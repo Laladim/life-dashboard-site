@@ -874,22 +874,111 @@ code { background: rgba(90,74,122,0.06); padding: 0.15rem 0.4rem; border-radius:
     </div>
     </div><div id="tab-word" class="tab-content">
     
-    <div class="card" style="border-left:4px solid var(--purple);">
-        <div class="card-title">Today's Reading &middot; Thursday, February 12</div>
-        <div class="grid-2">
-            
-        <div style="margin-bottom:0.75rem;">
-            <div class="rhythm-group-label">IBCM 260-Day (Solo)</div>
-            <div style="font-size:1.1rem;font-weight:700;color:var(--purple);font-family:'Playfair Display',serif;">Day 30: Joshua 22-24</div>
+    <!-- BSF Card (Priority #1) -->
+    <div class="card" style="border-left:4px solid var(--green);background:linear-gradient(135deg,rgba(90,138,114,0.04),rgba(90,74,122,0.03));">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+            <div class="card-title" style="margin-bottom:0;">Bible Study Fellowship (BSF)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <div style="font-size:0.72rem;color:var(--text-muted);">IBCM Manila</div>
+                <div style="padding:0.2rem 0.6rem;background:var(--green);color:white;border-radius:12px;font-size:0.7rem;font-weight:700;">Tomorrow 6PM</div>
+            </div>
         </div>
-            
-        <div>
-            <div class="rhythm-group-label">Navigators (with AJ)</div>
-            <div style="font-size:1.1rem;font-weight:700;color:var(--green);font-family:'Playfair Display',serif;">Psalm 1-3</div>
-            <div style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.15rem;">The blessed life, God as shield</div>
+        <div style="display:flex;gap:0.75rem;align-items:flex-start;margin-bottom:0.75rem;">
+            <div style="flex:1;">
+                <div class="rhythm-group-label">Current Study</div>
+                <div style="font-size:0.95rem;font-weight:700;color:var(--green);font-family:'Playfair Display',serif;">People of the Promise: Exile and Return</div>
+                <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:0.2rem;">30-week course &middot; Nehemiah section (Lessons 23-27)</div>
+            </div>
+            <div style="text-align:center;padding:0.4rem 0.75rem;background:rgba(90,74,122,0.06);border-radius:8px;">
+                <div style="font-size:1.2rem;font-weight:700;color:var(--purple);">L25</div>
+                <div style="font-size:0.65rem;color:var(--text-muted);">Current</div>
+            </div>
         </div>
+        <div style="background:rgba(90,74,122,0.04);border-radius:8px;padding:0.6rem 0.75rem;margin-bottom:0.75rem;">
+            <div style="font-size:0.78rem;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;">Lesson 25: Reading and Responding to the Law</div>
+            <div style="font-size:0.85rem;color:var(--text-primary);font-weight:600;">Nehemiah 6:15-8:18</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.15rem;">Theme: God's Word and sincere worship unite His people</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.1rem;">Focus: Nehemiah 8:18 &middot; 25 questions across 6 days</div>
         </div>
-        <div style="margin-top:0.75rem;padding-top:0.5rem;border-top:1px solid var(--border);display:flex;gap:0.4rem;flex-wrap:wrap;">
+        <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:0.5rem;cursor:pointer;" onclick="toggleCollapsible(this)">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0.75rem;">
+                <span style="font-weight:600;font-size:0.82rem;color:var(--green);">BSF Weekly Rhythm</span>
+                <span class="collapsible-arrow">&#9654;</span>
+            </div>
+            <div class="collapsible-body" style="padding:0.5rem 0.75rem;">
+                <div style="font-size:0.82rem;color:var(--text-primary);line-height:1.7;">
+                    <strong>Mon-Sat:</strong> Personal study (daily questions on passage)<br>
+                    <strong>Monday 6PM:</strong> Group discussion (~15 people) + Lecture<br>
+                    <strong>After class:</strong> Read lesson notes (background + application)<br>
+                    <strong>Day 1:</strong> Review previous week's notes before starting new questions
+                </div>
+            </div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:0.5rem;cursor:pointer;" onclick="toggleCollapsible(this)">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0.75rem;">
+                <span style="font-weight:600;font-size:0.82rem;color:var(--purple);">Themes for Discussion (Reformed Lens)</span>
+                <span class="collapsible-arrow">&#9654;</span>
+            </div>
+            <div class="collapsible-body" style="padding:0.5rem 0.75rem;">
+                <div style="font-size:0.82rem;color:var(--text-primary);line-height:1.7;">
+                    <strong style="color:var(--green);">God's sovereignty in completion</strong> (6:15-16): Enemies recognized "this work had been done with the help of our God." Providence.<br>
+                    <strong style="color:var(--green);">The Word does the work</strong> (8:1-12): No motivational speech needed. The Law read aloud produced both conviction and joy. Sufficiency of Scripture.<br>
+                    <strong style="color:var(--green);">Joy follows repentance</strong> (8:9-12): "The joy of the Lord is your strength." Joy in God IS the strength for obedience.<br>
+                    <strong style="color:var(--green);">Feast of Tabernacles points to Christ</strong> (8:13-18): Jesus declared at this feast: "If anyone thirsts, let him come to me" (John 7:37). He is the true Tabernacle (John 1:14).
+                </div>
+            </div>
+        </div>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+            <a href="https://docs.google.com/document/d/1PyugiGwkhsuVsN4hOCOlj6NHzzHrKHzUVQyJuAzKU7Q/edit" target="_blank" class="filter-btn">BSF Reference Doc</a>
+            <a href="https://www.mybsf.org" target="_blank" class="filter-btn">BSF App</a>
+        </div>
+    </div>
+
+    <!-- Navigators Card (Priority #2) -->
+    <div class="card" style="border-left:4px solid var(--gold);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+            <div class="card-title" style="margin-bottom:0;">Navigators 12-Month Plan</div>
+            <div style="padding:0.2rem 0.6rem;background:rgba(200,152,95,0.12);color:var(--gold-deep);border-radius:12px;font-size:0.7rem;font-weight:700;">With AJ</div>
+        </div>
+        <div style="display:flex;gap:0.75rem;align-items:flex-start;margin-bottom:0.75rem;">
+            <div style="flex:1;">
+                <div class="rhythm-group-label">Month 1 (February)</div>
+                <div style="font-size:0.95rem;font-weight:700;color:var(--gold-deep);font-family:'Playfair Display',serif;">Matthew, Acts, Psalms, Genesis</div>
+                <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:0.2rem;">~2-3 chapters/day &middot; Read together, discuss over dinner</div>
+            </div>
+            <div style="text-align:center;padding:0.4rem 0.75rem;background:rgba(200,152,95,0.06);border-radius:8px;">
+                <div style="font-size:1.2rem;font-weight:700;color:var(--gold-deep);">M1</div>
+                <div style="font-size:0.65rem;color:var(--text-muted);">Complete</div>
+            </div>
+        </div>
+        <div style="background:rgba(200,152,95,0.04);border-radius:8px;padding:0.6rem 0.75rem;margin-bottom:0.75rem;">
+            <div style="font-size:0.78rem;font-weight:600;color:var(--gold-deep);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;">Month 1 Progress</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.3rem 1rem;">
+                <div style="font-size:0.82rem;color:var(--text-primary);">Matthew 1-21 <span style="color:var(--text-muted);font-size:0.75rem;">(75%)</span></div>
+                <div style="font-size:0.82rem;color:var(--text-primary);">Acts 1-9 <span style="color:var(--text-muted);font-size:0.75rem;">(32%)</span></div>
+                <div style="font-size:0.82rem;color:var(--text-primary);">Psalms 1-19 <span style="color:var(--text-muted);font-size:0.75rem;">(13%)</span></div>
+                <div style="font-size:0.82rem;color:var(--text-primary);">Genesis 1-18 <span style="color:var(--text-muted);font-size:0.75rem;">(36%)</span></div>
+            </div>
+        </div>
+        <div style="padding:0.5rem 0.75rem;background:rgba(90,74,122,0.04);border-radius:8px;border-left:3px solid var(--purple);margin-bottom:0.5rem;">
+            <div style="font-size:0.82rem;color:var(--purple);font-weight:600;">Month 2 plan needed</div>
+            <div style="font-size:0.78rem;color:var(--text-secondary);">Month 1 ended March 9. Plan Month 2 books with AJ.</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:0.5rem;cursor:pointer;" onclick="toggleCollapsible(this)">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0.75rem;">
+                <span style="font-weight:600;font-size:0.82rem;color:var(--gold-deep);">Discussion Prompts</span>
+                <span class="collapsible-arrow">&#9654;</span>
+            </div>
+            <div class="collapsible-body" style="padding:0.5rem 0.75rem;">
+                <div style="font-size:0.82rem;color:var(--text-primary);line-height:1.7;">
+                    1. <strong>What stood out to you?</strong> (No wrong answers.)<br>
+                    2. <strong>What did this teach you about God?</strong> (Character, actions, promises)<br>
+                    3. <strong>Is there something here we should apply this week?</strong><br>
+                    4. <strong>How does this connect to other things we've been reading?</strong>
+                </div>
+            </div>
+        </div>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
             <a href="https://docs.google.com/spreadsheets/d/1YQoQZHkIJYWWhm4RwsTRd2oeKxO8uX5BdjYDqukOQIE/edit" target="_blank" class="filter-btn">Bible Reading Journal</a>
         </div>
     </div>
@@ -955,11 +1044,11 @@ code { background: rgba(90,74,122,0.06); padding: 0.15rem 0.4rem; border-radius:
         </div>
         <div style="margin-bottom:0.5rem;padding:0.6rem 0.75rem;border-left:3px solid var(--purple);background:rgba(90,74,122,0.02);border-radius:0 6px 6px 0;">
             <div style="font-weight:700;font-size:0.8rem;color:var(--purple);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.3rem;">DURING (main reading)</div>
-            <div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">First pass:</strong> Read straight through. Get the flow.</div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">Second pass:</strong> Five questions:</div><div style="margin:0.3rem 0;font-size:0.85rem;">3. Linger where the Spirit grabs you. Don&#39;t rush.</div>
+            <div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">First pass:</strong> Read straight through. Get the flow.</div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">Second pass:</strong> Five questions:</div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);">1. What does this passage actually say? (Observation)</div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);">2. What does it mean? (Interpretation)</div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);">3. What does it reveal about God? (Theology)</div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);">4. What response does it call for? (Application)</div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);">5. What is beautiful or surprising here? (Worship)</div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">Third:</strong> Linger where the Spirit grabs you. Don&#39;t rush.</div>
         </div>
         <div style="margin-bottom:0.5rem;padding:0.6rem 0.75rem;border-left:3px solid var(--green);background:rgba(90,74,122,0.02);border-radius:0 6px 6px 0;">
             <div style="font-weight:700;font-size:0.8rem;color:var(--green);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.3rem;">AFTER (2-5 min)</div>
-            <div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">ACTS Prayer:</strong> </div><div style="margin:0.3rem 0;font-size:0.85rem;">2. Log: Key verse + one-sentence reflection</div><div style="margin:0.3rem 0;font-size:0.85rem;">3. Carry: One truth for the rest of the day</div>
+            <div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">1. ACTS Prayer:</strong></div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);"><strong>A</strong>doration: What can I praise God for from this passage?</div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);"><strong>C</strong>onfession: What sin does this expose in me?</div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);"><strong>T</strong>hanksgiving: What am I grateful for?</div><div style="margin:0.15rem 0;font-size:0.82rem;padding-left:0.75rem;color:var(--text-secondary);"><strong>S</strong>upplication: What should I ask God for?</div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">2. Log:</strong> Key verse + one-sentence reflection</div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">3. Carry:</strong> One truth for the rest of the day</div>
         </div>
         <div style="margin-top:0.5rem;cursor:pointer;" onclick="toggleCollapsible(this)">
             <div style="display:flex;justify-content:space-between;align-items:center;padding:0.3rem 0;">
@@ -1053,15 +1142,6 @@ code { background: rgba(90,74,122,0.06); padding: 0.15rem 0.4rem; border-radius:
                     <div style="margin:0.2rem 0;font-size:0.83rem;color:var(--text-secondary);padding-left:0.5rem;border-left:2px solid var(--border);">This is worship literature, not a puzzle to decode</div><div style="margin:0.2rem 0;font-size:0.83rem;color:var(--text-secondary);padding-left:0.5rem;border-left:2px solid var(--border);">Focus on the repeated theme: God wins, evil loses, Jesus reigns</div><div style="margin:0.2rem 0;font-size:0.83rem;color:var(--text-secondary);padding-left:0.5rem;border-left:2px solid var(--border);">Let the imagery create awe, not anxiety</div>
                 </div>
             </div>
-            <div style="margin-bottom:0.3rem;border:1px solid var(--border);border-radius:6px;overflow:hidden;">
-                <div class="collapsible-header" onclick="toggleCollapsible(this.parentElement)" style="padding:0.4rem 0.6rem;">
-                    <span style="font-weight:600;font-size:0.8rem;color:var(--text-primary);">Revelation</span>
-                    <span class="collapsible-arrow">&#9654;</span>
-                </div>
-                <div class="collapsible-body" style="padding:0.4rem 0.75rem;">
-                    <div style="margin:0.2rem 0;font-size:0.83rem;color:var(--text-secondary);padding-left:0.5rem;border-left:2px solid var(--border);">This is worship literature, not a puzzle to decode</div><div style="margin:0.2rem 0;font-size:0.83rem;color:var(--text-secondary);padding-left:0.5rem;border-left:2px solid var(--border);">Focus on the repeated theme: God wins, evil loses, Jesus reigns</div><div style="margin:0.2rem 0;font-size:0.83rem;color:var(--text-secondary);padding-left:0.5rem;border-left:2px solid var(--border);">Let the imagery create awe, not anxiety</div>
-                </div>
-            </div>
             </div>
         </div>
     
@@ -1071,7 +1151,11 @@ code { background: rgba(90,74,122,0.06); padding: 0.15rem 0.4rem; border-radius:
                 <span class="collapsible-arrow">&#9654;</span>
             </div>
             <div class="collapsible-body">
-                <div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">1. Goal is glory, not information.</strong> <span style="color:var(--text-secondary);">You read successfully when you see God&#39;s beauty, not when you finish chapters.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">2. Prayer is not optional.</strong> <span style="color:var(--text-secondary);">It is the atmosphere of supernatural reading.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">3. Humility before method.</strong> <span style="color:var(--text-secondary);">God opposes the proud. Come as a student.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">4. Slow down.</strong> <span style="color:var(--text-secondary);">The devil uses busyness, not atheism, to kill Bible reading.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">5. Every text reveals God.</strong> <span style="color:var(--text-secondary);">Ask &quot;What does this show me about God?&quot; of every passage.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">6. Every text points to Christ.</strong> <span style="color:var(--text-secondary);">The OT moves toward Him; the NT looks back to the cross and forward to His return.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">7. Seeing transforms.</strong> <span style="color:var(--text-secondary);">&quot;We are changed by what we see.&quot; Beholding God&#39;s glory in Scripture is the engine of sanctification.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">8. Affection required.</strong> <span style="color:var(--text-secondary);">It&#39;s not enough to see the glory; you must savor it, delight in it.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">9. Questions are tools.</strong> <span style="color:var(--text-secondary);">The person who asks the most questions sees the most.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">10. The Pharisee Warning.</strong> <span style="color:var(--text-secondary);">It is possible to study the Bible with extraordinary diligence and completely miss its main message.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">11. A</strong> <span style="color:var(--text-secondary);">dmit your inability (you cannot see God&#39;s glory on your own)</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">12. P</strong> <span style="color:var(--text-secondary);">ray for help (Psalm 119:18, 36)</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">13. T</strong> <span style="color:var(--text-secondary);">rust in a specific promise of God (He rewards those who seek Him)</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">14. A</strong> <span style="color:var(--text-secondary);">ct by reading with aggressive attentiveness</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">15. T</strong> <span style="color:var(--text-secondary);">hank God for what He reveals</span></div>
+                <div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">1. Goal is glory, not information.</strong> <span style="color:var(--text-secondary);">You read successfully when you see God&#39;s beauty, not when you finish chapters.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">2. Prayer is not optional.</strong> <span style="color:var(--text-secondary);">It is the atmosphere of supernatural reading.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">3. Humility before method.</strong> <span style="color:var(--text-secondary);">God opposes the proud. Come as a student.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">4. Slow down.</strong> <span style="color:var(--text-secondary);">The devil uses busyness, not atheism, to kill Bible reading.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">5. Every text reveals God.</strong> <span style="color:var(--text-secondary);">Ask &quot;What does this show me about God?&quot; of every passage.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">6. Every text points to Christ.</strong> <span style="color:var(--text-secondary);">The OT moves toward Him; the NT looks back to the cross and forward to His return.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">7. Seeing transforms.</strong> <span style="color:var(--text-secondary);">&quot;We are changed by what we see.&quot; Beholding God&#39;s glory in Scripture is the engine of sanctification.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">8. Affection required.</strong> <span style="color:var(--text-secondary);">It&#39;s not enough to see the glory; you must savor it, delight in it.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">9. Questions are tools.</strong> <span style="color:var(--text-secondary);">The person who asks the most questions sees the most.</span></div><div style="margin:0.4rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">10. The Pharisee Warning.</strong> <span style="color:var(--text-secondary);">It is possible to study the Bible with extraordinary diligence and completely miss its main message.</span></div>
+                <div style="margin-top:0.75rem;padding-top:0.5rem;border-top:1px solid var(--border);">
+                    <div style="font-weight:700;font-size:0.8rem;color:var(--gold-deep);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.4rem;">A.P.T.A.T. - Piper's Reading Posture</div>
+                    <div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">A</strong><span style="color:var(--text-secondary);">dmit your inability (you cannot see God&#39;s glory on your own)</span></div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">P</strong><span style="color:var(--text-secondary);">ray for help (Psalm 119:18, 36)</span></div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">T</strong><span style="color:var(--text-secondary);">rust in a specific promise of God (He rewards those who seek Him)</span></div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">A</strong><span style="color:var(--text-secondary);">ct by reading with aggressive attentiveness</span></div><div style="margin:0.3rem 0;font-size:0.85rem;"><strong style="color:var(--purple);">T</strong><span style="color:var(--text-secondary);">hank God for what He reveals</span></div>
+                </div>
             </div>
         </div>
     <!-- Bible Folder Guide -->
@@ -1116,7 +1200,7 @@ code { background: rgba(90,74,122,0.06); padding: 0.15rem 0.4rem; border-radius:
     <!-- Bible Folder Inventory -->
     <div class="card" style="cursor:pointer;" onclick="toggleCollapsible(this)">
         <div style="display:flex;justify-content:space-between;align-items:center;">
-            <div class="card-title" style="margin-bottom:0;">What's In Your Bible Folder (10 items)</div>
+            <div class="card-title" style="margin-bottom:0;">What's In Your Bible Folder (11 items)</div>
             <span class="collapsible-arrow">&#9654;</span>
         </div>
         <div class="collapsible-body">
@@ -1128,6 +1212,7 @@ code { background: rgba(90,74,122,0.06); padding: 0.15rem 0.4rem; border-radius:
                 <tr><td>&#x1F3AF;</td><td style="font-family:monospace;font-size:0.78rem;color:var(--purple);">a-passion-for-the-supremacy-of-god.md</td><td style="font-size:0.8rem;color:var(--text-secondary);">Mission statement breakdown</td></tr>
                 <tr><td>&#x1F3C3;</td><td style="font-family:monospace;font-size:0.78rem;color:var(--purple);">catch-up-genesis-to-joshua.md</td><td style="font-size:0.8rem;color:var(--text-secondary);">Days 1-27 catch-up highlights</td></tr>
                 <tr><td>&#x1F491;</td><td style="font-family:monospace;font-size:0.78rem;color:var(--purple);">navigators-month1.md</td><td style="font-size:0.8rem;color:var(--text-secondary);">Month 1 couple reading plan with AJ</td></tr>
+                <tr><td>&#x1F4D6;</td><td style="font-family:monospace;font-size:0.78rem;color:var(--purple);">bible-study-fellowship.md</td><td style="font-size:0.8rem;color:var(--text-secondary);">BSF working reference, lesson notes, session log</td></tr>
                 <tr><td>&#x1F4DA;</td><td style="font-family:monospace;font-size:0.78rem;color:var(--purple);">piper-books/</td><td style="font-size:0.8rem;color:var(--text-secondary);">30+ Piper books (symlink to ~/Desktop/Jesus)</td></tr>
                 <tr><td>&#x1F5C2;</td><td style="font-family:monospace;font-size:0.78rem;color:var(--purple);">piper-books-index.md</td><td style="font-size:0.8rem;color:var(--text-secondary);">Book catalog &amp; topic mapping</td></tr>
                 <tr><td>&#x1F4AC;</td><td style="font-family:monospace;font-size:0.78rem;color:var(--purple);">piper-quotes-index.md</td><td style="font-size:0.8rem;color:var(--text-secondary);">80+ quotes organized by 12 topics</td></tr>
