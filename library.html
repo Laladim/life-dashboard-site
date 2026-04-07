@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shela's Library</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --purple: #5a4a7a;
+    --purple-deep: #4a3a6a;
+    --gold: #c8985f;
+    --gold-deep: #a88d5e;
+    --amber: #c8985f;
+    --bg-primary: #f5f1f0;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf7f6;
+    --bg-input: #faf8f7;
+    --warmwhite: #fffcfa;
+    --charcoal: #3a3a3a;
+    --lavender: #7a6a8f;
+    --text-primary: #3a3a3a;
+    --text-secondary: #6b6565;
+    --text-muted: #9a9090;
+    --rosegold: #a0756a;
+    --green: #5a8a72;
+    --red: #c45a5a;
+    --border: #e0dbd8;
+    --border-accent: #d0c8c4;
+    --gray: #9a9090;
+    --teal: #4a8a8a;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+h1, h2, h3, .section-header {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Faith Header */
+.faith-header {
+    text-align: center;
+    padding: 1.25rem 1.5rem 1rem;
+    background: linear-gradient(135deg, #faf7f5, #f5f0ee);
+    border-bottom: 1px solid var(--border);
+}
+.faith-mission {
+    font-size: 0.8rem;
+    color: var(--purple);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+.faith-verse {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--purple-deep);
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+.faith-verse-ref {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.home-link {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--purple);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.home-link:hover { opacity: 1; }
+
+/* Stats Banner */
+.stats-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    box-shadow: 0 1px 3px rgba(90,74,122,0.06);
+}
+.stat-item {
+    text-align: center;
+    min-width: 80px;
+}
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.1;
+    color: var(--purple);
+}
+.stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* Page Title */
+.page-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+}
+.page-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Dots */
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-green { background: var(--green); }
+.dot-amber { background: var(--gold); }
+.dot-red { background: var(--red); }
+.dot-gray { background: var(--gray); }
+
+/* Domain Card */
+.domain-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 0.75rem;
+    box-shadow: 0 1px 3px rgba(90,74,122,0.06);
+    overflow: hidden;
+}
+
+/* Domain Header (clickable) */
+.domain-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+    gap: 0.75rem;
+}
+.domain-header:hover {
+    background: var(--bg-card-hover);
+}
+
+.domain-arrow {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    width: 14px;
+    text-align: center;
+    flex-shrink: 0;
+}
+.domain-card.open > .domain-header .domain-arrow {
+    transform: rotate(90deg);
+}
+
+.domain-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--purple);
+    flex: 1;
+}
+.domain-name .domain-count {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-left: 0.4rem;
+}
+
+.domain-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.domain-status {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.status-active {
+    background: rgba(90,138,114,0.1);
+    color: var(--green);
+}
+.status-dormant {
+    background: rgba(154,144,144,0.12);
+    color: var(--gray);
+}
+
+/* Domain Body (collapsible) */
+.domain-body {
+    display: none;
+    padding: 0 1.25rem 1rem;
+    border-top: 1px solid var(--border);
+}
+.domain-card.open > .domain-body {
+    display: block;
+}
+
+/* Tree */
+.tree-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.tree-item {
+    border-bottom: 1px solid rgba(224,219,216,0.5);
+}
+.tree-item:last-child {
+    border-bottom: none;
+}
+
+/* Tree Row */
+.tree-row {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+}
+.tree-row.clickable {
+    cursor: pointer;
+}
+.tree-row.clickable:hover {
+    background: rgba(90,74,122,0.02);
+    margin: 0 -0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 6px;
+}
+
+.tree-indent {
+    width: 20px;
+    flex-shrink: 0;
+}
+
+.tree-icon {
+    font-size: 0.75rem;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+.tree-label {
+    flex: 1;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.78rem;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.tree-label.dir-label {
+    font-weight: 500;
+    color: var(--purple-deep);
+}
+
+.tree-file-count {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.tree-date {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    min-width: 45px;
+    text-align: right;
+}
+
+/* Sub-tree (nested) */
+.sub-tree {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.tree-item.open > .sub-tree {
+    display: block;
+}
+.sub-tree-arrow {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    width: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+.tree-item.open > .tree-row .sub-tree-arrow {
+    transform: rotate(90deg);
+}
+
+/* Sheet Links */
+.sheet-section {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border);
+}
+.sheet-row {
+    display: flex;
+    align-items: center;
+    padding: 0.35rem 0;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+}
+.sheet-icon {
+    font-size: 0.85rem;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+.sheet-name {
+    flex: 1;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+.sheet-link {
+    font-size: 0.72rem;
+    color: var(--purple);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 2px 8px;
+    border: 1px solid rgba(90,74,122,0.2);
+    border-radius: 6px;
+    transition: all 0.15s;
+}
+.sheet-link:hover {
+    background: rgba(90,74,122,0.06);
+    border-color: var(--purple);
+}
+
+/* Skill Files Section */
+.skill-section {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+}
+.skill-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 1px 7px;
+    border-radius: 8px;
+    background: rgba(200,152,95,0.12);
+    color: var(--gold-deep);
+    margin: 2px;
+}
+
+/* Generated timestamp */
+.generated {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .container { padding: 1rem; }
+    .stats-banner { gap: 0.5rem; padding: 1rem; }
+    .stat-value { font-size: 1.4rem; }
+    .stat-item { min-width: 60px; }
+    .domain-header { padding: 0.75rem 1rem; }
+    .domain-body { padding: 0 1rem 0.75rem; }
+    .tree-label { font-size: 0.72rem; }
+    .domain-meta .domain-date-text { display: none; }
+    .legend { gap: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Faith Header -->
+<div class="faith-header">
+    <div class="faith-mission">Stewardship Through Order</div>
+    <div class="faith-verse">"For God is not a God of disorder but of peace."</div>
+    <div class="faith-verse-ref">1 Corinthians 14:33</div>
+    <a href="index.html" class="home-link">Back to Dashboard</a>
+</div>
+
+<div class="container">
+
+    <h1 class="page-title">Document Library</h1>
+    <p class="page-subtitle">Bird's-eye view of Shela's Life Dashboard ecosystem</p>
+
+    <!-- Stats Banner -->
+    <div class="stats-banner">
+        <div class="stat-item">
+            <div class="stat-value">4,954</div>
+            <div class="stat-label">Total Files</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">48</div>
+            <div class="stat-label">Skill Files</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">15</div>
+            <div class="stat-label">Google Sheets</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">10</div>
+            <div class="stat-label">Domains</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" style="color: var(--green);">9</div>
+            <div class="stat-label">Active</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" style="color: var(--gray);">1</div>
+            <div class="stat-label">Dormant</div>
+        </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+        <div class="legend-item"><span class="dot dot-green"></span> Updated &lt; 7 days</div>
+        <div class="legend-item"><span class="dot dot-amber"></span> Updated 7-30 days</div>
+        <div class="legend-item"><span class="dot dot-red"></span> Updated &gt; 30 days</div>
+    </div>
+
+    <!-- ===== COBALT CONTENT ===== -->
+    <div class="domain-card open" id="domain-cobalt-content">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Cobalt Content <span class="domain-count">(345 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 18</span>
+                <span class="dot dot-green"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <!-- cobalt-skills/ -->
+                <li class="tree-item open">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">cobalt-skills/</span>
+                        <span class="tree-file-count">254 files</span>
+                        <span class="dot dot-green"></span>
+                        <span class="tree-date">Feb 18</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item">
+                            <div class="tree-row clickable" onclick="toggleTree(this)">
+                                <span class="tree-indent"></span>
+                                <span class="sub-tree-arrow">&#9654;</span>
+                                <span class="tree-icon">&#128193;</span>
+                                <span class="tree-label dir-label">blog-creation-system/</span>
+                                <span class="tree-file-count">88 files</span>
+                                <span class="dot dot-green"></span>
+                                <span class="tree-date">Feb 17</span>
+                            </div>
+                            <ul class="sub-tree">
+                                <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">workflows/ (3 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 12</span></div></li>
+                                <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">publishing/ (5 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 12</span></div></li>
+                                <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">seo/ (14 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                                <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">scripts/ (15 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 10</span></div></li>
+                                <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">docs/ (6 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 07</span></div></li>
+                                <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">updates/ (28 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 10</span></div></li>
+                                <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">templates/ (6 files)</span><span class="dot dot-red"></span><span class="tree-date">Jan 23</span></div></li>
+                            </ul>
+                        </li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">newsletter-writing-automation/ (15 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 17</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">personas/ (3 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 07</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">scripts/ (25 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">homepage-screenshots/ (40 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 14</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">youtube-shorts/ (6 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 11</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">knowledge-base/ (21 files)</span><span class="dot dot-red"></span><span class="tree-date">Jan 24</span></div></li>
+                    </ul>
+                </li>
+                <!-- cowork-outputs/ -->
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">cowork-outputs/</span>
+                        <span class="tree-file-count">91 files</span>
+                        <span class="dot dot-green"></span>
+                        <span class="tree-date">Feb 18</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">FFBE-Event-Playbook/ (11 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">claude-code-upgrade-research/ (12 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 07</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">repo-study/ (9 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">testing/ (10 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">+ 49 individual .md outputs</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Sheets -->
+            <div class="sheet-section">
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Blog Content Database</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1cqY_GO7UvFN_x5RfiO5XuB1Pj-UPbWvzTp9W_4o51LY/edit" target="_blank">Open</a>
+                </div>
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Existing Articles</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1S8QoPHLHGTX6MrbQW1spEaHdiSaY--vfC3PqWRCioPQ/edit" target="_blank">Open</a>
+                </div>
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Blog Queue</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1ls8MROp1Ak4lKd7jV9vK7JvKnXFvGXuvjn_vc921Gag/edit" target="_blank">Open</a>
+                </div>
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Quote Tracker</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1gMsn1sTkNQvL9d-48KqkvldOD1xpeBLLc800X6T7iqg/edit" target="_blank">Open</a>
+                </div>
+            </div>
+            <!-- Key Skills -->
+            <div class="skill-section">
+                <span class="skill-tag">product-expert</span>
+                <span class="skill-tag">icp-lens</span>
+                <span class="skill-tag">blog-writing</span>
+                <span class="skill-tag">content-repurposing</span>
+                <span class="skill-tag">engagement-design</span>
+                <span class="skill-tag">webflow-publisher</span>
+                <span class="skill-tag">alt-lender-rater</span>
+                <span class="skill-tag">case-study-writing</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== COBALT NEWS ===== -->
+    <div class="domain-card" id="domain-cobalt-news">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Cobalt News <span class="domain-count">(37 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 17</span>
+                <span class="dot dot-green"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">newsletter-writing-automation/</span>
+                        <span class="tree-file-count">15 files</span>
+                        <span class="dot dot-green"></span>
+                        <span class="tree-date">Feb 17</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">drafts/ (6 newsletter drafts)</span><span class="dot dot-green"></span><span class="tree-date">Feb 17</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">README.md, headline-process.md, beehiiv-formatting.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 10</span></div></li>
+                    </ul>
+                </li>
+                <li class="tree-item">
+                    <div class="tree-row">
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">news-dashboard/ (automation pipeline)</span>
+                        <span class="tree-file-count">22 files</span>
+                        <span class="dot dot-green"></span>
+                        <span class="tree-date">Feb 15</span>
+                    </div>
+                </li>
+            </ul>
+            <div class="sheet-section">
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Cobalt News Archive</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1JeGXmXfnhP5wPU0cEsx6ErIrqDit95euTMCtmoHBLv0/edit" target="_blank">Open</a>
+                </div>
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">2026 News List</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1ZHDpiRbKAMp3buwHSNGax5OTrg_Xr-fC0-7ONNSCf4E/edit" target="_blank">Open</a>
+                </div>
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">News Details</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1xjp6PNgYvhdBPiMGwZmkgv8bp1xbHCdg3Xjsq6KDInI/edit" target="_blank">Open</a>
+                </div>
+            </div>
+            <div class="skill-section">
+                <span class="skill-tag">newsletter-writing</span>
+                <span class="skill-tag">news-archive</span>
+                <span class="skill-tag">news-automation-local</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== COBALT YOUTUBE ===== -->
+    <div class="domain-card" id="domain-cobalt-youtube">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Cobalt YouTube <span class="domain-count">(6 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 11</span>
+                <span class="dot dot-amber"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">youtube-shorts/</span>
+                        <span class="tree-file-count">6 files</span>
+                        <span class="dot dot-amber"></span>
+                        <span class="tree-date">Feb 11</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">analysis/ (1 file)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 09</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">reference/ (3 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 11</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sheet-section">
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Cobalt YT Short Videos</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1Jdzv4AWSy4JHU44hN5qklkdYOhZVK94WxAu_emcZAW8/edit" target="_blank">Open</a>
+                </div>
+            </div>
+            <div class="skill-section">
+                <span class="skill-tag">youtube-shorts-creator</span>
+                <span class="skill-tag">youtube-transcription</span>
+                <span class="skill-tag">youtube-integration</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== COBALT SEO ===== -->
+    <div class="domain-card" id="domain-cobalt-seo">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Cobalt SEO <span class="domain-count">(14 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 04</span>
+                <span class="dot dot-amber"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">blog-creation-system/seo/</span>
+                        <span class="tree-file-count">14 files</span>
+                        <span class="dot dot-amber"></span>
+                        <span class="tree-date">Feb 04</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">exports/ (5 CSV files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 02</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">seo-daily-tasks.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">cobalt-seo-adviser.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">ahrefs-mcp-expert.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">backlink-quality-criteria.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">link-reclamation-playbook.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="skill-section">
+                <span class="skill-tag">seo-daily-tasks</span>
+                <span class="skill-tag">cobalt-seo-adviser</span>
+                <span class="skill-tag">ahrefs-mcp-expert</span>
+                <span class="skill-tag">backlink-quality</span>
+                <span class="skill-tag">link-reclamation</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PERSONAL FINANCE ===== -->
+    <div class="domain-card" id="domain-personal-finance">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Personal Finance <span class="domain-count">(7 skills)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 18</span>
+                <span class="dot dot-green"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">personal-finance.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">debt-payoff-strategist.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">weekly-money-ritual.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">monthly-financial-review.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">spending-categories.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 12</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">finance-dashboard-builder.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 12</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">statement-parser.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 12</span></div></li>
+            </ul>
+            <div class="sheet-section">
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Personal Finance Hub</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1TOmhEcRvmgqMhAaDmoXe_hXytOujEVrapKF-sHXMEMM/edit" target="_blank">Open</a>
+                </div>
+            </div>
+            <div class="skill-section">
+                <span class="skill-tag">personal-finance</span>
+                <span class="skill-tag">debt-payoff</span>
+                <span class="skill-tag">weekly-money</span>
+                <span class="skill-tag">monthly-review</span>
+                <span class="skill-tag">statement-parser</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEALTH ===== -->
+    <div class="domain-card" id="domain-health">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Health <span class="domain-count">(3 files + dashboard)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 17</span>
+                <span class="dot dot-green"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">health-tracker.md (9 workflows)</span><span class="dot dot-green"></span><span class="tree-date">Feb 17</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">endo-helper.md (health context, red flags)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 08</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#127760;</span><span class="tree-label">health.html (HTML dashboard)</span><span class="dot dot-green"></span><span class="tree-date">Feb 17</span></div></li>
+            </ul>
+            <div class="sheet-section">
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Shela's Health Hub</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1RY7Z-z6u3Mx2IU5QgnsDKhDmBxgE3dhXBpgaJBy4p80/edit" target="_blank">Open</a>
+                </div>
+            </div>
+            <div class="skill-section">
+                <span class="skill-tag">health-tracker</span>
+                <span class="skill-tag">endo-helper</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== GROWTH & LEARNING ===== -->
+    <div class="domain-card" id="domain-growth">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Growth & Learning <span class="domain-count">(418 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 18</span>
+                <span class="dot dot-green"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">growth/</span>
+                        <span class="tree-file-count">418 files</span>
+                        <span class="dot dot-green"></span>
+                        <span class="tree-date">Feb 18</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">insight-journal/ (78 tag pages)</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">swahg-export/ (266 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 08</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">piper-conversations/ (55 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 13</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">dashboard/ (15 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 12</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">knowledge-arsenal.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">working-resume.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sheet-section">
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Shela's Learning Evolution</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1A_LqNXbMi7zHPHXdYKpQGam4hTfNmHMvfWe06QISdzw/edit" target="_blank">Open</a>
+                </div>
+            </div>
+            <div class="skill-section">
+                <span class="skill-tag">knowledge-arsenal</span>
+                <span class="skill-tag">insight-journal</span>
+                <span class="skill-tag">gemini-sidecar</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SPIRITUAL ===== -->
+    <div class="domain-card" id="domain-spiritual">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Spiritual <span class="domain-count">(65 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 16</span>
+                <span class="dot dot-green"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">bible/</span>
+                        <span class="tree-file-count">10 files</span>
+                        <span class="dot dot-green"></span>
+                        <span class="tree-date">Feb 16</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">bible-reading-method.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 16</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">centering-page.md</span><span class="dot dot-amber"></span><span class="tree-date">Feb 10</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">piper-books/ (35 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 13</span></div></li>
+                    </ul>
+                </li>
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">piper-conversations/</span>
+                        <span class="tree-file-count">55 files</span>
+                        <span class="dot dot-green"></span>
+                        <span class="tree-date">Feb 13</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">raw/ (27 conversations)</span><span class="dot dot-green"></span><span class="tree-date">Feb 13</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">summaries/ (27 summaries)</span><span class="dot dot-green"></span><span class="tree-date">Feb 13</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sheet-section">
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Bible Reading Journal</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1YQoQZHkIJYWWhm4RwsTRd2oeKxO8uX5BdjYDqukOQIE/edit" target="_blank">Open</a>
+                </div>
+                <div class="sheet-row">
+                    <span class="sheet-icon">&#128202;</span>
+                    <span class="sheet-name">Shela's Moments Database</span>
+                    <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1pjRRIqiGhPrlFuPkxO0nQyxvqqtsJKQPF6xn71K9Rp8/edit" target="_blank">Open</a>
+                </div>
+            </div>
+            <div class="skill-section">
+                <span class="skill-tag">bible-reading-method</span>
+                <span class="skill-tag">reformed-theology</span>
+                <span class="skill-tag">books-with-piper</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SYSTEM ===== -->
+    <div class="domain-card" id="domain-system">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">System <span class="domain-count">(58 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 17</span>
+                <span class="dot dot-green"></span>
+                <span class="domain-status status-active">Active</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">.claude/</span>
+                        <span class="tree-file-count">9 files</span>
+                        <span class="dot dot-green"></span>
+                        <span class="tree-date">Feb 17</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128196;</span><span class="tree-label">active-workflow.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 17</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">docs/ (4 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 12</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">hooks/ (2 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 12</span></div></li>
+                    </ul>
+                </li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128193;</span><span class="tree-label dir-label">.hooks/ (6 files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 15</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128193;</span><span class="tree-label dir-label">.ai-models/ (3 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 10</span></div></li>
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">amp-skills/</span>
+                        <span class="tree-file-count">40 files</span>
+                        <span class="dot dot-amber"></span>
+                        <span class="tree-date">Feb 10</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">compound-engineering/</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">gemini-sidecar/ (8 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">model-router/</span><span class="dot dot-amber"></span><span class="tree-date">Feb 10</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">multi-agent/ (4 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">prd/</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">dev-browser/ (17 files)</span><span class="dot dot-red"></span><span class="tree-date">Jan 20</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">repo-study-workflow/</span><span class="dot dot-amber"></span><span class="tree-date">Feb 04</span></div></li>
+                    </ul>
+                </li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">CLAUDE.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">ORCHESTRATOR.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">SKILL-INDEX.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">BACKLOG.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">7-DAY-CONTEXT.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128196;</span><span class="tree-label">FILE-REGISTRY.md</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== RELATIONSHIPS ===== -->
+    <div class="domain-card" id="domain-relationships">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Relationships <span class="domain-count">(11 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 03</span>
+                <span class="dot dot-amber"></span>
+                <span class="domain-status status-dormant">Dormant</span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item">
+                    <div class="tree-row clickable" onclick="toggleTree(this)">
+                        <span class="sub-tree-arrow">&#9654;</span>
+                        <span class="tree-icon">&#128193;</span>
+                        <span class="tree-label dir-label">relationships/</span>
+                        <span class="tree-file-count">11 files</span>
+                        <span class="dot dot-amber"></span>
+                        <span class="tree-date">Feb 03</span>
+                    </div>
+                    <ul class="sub-tree">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">hobbies/ (9 files)</span><span class="dot dot-amber"></span><span class="tree-date">Feb 03</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-indent"></span><span class="tree-icon">&#128193;</span><span class="tree-label">God/ (2 files)</span><span class="dot dot-red"></span><span class="tree-date">Jan 25</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="skill-section">
+                <span class="skill-tag">community-strategy</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SESSION LOGS (bonus section) ===== -->
+    <div class="domain-card" id="domain-sessions">
+        <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-arrow">&#9654;</span>
+            <span class="domain-name">Session Logs <span class="domain-count">(31 files)</span></span>
+            <span class="domain-meta">
+                <span class="domain-date-text">Feb 18</span>
+                <span class="dot dot-green"></span>
+            </span>
+        </div>
+        <div class="domain-body">
+            <ul class="tree-list">
+                <li class="tree-item"><div class="tree-row"><span class="tree-icon">&#128193;</span><span class="tree-label dir-label">session-logs/ (31 daily log files)</span><span class="dot dot-green"></span><span class="tree-date">Feb 18</span></div></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="generated">
+        Generated Feb 18, 2026 &middot; Run "Rebuild library page" to refresh
+    </div>
+
+</div>
+
+<script>
+function toggleDomain(header) {
+    const card = header.parentElement;
+    card.classList.toggle('open');
+}
+
+function toggleTree(row) {
+    const item = row.parentElement;
+    item.classList.toggle('open');
+}
+
+// Expand first domain by default (already done via class="open")
+</script>
+
+</body>
+</html>

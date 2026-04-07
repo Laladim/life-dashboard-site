@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shela's Health Hub</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --purple: #5a4a7a;
+    --purple-deep: #4a3a6a;
+    --gold: #c8985f;
+    --gold-deep: #a88d5e;
+    --amber: #c8985f;
+    --bg-primary: #f5f1f0;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf7f6;
+    --bg-input: #faf8f7;
+    --plum: #f5f1f0;
+    --warmwhite: #fffcfa;
+    --charcoal: #3a3a3a;
+    --lavender: #7a6a8f;
+    --text-primary: #3a3a3a;
+    --text-secondary: #6b6565;
+    --text-muted: #9a9090;
+    --rosegold: #a0756a;
+    --green: #5a8a72;
+    --red: #c45a5a;
+    --border: #e0dbd8;
+    --border-accent: #d0c8c4;
+    --gray: #9a9090;
+    --teal: #4a8a8a;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+h1, h2, h3, .section-header {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Faith Header */
+.faith-header {
+    text-align: center;
+    padding: 1.25rem 1.5rem 1rem;
+    background: linear-gradient(135deg, #faf7f5, #f5f0ee);
+    border-bottom: 1px solid var(--border);
+}
+.faith-mission {
+    font-size: 0.8rem;
+    color: var(--purple);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+.faith-verse {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--purple-deep);
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+.faith-verse-ref {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.home-link {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--purple);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.home-link:hover { opacity: 1; }
+
+/* Tab Navigation */
+.tab-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(90,74,122,0.08);
+}
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-align: center;
+}
+.tab-btn:hover { color: var(--purple); background: rgba(90,74,122,0.04); }
+.tab-btn.active { color: var(--purple); border-bottom-color: var(--gold); font-weight: 600; }
+
+/* Tab Content */
+.tab-content { display: none; padding: 1.5rem; max-width: 1100px; margin: 0 auto; }
+.tab-content.active { display: block; }
+
+/* Cards */
+.card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(90,74,122,0.06);
+}
+.card-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+}
+.card-alert {
+    border-left: 4px solid var(--red);
+}
+.card-success {
+    border-left: 4px solid var(--green);
+}
+
+/* Grids */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.75rem; }
+
+/* Status Dots */
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+.dot-green { background: var(--green); }
+.dot-amber { background: var(--gold); }
+.dot-red { background: var(--red); }
+.dot-gray { background: var(--gray); }
+
+/* Status Banner */
+.status-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+.status-metric {
+    text-align: center;
+    min-width: 80px;
+}
+.status-metric .metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.1;
+}
+.status-metric .metric-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+.metric-pain-low { color: var(--green); }
+.metric-pain-med { color: var(--gold); }
+.metric-pain-high { color: var(--red); }
+
+/* Alert Banner */
+.alert-banner {
+    background: linear-gradient(135deg, #c45a5a, #a84848);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-align: center;
+    animation: pulse-border 3s ease-in-out infinite;
+}
+@keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(196,90,90,0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(196,90,90,0); }
+}
+.alert-banner .alert-title { font-size: 0.9rem; margin-bottom: 0.15rem; }
+.alert-banner .alert-text { font-size: 0.8rem; font-weight: 400; opacity: 0.9; }
+
+/* Condition Cards */
+.condition-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.condition-item {
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+.condition-item .cond-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+.condition-item .cond-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+.condition-item .cond-status {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+.condition-item .cond-note {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+/* Lab Badge */
+.lab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.lab-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-primary);
+    border-radius: 8px;
+}
+.lab-name { font-weight: 500; font-size: 0.85rem; }
+.lab-value { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 600; }
+.lab-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-left: 6px;
+}
+.badge-red { background: rgba(196,90,90,0.12); color: var(--red); }
+.badge-amber { background: rgba(200,152,95,0.15); color: var(--gold-deep); }
+.badge-green { background: rgba(90,138,114,0.12); color: var(--green); }
+.badge-gray { background: rgba(154,144,144,0.12); color: var(--gray); }
+
+/* Medication List */
+.med-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    font-size: 0.85rem;
+}
+.med-item:last-child { border-bottom: none; }
+.med-name { font-weight: 600; }
+.med-dose { color: var(--text-secondary); }
+.med-status-active { color: var(--green); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+.med-status-paused { color: var(--gold); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+.med-status-stopped { color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+
+/* Trend Bars */
+.trend-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+    font-size: 0.85rem;
+}
+.trend-label { width: 110px; font-weight: 500; flex-shrink: 0; }
+.trend-bar-container { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.trend-bar { height: 100%; border-radius: 4px; transition: width 0.5s; }
+.trend-value { width: 50px; text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 0.8rem; }
+.trend-arrow { font-size: 0.75rem; }
+.trend-up { color: var(--red); }
+.trend-down { color: var(--green); }
+.trend-flat { color: var(--gray); }
+
+/* Section Headers */
+.section-header {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+}
+.section-header:first-child { margin-top: 0; }
+
+/* Tables */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.data-table th { text-align: left; padding: 0.5rem; border-bottom: 2px solid var(--border); color: var(--purple); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.data-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); color: var(--text-primary); }
+.data-table tr:hover td { background: rgba(90,74,122,0.03); }
+
+/* Tags */
+.tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin: 2px;
+}
+.tag-green { background: rgba(90,138,114,0.12); color: var(--green); }
+.tag-red { background: rgba(196,90,90,0.1); color: var(--red); }
+.tag-purple { background: rgba(90,74,122,0.1); color: var(--purple); }
+.tag-gold { background: rgba(200,152,95,0.12); color: var(--gold-deep); }
+.tag-gray { background: rgba(154,144,144,0.12); color: var(--gray); }
+.tag-teal { background: rgba(74,138,138,0.12); color: var(--teal); }
+
+/* Checklist */
+.check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.35rem 0;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+.check-box {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    display: inline-block;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Collapsible */
+.collapsible-header {
+    cursor: pointer;
+    padding: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    user-select: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+.collapsible-header:hover { background: rgba(90,74,122,0.03); }
+.collapsible-body { display: none; padding: 0.75rem; }
+.collapsible-body.open { display: block; }
+.collapsible-arrow { transition: transform 0.2s; color: var(--text-secondary); font-size: 0.8rem; }
+.collapsible-arrow.open { transform: rotate(90deg); }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+}
+.timeline-item {
+    position: relative;
+    padding-bottom: 1.25rem;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 3px solid var(--bg-primary);
+}
+.timeline-dot.procedure { background: var(--purple); }
+.timeline-dot.lab { background: var(--gold); }
+.timeline-dot.consult { background: var(--green); }
+.timeline-dot.er { background: var(--red); }
+.timeline-dot.imaging { background: var(--gray); }
+.timeline-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--purple);
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+}
+.timeline-event { font-size: 0.88rem; color: var(--text-primary); }
+.timeline-detail { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.1rem; }
+
+/* Food Score */
+.score-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+.score-1 { background: rgba(196,90,90,0.12); color: var(--red); }
+.score-2 { background: rgba(200,152,95,0.12); color: var(--gold-deep); }
+.score-3 { background: rgba(200,152,95,0.15); color: var(--gold); }
+.score-4 { background: rgba(90,138,114,0.12); color: var(--green); }
+.score-5 { background: rgba(90,138,114,0.2); color: #3a7a5a; }
+
+/* Recipe Card */
+.recipe-card {
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+}
+.recipe-card:hover { box-shadow: 0 4px 16px rgba(90,74,122,0.1); }
+.recipe-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.3rem; }
+.recipe-meta { font-size: 0.8rem; color: var(--text-secondary); }
+
+/* Verdict Badges */
+.verdict-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.verdict-supported { background: rgba(90,138,114,0.15); color: var(--green); }
+.verdict-mixed { background: rgba(200,152,95,0.15); color: var(--gold-deep); }
+.verdict-unsupported { background: rgba(200,152,95,0.2); color: var(--gold); }
+.verdict-dangerous { background: rgba(196,90,90,0.15); color: var(--red); }
+
+/* Source Hierarchy */
+.hierarchy-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.hierarchy-rank {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--purple);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* Filter buttons */
+.filter-btns { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.filter-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.filter-btn:hover, .filter-btn.active { background: var(--purple); color: #ffffff; border-color: var(--purple); }
+
+/* Emergency Card */
+.emergency-card {
+    background: linear-gradient(135deg, rgba(196,90,90,0.06), rgba(196,90,90,0.02));
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+}
+.emergency-card .em-title {
+    font-weight: 700;
+    color: var(--red);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+}
+
+/* Footer */
+.hub-footer {
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.hub-footer a { color: var(--purple); text-decoration: none; }
+.hub-footer a:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .condition-grid { grid-template-columns: 1fr 1fr; }
+    .lab-grid { grid-template-columns: 1fr; }
+    .tab-btn { padding: 0.5rem 0.6rem; font-size: 0.72rem; }
+    .status-banner { gap: 0.75rem; padding: 1rem; }
+    .status-metric .metric-value { font-size: 1.5rem; }
+    .faith-header { padding: 1rem; }
+    .tab-content { padding: 1rem; }
+    .timeline { padding-left: 1.75rem; }
+}
+@media (max-width: 480px) {
+    .condition-grid { grid-template-columns: 1fr; }
+}
+
+/* Print */
+@media print {
+    .tab-bar, .home-link, .hub-footer { display: none; }
+    .tab-content { display: block !important; page-break-before: always; }
+    .tab-content:first-of-type { page-break-before: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="faith-header">
+    <div class="faith-mission">Shela's Health Hub</div>
+    <div class="faith-verse">"Do you not know that your bodies are temples of the Holy Spirit, who is in you, whom you have received from God?"</div>
+    <div class="faith-verse-ref">1 Corinthians 6:19</div>
+    <a href="index.html" class="home-link">&larr; Back to Life Dashboard</a>
+</div>
+
+<nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+    <button class="tab-btn" onclick="switchTab('protocols')">Protocols</button>
+    <button class="tab-btn" onclick="switchTab('food')">Food</button>
+    <button class="tab-btn" onclick="switchTab('history')">History</button>
+    <button class="tab-btn" onclick="switchTab('rx')">Prescriptions</button>
+    <button class="tab-btn" onclick="switchTab('research')">Research</button>
+</nav>
+
+<!-- ==================== TAB 1: OVERVIEW ==================== -->
+<div id="tab-overview" class="tab-content active">
+
+    <!-- Status Banner -->
+    <div class="status-banner">
+        <div class="status-metric">
+            <div class="metric-value metric-pain-high" id="current-pain">--</div>
+            <div class="metric-label">Pain Level</div>
+        </div>
+        <div class="status-metric">
+            <div class="metric-value" style="color:var(--purple);" id="current-energy">--</div>
+            <div class="metric-label">Energy</div>
+        </div>
+        <div class="status-metric">
+            <div class="metric-value" id="flare-status" style="font-size:1.2rem;color:var(--text-muted);">--</div>
+            <div class="metric-label">Flare Status</div>
+        </div>
+        <div class="status-metric">
+            <div class="metric-value" style="color:var(--gold);" id="days-tracked">0</div>
+            <div class="metric-label">Days Tracked</div>
+        </div>
+    </div>
+
+    <!-- Alerts -->
+    <div class="card card-alert" id="alerts-card">
+        <div class="card-title" style="color:var(--red);">Active Alerts</div>
+        <div style="font-size:0.88rem;">
+            <div style="padding:0.3rem 0;"><span class="dot dot-red"></span><strong>Cavernoma MRI overdue</strong> &mdash; Last: Aug 2025. 6-month interval recommended.</div>
+            <div style="padding:0.3rem 0;"><span class="dot dot-amber"></span><strong>Rheumatology evaluation pending</strong> &mdash; Suspected Behcet's needs confirmation.</div>
+            <div style="padding:0.3rem 0;"><span class="dot dot-red"></span><strong>Hematology consult needed</strong> &mdash; Platelets 1,130 (rising trend 762&rarr;927&rarr;1,130). Booked Apr 8, 2026.</div>
+            <div style="padding:0.3rem 0;"><span class="dot dot-amber"></span><strong>Vit D recovering, still insufficient</strong> &mdash; 16.53 (Mar 2024) &rarr; 28.52 ng/mL (Mar 27, 2026). Target 50+. Retest June 2026.</div>
+            <div style="padding:0.3rem 0;"><span class="dot dot-green"></span><strong>Supplement protocol ACTIVE</strong> &mdash; D3+K2 + Vit A cycled + Ultra-Zyme since Mar 25, 2026.</div>
+            <div style="padding:0.3rem 0;"><span class="dot dot-green"></span><strong>CRP normalized</strong> &mdash; 192 mg/L (Mar 2024) &rarr; &lt;6 mg/L (Mar 27, 2026). 32&times; improvement.</div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+
+        <!-- Conditions Monitor -->
+        <div class="card">
+            <div class="card-title">Conditions Monitor</div>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                <div class="condition-item">
+                    <div class="cond-dot" style="background:var(--green);"></div>
+                    <div>
+                        <div class="cond-name">Hereditary Spherocytosis</div>
+                        <div class="cond-status">Managed via splenectomy (2010)</div>
+                    </div>
+                </div>
+                <div class="condition-item" style="border-left:3px solid var(--gold);">
+                    <div class="cond-dot" style="background:var(--gold);"></div>
+                    <div>
+                        <div class="cond-name">Deep Infiltrating Endometriosis</div>
+                        <div class="cond-status">Managed &mdash; Mirena IUD active</div>
+                        <div class="cond-note">Rectum, sigmoid, vaginal fornix involved</div>
+                    </div>
+                </div>
+                <div class="condition-item" style="border-left:3px solid var(--red);">
+                    <div class="cond-dot" style="background:var(--red);"></div>
+                    <div>
+                        <div class="cond-name">Cerebral Cavernoma</div>
+                        <div class="cond-status">MRI OVERDUE &mdash; 80% growth in 5 years</div>
+                        <div class="cond-note">Left posterior parietal, 9mm x 8mm (Aug 2025)</div>
+                    </div>
+                </div>
+                <div class="condition-item" style="border-left:3px solid var(--red);">
+                    <div class="cond-dot" style="background:var(--red);"></div>
+                    <div>
+                        <div class="cond-name">Post-Splenectomy (Asplenia)</div>
+                        <div class="cond-status" style="color:var(--red);font-weight:700;">ANY FEVER = EMERGENCY ROOM</div>
+                        <div class="cond-note">Permanent. High risk for OPSI.</div>
+                    </div>
+                </div>
+                <div class="condition-item" style="border-left:3px solid var(--gold);">
+                    <div class="cond-dot" style="background:var(--gold);"></div>
+                    <div>
+                        <div class="cond-name">Adenomyosis</div>
+                        <div class="cond-status">Present &mdash; thickened posterior myometrium</div>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="cond-dot" style="background:var(--gray);"></div>
+                    <div>
+                        <div class="cond-name">Suspected Behcet's Disease</div>
+                        <div class="cond-status">Pending rheumatology evaluation</div>
+                        <div class="cond-note">Recurrent erythema nodosum, vascular inflammation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <!-- Current Medications -->
+            <div class="card">
+                <div class="card-title">Current Medications</div>
+                <div class="med-item">
+                    <div><span class="med-name">Mirena IUD</span> <span class="med-dose">&mdash; 52mg levonorgestrel</span></div>
+                    <span class="med-status-active">Active</span>
+                </div>
+                <div class="med-item">
+                    <div><span class="med-name">Ketesse</span> <span class="med-dose">&mdash; PRN for flares</span></div>
+                    <span class="med-status-active">Active</span>
+                </div>
+                <div class="med-item" style="opacity:0.6;">
+                    <div><span class="med-name">Magnesium Glycinate</span> <span class="med-dose">&mdash; 200-400mg</span></div>
+                    <span class="med-status-paused">Paused</span>
+                </div>
+                <div class="med-item" style="opacity:0.6;">
+                    <div><span class="med-name">Vitamin D</span> <span class="med-dose">&mdash; supplement needed</span></div>
+                    <span class="med-status-paused">Paused</span>
+                </div>
+                <div class="med-item" style="opacity:0.4;">
+                    <div><span class="med-name">Drospirenone</span> <span class="med-dose">&mdash; was daily</span></div>
+                    <span class="med-status-stopped">Stopped</span>
+                </div>
+            </div>
+
+            <!-- Lab Values -->
+            <div class="card">
+                <div class="card-title">Key Lab Values</div>
+                <div class="lab-grid">
+                    <div class="lab-item">
+                        <span class="lab-name">CRP</span>
+                        <span><span class="lab-value">192</span> mg/L <span class="lab-badge badge-red">Severe</span></span>
+                    </div>
+                    <div class="lab-item">
+                        <span class="lab-name">Platelets</span>
+                        <span><span class="lab-value">762-927</span> <span class="lab-badge badge-amber">Elevated</span></span>
+                    </div>
+                    <div class="lab-item">
+                        <span class="lab-name">WBC</span>
+                        <span><span class="lab-value">13.0</span> <span class="lab-badge badge-amber">Elevated</span></span>
+                    </div>
+                    <div class="lab-item">
+                        <span class="lab-name">Vitamin D</span>
+                        <span><span class="lab-value">16.53</span> ng/mL <span class="lab-badge badge-red">Deficient</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 30-Day Trends -->
+    <div class="card">
+        <div class="card-title">30-Day Trends</div>
+        <div id="trends-container" style="color:var(--text-muted);font-size:0.85rem;font-style:italic;text-align:center;padding:1rem 0;">
+            Trends will populate once daily logging begins in the Google Sheet.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB 2: DAILY PROTOCOLS ==================== -->
+<div id="tab-protocols" class="tab-content">
+
+    <h2 class="section-header">Morning Routine</h2>
+    <div class="card">
+        <div class="card-title">Wake-up Checklist</div>
+        <div class="check-item"><span class="check-box"></span> How did I sleep? (Quality 1-10)</div>
+        <div class="check-item"><span class="check-box"></span> Body check: Any new pain or symptoms?</div>
+        <div class="check-item"><span class="check-box"></span> Energy level assessment (1-10)</div>
+        <div class="check-item"><span class="check-box"></span> Take morning temperature (fever = urgent action)</div>
+        <div class="check-item"><span class="check-box"></span> Drink first glass of water</div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card card-success">
+            <div class="card-title">Anti-Inflammatory Juice</div>
+            <table class="data-table">
+                <tr><td style="font-weight:500;">Green apple</td><td>150g</td><td style="color:var(--text-muted);font-size:0.8rem;">Fiber, sweetness</td></tr>
+                <tr><td style="font-weight:500;">Cucumber</td><td>150g</td><td style="color:var(--text-muted);font-size:0.8rem;">Hydration</td></tr>
+                <tr><td style="font-weight:500;">Pineapple</td><td>100g</td><td style="color:var(--text-muted);font-size:0.8rem;">Bromelain enzyme</td></tr>
+                <tr><td style="font-weight:500;">Spinach</td><td>30g</td><td style="color:var(--text-muted);font-size:0.8rem;">Iron, antioxidants</td></tr>
+                <tr><td style="font-weight:500;">Malunggay</td><td>30g</td><td style="color:var(--text-muted);font-size:0.8rem;">Anti-inflammatory powerhouse</td></tr>
+                <tr><td style="font-weight:500;">Fresh turmeric</td><td>15g</td><td style="color:var(--text-muted);font-size:0.8rem;">Curcumin</td></tr>
+            </table>
+            <div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-secondary);">
+                <strong>Add-ins:</strong> Black pepper (1 tsp), coconut oil (1 tbsp), ginger (30g), chia seeds (1 tbsp)
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Morning Supplement Stack</div>
+            <div style="padding:0.5rem;background:rgba(76,175,80,0.10);border-radius:8px;margin-bottom:0.75rem;">
+                <span style="font-weight:600;color:var(--green);font-size:0.85rem;">ACTIVE since Mar 25, 2026 &mdash; Updated Apr 7, 2026</span>
+            </div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);">
+                <div style="padding:0.4rem 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+                    <strong style="color:var(--text-primary);">Step 1 &mdash; Morning tea</strong> (T&minus;20min)<br>
+                    Turmeric + ginger + black pepper + 1 tsp coconut oil + calamansi
+                </div>
+                <div style="padding:0.4rem 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+                    <strong style="color:var(--text-primary);">Step 2 &mdash; Ultra-Zyme</strong> (1st bite of breakfast)<br>
+                    1 capsule &middot; activates ox bile + enzymes &middot; non-negotiable
+                </div>
+                <div style="padding:0.4rem 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+                    <strong style="color:var(--text-primary);">Step 3 &mdash; D3 + K2 combo</strong> (Healthy Options)<br>
+                    <strong>2 tablets</strong> = 5,000 IU D3 + 110 mcg K2 (MK-7)
+                </div>
+                <div style="padding:0.4rem 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+                    <strong style="color:var(--text-primary);">Step 4 &mdash; Omega-3 fish oil</strong><br>
+                    Per bottle label
+                </div>
+                <div style="padding:0.4rem 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+                    <strong style="color:var(--text-primary);">Step 5 &mdash; CoQ10 200 mg</strong><br>
+                    1 capsule
+                </div>
+                <div style="padding:0.4rem 0;">
+                    <strong style="color:var(--text-primary);">Step 6 &mdash; Vitamin C 500&ndash;1,000 mg</strong><br>
+                    End of meal
+                </div>
+            </div>
+            <div style="margin-top:0.75rem;padding:0.6rem;background:rgba(255,193,7,0.10);border-left:3px solid #f39c12;border-radius:6px;font-size:0.78rem;">
+                <strong>Breakfast must contain real fat</strong> (NO avocado &mdash; bloat trigger). Good options: eggs in coconut oil, sardines, mackerel, eggs with EVOO, macadamia nuts, pumpkin seeds, ghee.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title" style="color:#c0392b;">&#9888; Vitamin A &mdash; 3 days/week ONLY</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:0.75rem;">
+                Take <strong>1 tablet of Nature's Plus Vitamin A 10,000 IU</strong> with the morning stack on Mon, Wed, Fri only. Skip the other days.
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:0.5rem 0;">
+                <div style="text-align:center;padding:6px 2px;border:1px solid #ddd;border-radius:4px;background:#f9f9f9;font-size:0.7rem;color:#aaa;"><div>SUN</div><div style="font-weight:700;font-size:1.1em;">&mdash;</div></div>
+                <div style="text-align:center;padding:6px 2px;border:1px solid #c0392b;border-radius:4px;background:#c0392b;color:white;font-size:0.7rem;font-weight:700;"><div>MON</div><div style="font-size:1.1em;">&#10003;</div></div>
+                <div style="text-align:center;padding:6px 2px;border:1px solid #ddd;border-radius:4px;background:#f9f9f9;font-size:0.7rem;color:#aaa;"><div>TUE</div><div style="font-weight:700;font-size:1.1em;">&mdash;</div></div>
+                <div style="text-align:center;padding:6px 2px;border:1px solid #c0392b;border-radius:4px;background:#c0392b;color:white;font-size:0.7rem;font-weight:700;"><div>WED</div><div style="font-size:1.1em;">&#10003;</div></div>
+                <div style="text-align:center;padding:6px 2px;border:1px solid #ddd;border-radius:4px;background:#f9f9f9;font-size:0.7rem;color:#aaa;"><div>THU</div><div style="font-weight:700;font-size:1.1em;">&mdash;</div></div>
+                <div style="text-align:center;padding:6px 2px;border:1px solid #c0392b;border-radius:4px;background:#c0392b;color:white;font-size:0.7rem;font-weight:700;"><div>FRI</div><div style="font-size:1.1em;">&#10003;</div></div>
+                <div style="text-align:center;padding:6px 2px;border:1px solid #ddd;border-radius:4px;background:#f9f9f9;font-size:0.7rem;color:#aaa;"><div>SAT</div><div style="font-weight:700;font-size:1.1em;">&mdash;</div></div>
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:0.5rem;">
+                <strong>Why cycled:</strong> Preformed retinyl palmitate at 10,000 IU/day is at the upper safe limit. Daily long-term use risks liver, bone density, and Vit D antagonism. 3 days/week = effective benefit, no toxicity risk.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Bedtime &mdash; 9 PM</div>
+            <div style="font-size:0.85rem;color:var(--text-secondary);">
+                <strong>Magnesium Glycinate</strong> &mdash; per bottle label
+                <div style="margin-top:0.4rem;font-size:0.78rem;">Glycine promotes sleep + cortisol regulation. Tie to brushing teeth so you don't forget.</div>
+            </div>
+        </div>
+
+        <div class="card" style="background:rgba(76,175,80,0.05);">
+            <div class="card-title" style="color:var(--green);">The Rules</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.7;">
+                &#10003; Always take Ultra-Zyme with the FIRST bite of any fatty meal<br>
+                &#10003; Always take D3+K2 with food that has real fat<br>
+                &#10003; Pause the standalone D3 5,000 IU bottle (save for later if needed)<br>
+                &#10005; Never take Vitamin A every day &mdash; Mon/Wed/Fri only<br>
+                &#10005; Never take supplements on an empty stomach<br>
+                &#10003; Retest Vitamin D in late June 2026 &mdash; target above 50 ng/mL
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Nutrition Quick Guide</h2>
+    <div class="grid-2">
+        <div class="card card-success">
+            <div class="card-title" style="color:var(--green);">Power Foods (Eat More)</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                <span class="tag tag-green">Fatty Fish (salmon, bangus)</span>
+                <span class="tag tag-green">Malunggay</span>
+                <span class="tag tag-green">Turmeric + Black Pepper</span>
+                <span class="tag tag-green">Ginger</span>
+                <span class="tag tag-green">Leafy Greens</span>
+                <span class="tag tag-green">Berries</span>
+                <span class="tag tag-green">Walnuts/Pili Nuts</span>
+                <span class="tag tag-green">Olive Oil</span>
+                <span class="tag tag-green">Munggo</span>
+                <span class="tag tag-green">Cruciferous Vegs</span>
+                <span class="tag tag-green">Green Tea</span>
+                <span class="tag tag-green">Fermented Foods</span>
+                <span class="tag tag-green">Flaxseeds</span>
+                <span class="tag tag-green">Kamote</span>
+            </div>
+        </div>
+        <div class="card card-alert">
+            <div class="card-title" style="color:var(--red);">Avoid / Limit</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                <span class="tag tag-red">Processed Foods</span>
+                <span class="tag tag-red">Refined Sugar</span>
+                <span class="tag tag-red">Red Meat (excess)</span>
+                <span class="tag tag-red">Dairy (assess tolerance)</span>
+                <span class="tag tag-red">Refined Carbs</span>
+                <span class="tag tag-red">Alcohol</span>
+                <span class="tag tag-red">Fried Foods</span>
+                <span class="tag tag-red">Gluten (assess)</span>
+            </div>
+            <div class="emergency-card" style="margin-top:0.75rem;">
+                <div class="em-title">Asplenia: NEVER Eat</div>
+                <div style="font-size:0.85rem;">Raw/undercooked meat, raw seafood (kinilaw, sashimi), unpasteurized dairy, raw eggs, cold deli meats</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Hydration Protocol</h2>
+    <div class="card">
+        <div style="text-align:center;margin-bottom:0.75rem;">
+            <span style="font-size:1.8rem;font-weight:700;color:var(--teal);font-family:'Playfair Display',serif;">3-4L</span>
+            <span style="font-size:0.85rem;color:var(--text-secondary);"> daily target (12-16 glasses)</span>
+        </div>
+        <div class="grid-4" style="font-size:0.85rem;">
+            <div style="text-align:center;padding:0.5rem;background:var(--bg-primary);border-radius:8px;">
+                <div style="font-weight:600;color:var(--teal);">Morning</div>
+                <div>Wake-8am</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-weight:600;">500ml</div>
+            </div>
+            <div style="text-align:center;padding:0.5rem;background:var(--bg-primary);border-radius:8px;">
+                <div style="font-weight:600;color:var(--teal);">Mid-day</div>
+                <div>8am-12pm</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-weight:600;">750ml</div>
+            </div>
+            <div style="text-align:center;padding:0.5rem;background:var(--bg-primary);border-radius:8px;">
+                <div style="font-weight:600;color:var(--teal);">Afternoon</div>
+                <div>12-4pm</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-weight:600;">750ml</div>
+            </div>
+            <div style="text-align:center;padding:0.5rem;background:var(--bg-primary);border-radius:8px;">
+                <div style="font-weight:600;color:var(--teal);">Evening</div>
+                <div>4pm-bed</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-weight:600;">1000ml</div>
+            </div>
+        </div>
+        <div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-secondary);text-align:center;">
+            Add pinch of sea salt for electrolytes. Reduces cavernoma bleeding risk, flushes inflammatory mediators.
+        </div>
+    </div>
+
+    <h2 class="section-header">Movement Guide</h2>
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title" style="color:var(--green);">Safe Movements</div>
+            <div style="font-size:0.88rem;">
+                <div style="padding:0.25rem 0;"><strong>Energy 3-4/10:</strong> Gentle walk, seated stretching, deep breathing</div>
+                <div style="padding:0.25rem 0;"><strong>Energy 5-6/10:</strong> 20-30 min walk, gentle yoga, light resistance bands</div>
+                <div style="padding:0.25rem 0;"><strong>Energy 7+/10:</strong> Full 30-45 min walk, swimming, full yoga</div>
+            </div>
+        </div>
+        <div class="card card-alert">
+            <div class="card-title" style="color:var(--red);">Avoid (Cavernoma Restrictions)</div>
+            <div style="font-size:0.88rem;">
+                <div style="padding:0.2rem 0;"><span class="tag tag-red">Heavy lifting (&gt;10 lbs)</span></div>
+                <div style="padding:0.2rem 0;"><span class="tag tag-red">Inverted yoga poses</span></div>
+                <div style="padding:0.2rem 0;"><span class="tag tag-red">HIIT</span></div>
+                <div style="padding:0.2rem 0;"><span class="tag tag-red">Breath-holding (Valsalva)</span></div>
+                <div style="padding:0.2rem 0;"><span class="tag tag-red">Contact sports</span></div>
+                <div style="padding:0.2rem 0;"><span class="tag tag-red">Straining exercises</span></div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Energy Management</h2>
+    <div class="card">
+        <div style="text-align:center;padding:0.5rem;margin-bottom:0.75rem;background:rgba(90,74,122,0.05);border-radius:8px;">
+            <span style="font-family:'Playfair Display',serif;font-style:italic;color:var(--purple);font-size:0.95rem;">"My body requires rest to heal. This is a non-negotiable prescription, not laziness."</span>
+        </div>
+        <div class="grid-3" style="font-size:0.85rem;">
+            <div style="padding:0.5rem;background:var(--bg-primary);border-radius:8px;">
+                <div style="font-weight:600;color:var(--purple);margin-bottom:0.25rem;">The 60% Rule</div>
+                When feeling good, do 60% of what you think you can. Prevents crash later.
+            </div>
+            <div style="padding:0.5rem;background:var(--bg-primary);border-radius:8px;">
+                <div style="font-weight:600;color:var(--purple);margin-bottom:0.25rem;">Activity-Rest Ratio</div>
+                Work 45 min, rest 15 min. Standing activity followed by sitting break.
+            </div>
+            <div style="padding:0.5rem;background:var(--bg-primary);border-radius:8px;">
+                <div style="font-weight:600;color:var(--purple);margin-bottom:0.25rem;">Energy Budget</div>
+                Morning: highest tasks. Afternoon: moderate + rest. Evening: wind down only.
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Body Signals Reference</h2>
+    <div class="card">
+        <div class="collapsible-header" onclick="toggleCollapsible(this)">
+            <span style="font-weight:600;font-size:0.88rem;">Warning Signs &mdash; Stop Immediately</span>
+            <span class="collapsible-arrow">&#9654;</span>
+        </div>
+        <div class="collapsible-body">
+            <div class="emergency-card">
+                <div class="em-title">Emergency (Call for Help)</div>
+                <div style="font-size:0.85rem;">
+                    <div>Any fever &mdash; Asplenic = medical emergency</div>
+                    <div>Severe sudden headache &mdash; Possible cavernoma bleed</div>
+                    <div>Right-side weakness/numbness &mdash; Possible cavernoma bleed</div>
+                    <div>Vision changes &mdash; Neurological issue</div>
+                    <div>Confusion &mdash; Multiple possible causes</div>
+                </div>
+            </div>
+            <div style="margin-top:0.75rem;font-size:0.85rem;">
+                <div style="font-weight:600;color:var(--gold-deep);margin-bottom:0.3rem;">Slow Down If:</div>
+                <div style="padding:0.15rem 0;">Fatigue hitting harder than usual</div>
+                <div style="padding:0.15rem 0;">Brain fog increasing</div>
+                <div style="padding:0.15rem 0;">Pain creeping up from baseline</div>
+            </div>
+        </div>
+
+        <div class="collapsible-header" onclick="toggleCollapsible(this)">
+            <span style="font-weight:600;font-size:0.88rem;">Flare Toolkit</span>
+            <span class="collapsible-arrow">&#9654;</span>
+        </div>
+        <div class="collapsible-body">
+            <div style="font-size:0.88rem;display:flex;flex-wrap:wrap;gap:6px;">
+                <span class="tag tag-purple">Heating Pad</span>
+                <span class="tag tag-purple">TENS Machine</span>
+                <span class="tag tag-purple">Ketesse (PRN)</span>
+                <span class="tag tag-purple">Rest</span>
+                <span class="tag tag-purple">Gentle Distractions</span>
+                <span class="tag tag-purple">Comfortable Clothing</span>
+                <span class="tag tag-purple">Hydration</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB 3: FOOD & NUTRITION ==================== -->
+<div id="tab-food" class="tab-content">
+
+    <h2 class="section-header" style="margin-top:0;">Today's Food Log</h2>
+    <div class="card" id="food-log-today">
+        <div style="color:var(--text-muted);font-size:0.85rem;font-style:italic;text-align:center;padding:1rem 0;">
+            Food log will populate from Google Sheet once daily logging begins.<br>
+            Say <strong>"Log food: [description]"</strong> to add meals.
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Weekly Food Score</div>
+            <div style="text-align:center;padding:0.5rem;">
+                <div style="font-size:2rem;font-weight:700;color:var(--text-muted);font-family:'Playfair Display',serif;">--</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);">Average anti-inflammatory score (1-5)</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Trigger Food This Month</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);font-style:italic;text-align:center;padding:0.5rem;">
+                Tracking begins with food logging.
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Anti-Inflammatory Scoring Guide</h2>
+    <div class="card">
+        <div class="card-title">How Food Is Scored (1-5)</div>
+        <table class="data-table">
+            <thead><tr><th>Score</th><th>Criteria</th><th>Examples</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><span class="score-circle score-5">5</span></td>
+                    <td>Powerhouse &mdash; Directly fights inflammation for all conditions</td>
+                    <td>Turmeric-ginger juice, salmon + leafy greens, munggo with malunggay</td>
+                </tr>
+                <tr>
+                    <td><span class="score-circle score-4">4</span></td>
+                    <td>Strong &mdash; Multiple anti-inflammatory components</td>
+                    <td>Chicken tinola, sinigang na bangus, berry smoothie</td>
+                </tr>
+                <tr>
+                    <td><span class="score-circle score-3">3</span></td>
+                    <td>Neutral &mdash; Neither helps nor hurts significantly</td>
+                    <td>Plain rice + well-cooked chicken, whole grain bread</td>
+                </tr>
+                <tr>
+                    <td><span class="score-circle score-2">2</span></td>
+                    <td>Caution &mdash; Contains inflammatory components</td>
+                    <td>Fast food, white bread, heavy dairy, sweetened drinks</td>
+                </tr>
+                <tr>
+                    <td><span class="score-circle score-1">1</span></td>
+                    <td>Violation &mdash; Directly inflammatory or food-safety risk</td>
+                    <td>Raw seafood, excessive sugar, deep fried, alcohol</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="section-header">Priority Ingredients</h2>
+    <div class="grid-3">
+        <div class="card">
+            <div class="card-title" style="color:var(--green);">All-Condition Priority</div>
+            <div style="font-size:0.85rem;">
+                <div style="padding:0.2rem 0;">Malunggay (Moringa)</div>
+                <div style="padding:0.2rem 0;">Fatty fish (salmon, bangus, sardines)</div>
+                <div style="padding:0.2rem 0;">Turmeric + black pepper</div>
+                <div style="padding:0.2rem 0;">Ginger</div>
+                <div style="padding:0.2rem 0;">Munggo (mung beans)</div>
+                <div style="padding:0.2rem 0;">Pechay/leafy greens</div>
+                <div style="padding:0.2rem 0;">Fermented foods</div>
+                <div style="padding:0.2rem 0;">Eggs (fully cooked)</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title" style="color:var(--purple);">Cavernoma Focus</div>
+            <div style="font-size:0.85rem;">
+                <div style="padding:0.2rem 0;">Dark leafy greens (Vitamin K)</div>
+                <div style="padding:0.2rem 0;">Pili nuts (Mg + Vitamin E)</div>
+                <div style="padding:0.2rem 0;">Beets (nitrates for blood flow)</div>
+                <div style="padding:0.2rem 0;">Ube/purple foods (anthocyanins)</div>
+                <div style="padding:0.2rem 0;">Avocado (healthy fats)</div>
+                <div style="padding:0.2rem 0;">Dark chocolate 70%+</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title" style="color:var(--rosegold);">Endo Focus</div>
+            <div style="font-size:0.85rem;">
+                <div style="padding:0.2rem 0;">Cruciferous vegs (I3C/DIM)</div>
+                <div style="padding:0.2rem 0;">High-fiber (kamote, legumes)</div>
+                <div style="padding:0.2rem 0;">Iron-rich (liver + calamansi)</div>
+                <div style="padding:0.2rem 0;">Flaxseeds (lignans)</div>
+                <div style="padding:0.2rem 0;">Omega-3 fish</div>
+                <div style="padding:0.2rem 0;">Whole grains</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Filipino Meal Ideas</h2>
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Breakfast</div>
+            <div style="font-size:0.85rem;">
+                <div style="padding:0.25rem 0;">Scrambled eggs with malunggay + brown rice <span class="tag tag-green">Score 5</span></div>
+                <div style="padding:0.25rem 0;">Oatmeal with pili nuts and moringa powder <span class="tag tag-green">Score 4</span></div>
+                <div style="padding:0.25rem 0;">Champorado (dark chocolate) with evaporated milk <span class="tag tag-gold">Score 3</span></div>
+                <div style="padding:0.25rem 0;">Pandesal with mashed avocado <span class="tag tag-gold">Score 3</span></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Lunch / Dinner</div>
+            <div style="font-size:0.85rem;">
+                <div style="padding:0.25rem 0;">Sinigang na bangus with greens <span class="tag tag-green">Score 5</span></div>
+                <div style="padding:0.25rem 0;">Ginisang munggo with malunggay <span class="tag tag-green">Score 5</span></div>
+                <div style="padding:0.25rem 0;">Chicken tinola (ginger-based) <span class="tag tag-green">Score 4</span></div>
+                <div style="padding:0.25rem 0;">Grilled fish + steamed broccoli + brown rice <span class="tag tag-green">Score 5</span></div>
+                <div style="padding:0.25rem 0;">Pinakbet (multiple vegetables) <span class="tag tag-green">Score 4</span></div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Recipe Collection</h2>
+    <div class="card" id="recipe-collection">
+        <div style="color:var(--text-muted);font-size:0.85rem;font-style:italic;text-align:center;padding:1rem 0;">
+            Recipe collection will populate from Google Sheet.<br>
+            Save recipes by sharing a screenshot, text, or link with <strong>"Save recipe"</strong>.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB 4: MEDICAL HISTORY ==================== -->
+<div id="tab-history" class="tab-content">
+
+    <h2 class="section-header" style="margin-top:0;">Medical Timeline</h2>
+    <div class="card">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot procedure"></div>
+                <div class="timeline-year">1989</div>
+                <div class="timeline-event">Born &mdash; October 24</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot procedure"></div>
+                <div class="timeline-year">2010</div>
+                <div class="timeline-event">Splenectomy + Cholecystectomy</div>
+                <div class="timeline-detail">For Hereditary Spherocytosis</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot consult"></div>
+                <div class="timeline-year">2016</div>
+                <div class="timeline-event">First erythema nodosum episode</div>
+                <div class="timeline-detail">Treated with steroids</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot imaging"></div>
+                <div class="timeline-year">Feb 2019</div>
+                <div class="timeline-event">Cavernoma discovered on brain MRI</div>
+                <div class="timeline-detail">6mm x 5mm, left posterior parietal lobe</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot imaging"></div>
+                <div class="timeline-year">Dec 2020</div>
+                <div class="timeline-event">Cavernoma follow-up MRI</div>
+                <div class="timeline-detail">Stable, cyst with hemosiderin (evidence of prior bleed)</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot lab"></div>
+                <div class="timeline-year">Mar 2024</div>
+                <div class="timeline-event">Major inflammatory workup</div>
+                <div class="timeline-detail">CRP 192, pleural effusion, extensive testing. Chest CT: right pleural nodules, 320cc effusion, pericolonic lymph nodes.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot imaging"></div>
+                <div class="timeline-year">Feb 2025</div>
+                <div class="timeline-event">Comprehensive DIE ultrasound</div>
+                <div class="timeline-detail">Extensive endometriosis: posterior vaginal fornix, right uterosacral ligament, rectal/sigmoid involvement, obliterated cul de sac, possible hydrosalpinx, adenomyosis</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot imaging"></div>
+                <div class="timeline-year">Jul 2025</div>
+                <div class="timeline-event">Follow-up DIE scan (Healthway)</div>
+                <div class="timeline-detail">Persistent DIE, 1.5x1.5x1.0 cm posterior vaginal fornix nodule, adenomyosis confirmed</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot imaging"></div>
+                <div class="timeline-year">Aug 2025</div>
+                <div class="timeline-event">Brain MRI &mdash; 80% cavernoma growth</div>
+                <div class="timeline-detail">Now 9mm x 8mm. Started hormonal treatment (Drospirenone).</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot procedure"></div>
+                <div class="timeline-year">Sept 5, 2025</div>
+                <div class="timeline-event">Hysteroscopy + Mirena IUD insertion</div>
+                <div class="timeline-detail">Dr. De Guzman, anesthesia by Dr. Mark Cruz. Cefuroxime given.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot consult"></div>
+                <div class="timeline-year">~Sept 12, 2025</div>
+                <div class="timeline-event">Stopped Drospirenone</div>
+                <div class="timeline-detail">Transitioned to Mirena-only management</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot consult"></div>
+                <div class="timeline-year">Nov 2025</div>
+                <div class="timeline-event">Erythema nodosum recurrence, then resolved</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot consult"></div>
+                <div class="timeline-year">Jan 2026</div>
+                <div class="timeline-event">Supplements paused; Pelvic pain flare (8-9/10)</div>
+                <div class="timeline-detail">Taking Ketesse PRN. Question: Is Mirena-only sufficient?</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- Upcoming -->
+        <div class="card">
+            <div class="card-title">Upcoming / Overdue</div>
+            <div class="emergency-card">
+                <div class="em-title">OVERDUE: Brain MRI</div>
+                <div style="font-size:0.85rem;">Last: Aug 2025. 6-month interval = due Feb 2026. Schedule immediately.</div>
+            </div>
+            <div style="padding:0.4rem 0;font-size:0.88rem;">
+                <span class="dot dot-amber"></span><strong>Rheumatology consult</strong> &mdash; Pending. Suspected Behcet's needs evaluation.
+            </div>
+            <div style="padding:0.4rem 0;font-size:0.88rem;">
+                <span class="dot dot-amber"></span><strong>Hematologist referral</strong> &mdash; Needed for post-splenectomy thrombocytosis monitoring.
+            </div>
+        </div>
+
+        <!-- Care Team -->
+        <div class="card">
+            <div class="card-title">Care Team</div>
+            <table class="data-table">
+                <thead><tr><th>Role</th><th>Doctor</th><th>Managing</th></tr></thead>
+                <tbody>
+                    <tr><td>Neurosurgeon</td><td>TBD</td><td>Cavernoma</td></tr>
+                    <tr><td>OB-GYN</td><td>Dr. E. Salido</td><td>Endo, Adenomyosis</td></tr>
+                    <tr><td>OB-GYN</td><td>Dr. De Guzman</td><td>Hysteroscopy, Mirena</td></tr>
+                    <tr><td>Anesthesiologist</td><td>Dr. Mark Cruz</td><td>Procedures</td></tr>
+                    <tr><td style="color:var(--red);">Rheumatologist</td><td style="color:var(--red);">PENDING</td><td>Behcet's</td></tr>
+                    <tr><td style="color:var(--gold);">Hematologist</td><td style="color:var(--gold);">NEEDED</td><td>Thrombocytosis</td></tr>
+                    <tr><td>Primary Care</td><td>TBD</td><td>Labs, Referrals</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h2 class="section-header">Lab History</h2>
+    <div class="card">
+        <table class="data-table">
+            <thead><tr><th>Test</th><th>Value</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody>
+                <tr><td>CRP</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">192 mg/L</td><td>&lt;6</td><td><span class="lab-badge badge-red">Severe</span></td><td>Mar 2024</td></tr>
+                <tr><td>ESR</td><td style="font-family:'JetBrains Mono',monospace;">32 mm/hr</td><td>0-20</td><td><span class="lab-badge badge-amber">Elevated</span></td><td>Mar 2024</td></tr>
+                <tr><td>Vitamin D</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">16.53 ng/mL</td><td>20-70</td><td><span class="lab-badge badge-red">Deficient</span></td><td>Mar 2024</td></tr>
+                <tr><td>WBC</td><td style="font-family:'JetBrains Mono',monospace;">13.0</td><td>4.5-11.0</td><td><span class="lab-badge badge-amber">Elevated</span></td><td>Sept 2025</td></tr>
+                <tr><td>Platelets</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">927</td><td>150-400</td><td><span class="lab-badge badge-amber">Elevated</span></td><td>Sept 2025</td></tr>
+                <tr><td>Hemoglobin</td><td style="font-family:'JetBrains Mono',monospace;">136</td><td>120-160</td><td><span class="lab-badge badge-green">Normal</span></td><td>Sept 2025</td></tr>
+                <tr><td>Creatinine</td><td style="font-family:'JetBrains Mono',monospace;">54.5</td><td>46-92</td><td><span class="lab-badge badge-green">Normal</span></td><td>Sept 2025</td></tr>
+                <tr><td>Sodium</td><td style="font-family:'JetBrains Mono',monospace;">137</td><td>137-145</td><td><span class="lab-badge badge-green">Normal</span></td><td>Sept 2025</td></tr>
+                <tr><td>Potassium</td><td style="font-family:'JetBrains Mono',monospace;">4.70</td><td>3.5-5.1</td><td><span class="lab-badge badge-green">Normal</span></td><td>Sept 2025</td></tr>
+                <tr><td>PT/INR</td><td style="font-family:'JetBrains Mono',monospace;">Normal</td><td>&mdash;</td><td><span class="lab-badge badge-green">Normal</span></td><td>Sept 2025</td></tr>
+                <tr><td>APTT</td><td style="font-family:'JetBrains Mono',monospace;">27.1</td><td>26-38</td><td><span class="lab-badge badge-green">Normal</span></td><td>Sept 2025</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="section-header">Brain MRI Series</h2>
+    <div class="card">
+        <table class="data-table">
+            <thead><tr><th>Date</th><th>Size</th><th>Findings</th></tr></thead>
+            <tbody>
+                <tr><td>Feb 2019</td><td style="font-family:'JetBrains Mono',monospace;">6mm x 5mm</td><td>Initial discovery, left posterior parietal</td></tr>
+                <tr><td>Dec 2020</td><td style="font-family:'JetBrains Mono',monospace;">~same</td><td>Stable, cyst with hemosiderin (old bleed)</td></tr>
+                <tr><td>Aug 2025</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--red);">9mm x 8mm</td><td>80% growth, stable edema. <span class="lab-badge badge-red">6-mo follow-up needed</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ==================== TAB 5: PRESCRIPTIONS ==================== -->
+<div id="tab-rx" class="tab-content">
+
+    <h2 class="section-header" style="margin-top:0;">Active Medications</h2>
+    <div class="grid-2">
+        <div class="card" style="border-left:4px solid var(--green);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                <span style="font-weight:700;font-size:1rem;">Mirena IUD</span>
+                <span class="med-status-active">Active</span>
+            </div>
+            <table class="data-table" style="font-size:0.82rem;">
+                <tr><td style="color:var(--text-muted);width:100px;">Generic</td><td>Levonorgestrel 52mg</td></tr>
+                <tr><td style="color:var(--text-muted);">Route</td><td>Intrauterine device</td></tr>
+                <tr><td style="color:var(--text-muted);">Prescriber</td><td>Dr. De Guzman</td></tr>
+                <tr><td style="color:var(--text-muted);">Start Date</td><td>Sept 5, 2025</td></tr>
+                <tr><td style="color:var(--text-muted);">Purpose</td><td>Long-term endometriosis management</td></tr>
+            </table>
+        </div>
+        <div class="card" style="border-left:4px solid var(--green);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                <span style="font-weight:700;font-size:1rem;">Ketesse</span>
+                <span class="med-status-active">Active</span>
+            </div>
+            <table class="data-table" style="font-size:0.82rem;">
+                <tr><td style="color:var(--text-muted);width:100px;">Generic</td><td>Dexketoprofen</td></tr>
+                <tr><td style="color:var(--text-muted);">Dose</td><td>As needed (PRN)</td></tr>
+                <tr><td style="color:var(--text-muted);">Route</td><td>Oral</td></tr>
+                <tr><td style="color:var(--text-muted);">Purpose</td><td>Pain management during flares</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <h2 class="section-header">Paused Medications</h2>
+    <div class="grid-2" style="opacity:0.7;">
+        <div class="card" style="border-left:4px solid var(--gold);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                <span style="font-weight:700;">Magnesium Glycinate</span>
+                <span class="med-status-paused">Paused</span>
+            </div>
+            <div style="font-size:0.82rem;">
+                <div>Dose: 200-400mg daily with food</div>
+                <div>Purpose: Cavernoma stability, anti-inflammatory</div>
+                <div style="color:var(--gold);font-weight:500;margin-top:0.3rem;">Paused: Jan 2026 (reset)</div>
+            </div>
+        </div>
+        <div class="card" style="border-left:4px solid var(--gold);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                <span style="font-weight:700;">Vitamin D</span>
+                <span class="med-status-paused">Paused</span>
+            </div>
+            <div style="font-size:0.82rem;">
+                <div>Dose: 2000-4000 IU D3 with fat</div>
+                <div>Purpose: Deficiency (was 16.53 ng/mL)</div>
+                <div style="color:var(--gold);font-weight:500;margin-top:0.3rem;">Paused: Jan 2026 (reset)</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Stopped Medications</h2>
+    <div class="card" style="opacity:0.5;">
+        <table class="data-table">
+            <thead><tr><th>Medication</th><th>Dose</th><th>Period</th><th>Reason Stopped</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td>Drospirenone</td>
+                    <td>Standard, daily 1 PM</td>
+                    <td>Aug 2025 &ndash; ~Sept 12, 2025</td>
+                    <td>Transitioned to Mirena-only management</td>
+                </tr>
+                <tr>
+                    <td>Colchicine</td>
+                    <td>Standard</td>
+                    <td>Temporary</td>
+                    <td>Erythema nodosum resolved</td>
+                </tr>
+                <tr>
+                    <td>Cefuroxime</td>
+                    <td>Standard</td>
+                    <td>Sept 5, 2025 (post-procedure)</td>
+                    <td>Prophylactic antibiotics completed</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="section-header">Photo Reference</h2>
+    <div class="card">
+        <div style="font-size:0.88rem;color:var(--text-secondary);">
+            <p style="margin-bottom:0.5rem;">Medication photos stored in Google Drive:</p>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;background:var(--bg-primary);padding:0.75rem;border-radius:8px;">
+                Google Drive/Health/<br>
+                &nbsp;&nbsp;Rx/[medication-name]-[date]/ &mdash; box photos, labels, prescriptions<br>
+                &nbsp;&nbsp;Labs/[YYYY-MM]/ &mdash; lab result PDFs/photos<br>
+                &nbsp;&nbsp;Imaging/[YYYY-MM]/ &mdash; scan reports
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TAB 6: RESEARCH LOG ==================== -->
+<div id="tab-research" class="tab-content">
+
+    <h2 class="section-header" style="margin-top:0;">Recent Evaluations</h2>
+    <div class="card" id="research-log">
+        <div style="color:var(--text-muted);font-size:0.85rem;font-style:italic;text-align:center;padding:1rem 0;">
+            Research evaluations will populate from Google Sheet.<br>
+            Share any health article and say <strong>"Is this legit?"</strong> to evaluate it.
+        </div>
+    </div>
+
+    <h2 class="section-header">Source Hierarchy</h2>
+    <div class="card">
+        <div class="card-title">Trust Levels (Highest to Lowest)</div>
+        <div class="hierarchy-item">
+            <div class="hierarchy-rank" style="background:var(--green);">1</div>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem;">Peer-reviewed research (PubMed, Cochrane)</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);">Systematic reviews, meta-analyses, RCTs</div>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="hierarchy-rank" style="background:var(--green);">2</div>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem;">Medical organizations (ACOG, ESHRE)</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);">Clinical practice guidelines, consensus statements</div>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="hierarchy-rank" style="background:var(--teal);">3</div>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem;">Specialist organizations (Endo Foundation, Cavernoma Alliance)</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);">Patient education materials backed by medical boards</div>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="hierarchy-rank" style="background:var(--gold);">4</div>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem;">Medical institutions (Mayo Clinic, Johns Hopkins)</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);">Hospital/university health information pages</div>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="hierarchy-rank" style="background:var(--gold-deep);">5</div>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem;">Individual practitioners</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);">Doctor blogs, specialist opinions (verify credentials)</div>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="hierarchy-rank" style="background:var(--red);">6</div>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem;">Wellness bloggers, social media, anecdotal</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);">Cross-reference everything. Many well-meaning but unverified claims.</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Red Flag Patterns</h2>
+    <div class="card card-alert">
+        <div class="card-title" style="color:var(--red);">Warning Signs in Health Content</div>
+        <div style="font-size:0.88rem;">
+            <div style="padding:0.3rem 0;"><span class="tag tag-red">CURE claims</span> "This cured my endometriosis" &mdash; Endo has no cure, only management.</div>
+            <div style="padding:0.3rem 0;"><span class="tag tag-red">Anti-medication</span> "Throw away your pills" &mdash; Dangerous for someone on critical management.</div>
+            <div style="padding:0.3rem 0;"><span class="tag tag-red">Supplement selling</span> Article exists primarily to sell supplements &mdash; Biased source.</div>
+            <div style="padding:0.3rem 0;"><span class="tag tag-red">Raw food diets</span> Any raw food recommendation &mdash; Unsafe for asplenia.</div>
+            <div style="padding:0.3rem 0;"><span class="tag tag-red">One-size-fits-all</span> Ignores that conditions interact differently in each person.</div>
+            <div style="padding:0.3rem 0;"><span class="tag tag-red">Testimonial-only</span> No citations, just personal stories presented as evidence.</div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Verdict Guide</h2>
+    <div class="card">
+        <div class="grid-4" style="text-align:center;font-size:0.85rem;">
+            <div style="padding:0.5rem;">
+                <div class="verdict-badge verdict-supported" style="display:block;margin-bottom:0.3rem;">Supported</div>
+                Claims backed by peer-reviewed evidence, applicable to Shela's conditions
+            </div>
+            <div style="padding:0.5rem;">
+                <div class="verdict-badge verdict-mixed" style="display:block;margin-bottom:0.3rem;">Mixed</div>
+                Some valid points but incomplete evidence or not specific to her conditions
+            </div>
+            <div style="padding:0.5rem;">
+                <div class="verdict-badge verdict-unsupported" style="display:block;margin-bottom:0.3rem;">Unsupported</div>
+                Claims lack evidence or contradict current medical consensus
+            </div>
+            <div style="padding:0.5rem;">
+                <div class="verdict-badge verdict-dangerous" style="display:block;margin-bottom:0.3rem;">Dangerous</div>
+                Could actively harm Shela if followed (raw food, anti-med, etc.)
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="hub-footer">
+    <div style="margin-bottom:0.3rem;">
+        <strong>Shela's Health Hub</strong> &mdash; Last regenerated: <span id="regen-date">Feb 17, 2026</span>
+    </div>
+    <div style="margin-bottom:0.5rem;">
+        Days tracked: <strong id="footer-days">0</strong> &middot;
+        <a href="https://docs.google.com/spreadsheets/d/1RY7Z-z6u3Mx2IU5QgnsDKhDmBxgE3dhXBpgaJBy4p80/edit" id="sheet-link">Open Google Sheet</a> &middot;
+        <a href="index.html">Back to Life Dashboard</a>
+    </div>
+    <div style="font-size:0.7rem;color:var(--text-muted);">
+        Commands: "Morning check-in" &middot; "Log food: [desc]" &middot; "Save recipe" &middot; "Is this legit?" &middot; "Health status" &middot; "Rebuild health dashboard"
+    </div>
+</div>
+
+<script>
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.target.classList.add('active');
+}
+
+function toggleCollapsible(header) {
+    const body = header.nextElementSibling;
+    const arrow = header.querySelector('.collapsible-arrow');
+    body.classList.toggle('open');
+    arrow.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

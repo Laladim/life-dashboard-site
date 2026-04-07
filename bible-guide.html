@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Bible Folder Guide</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --purple: #5a4a7a;
+    --purple-deep: #4a3a6a;
+    --purple-light: #7a6a9a;
+    --gold: #c8985f;
+    --gold-deep: #a88d5e;
+    --bg-primary: #f5f1f0;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf7f6;
+    --warmwhite: #fffcfa;
+    --text-primary: #3a3a3a;
+    --text-secondary: #6b6565;
+    --text-muted: #9a9090;
+    --lavender: #7a6a8f;
+    --green: #5a8a72;
+    --border: #e0dbd8;
+    --border-accent: #d0c8c4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+h1, h2, h3, .section-header, .piper-quote, .verse-block {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* ─── Navigation ─── */
+.nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--border);
+    box-shadow: 0 2px 12px rgba(90, 74, 122, 0.08);
+    padding: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.nav-inner {
+    display: flex;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+}
+.nav-link {
+    display: block;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+}
+.nav-link:hover {
+    color: var(--purple);
+    border-bottom-color: var(--gold);
+    background: var(--bg-card-hover);
+}
+
+/* ─── Hero ─── */
+.hero {
+    text-align: center;
+    padding: 3.5rem 1.5rem 3rem;
+    background: linear-gradient(160deg, #f8f4f3 0%, #f0ebe9 50%, #ede6e3 100%);
+    border-bottom: 1px solid var(--border);
+}
+.hero-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+.hero h1 {
+    font-size: 2.2rem;
+    color: var(--purple-deep);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+.hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--purple);
+    margin-bottom: 1.2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+.hero-intro {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+/* ─── Main Content ─── */
+.main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 1.25rem 4rem;
+}
+
+/* ─── Sections ─── */
+.section {
+    margin-top: 2.5rem;
+}
+.section-header {
+    font-size: 1.5rem;
+    color: var(--purple-deep);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.section-header .icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+.section-intro {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+
+/* ─── Cards ─── */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card:hover {
+    box-shadow: 0 4px 16px rgba(90, 74, 122, 0.08);
+    border-color: var(--border-accent);
+}
+.card-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--purple-deep);
+    margin-bottom: 0.3rem;
+}
+.card-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* ─── Collapsible Sections ─── */
+details {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+details:hover {
+    box-shadow: 0 2px 12px rgba(90, 74, 122, 0.06);
+}
+details[open] {
+    box-shadow: 0 4px 16px rgba(90, 74, 122, 0.08);
+}
+summary {
+    padding: 1rem 1.3rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--purple-deep);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    user-select: none;
+    transition: background 0.15s ease;
+}
+summary:hover {
+    background: var(--bg-card-hover);
+}
+summary::before {
+    content: '\25B6';
+    font-size: 0.65rem;
+    color: var(--gold);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+details[open] summary::before {
+    transform: rotate(90deg);
+}
+summary::-webkit-details-marker { display: none; }
+.details-body {
+    padding: 0 1.3rem 1.3rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.8;
+}
+
+/* ─── Tables ─── */
+.table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+thead {
+    background: linear-gradient(135deg, var(--purple-deep), var(--purple));
+    color: white;
+}
+th {
+    padding: 0.7rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+td {
+    padding: 0.65rem 1rem;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+}
+tr:nth-child(even) { background: var(--bg-card-hover); }
+tr:hover { background: #f5efed; }
+.file-name {
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 0.82rem;
+    color: var(--purple);
+    background: #f5f1f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+/* ─── Quote Blocks ─── */
+.quote-block {
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.3rem;
+    margin: 1.2rem 0;
+    background: linear-gradient(135deg, #faf7f5, #f8f5f3);
+    border-radius: 0 8px 8px 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--purple-deep);
+    line-height: 1.7;
+}
+.quote-block .attribution {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* ─── Verse Blocks ─── */
+.verse-block {
+    text-align: center;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    background: linear-gradient(135deg, #f8f5f3, #f5f0ee);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+.verse-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--purple-deep);
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
+}
+.verse-ref {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+/* ─── Diagram ─── */
+.diagram {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+.diagram-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0;
+}
+.diagram-box {
+    background: linear-gradient(135deg, var(--purple), var(--purple-deep));
+    color: white;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 180px;
+    text-align: center;
+}
+.diagram-box.gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+}
+.diagram-box.green {
+    background: linear-gradient(135deg, var(--green), #4a7a62);
+}
+.diagram-arrow {
+    font-size: 1.2rem;
+    color: var(--gold);
+    font-weight: bold;
+}
+.diagram-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    font-style: italic;
+}
+
+/* ─── Step Lists ─── */
+.step-list {
+    counter-reset: steps;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+.step-list li {
+    counter-increment: steps;
+    position: relative;
+    padding: 0.8rem 0 0.8rem 3rem;
+    border-bottom: 1px solid #f0ebe9;
+}
+.step-list li:last-child { border-bottom: none; }
+.step-list li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, var(--purple), var(--purple-deep));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+.step-title {
+    font-weight: 600;
+    color: var(--purple-deep);
+    display: block;
+    margin-bottom: 0.2rem;
+}
+.step-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* ─── Command Table ─── */
+.cmd-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.cmd-table td {
+    padding: 0.6rem 0.8rem;
+}
+.cmd-table tr:hover {
+    background: #f8f5f3;
+}
+.cmd {
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 0.82rem;
+    color: var(--purple);
+    background: #f5f1f0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* ─── Badges ─── */
+.badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+.badge-purple {
+    background: #ece6f5;
+    color: var(--purple);
+}
+.badge-gold {
+    background: #f5efe5;
+    color: var(--gold-deep);
+}
+.badge-green {
+    background: #e5f0eb;
+    color: var(--green);
+}
+
+/* ─── Scenario Cards ─── */
+.scenario {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+}
+.scenario summary {
+    padding: 0.9rem 1.2rem;
+}
+.scenario .scenario-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: var(--gold);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+.scenario .details-body ol {
+    padding-left: 1.2rem;
+}
+.scenario .details-body li {
+    margin-bottom: 0.4rem;
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+/* ─── Link Cards ─── */
+.link-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.3rem;
+    margin-bottom: 0.75rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.link-card:hover {
+    box-shadow: 0 4px 16px rgba(90, 74, 122, 0.1);
+    border-color: var(--purple-light);
+    transform: translateY(-1px);
+}
+.link-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+.link-text {
+    flex: 1;
+}
+.link-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--purple-deep);
+}
+.link-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-top: 0.15rem;
+}
+.link-url {
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+    word-break: break-all;
+}
+
+/* ─── Highlight Box ─── */
+.highlight-box {
+    background: linear-gradient(135deg, #f8f4f2, #f5efec);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.3rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+.highlight-box.gold-border {
+    border-left-color: var(--gold);
+}
+.highlight-box.green-border {
+    border-left-color: var(--green);
+}
+
+/* ─── Footer ─── */
+.footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+.footer .verse-text {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+    .hero { padding: 2.5rem 1.25rem 2rem; }
+    .hero h1 { font-size: 1.7rem; }
+    .hero-subtitle { font-size: 0.95rem; }
+    .section-header { font-size: 1.25rem; }
+    .main { padding: 0 1rem 3rem; }
+    .nav-link { padding: 0.65rem 0.7rem; font-size: 0.72rem; }
+    .diagram-row { flex-direction: column; }
+    .diagram-arrow { transform: rotate(90deg); }
+    td, th { padding: 0.5rem 0.6rem; }
+    .link-card { flex-direction: column; text-align: center; gap: 0.5rem; }
+}
+
+/* ─── Smooth Scroll ─── */
+html { scroll-behavior: smooth; }
+:target { scroll-margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav-bar">
+    <div class="nav-inner">
+        <a href="#inventory" class="nav-link">Inventory</a>
+        <a href="#diary" class="nav-link">Diary System</a>
+        <a href="#methods" class="nav-link">How to Read</a>
+        <a href="#capture" class="nav-link">Capture</a>
+        <a href="#piper" class="nav-link">Piper Library</a>
+        <a href="#books" class="nav-link">Book Insights</a>
+        <a href="#scenarios" class="nav-link">Scenarios</a>
+        <a href="#commands" class="nav-link">Commands</a>
+        <a href="#sheets" class="nav-link">Sheets</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+    <span class="hero-icon" aria-hidden="true">&#x1F4D6;</span>
+    <h1>Your Bible Folder Guide</h1>
+    <p class="hero-subtitle">
+        "We exist to spread a passion for the Supremacy of God in all things
+        for the joy of all peoples through Jesus Christ."
+    </p>
+    <p class="hero-intro">
+        Everything you need to know about your spiritual tools, journaling system,
+        and how to capture what God is teaching you.
+    </p>
+</header>
+
+<!-- Main Content -->
+<main class="main">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: INVENTORY -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="inventory">
+    <h2 class="section-header">
+        <span class="icon">&#x1F4C2;</span>
+        What's In Your Bible Folder
+    </h2>
+    <p class="section-intro">
+        Your <span class="file-name">bible/</span> folder has 10 items, each with a specific purpose.
+        Think of it as your spiritual toolkit: methods, frameworks, catch-up notes, and a library.
+    </p>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>File</th>
+                    <th>What It Is</th>
+                    <th>When to Use</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>&#x1F4D6;</td>
+                    <td><span class="file-name">bible-reading-method.md</span></td>
+                    <td>Daily reading workflow, commands, schedule, genre tips</td>
+                    <td>Every day; your go-to reference</td>
+                </tr>
+                <tr>
+                    <td>&#x1F9D8;</td>
+                    <td><span class="file-name">centering-page.md</span></td>
+                    <td>Heart-preparation page with prayers and Scripture</td>
+                    <td>Before deeper study sessions</td>
+                </tr>
+                <tr>
+                    <td>&#x2728;</td>
+                    <td><span class="file-name">piper-framework.md</span></td>
+                    <td>Before/During/After method from <em>Reading the Bible Supernaturally</em></td>
+                    <td>Deeper 15-30 min study</td>
+                </tr>
+                <tr>
+                    <td>&#x1F3AF;</td>
+                    <td><span class="file-name">a-passion-for-the-supremacy-of-god.md</span></td>
+                    <td>Phrase-by-phrase breakdown of the mission statement</td>
+                    <td>When you need grounding in "why"</td>
+                </tr>
+                <tr>
+                    <td>&#x1F3C3;</td>
+                    <td><span class="file-name">catch-up-genesis-to-joshua.md</span></td>
+                    <td>Key highlights for IBCM Days 1-27</td>
+                    <td>When you need context on what you've read</td>
+                </tr>
+                <tr>
+                    <td>&#x1F491;</td>
+                    <td><span class="file-name">navigators-month1.md</span></td>
+                    <td>Month 1 couple reading plan (Matthew, Acts, Psalms, Genesis)</td>
+                    <td>Daily reading with AJ</td>
+                </tr>
+                <tr>
+                    <td>&#x1F4DA;</td>
+                    <td><span class="file-name">piper-books/</span></td>
+                    <td>Symlink to ~/Desktop/Jesus/ with 30+ books</td>
+                    <td>When you want to read a Piper book</td>
+                </tr>
+                <tr>
+                    <td>&#x1F5C2;</td>
+                    <td><span class="file-name">piper-books-index.md</span></td>
+                    <td>Full catalog with topic-to-book mapping</td>
+                    <td>Finding the right book for a topic</td>
+                </tr>
+                <tr>
+                    <td>&#x1F4AC;</td>
+                    <td><span class="file-name">piper-quotes-index.md</span></td>
+                    <td>80+ pre-extracted quotes organized by 12 topics</td>
+                    <td>Quick encouragement; content creation</td>
+                </tr>
+                <tr>
+                    <td>&#x270D;&#xFE0F;</td>
+                    <td><span class="file-name">practical-guidance-poetry.md</span></td>
+                    <td>Piper's guidance on writing poetry</td>
+                    <td>When writing prayers, poems, or reflections</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: SPIRITUAL DIARY SYSTEM -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="diary">
+    <h2 class="section-header">
+        <span class="icon">&#x1F4D3;</span>
+        Your Spiritual Diary System
+    </h2>
+    <p class="section-intro">
+        Your spiritual life is captured in three connected layers. Each one has a different purpose,
+        and together they give you a complete record of your walk with God.
+    </p>
+
+    <div class="diagram">
+        <div class="diagram-row">
+            <div class="diagram-box">
+                &#x1F4C2; bible/ folder<br>
+                <span style="font-size:0.75rem;font-weight:400;opacity:0.9">HOW to read</span>
+            </div>
+        </div>
+        <div class="diagram-label">Methods, frameworks, plans, and the Piper library</div>
+        <div class="diagram-row" style="margin-top:0.8rem">
+            <div class="diagram-arrow">&#x2193;</div>
+        </div>
+        <div class="diagram-row">
+            <div class="diagram-box gold">
+                &#x1F4D6; Bible Reading Journal<br>
+                <span style="font-size:0.75rem;font-weight:400;opacity:0.9">WHAT you read</span>
+            </div>
+        </div>
+        <div class="diagram-label">Daily logs: passage, key verse, reflection, teaching seeds</div>
+        <div class="diagram-row" style="margin-top:0.8rem">
+            <div class="diagram-arrow">&#x2193;</div>
+        </div>
+        <div class="diagram-row">
+            <div class="diagram-box green">
+                &#x1F31F; Moments Database<br>
+                <span style="font-size:0.75rem;font-weight:400;opacity:0.9">WHAT God is doing</span>
+            </div>
+        </div>
+        <div class="diagram-label">Deeper diary: moments, verses that spoke to you, prayers, poems, Piper wisdom</div>
+    </div>
+
+    <div class="highlight-box">
+        <strong>How they work together:</strong> You read your Bible using the methods in the
+        <span class="file-name">bible/</span> folder. You log what you read in the Bible Reading Journal.
+        When something deeper happens (a verse grips your heart, a moment of clarity, a breakthrough in prayer),
+        you capture it in the Moments Database. Over time, these three layers paint the full picture
+        of how God has been working in your life.
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: HOW TO READ -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="methods">
+    <h2 class="section-header">
+        <span class="icon">&#x1F4D6;</span>
+        How to Read Your Bible
+    </h2>
+    <p class="section-intro">
+        You have two modes: a 2-minute quick read for consistency, and a deeper 15-30 minute study
+        for when you have the time and energy. Both are valid. The goal is never zero.
+    </p>
+
+    <!-- Quick Read -->
+    <details open>
+        <summary>&#x26A1; Quick Read (2 minutes)</summary>
+        <div class="details-body">
+            <p>This is your daily minimum. On hard days, even one verse and one sentence counts.</p>
+            <ol class="step-list">
+                <li>
+                    <span class="step-title">Check today's reading</span>
+                    <span class="step-desc">
+                        From the IBCM schedule in <span class="file-name">bible-reading-method.md</span>,
+                        or ask Jarvis/Claude: <span class="cmd">today's reading</span>
+                    </span>
+                </li>
+                <li>
+                    <span class="step-title">Read the Bible</span>
+                    <span class="step-desc">Physical Bible or YouVersion app. Just read.</span>
+                </li>
+                <li>
+                    <span class="step-title">Log it</span>
+                    <span class="step-desc">
+                        Message Jarvis or Claude Code:<br>
+                        <span class="cmd">bible log: Joshua 11-15. Key verse: Josh 11:23. God completes what He starts.</span>
+                    </span>
+                </li>
+            </ol>
+            <div class="highlight-box gold-border">
+                <strong>The 2-minute rule:</strong> On hard days, just log the passage and one sentence. That counts.
+                Never zero. Missing a day is not failure. Quitting is.
+            </div>
+        </div>
+    </details>
+
+    <!-- Deeper Study -->
+    <details>
+        <summary>&#x1F9D8; Deeper Study (15-30 minutes)</summary>
+        <div class="details-body">
+            <p style="margin-bottom:1rem">This is the full Piper method from <em>Reading the Bible Supernaturally</em>.
+            Use it when you have the time and hunger for more.</p>
+
+            <h3 style="font-size:1rem;color:var(--purple);margin-bottom:0.5rem">BEFORE (2-5 min)</h3>
+            <ol class="step-list">
+                <li>
+                    <span class="step-title">Pray</span>
+                    <span class="step-desc">"Open my eyes, that I may behold wondrous things out of your law." (Psalm 119:18)</span>
+                </li>
+                <li>
+                    <span class="step-title">Humble yourself</span>
+                    <span class="step-desc">"I am a student, not a judge."</span>
+                </li>
+                <li>
+                    <span class="step-title">Set context</span>
+                    <span class="step-desc">What book? What genre? Where in the story?</span>
+                </li>
+                <li>
+                    <span class="step-title">Expect God to speak</span>
+                    <span class="step-desc">He has promised to speak. Come with faith.</span>
+                </li>
+            </ol>
+
+            <h3 style="font-size:1rem;color:var(--purple);margin:1rem 0 0.5rem">DURING (main reading)</h3>
+            <p><strong>First pass:</strong> Read straight through. Get the flow.</p>
+            <p style="margin:0.5rem 0"><strong>Second pass:</strong> Piper's 5 questions:</p>
+            <ol style="padding-left:1.5rem;margin-bottom:0.8rem">
+                <li>What does it <strong>say</strong>? (Observation)</li>
+                <li>What does it <strong>mean</strong>? (Interpretation)</li>
+                <li>What does it reveal about <strong>God</strong>? (Theology)</li>
+                <li>What <strong>response</strong> does it call for? (Application)</li>
+                <li>What is <strong>beautiful</strong> or surprising? (Worship)</li>
+            </ol>
+            <p>Linger where the Spirit grabs you. Don't rush.</p>
+
+            <h3 style="font-size:1rem;color:var(--purple);margin:1rem 0 0.5rem">AFTER (2-5 min)</h3>
+            <p>Journal using <strong>ACTS prayer</strong>:</p>
+            <ul style="padding-left:1.5rem;margin:0.5rem 0">
+                <li><strong>A</strong>doration: What can I praise God for from this passage?</li>
+                <li><strong>C</strong>onfession: What sin does this expose in me?</li>
+                <li><strong>T</strong>hanksgiving: What am I grateful for?</li>
+                <li><strong>S</strong>upplication: What should I ask God for?</li>
+            </ul>
+            <p>Then log your key verse + one-sentence reflection. Carry one truth for the rest of the day.</p>
+        </div>
+    </details>
+
+    <!-- Reading with AJ -->
+    <details>
+        <summary>&#x1F491; Reading with AJ (Navigators Plan)</summary>
+        <div class="details-body">
+            <p>The Navigators 12-month plan is designed for couples. Pace: 2-3 chapters/day across four books
+            (currently Matthew, Acts, Psalms, Genesis).</p>
+
+            <div class="highlight-box green-border">
+                <strong>Schedule:</strong> See <span class="file-name">navigators-month1.md</span> for daily readings.<br>
+                <strong>Discussion prompts:</strong>
+                <ol style="padding-left:1.5rem;margin-top:0.4rem">
+                    <li>What stood out to you?</li>
+                    <li>What did this teach you about God?</li>
+                    <li>Is there something here we should apply this week?</li>
+                    <li>How does this connect to other things we've been reading?</li>
+                </ol>
+            </div>
+            <p style="margin-top:0.8rem;font-size:0.88rem;color:var(--text-secondary)">
+                If you miss a day, don't double up. Just pick up where you left off.
+                When a passage sparks deep discussion, stay there. The schedule serves you, not the other way around.
+            </p>
+        </div>
+    </details>
+
+    <!-- Centering Page -->
+    <details>
+        <summary>&#x1F9D8; The Centering Page</summary>
+        <div class="details-body">
+            <p>Your <span class="file-name">centering-page.md</span> is designed to prepare your heart
+            before reading. Not for information, but for transformation. It walks you through:</p>
+            <ul style="padding-left:1.5rem;margin:0.5rem 0 1rem">
+                <li><strong>Opening prayer</strong> (Psalm 119:18)</li>
+                <li><strong>Why you're here</strong> (Piper quotes on supernatural reading)</li>
+                <li><strong>Surrender the noise</strong> (stillness verses)</li>
+                <li><strong>Fire for the Word</strong> (desire-kindling verses)</li>
+                <li><strong>Dependence on God</strong> (you need the Holy Spirit)</li>
+                <li><strong>Declaration</strong> ("I am reading to see You")</li>
+            </ul>
+
+            <div class="verse-block">
+                <div class="verse-text">
+                    "We do not read the Bible simply to get through it.
+                    We read the Bible to get through to God."
+                </div>
+                <div class="verse-ref">John Piper</div>
+            </div>
+        </div>
+    </details>
+
+    <!-- Genre Tips -->
+    <details>
+        <summary>&#x1F4DA; Genre-Specific Reading Tips</summary>
+        <div class="details-body">
+            <p>Different parts of the Bible use different literary forms. Knowing the genre changes how you read.</p>
+
+            <div class="card" style="margin-top:0.8rem">
+                <div class="card-title">Pentateuch (Genesis-Deuteronomy)</div>
+                <div class="card-desc">Look for God's covenant promises and their progressive unfolding.
+                Notice the pattern: God speaks, humans fail, God rescues.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Historical Narrative (Joshua-Esther)</div>
+                <div class="card-desc">Focus on God's faithfulness despite human failure.
+                Characters are not moral examples; they point to the need for a better King.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Poetry &amp; Wisdom (Job-Song of Solomon)</div>
+                <div class="card-desc">Read emotionally, not just intellectually. These are meant to be felt.
+                Proverbs are general truths, not absolute promises.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Prophets (Isaiah-Malachi)</div>
+                <div class="card-desc">Always identify the historical context first.
+                Look for: judgment warning, call to repentance, promise of restoration.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Gospels (Matthew-John)</div>
+                <div class="card-desc">Jesus is the center. Every story, teaching, and miracle reveals who He is.
+                Read the passion narrative slowly.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Epistles (Romans-Jude)</div>
+                <div class="card-desc">Look for the indicative (what God has done) before the imperative (what we should do).
+                Trace the argument structure.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Revelation</div>
+                <div class="card-desc">This is worship literature, not a puzzle to decode.
+                Focus on: God wins, evil loses, Jesus reigns. Let the imagery create awe, not anxiety.</div>
+            </div>
+        </div>
+    </details>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: CAPTURE THOUGHTS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="capture">
+    <h2 class="section-header">
+        <span class="icon">&#x270D;&#xFE0F;</span>
+        How to Capture Thoughts &amp; Moments
+    </h2>
+    <p class="section-intro">
+        Your spiritual life produces insights, breakthroughs, questions, and creative expressions.
+        Here's exactly what to say (to Jarvis via Telegram or Claude Code) and where each one gets saved.
+    </p>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>What You Want to Capture</th>
+                    <th>What to Say</th>
+                    <th>Where It Goes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Daily Bible reading log</td>
+                    <td><span class="cmd">bible log: [passage]. Key verse: [ref]. [reflection]</span></td>
+                    <td><span class="badge badge-gold">Bible Reading Journal</span> Reading Log tab</td>
+                </tr>
+                <tr>
+                    <td>A verse that spoke to you</td>
+                    <td><span class="cmd">Add verse: Romans 8:28</span></td>
+                    <td><span class="badge badge-green">Moments Database</span> Verse Collection tab</td>
+                </tr>
+                <tr>
+                    <td>A spiritual moment or breakthrough</td>
+                    <td><span class="cmd">Add moment: God showed me today that...</span></td>
+                    <td><span class="badge badge-green">Moments Database</span> Moments Timeline tab</td>
+                </tr>
+                <tr>
+                    <td>A prayer or poem</td>
+                    <td><span class="cmd">Add prayer: [your prayer text]</span></td>
+                    <td><span class="badge badge-green">Moments Database</span> Prayers &amp; Poems tab</td>
+                </tr>
+                <tr>
+                    <td>A Piper wisdom gem</td>
+                    <td><span class="cmd">Use skill: books-with-pastor-john-piper</span> (conversation gets logged)</td>
+                    <td><span class="badge badge-green">Moments Database</span> Piper Wisdom tab</td>
+                </tr>
+                <tr>
+                    <td>A teaching idea</td>
+                    <td><span class="cmd">bible log: [passage]. teach: [idea]</span></td>
+                    <td><span class="badge badge-gold">Bible Reading Journal</span> Reading Log tab (flagged)</td>
+                </tr>
+                <tr>
+                    <td>A theological question</td>
+                    <td><span class="cmd">Use skill: books-with-pastor-john-piper</span>, then ask your question</td>
+                    <td><span class="badge badge-green">Moments Database</span> Piper Wisdom tab</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="highlight-box">
+        <strong>Teaching Seeds:</strong> When you encounter something worth teaching (to AJ, to your community, or in content),
+        add the <span class="cmd">teach:</span> prefix to your log entry. These accumulate in the Reading Log
+        and can be filtered later for lesson planning. Teaching-worthy moments include:
+        surprises, OT-NT connections, passages that speak to real struggles, Hebrew/Greek depth,
+        and historical context that transforms meaning.
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: PIPER LIBRARY -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="piper">
+    <h2 class="section-header">
+        <span class="icon">&#x1F4DA;</span>
+        Your Piper Library
+    </h2>
+    <p class="section-intro">
+        You have 30 Piper books (plus C.S. Lewis and <em>When Helping Hurts</em>) available at
+        <span class="file-name">bible/piper-books/</span>, with 80+ pre-extracted quotes organized by topic.
+        Claude can read any of these books and bring relevant wisdom into your conversations.
+    </p>
+
+    <!-- Stats -->
+    <div style="display:flex;gap:0.75rem;margin-bottom:1.2rem;flex-wrap:wrap">
+        <div class="card" style="flex:1;min-width:140px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:700;color:var(--purple-deep)">30+</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary)">Books Available</div>
+        </div>
+        <div class="card" style="flex:1;min-width:140px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:700;color:var(--gold)">80+</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary)">Pre-Extracted Quotes</div>
+        </div>
+        <div class="card" style="flex:1;min-width:140px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:700;color:var(--green)">14</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary)">Topic Categories</div>
+        </div>
+    </div>
+
+    <!-- Topic to Book Mapping -->
+    <details>
+        <summary>&#x1F5C2; Topics &amp; Which Books to Read</summary>
+        <div class="details-body">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Topic</th><th>Start With</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Joy, satisfaction in God</td><td>Future Grace, Alive to Wonder, Seeing and Savoring Jesus</td></tr>
+                        <tr><td>Suffering, trials, darkness</td><td>When the Darkness Will Not Lift, Filling Up the Afflictions</td></tr>
+                        <tr><td>Life purpose, risk, calling</td><td>Don't Waste Your Life, Risk Is Right</td></tr>
+                        <tr><td>Marriage, gender roles</td><td>Recovering Biblical Manhood, What's the Difference?</td></tr>
+                        <tr><td>Providence, sovereignty</td><td>Providence, God's Passion for His Glory</td></tr>
+                        <tr><td>Faith and trust</td><td>Battling Unbelief, Future Grace</td></tr>
+                        <tr><td>Depression, spiritual warfare</td><td>When the Darkness Will Not Lift, Battling Unbelief</td></tr>
+                        <tr><td>Bible reading, learning</td><td>Foundations for Lifelong Learning</td></tr>
+                        <tr><td>Words, communication, poetry</td><td>The Power of Words, practical-guidance-poetry.md</td></tr>
+                        <tr><td>Church history, faith heroes</td><td>27 Servants, Legacy of Sovereign Joy, Roots of Endurance</td></tr>
+                        <tr><td>Calvinism, Reformed doctrine</td><td>Five Points, God's Passion for His Glory</td></tr>
+                        <tr><td>New birth, salvation</td><td>Finally Alive</td></tr>
+                        <tr><td>Christian living, apologetics</td><td>Mere Christianity (C.S. Lewis)</td></tr>
+                        <tr><td>Pastoral ministry</td><td>Velvet Steel, In Our Joy</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </details>
+
+    <!-- Sample Quotes -->
+    <details>
+        <summary>&#x1F4AC; Sample Quotes by Topic</summary>
+        <div class="details-body">
+            <h4 style="color:var(--purple);margin-bottom:0.5rem">Joy &amp; Satisfaction</h4>
+            <div class="quote-block">
+                "God is most glorified in us when we are most satisfied in him."
+                <span class="attribution">John Piper, Future Grace</span>
+            </div>
+
+            <h4 style="color:var(--purple);margin:1rem 0 0.5rem">Suffering &amp; Trials</h4>
+            <div class="quote-block">
+                "No one ever said that they learned their deepest lessons of life, or had their sweetest
+                encounters with God, on the sunny days. People go deep with God when the drought comes."
+                <span class="attribution">John Piper, Don't Waste Your Life</span>
+            </div>
+
+            <h4 style="color:var(--purple);margin:1rem 0 0.5rem">Life Purpose</h4>
+            <div class="quote-block">
+                "You have one life. That's all. You were made for God. Don't waste it."
+                <span class="attribution">John Piper, Don't Waste Your Life</span>
+            </div>
+
+            <h4 style="color:var(--purple);margin:1rem 0 0.5rem">Depression &amp; Darkness</h4>
+            <div class="quote-block">
+                "It is utterly crucial that in our darkness we affirm the wise, strong hand of God
+                to hold us, even when we have no strength to hold him."
+                <span class="attribution">John Piper, When the Darkness Will Not Lift</span>
+            </div>
+
+            <h4 style="color:var(--purple);margin:1rem 0 0.5rem">Seeing Christ</h4>
+            <div class="quote-block">
+                "We are all starved for the glory of God, not self. No one goes to the Grand Canyon
+                to increase self-esteem. Why do we go? Because there is greater healing for the soul
+                in beholding splendor than there is in beholding self."
+                <span class="attribution">John Piper, Seeing and Savoring Jesus Christ</span>
+            </div>
+
+            <p style="margin-top:1rem;font-size:0.88rem;color:var(--text-muted)">
+                Full quote index: <span class="file-name">piper-quotes-index.md</span> (12 topic categories,
+                80+ quotes with book and chapter references)
+            </p>
+        </div>
+    </details>
+
+    <!-- How to Use -->
+    <details>
+        <summary>&#x1F4D6; How to Use the "Books with Pastor John Piper" Skill</summary>
+        <div class="details-body">
+            <p>Say <span class="cmd">Use skill: books-with-pastor-john-piper</span> to Claude Code, then ask your question.
+            Claude will:</p>
+            <ol style="padding-left:1.5rem;margin:0.5rem 0">
+                <li>Check the topic-to-book mapping in <span class="file-name">piper-books-index.md</span></li>
+                <li>Pull pre-extracted quotes from <span class="file-name">piper-quotes-index.md</span></li>
+                <li>For deeper answers, read the actual PDF from <span class="file-name">piper-books/</span></li>
+                <li>Present quotes, then Scripture, then a pastoral response</li>
+            </ol>
+            <p style="margin-top:0.5rem">Ask anything: theological questions, life struggles, marriage guidance,
+            dealing with depression, finding purpose. The library covers the full range of Christian life.</p>
+        </div>
+    </details>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: BOOK INSIGHTS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="books">
+    <h2 class="section-header">
+        <span class="icon">&#x1F4DD;</span>
+        Book Insights Storage
+    </h2>
+    <p class="section-intro">
+        When you read a book (Piper, C.S. Lewis, or any other), capture your insights using this structure.
+        Your first book-notes file (<span class="file-name">mere-christianity-notes.md</span> in
+        <span class="file-name">growth/insight-journal/desire/</span>) serves as the template.
+    </p>
+
+    <div class="card">
+        <div class="card-title">Template Structure</div>
+        <div class="card-desc">
+            <ol style="padding-left:1.2rem;margin-top:0.3rem">
+                <li><strong>Book metadata:</strong> Title, author, genre, why you're reading it</li>
+                <li><strong>Chapter-by-chapter notes:</strong> Key ideas, quotes, personal reflections</li>
+                <li><strong>Connections:</strong> Links to other books, Scripture, and life situations</li>
+                <li><strong>Teaching seeds:</strong> Ideas worth sharing or teaching later</li>
+                <li><strong>Overall takeaway:</strong> The one thing this book changed in your thinking</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="highlight-box">
+        <strong>How to capture book insights:</strong> As you read, tell Claude Code or Jarvis:
+        <span class="cmd">Book insight: [book title] - [your insight]</span>.
+        At the end of a book, ask Claude to help you create a full notes file.
+        These become part of your permanent knowledge base in the insight journal.
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: SCENARIOS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="scenarios">
+    <h2 class="section-header">
+        <span class="icon">&#x1F3AF;</span>
+        10 Real Scenarios
+    </h2>
+    <p class="section-intro">
+        Practical, step-by-step instructions for the most common situations you'll find yourself in.
+    </p>
+
+    <!-- Scenario 1 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">1</span>
+            Morning quick read
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Open your Bible or YouVersion to today's IBCM reading</li>
+                <li>Read straight through (5-10 minutes)</li>
+                <li>Pick one verse that stood out</li>
+                <li>Message Jarvis: <span class="cmd">bible log: [passage]. Key verse: [ref]. [one sentence]</span></li>
+                <li>Done. Move on with your day carrying that one truth.</li>
+            </ol>
+        </div>
+    </details>
+
+    <!-- Scenario 2 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">2</span>
+            Deeper study with heart preparation
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Open <span class="file-name">centering-page.md</span> and read through the prayers and verses</li>
+                <li>Pray Psalm 119:18: "Open my eyes..."</li>
+                <li>Read today's passage twice (first for flow, second with Piper's 5 questions)</li>
+                <li>Journal using ACTS: Adoration, Confession, Thanksgiving, Supplication</li>
+                <li>Log: <span class="cmd">bible log: [passage]. Key verse: [ref]. [reflection]</span></li>
+                <li>If a verse gripped you: <span class="cmd">Add verse: [reference]</span></li>
+            </ol>
+        </div>
+    </details>
+
+    <!-- Scenario 3 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">3</span>
+            You missed several days
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Don't panic. Don't try to "catch up" all at once.</li>
+                <li>Ask Claude: <span class="cmd">catch up</span> to see highlights of what you missed</li>
+                <li>Read the catch-up summary in <span class="file-name">catch-up-genesis-to-joshua.md</span></li>
+                <li>Pick up from today's reading. The summary gives you enough context to continue.</li>
+                <li>Remember: consistency over perfection. Never zero.</li>
+            </ol>
+            <div class="quote-block" style="margin-top:0.8rem">
+                "The devil's strategy is not to make you disbelieve the Bible
+                but to make you too busy to read it carefully."
+                <span class="attribution">John Piper</span>
+            </div>
+        </div>
+    </details>
+
+    <!-- Scenario 4 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">4</span>
+            A verse hit you hard
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Stop. Don't rush past it. This is the Holy Spirit at work.</li>
+                <li>Read it again slowly. What is it saying? Why is it gripping you?</li>
+                <li>Pray about it. What is God showing you?</li>
+                <li>Log the verse: <span class="cmd">Add verse: [reference]</span> (goes to Verse Collection)</li>
+                <li>If it triggered a deeper moment: <span class="cmd">Add moment: [describe what happened]</span></li>
+                <li>Write it on a sticky note, set it as your phone wallpaper, or memorize it.</li>
+            </ol>
+        </div>
+    </details>
+
+    <!-- Scenario 5 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">5</span>
+            You have a theological question
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Say: <span class="cmd">Use skill: books-with-pastor-john-piper</span></li>
+                <li>Ask your question (e.g., "Why does God allow suffering?" or "What does Piper say about anxiety?")</li>
+                <li>Claude will pull relevant quotes from the 30-book library and guide you through Scripture</li>
+                <li>The conversation gets logged to the Piper Wisdom tab in your Moments Database</li>
+                <li>For deeper study, Claude can read the actual PDF of the most relevant book</li>
+            </ol>
+        </div>
+    </details>
+
+    <!-- Scenario 6 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">6</span>
+            Couple devotion with AJ
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Check today's Navigators reading in <span class="file-name">navigators-month1.md</span></li>
+                <li>Read together (or individually, then discuss)</li>
+                <li>Use the discussion prompts: What stood out? What does this teach about God?</li>
+                <li>If something special happens in the conversation, capture it:
+                    <span class="cmd">Add moment: AJ and I discussed [topic] and realized...</span></li>
+                <li>Don't pressure the schedule. If a passage sparks deep discussion, stay there.</li>
+            </ol>
+        </div>
+    </details>
+
+    <!-- Scenario 7 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">7</span>
+            Writing a prayer or poem
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Read <span class="file-name">practical-guidance-poetry.md</span> for Piper's craft guidance</li>
+                <li>Remember: purpose before technique. "The aim of Christian eloquence is not self-display but Christ-exaltation."</li>
+                <li>Pay attention to: cadence, consonance, the right word, concreteness</li>
+                <li>Write your prayer or poem</li>
+                <li>Save it: <span class="cmd">Add prayer: [your text]</span> (goes to Prayers &amp; Poems tab)</li>
+            </ol>
+            <div class="quote-block" style="margin-top:0.8rem">
+                "When we take care to create a beautiful way of speaking about something beautiful,
+                the eloquence reflects and honors the beauty of the subject."
+                <span class="attribution">John Piper</span>
+            </div>
+        </div>
+    </details>
+
+    <!-- Scenario 8 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">8</span>
+            Content creation grounded in Scripture
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Pull relevant quotes from <span class="file-name">piper-quotes-index.md</span> by topic</li>
+                <li>Cross-reference with actual Scripture passages</li>
+                <li>Use the Topical Cross-Reference section for specific life situations</li>
+                <li>Quotes include book, chapter, and page references for attribution</li>
+                <li>For Cobalt content: use the quotes to ground marketing in authentic conviction</li>
+            </ol>
+        </div>
+    </details>
+
+    <!-- Scenario 9 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">9</span>
+            Spiritual milestone reflection
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Ask Claude: <span class="cmd">Show moments</span> or <span class="cmd">Review my moments this week</span></li>
+                <li>Review your recent verses, moments, and prayers</li>
+                <li>Look for patterns: What themes is God weaving through your life?</li>
+                <li>Read <span class="file-name">a-passion-for-the-supremacy-of-god.md</span> to reconnect with the "why"</li>
+                <li>Capture any new insight: <span class="cmd">Add moment: Looking back, I see that God has been...</span></li>
+            </ol>
+        </div>
+    </details>
+
+    <!-- Scenario 10 -->
+    <details class="scenario">
+        <summary>
+            <span class="scenario-num">10</span>
+            Starting insights from a new book
+        </summary>
+        <div class="details-body">
+            <ol>
+                <li>Create a notes file: ask Claude to set up a book-notes template</li>
+                <li>As you read, capture insights: <span class="cmd">Book insight: [title] - [insight]</span></li>
+                <li>At chapter breaks, review and organize your notes</li>
+                <li>When finished, ask Claude to summarize connections to other books and Scripture</li>
+                <li>Add to the insight journal under the relevant tag page</li>
+            </ol>
+        </div>
+    </details>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: COMMANDS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="commands">
+    <h2 class="section-header">
+        <span class="icon">&#x2328;&#xFE0F;</span>
+        All Commands (Quick Reference)
+    </h2>
+    <p class="section-intro">
+        Everything you can say to Jarvis (Telegram) or Claude Code (Terminal).
+    </p>
+
+    <!-- Bible Reading Commands -->
+    <details open>
+        <summary>&#x1F4D6; Bible Reading</summary>
+        <div class="details-body">
+            <div class="table-wrap">
+                <table class="cmd-table">
+                    <thead>
+                        <tr><th>Say This</th><th>What Happens</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="cmd">bible log: [passage]. Key verse: [ref]. [reflection]</span></td>
+                            <td>Appends to Bible Reading Journal, Reading Log tab</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">today's reading</span></td>
+                            <td>Shows today's IBCM + Navigators readings</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">reading status</span></td>
+                            <td>Shows progress on both reading plans</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">catch up</span></td>
+                            <td>Shows catch-up highlights for missed days</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">deeper study: [passage]</span></td>
+                            <td>Walks through Piper's 5 questions</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">bible log: [passage]. teach: [idea]</span></td>
+                            <td>Logs reading + flags a teaching seed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </details>
+
+    <!-- Moments & Diary Commands -->
+    <details>
+        <summary>&#x1F31F; Moments &amp; Diary</summary>
+        <div class="details-body">
+            <div class="table-wrap">
+                <table class="cmd-table">
+                    <thead>
+                        <tr><th>Say This</th><th>What Happens</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="cmd">Add moment: [description]</span></td>
+                            <td>Adds to Moments Timeline tab</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">Add verse: [reference]</span></td>
+                            <td>Adds to Verse Collection tab</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">Add prayer: [text]</span></td>
+                            <td>Adds to Prayers &amp; Poems tab</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">Show moments</span></td>
+                            <td>Displays recent moments</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">Show moments: [category]</span></td>
+                            <td>Filters by category (Faith, Marriage, Health, etc.)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">Review my moments this week</span></td>
+                            <td>Weekly moment review with patterns</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </details>
+
+    <!-- Skills & Library Commands -->
+    <details>
+        <summary>&#x1F4DA; Library &amp; Skills</summary>
+        <div class="details-body">
+            <div class="table-wrap">
+                <table class="cmd-table">
+                    <thead>
+                        <tr><th>Say This</th><th>What Happens</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="cmd">Use skill: books-with-pastor-john-piper</span></td>
+                            <td>Loads Piper persona for theological Q&amp;A</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">Use skill: reformed-theology-context</span></td>
+                            <td>Loads Reformed theology framework</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">Book insight: [title] - [insight]</span></td>
+                            <td>Captures a book insight for later organization</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd">Rebuild moments dashboard</span></td>
+                            <td>Regenerates Moments.html from Sheet data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </details>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: CONNECTED SHEETS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="sheets">
+    <h2 class="section-header">
+        <span class="icon">&#x1F4CA;</span>
+        Connected Google Sheets
+    </h2>
+    <p class="section-intro">
+        These two Google Sheets are the permanent storage for your spiritual life data.
+        Click to open them in your browser.
+    </p>
+
+    <a href="https://docs.google.com/spreadsheets/d/1YQoQZHkIJYWWhm4RwsTRd2oeKxO8uX5BdjYDqukOQIE/edit" class="link-card" target="_blank" rel="noopener">
+        <span class="link-icon">&#x1F4D6;</span>
+        <div class="link-text">
+            <div class="link-title">Bible Reading Journal</div>
+            <div class="link-desc">
+                <strong>Tabs:</strong> Reading Log (daily entries), Catch-Up Notes (Days 1-27),
+                Book Summaries (66 books), Progress Tracker
+            </div>
+            <div class="link-url">docs.google.com/spreadsheets/d/1YQoQZHkIJYWWhm4RwsTRd2oeKxO8uX5BdjYDqukOQIE</div>
+        </div>
+    </a>
+
+    <a href="https://docs.google.com/spreadsheets/d/1pjRRIqiGhPrlFuPkxO0nQyxvqqtsJKQPF6xn71K9Rp8/edit" class="link-card" target="_blank" rel="noopener">
+        <span class="link-icon">&#x1F31F;</span>
+        <div class="link-text">
+            <div class="link-title">Shela's Moments Database</div>
+            <div class="link-desc">
+                <strong>Tabs:</strong> Moments Timeline, Verse Collection, Prayers &amp; Poems, Piper Wisdom
+            </div>
+            <div class="link-url">docs.google.com/spreadsheets/d/1pjRRIqiGhPrlFuPkxO0nQyxvqqtsJKQPF6xn71K9Rp8</div>
+        </div>
+    </a>
+
+    <div class="highlight-box green-border" style="margin-top:1rem">
+        <strong>Tip:</strong> Both Claude Code and Jarvis can read from and write to these sheets automatically.
+        You never need to open the sheet manually unless you want to browse your history.
+    </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="verse-block" style="background:none;border:none;margin:0 0 0.5rem">
+        <div class="verse-text">
+            "Open my eyes, that I may behold wondrous things out of your law."
+        </div>
+        <div class="verse-ref">Psalm 119:18</div>
+    </div>
+    <p>Your Bible Folder Guide &middot; Life Dashboard &middot; 2026</p>
+</footer>
+
+</body>
+</html>

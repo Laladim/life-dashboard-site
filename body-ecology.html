@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lala's Body Ecology Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f1f0;
+    --text: #3a3a3a;
+    --text-secondary: #6b6565;
+    --sidebar-bg: #4a3a6a;
+    --sidebar-text: #e0d8e8;
+    --sidebar-active: #c8985f;
+    --sidebar-hover: #5a4a7a;
+    --purple: #5a4a7a;
+    --purple-deep: #4a3a6a;
+    --purple-light: #7a6a8f;
+    --gold: #c8985f;
+    --gold-deep: #a88d5e;
+    --cream: #f5f1f0;
+    --border: #e0d8e0;
+    --shadow: 0 2px 12px rgba(90, 74, 122, 0.07);
+    --shadow-hover: 0 4px 20px rgba(90, 74, 122, 0.12);
+    --win: #5a8a72;
+    --win-bg: #e8f2ec;
+    --caution: #c8985f;
+    --caution-bg: #faf3eb;
+    --alert: #b85450;
+    --alert-bg: #f9ecea;
+    --neutral: #7a6a8f;
+    --neutral-bg: #f0ecf3;
+    --elephant: #4a3a6a;
+    --elephant-bg: #ede8f3;
+    --bear: #5a8a72;
+    --bear-bg: #e8f2ec;
+    --panda: #c8985f;
+    --panda-bg: #faf3eb;
+    --rat: #9e9590;
+    --rat-bg: #f5f2f0;
+    --immune: #7a4a6a; --immune-bg: #f3e8f0;
+    --gut: #5a8a72; --gut-bg: #e8f2ec;
+    --endocrine: #8a6a4a; --endocrine-bg: #f3ede8;
+    --nervous: #4a6a8a; --nervous-bg: #e8edf3;
+    --skeletal: #6a5a4a; --skeletal-bg: #f0ede8;
+    --circulatory: #8a4a4a; --circulatory-bg: #f3e8e8;
+    --reproductive: #6a4a7a; --reproductive-bg: #ede8f3;
+    --urinary: #4a7a6a; --urinary-bg: #e8f0ec;
+    --respiratory: #5a7a8a; --respiratory-bg: #e8f0f3;
+    --muscular: #7a6a5a; --muscular-bg: #f0ede8;
+    --liver: #6a8a5a; --liver-bg: #edf0e8;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-ui: 'DM Sans', -apple-system, sans-serif;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-ui);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    position: relative;
+  }
+
+  /* paper grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  /* ===== DESKTOP SIDEBAR ===== */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    overflow-y: auto;
+    padding: 24px 0 100px;
+    z-index: 100;
+    font-size: 0.87em;
+  }
+
+  .sidebar-brand {
+    padding: 0 22px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 16px;
+  }
+
+  .sidebar-brand h2 {
+    font-family: var(--font-display);
+    font-size: 1.2em;
+    color: white;
+    font-weight: 700;
+    margin: 0; padding: 0; border: 0;
+  }
+
+  .sidebar-brand small {
+    font-size: 0.78em;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .sidebar .nav-section {
+    padding: 10px 22px 4px;
+    font-size: 0.68em;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 700;
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 22px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+    font-weight: 400;
+  }
+
+  .sidebar a:hover, .sidebar a.active {
+    background: var(--sidebar-hover);
+    color: white;
+    border-left-color: var(--sidebar-active);
+  }
+
+  .sidebar a .tag {
+    font-size: 0.62em;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  .tag-e { background: rgba(200,152,95,0.3); color: var(--gold); }
+  .tag-b { background: rgba(90,138,114,0.3); color: #8abfa5; }
+  .tag-p { background: rgba(200,152,95,0.15); color: #d4b08a; }
+
+  /* Mode toggle in sidebar */
+  .mode-toggle {
+    display: flex;
+    margin: 0 22px 16px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .mode-toggle button {
+    flex: 1;
+    padding: 8px 0;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-family: var(--font-ui);
+    font-size: 0.82em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .mode-toggle button.active {
+    background: var(--gold);
+    color: var(--purple-deep);
+    border-radius: 6px;
+  }
+
+  /* ===== MOBILE BOTTOM NAV ===== */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--sidebar-bg);
+    z-index: 200;
+    padding: 6px 0 env(safe-area-inset-bottom, 8px);
+    box-shadow: 0 -2px 20px rgba(74, 58, 106, 0.3);
+  }
+
+  .mobile-nav-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .mobile-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 0.65em;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+  }
+
+  .mobile-nav a.active, .mobile-nav a:hover {
+    color: var(--gold);
+    background: rgba(200,152,95,0.1);
+  }
+
+  .mobile-nav a .nav-icon {
+    font-size: 1.6em;
+    line-height: 1;
+  }
+
+  /* Mobile header */
+  .mobile-header {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: var(--sidebar-bg);
+    color: white;
+    padding: 14px 20px;
+    z-index: 200;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05em;
+    box-shadow: 0 2px 12px rgba(74, 58, 106, 0.2);
+  }
+
+  .mobile-header small {
+    color: var(--gold);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 0.7em;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ===== MAIN ===== */
+  .main {
+    margin-left: 260px;
+    max-width: 880px;
+    padding: 36px 40px 100px;
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  h1 {
+    font-family: var(--font-display);
+    font-size: 2.1em;
+    font-weight: 900;
+    color: var(--purple-deep);
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+
+  .page-subtitle {
+    font-size: 1em;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    font-style: italic;
+    font-family: var(--font-display);
+    font-weight: 300;
+  }
+
+  .page-date {
+    font-size: 0.8em;
+    color: var(--purple-light);
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.45em;
+    font-weight: 700;
+    color: var(--purple-deep);
+    margin-top: 52px;
+    margin-bottom: 14px;
+    padding-top: 24px;
+    border-top: 2px solid var(--border);
+    letter-spacing: -0.01em;
+  }
+
+  h2:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1.12em;
+    font-weight: 500;
+    color: var(--purple);
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+
+  p { margin-bottom: 12px; }
+  strong { color: var(--purple-deep); font-weight: 600; }
+
+  /* ===== TODAY HERO (Daily Mode) ===== */
+  .today-hero {
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    color: white;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .today-hero::after {
+    content: '';
+    position: absolute;
+    top: -40%; right: -10%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(200,152,95,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .today-hero .hero-greeting {
+    font-family: var(--font-display);
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .today-hero .hero-date {
+    font-size: 0.82em;
+    opacity: 0.7;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .today-hero .hero-now {
+    background: rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-now .now-label {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.6;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .hero-now .now-supps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .now-pill {
+    background: rgba(200,152,95,0.25);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.82em;
+    font-weight: 600;
+    border: 1px solid rgba(200,152,95,0.3);
+  }
+
+  .now-pill.highlight {
+    background: var(--gold);
+    color: var(--purple-deep);
+    border-color: var(--gold);
+  }
+
+  /* ===== QUICK STATS ROW ===== */
+  .quick-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .qs-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: box-shadow 0.2s;
+  }
+
+  .qs-card:hover { box-shadow: var(--shadow-hover); }
+
+  .qs-card .qs-value {
+    font-family: var(--font-display);
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .qs-card .qs-label {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  .qs-win .qs-value { color: var(--win); }
+  .qs-win .qs-label { color: var(--win); }
+  .qs-alert .qs-value { color: var(--alert); }
+  .qs-alert .qs-label { color: var(--alert); }
+  .qs-caution .qs-value { color: var(--caution); }
+  .qs-caution .qs-label { color: var(--caution); }
+
+  /* ===== SUPPLEMENT TIMELINE (Daily Hero) ===== */
+  .supp-timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 20px 0 28px;
+  }
+
+  .supp-slot {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--border);
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .supp-slot.is-now {
+    border-top-color: var(--gold);
+    box-shadow: 0 4px 24px rgba(200, 152, 95, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .supp-slot.is-now::after {
+    content: 'NOW';
+    position: absolute;
+    top: 8px; right: 10px;
+    font-size: 0.6em;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    background: var(--panda-bg);
+    padding: 1px 8px;
+    border-radius: 3px;
+  }
+
+  .supp-slot.is-done { opacity: 1; }  /* no visual penalty for past slots */
+
+  .slot-time {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--purple-light);
+    margin-bottom: 6px;
+  }
+
+  .slot-meal {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--purple-deep);
+    margin-bottom: 10px;
+  }
+
+  .slot-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .slot-pill {
+    font-size: 0.78em;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background: var(--neutral-bg);
+    color: var(--purple);
+    font-weight: 500;
+  }
+
+  .slot-pill.critical {
+    background: var(--elephant-bg);
+    color: var(--elephant);
+    font-weight: 600;
+  }
+
+  .slot-note {
+    font-size: 0.72em;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ===== BP SECTION (Daily) ===== */
+  .bp-widget {
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+
+  .bp-widget h3 { margin-top: 0; }
+
+  .bp-targets {
+    display: flex;
+    gap: 16px;
+    margin: 10px 0 16px;
+    font-size: 0.78em;
+  }
+
+  .bp-target-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bp-target-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .bp-sparkline {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 60px;
+    margin: 12px 0;
+    padding: 4px 0;
+  }
+
+  .bp-bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .bp-bar {
+    width: 100%;
+    max-width: 28px;
+    border-radius: 3px 3px 0 0;
+    min-height: 4px;
+    transition: height 0.5s ease;
+  }
+
+  .bp-bar-label {
+    font-size: 0.6em;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  .bp-log-table {
+    width: 100%;
+    font-size: 0.82em;
+    border-collapse: collapse;
+  }
+
+  .bp-log-table th {
+    text-align: left;
+    padding: 6px 10px;
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--purple-light);
+    border-bottom: 2px solid var(--border);
+    font-weight: 700;
+  }
+
+  .bp-log-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bp-val { font-weight: 700; font-size: 1.05em; }
+  .bp-val.low { color: var(--alert); }
+  .bp-val.normal { color: var(--win); }
+  .bp-val.high { color: var(--caution); }
+
+  /* ===== COLLAPSIBLE SECTIONS ===== */
+  details {
+    margin: 16px 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  details > summary {
+    cursor: pointer;
+    padding: 14px 20px;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1em;
+    color: var(--purple-deep);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  details > summary:hover { box-shadow: var(--shadow-hover); }
+
+  details > summary::after {
+    content: '+';
+    font-size: 1.3em;
+    color: var(--purple-light);
+    font-weight: 300;
+    transition: transform 0.2s;
+  }
+
+  details[open] > summary::after {
+    content: '\2212';
+  }
+
+  details[open] > summary {
+    border-radius: var(--radius) var(--radius) 0 0;
+    margin-bottom: 0;
+  }
+
+  details > .detail-body {
+    background: white;
+    padding: 20px 24px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  /* ===== STATUS CARDS ===== */
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .status-card {
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid;
+    box-shadow: var(--shadow);
+    background: white;
+    transition: box-shadow 0.2s;
+  }
+
+  .status-card:hover { box-shadow: var(--shadow-hover); }
+
+  .status-card .card-label {
+    font-size: 0.68em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .status-card .card-value {
+    font-family: var(--font-display);
+    font-size: 1.25em;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .status-card .card-note { font-size: 0.78em; color: var(--text-secondary); }
+
+  .card-win { border-color: var(--win); }
+  .card-win .card-label, .card-win .card-value { color: var(--win); }
+  .card-caution { border-color: var(--caution); }
+  .card-caution .card-label, .card-caution .card-value { color: var(--caution); }
+  .card-alert { border-color: var(--alert); }
+  .card-alert .card-label, .card-alert .card-value { color: var(--alert); }
+  .card-neutral { border-color: var(--neutral); }
+  .card-neutral .card-label, .card-neutral .card-value { color: var(--neutral); }
+
+  /* ===== POWER CURVE ===== */
+  .power-level {
+    display: flex;
+    align-items: stretch;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+
+  .power-level:hover { box-shadow: var(--shadow-hover); }
+
+  .power-bar { width: 5px; flex-shrink: 0; }
+
+  .power-content { flex: 1; padding: 18px 22px; }
+
+  .level-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .level-icon { font-size: 1.3em; width: 32px; text-align: center; }
+
+  .level-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95em;
+  }
+
+  .level-pct {
+    font-size: 0.7em;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  .level-body { font-size: 0.9em; line-height: 1.6; }
+
+  .cascade-inline {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.5);
+    font-size: 0.85em;
+  }
+
+  .cascade-arrow { color: var(--gold); font-weight: bold; margin: 0 4px; }
+
+  /* ===== CASCADE MAP ===== */
+  .cascade-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    background: white;
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+  }
+
+  .cascade-source {
+    font-weight: 700;
+    font-size: 0.88em;
+    padding: 6px 16px;
+    border-radius: var(--radius-sm);
+    color: white;
+    white-space: nowrap;
+  }
+
+  .cascade-targets { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .cascade-target {
+    font-size: 0.78em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    border: 1px solid;
+  }
+
+  .arrow-sym { color: var(--gold); font-weight: bold; font-size: 1.1em; }
+
+  /* System blocks */
+  .sys-block {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.82em;
+    font-weight: 600;
+    margin: 2px;
+    border: 1px solid;
+  }
+
+  .sb-immune { background: var(--immune-bg); color: var(--immune); border-color: var(--immune); }
+  .sb-gut { background: var(--gut-bg); color: var(--gut); border-color: var(--gut); }
+  .sb-endocrine { background: var(--endocrine-bg); color: var(--endocrine); border-color: var(--endocrine); }
+  .sb-nervous { background: var(--nervous-bg); color: var(--nervous); border-color: var(--nervous); }
+  .sb-skeletal { background: var(--skeletal-bg); color: var(--skeletal); border-color: var(--skeletal); }
+  .sb-circulatory { background: var(--circulatory-bg); color: var(--circulatory); border-color: var(--circulatory); }
+  .sb-reproductive { background: var(--reproductive-bg); color: var(--reproductive); border-color: var(--reproductive); }
+  .sb-urinary { background: var(--urinary-bg); color: var(--urinary); border-color: var(--urinary); }
+  .sb-respiratory { background: var(--respiratory-bg); color: var(--respiratory); border-color: var(--respiratory); }
+  .sb-muscular { background: var(--muscular-bg); color: var(--muscular); border-color: var(--muscular); }
+  .sb-liver { background: var(--liver-bg); color: var(--liver); border-color: var(--liver); }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.85em;
+  }
+
+  thead th {
+    background: var(--purple-deep);
+    color: white;
+    padding: 9px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  thead th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+  thead th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr:nth-child(even) { background: rgba(90, 74, 122, 0.02); }
+  tbody tr:hover { background: rgba(200, 152, 95, 0.06); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.78em;
+    font-weight: 600;
+  }
+
+  .badge-win { background: var(--win-bg); color: var(--win); }
+  .badge-caution { background: var(--caution-bg); color: var(--caution); }
+  .badge-alert { background: var(--alert-bg); color: var(--alert); }
+  .badge-done { background: #e8f2ec; color: #5a8a72; }
+  .badge-pending { background: #faf3eb; color: #c8985f; }
+  .badge-urgent { background: #f9ecea; color: #b85450; }
+
+  .gap-leverage {
+    font-size: 0.68em;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  .lev-high { background: var(--elephant-bg); color: var(--elephant); }
+  .lev-med { background: var(--panda-bg); color: var(--panda); }
+  .lev-low { background: var(--rat-bg); color: var(--rat); }
+
+  /* Lab category rows */
+  .lab-cat {
+    font-weight: 700 !important;
+    font-size: 0.82em !important;
+    letter-spacing: 0.3px;
+  }
+
+  /* ===== INFO BOXES ===== */
+  .info-box {
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    margin: 14px 0;
+    font-size: 0.88em;
+    border-left: 4px solid;
+    line-height: 1.55;
+  }
+
+  .info-box .src-label {
+    font-size: 0.68em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .info-marshall { background: #faf3eb; border-color: var(--gold); }
+  .info-marshall .src-label { color: var(--gold-deep); }
+  .info-koch { background: var(--neutral-bg); border-color: var(--purple-light); }
+  .info-koch .src-label { color: var(--purple-light); }
+  .info-healendo { background: var(--gut-bg); border-color: var(--gut); }
+  .info-healendo .src-label { color: var(--gut); }
+  .info-source { background: var(--elephant-bg); border-color: var(--purple); }
+  .info-source .src-label { color: var(--purple); }
+
+  /* ===== WINS WALL ===== */
+  .wins-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .win-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--win);
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .win-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .win-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  .win-card .win-metric {
+    font-family: var(--font-display);
+    font-size: 1.5em;
+    font-weight: 900;
+    color: var(--win);
+    line-height: 1.1;
+  }
+
+  .win-card .win-label {
+    font-size: 0.78em;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .win-card .win-detail {
+    font-size: 0.85em;
+    margin-top: 8px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ===== POSTURE ===== */
+  .posture-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+  }
+
+  .posture-col {
+    text-align: center;
+  }
+
+  .posture-col-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--purple);
+    margin-bottom: 12px;
+    font-size: 0.95em;
+  }
+
+  .posture-col-label .date-tag {
+    font-family: var(--font-ui);
+    font-size: 0.72em;
+    color: var(--text-secondary);
+    font-weight: 500;
+    display: block;
+  }
+
+  .posture-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .posture-slot {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .posture-placeholder {
+    width: 100%;
+    height: 160px;
+    background: var(--neutral-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple-light);
+    font-size: 0.78em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .posture-slot-label {
+    padding: 8px;
+    font-size: 0.72em;
+    font-weight: 600;
+    color: var(--purple);
+    text-align: center;
+  }
+
+  /* ===== VIEW MODE TOGGLE ===== */
+  .view-daily .full-only { display: none !important; }
+  .view-full .daily-only { display: none !important; }
+
+  /* ===== FOOTER ===== */
+  .footer-note {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border);
+    font-size: 0.78em;
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .mobile-nav { display: block; }
+    .mobile-header { display: block; }
+    .main { margin-left: 0; padding: 72px 16px 100px; max-width: 100%; }
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.2em; }
+    .quick-stats { grid-template-columns: repeat(2, 1fr); }
+    .supp-timeline { grid-template-columns: repeat(2, 1fr); }
+    .posture-compare { grid-template-columns: 1fr; }
+    .posture-photos { grid-template-columns: 1fr 1fr; }
+    .wins-grid { grid-template-columns: 1fr; }
+    .cascade-row { flex-direction: column; align-items: flex-start; }
+    .today-hero { padding: 20px; border-radius: 12px; }
+    .today-hero .hero-greeting { font-size: 1.2em; }
+    table { font-size: 0.78em; }
+    thead th, tbody td { padding: 7px 8px; }
+    .status-grid { grid-template-columns: 1fr; }
+    .bp-widget { padding: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .supp-timeline { grid-template-columns: 1fr 1fr; }
+    .quick-stats { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ===== SCROLL ANIMATION ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body class="view-daily">
+
+<!-- ===== GLOBAL HUB BANNER (synced across all pages) ===== -->
+<style>
+  .global-hub-banner {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(90,74,122,0.08);
+  }
+  .ghb-faith {
+    text-align: center;
+    padding: 14px 24px 10px;
+    background: linear-gradient(135deg, #faf7f5, #f5f0ee);
+    border-bottom: 1px solid #e8e2dd;
+  }
+  .ghb-mission {
+    font-size: 0.72rem; color: #5a4a7a; letter-spacing: 0.04em;
+    font-weight: 500; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .ghb-piper {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic; color: #3d2a52; font-size: 0.88rem; margin-bottom: 4px;
+  }
+  .ghb-verse {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic; color: #666; font-size: 0.82rem; line-height: 1.4;
+  }
+  .ghb-verseref {
+    font-family: 'Inter', sans-serif; font-size: 0.7rem; color: #999; margin-top: 2px;
+  }
+  .ghb-nav {
+    background: #fff; border-bottom: 2px solid #e8e2dd; display: flex; padding: 0;
+  }
+  .ghb-nav a {
+    flex: 1; text-align: center; padding: 0.7rem 1rem;
+    color: #999; font-size: 0.82rem; font-weight: 500;
+    border-bottom: 2px solid transparent; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .ghb-nav a:hover { color: #5a4a7a; background: rgba(90,74,122,0.04); }
+  .ghb-nav a.active { color: #5a4a7a; border-bottom-color: #c8985f; font-weight: 600; }
+  /* Push existing layout down to make room for banner */
+  .sidebar { top: 168px !important; height: calc(100vh - 168px) !important; }
+  .main { padding-top: 188px !important; }
+  .mobile-header { top: 168px !important; }
+  @media (max-width: 768px) {
+    .global-hub-banner .ghb-faith { padding: 10px 16px 6px; }
+    .global-hub-banner .ghb-mission { font-size: 0.62rem; }
+    .global-hub-banner .ghb-piper { font-size: 0.78rem; }
+    .global-hub-banner .ghb-verse { font-size: 0.72rem; }
+    .global-hub-banner .ghb-nav a { padding: 0.55rem 0.5rem; font-size: 0.72rem; }
+    .main { padding-top: 168px !important; }
+  }
+</style>
+<div class="global-hub-banner">
+  <div class="ghb-faith">
+    <div class="ghb-mission">spread a passion for the Supremacy of God in all things for the joy of all peoples</div>
+    <div class="ghb-piper">"God is most glorified in us when we are most satisfied in Him"</div>
+    <div class="ghb-verse">"For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do."</div>
+    <div class="ghb-verseref">Ephesians 2:10</div>
+  </div>
+  <nav class="ghb-nav">
+    <a href="index.html">Anchor</a>
+    <a href="index.html">Word</a>
+    <a href="index.html">Moments</a>
+    <a href="body-ecology.html" class="active">Health</a>
+    <a href="system.html">System</a>
+  </nav>
+</div>
+
+<!-- ===== MOBILE HEADER ===== -->
+<header class="mobile-header">
+  Lala's Body Ecology
+  <small id="mobileDate"></small>
+</header>
+
+<!-- ===== DESKTOP SIDEBAR ===== -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <h2>Lala's Body Ecology</h2>
+    <small>80/20 Health Dashboard</small>
+  </div>
+
+  <div class="mode-toggle">
+    <button class="active" onclick="setView('daily')">Today</button>
+    <button onclick="setView('full')">Full Reference</button>
+  </div>
+
+  <div class="nav-section">Daily</div>
+  <a href="#today" class="active">Today's Protocol</a>
+
+  <div class="nav-section full-only">The Power Curve</div>
+  <a href="#overview" class="full-only">80/20 Overview</a>
+  <a href="#power-curve" class="full-only">Leverage Map <span class="tag tag-e">Core</span></a>
+  <a href="#cascade" class="full-only">Cascade Connections</a>
+
+  <div class="nav-section full-only">80/20 Interventions</div>
+  <a href="#elephant" class="full-only">Gut Ecology <span class="tag tag-e">1%</span></a>
+  <a href="#bear" class="full-only">Absorption + Nerves <span class="tag tag-b">4%</span></a>
+  <a href="#panda" class="full-only">Nutrition + Movement <span class="tag tag-p">15%</span></a>
+
+  <div class="nav-section full-only">Body Systems</div>
+  <a href="#systems" class="full-only">11-System Map</a>
+  <a href="#posture" class="full-only">Posture</a>
+
+  <div class="nav-section full-only">Lab Dashboard</div>
+  <a href="#labs-snapshot" class="full-only">At-a-Glance</a>
+  <a href="#labs-full" class="full-only">Functional Ranges</a>
+  <a href="#labs-trends" class="full-only">Trends</a>
+
+  <div class="nav-section full-only">Tracking</div>
+  <a href="#bp-section" class="full-only">BP Tracking</a>
+  <a href="#wins" class="full-only">Wins Wall</a>
+
+  <div class="nav-section full-only">Action Plan</div>
+  <a href="#gaps" class="full-only">Diagnostic Gaps (24)</a>
+  <a href="#log" class="full-only">Update Log</a>
+</nav>
+
+<!-- ===== MOBILE BOTTOM NAV ===== -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <a href="#today" class="active" onclick="setView('daily')">
+      <span class="nav-icon">&#x2600;</span>Today
+    </a>
+    <a href="#bp-section" onclick="setView('full')">
+      <span class="nav-icon">&#x2764;</span>Track
+    </a>
+    <a href="#labs-snapshot" onclick="setView('full')">
+      <span class="nav-icon">&#x1F9EA;</span>Labs
+    </a>
+    <a href="#overview" onclick="setView('full')">
+      <span class="nav-icon">&#x1F4D6;</span>Reference
+    </a>
+  </div>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="main">
+
+<!-- ============================================ -->
+<!-- DAILY VIEW -->
+<!-- ============================================ -->
+
+<div id="today" class="daily-only">
+  <div class="today-hero">
+    <div class="hero-greeting" id="greeting">Good morning, Lala</div>
+    <div class="hero-date" id="heroDate">Wednesday, April 2, 2026</div>
+    <div class="hero-now">
+      <div class="now-label" id="nowLabel">Next up</div>
+      <div class="now-supps" id="nowSupps">
+        <span class="now-pill highlight">Ultra-Zyme</span>
+        <span class="now-pill">with first bite</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supplement Schedule - CONSOLIDATED MORNING STACK (Apr 7, 2026 update) -->
+  <h3>Today's Supplements — Consolidated Morning Stack</h3>
+  <p style="font-size: 0.85em; color: var(--text-secondary); margin-bottom: 14px;">All fat-soluble supplements now taken together at breakfast within a 10-minute window. One Ultra-Zyme dose at first bite activates ox bile + enzymes for the whole stack. Magnesium stays at bedtime for sleep benefit.</p>
+  <div class="supp-timeline" id="suppTimeline">
+    <div class="supp-slot" data-hours="7">
+      <div class="slot-time">T−20 min (~7:40 AM)</div>
+      <div class="slot-meal">Morning Tea (before breakfast)</div>
+      <div class="slot-pills">
+        <span class="slot-pill">Turmeric + Ginger + Pepper</span>
+        <span class="slot-pill">Coconut Oil 1 tsp</span>
+        <span class="slot-pill">Calamansi</span>
+      </div>
+      <div class="slot-note">Primes digestion + stimulates bile before the meal</div>
+    </div>
+    <div class="supp-slot" data-hours="8">
+      <div class="slot-time">T+0 (1st bite, ~8:00 AM)</div>
+      <div class="slot-meal">Breakfast — Ultra-Zyme FIRST</div>
+      <div class="slot-pills">
+        <span class="slot-pill critical">Ultra-Zyme (1st bite)</span>
+      </div>
+      <div class="slot-note">Must hit food to activate ox bile + enzymes before fat absorption begins. Non-negotiable.</div>
+    </div>
+    <div class="supp-slot" data-hours="8">
+      <div class="slot-time">T+2 min (2nd–3rd bite)</div>
+      <div class="slot-meal">Fat-Soluble Core Stack</div>
+      <div class="slot-pills">
+        <span class="slot-pill">Vitamin D3 5,000 IU + K2 (MK-7)</span>
+        <span class="slot-pill">Vitamin A 10,000 IU</span>
+      </div>
+      <div class="slot-note">D3 + K2 synergistic. A + D3 safe at these doses. Fat required.</div>
+    </div>
+    <div class="supp-slot" data-hours="8">
+      <div class="slot-time">T+5 min (mid-meal)</div>
+      <div class="slot-meal">Mitochondrial + Omega</div>
+      <div class="slot-pills">
+        <span class="slot-pill">Omega-3 Fish Oil</span>
+        <span class="slot-pill">CoQ10 200 mg</span>
+      </div>
+      <div class="slot-note">Both fat-soluble, same absorption window</div>
+    </div>
+    <div class="supp-slot" data-hours="8">
+      <div class="slot-time">T+10 min (end of meal)</div>
+      <div class="slot-meal">Water-Soluble</div>
+      <div class="slot-pills">
+        <span class="slot-pill">Vitamin C 500–1,000 mg</span>
+      </div>
+      <div class="slot-note">Water-soluble, gentle on stomach after eating</div>
+    </div>
+    <div class="supp-slot" data-hours="21">
+      <div class="slot-time">9:00 PM (separate)</div>
+      <div class="slot-meal">Bedtime — Sleep Support</div>
+      <div class="slot-pills">
+        <span class="slot-pill">Magnesium Glycinate</span>
+      </div>
+      <div class="slot-note">Glycine promotes sleep. Moving to morning loses this benefit. Tie to brushing teeth.</div>
+    </div>
+  </div>
+
+  <div style="background:#fef9e7;border-left:4px solid #f39c12;padding:12px 16px;margin:16px 0;border-radius:6px;font-size:0.88em;">
+    <strong>⚠️ Breakfast must contain real fat</strong> for this stack to work. <strong>Avocado removed Apr 7, 2026</strong> — bloat trigger (high-FODMAP sorbitol). Good options now: eggs cooked in coconut oil, sardines or mackerel, eggs with EVOO drizzle, small handful of macadamia nuts or pumpkin seeds, or ghee. No low-fat breakfasts on this protocol. Ultra-Zyme still goes at the first bite of any other fatty meal during the day (for digestion), but you don't need the supplement stack again — fat-soluble vitamins have half-lives of days to weeks.
+  </div>
+
+  <!-- Daily Reminders -->
+  <details open>
+    <summary>Daily Non-Negotiables</summary>
+    <div class="detail-body">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.88em;">
+        <div><strong>Morning Tea</strong><br>Turmeric + ginger + black pepper + coconut oil 1tsp + calamansi. 20min before breakfast.</div>
+        <div><strong>Sun Window</strong><br>10-11 AM, 10-15 min. Forearms + shins. No sunscreen. (7-9am = UVA only, no Vit D)</div>
+        <div><strong>Hourly Stand</strong><br>Stand + walk across room every hour. Marshall: erases almost all sitting damage.</div>
+        <div><strong>Water Rule</strong><br>3-4L daily. 20 min before or 1 hour after meals. Never during.</div>
+        <div><strong>Pelvic Floor: Posture Reset</strong><br>Elongated S-curve, not military "chest out." Imagine being beamed up from the top of your head while tailbone drops slightly. Check every 30 min.</div>
+        <div><strong>Pelvic Floor: Breathing</strong><br>Hypopressive breathing 15-20 min. Diaphragm + rib breathing (not chest breathing). Safe for DDD + hemangioma. This IS your core work.</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Cascade Connections with How-To Notes (Daily Reminder) -->
+  <h3 style="margin-top: 28px;">Your 80/20 Cascade: What to Focus On</h3>
+  <p style="font-size: 0.85em; color: var(--text-secondary); margin-bottom: 14px;">Each fix ripples into multiple systems. These are the highest-leverage actions for your body right now.</p>
+
+  <div class="cascade-row" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <div class="cascade-source" style="background: var(--gut);">Fix Gut</div>
+      <span class="arrow-sym">&rarr;</span>
+      <div class="cascade-targets">
+        <span class="cascade-target sb-immune">Immune calms</span>
+        <span class="cascade-target sb-endocrine">Estrogen metabolized</span>
+        <span class="cascade-target sb-reproductive">Endo starved</span>
+        <span class="cascade-target sb-nervous">Pain drops</span>
+        <span class="cascade-target sb-liver">Liver load down</span>
+      </div>
+    </div>
+    <div style="font-size: 0.82em; color: var(--text-secondary); padding: 8px 12px; background: var(--gut-bg); border-radius: 6px; width: 100%;">
+      <strong style="color: var(--gut);">How:</strong> Atchara 2-3 tbsp at every fatty meal. Bitter greens (ampalaya, arugula) to stimulate bile. Avoid high-FODMAP triggers until SIBO test done. Probiotics next purchase (NaturesPlus 40B CFU).
+    </div>
+  </div>
+
+  <div class="cascade-row" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <div class="cascade-source" style="background: var(--endocrine);">Fix Absorption</div>
+      <span class="arrow-sym">&rarr;</span>
+      <div class="cascade-targets">
+        <span class="cascade-target sb-skeletal">Vit D: bones</span>
+        <span class="cascade-target sb-reproductive">Vit A: endo cells</span>
+        <span class="cascade-target sb-immune">Omega-3: inflammation</span>
+        <span class="cascade-target sb-nervous">Mg: sleep/cortisol</span>
+        <span class="cascade-target sb-muscular">Skin clears</span>
+      </div>
+    </div>
+    <div style="font-size: 0.82em; color: var(--text-secondary); padding: 8px 12px; background: var(--endocrine-bg); border-radius: 6px; width: 100%;">
+      <strong style="color: var(--endocrine);">How:</strong> Ultra-Zyme with FIRST BITE of every fatty meal. Non-negotiable. Fat-soluble supps (D3, A, CoQ10, Omega-3) are useless without it. Always eat fat at every meal (avocado, EVOO, sardines).
+    </div>
+  </div>
+
+  <div class="cascade-row" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <div class="cascade-source" style="background: var(--nervous);">Fix Nervous System</div>
+      <span class="arrow-sym">&rarr;</span>
+      <div class="cascade-targets">
+        <span class="cascade-target sb-immune">Pain perception</span>
+        <span class="cascade-target sb-endocrine">Cortisol normalizes</span>
+        <span class="cascade-target sb-gut">Digestion improves</span>
+        <span class="cascade-target sb-muscular">Pelvic floor releases</span>
+        <span class="cascade-target sb-skeletal">Posture corrects</span>
+      </div>
+    </div>
+    <div style="font-size: 0.82em; color: var(--text-secondary); padding: 8px 12px; background: var(--nervous-bg); border-radius: 6px; width: 100%;">
+      <strong style="color: var(--nervous);">How:</strong> Protect 8-9 hours sleep (Mg Glycinate at bedtime). Rest time is not lazy, it's parasympathetic healing. Faith + prayer = nervous system regulation (you self-rated 3/10 calm, that's a strength). Walk 20 min daily.
+    </div>
+  </div>
+
+  <div class="cascade-row" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <div class="cascade-source" style="background: var(--skeletal);">Fix Pelvic Floor</div>
+      <span class="arrow-sym">&rarr;</span>
+      <div class="cascade-targets">
+        <span class="cascade-target sb-skeletal">Spine decompresses</span>
+        <span class="cascade-target sb-nervous">L4-L5 nerve relief</span>
+        <span class="cascade-target sb-gut">Bowel function</span>
+        <span class="cascade-target sb-urinary">Bladder pressure</span>
+      </div>
+    </div>
+    <div style="font-size: 0.82em; color: var(--text-secondary); padding: 8px 12px; background: var(--skeletal-bg); border-radius: 6px; width: 100%;">
+      <strong style="color: var(--skeletal);">How:</strong> Hypopressive breathing daily (15-20 min). Posture resets every 30 min (alien beam cue). Glute activation, not squats. NO kegels until PT assesses hypertonic vs hypotonic. Book pelvic floor PT. Disclose L5 hemangioma to any PT.
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== BP TRACKING (Full view only) ===== -->
+<div id="bp-section" class="full-only">
+  <h2>Blood Pressure</h2>
+  <div class="bp-widget">
+    <div class="bp-targets">
+      <div class="bp-target-item"><div class="bp-target-dot" style="background: var(--win);"></div> Good: 100-120 / 65-80</div>
+      <div class="bp-target-item"><div class="bp-target-dot" style="background: var(--caution);"></div> Watch: &gt;130 / &gt;85</div>
+      <div class="bp-target-item"><div class="bp-target-dot" style="background: var(--alert);"></div> Flag: &lt;95 / &lt;60</div>
+    </div>
+
+    <h3 style="margin-top: 12px;">April 2026</h3>
+
+    <!-- BP Sparkline -->
+    <div class="bp-sparkline">
+      <div class="bp-bar-group">
+        <div class="bp-bar" style="height: 46px; background: var(--alert);" title="SYS 92"></div>
+        <div class="bp-bar" style="height: 29px; background: rgba(184,84,80,0.5);" title="DIA 58"></div>
+        <span class="bp-bar-label">Apr 1</span>
+      </div>
+      <!-- NEW READINGS: add bar groups here -->
+      <div class="bp-bar-group" style="opacity: 0.15;">
+        <div class="bp-bar" style="height: 50px; background: var(--border);"></div>
+        <div class="bp-bar" style="height: 35px; background: var(--border);"></div>
+        <span class="bp-bar-label">Apr 2</span>
+      </div>
+      <div class="bp-bar-group" style="opacity: 0.15;">
+        <div class="bp-bar" style="height: 50px; background: var(--border);"></div>
+        <div class="bp-bar" style="height: 35px; background: var(--border);"></div>
+        <span class="bp-bar-label">Apr 3</span>
+      </div>
+      <div class="bp-bar-group" style="opacity: 0.15;">
+        <div class="bp-bar" style="height: 50px; background: var(--border);"></div>
+        <div class="bp-bar" style="height: 35px; background: var(--border);"></div>
+        <span class="bp-bar-label">Apr 4</span>
+      </div>
+      <div class="bp-bar-group" style="opacity: 0.15;">
+        <div class="bp-bar" style="height: 50px; background: var(--border);"></div>
+        <div class="bp-bar" style="height: 35px; background: var(--border);"></div>
+        <span class="bp-bar-label">Apr 5</span>
+      </div>
+      <div class="bp-bar-group" style="opacity: 0.15;">
+        <div class="bp-bar" style="height: 50px; background: var(--border);"></div>
+        <div class="bp-bar" style="height: 35px; background: var(--border);"></div>
+        <span class="bp-bar-label">Apr 6</span>
+      </div>
+      <div class="bp-bar-group" style="opacity: 0.15;">
+        <div class="bp-bar" style="height: 50px; background: var(--border);"></div>
+        <div class="bp-bar" style="height: 35px; background: var(--border);"></div>
+        <span class="bp-bar-label">Apr 7</span>
+      </div>
+    </div>
+
+    <!-- BP Log -->
+    <table class="bp-log-table">
+      <thead><tr><th>Date</th><th>Slot</th><th>SYS</th><th>DIA</th><th>Pulse</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Apr 1</td><td>Evening</td>
+          <td><span class="bp-val low">92</span></td>
+          <td><span class="bp-val low">58</span></td>
+          <td><span class="bp-val normal">71</span></td>
+          <td>Hypotensive. Low sodium (133.2). First logged reading.</td>
+        </tr>
+        <!-- NEW BP READINGS GO HERE -->
+      </tbody>
+    </table>
+
+    <div class="info-box info-source" style="margin-top: 14px;">
+      <div class="src-label">Protocol</div>
+      3x daily: morning (fasting), 12pm, 6pm. Same arm, sit 3-5 min, back supported, feet flat, no talking. Retake if off (wait 2 min).
+    </div>
+  </div>
+</div>
+
+<!-- ===== WINS WALL (Full view only) ===== -->
+<h2 id="wins" class="full-only">Wins Wall</h2>
+<p style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 4px;" class="full-only">Richard Koch: find your "happiness islands" and multiply them.</p>
+
+<div class="wins-grid full-only">
+  <div class="win-card"><div class="win-metric">192 &rarr; &lt;6</div><div class="win-label">CRP (Inflammation)</div><div class="win-detail">32x improvement in 2 years. Anti-inflammatory diet and lifestyle changes working at a measurable biological level.</div></div>
+  <div class="win-card"><div class="win-metric">HbA1c 4.30%</div><div class="win-label">Blood Sugar Control</div><div class="win-detail">Top tier. 8am-8pm eating window + whole-food protocol locked in.</div></div>
+  <div class="win-card"><div class="win-metric">TSH 1.08</div><div class="win-label">Thyroid Clear</div><div class="win-detail">First-ever thyroid panel: right in the functional sweet spot (1.0-2.0).</div></div>
+  <div class="win-card"><div class="win-metric">TG:HDL 1.17</div><div class="win-label">CV Risk Ratio</div><div class="win-detail">Excellent. Better predictor than LDL alone. Omega-3 doing its job.</div></div>
+  <div class="win-card"><div class="win-metric">Ultra-Zyme</div><div class="win-label">15-Year Gap Closed</div><div class="win-detail">First time since 2010 with enzyme + ox bile support. Unlocks A, D, E, K, omega-3 absorption.</div></div>
+  <div class="win-card"><div class="win-metric">7 of 9</div><div class="win-label">Endo-9 Nutrients</div><div class="win-detail">Only zinc (Phase 2) and iron (needs ferritin first) remaining.</div></div>
+  <div class="win-card"><div class="win-metric">Amenorrheic</div><div class="win-label">Mirena Working</div><div class="win-detail">Heavy bleeding resolved. Confirmed in place. Cul-de-sac improved.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!-- FULL REFERENCE VIEW -->
+<!-- ============================================ -->
+
+<div class="full-only">
+
+<!-- 80/20 Overview -->
+<h2 id="overview">The 80/20 Health Principle</h2>
+
+<div class="info-box info-marshall">
+  <div class="src-label">Perry Marshall, 80/20 Sales &amp; Marketing</div>
+  80/20 is a <strong>fractal</strong>: the pattern repeats at every level. 20% of the top 20% produces 80% of the top 80%, meaning <strong>1% of your actions can produce 50% of your results.</strong> Find the one root cause that cascades into five systems: 80/20^5.
+</div>
+
+<div class="info-box info-koch">
+  <div class="src-label">Richard Koch, The 80/20 Principle</div>
+  <strong>50% of illness is related to personal behavior</strong>, while only 10% comes from medical care. The vital few: better nutrition, health education, self-care, and personal fitness. What you think and feel directly affects your immune system.
+</div>
+
+<div class="info-box info-healendo">
+  <div class="src-label">Katie Edmonds, Heal Endo</div>
+  Endometriosis is an <strong>inflammatory condition rooted in immune dysfunction</strong>, not a hormonal period problem. Biggest cascading systems: immune (master switch), gut/microbiome (home of immune + estrobolome), endocrine (insulin + cortisol), nervous system (central sensitization).
+</div>
+
+<!-- Power Curve -->
+<h2 id="power-curve">The Power Curve: Your 80/20 Leverage Map</h2>
+<p style="font-size: 0.9em; margin-bottom: 16px;">Perry Marshall's fractal: the top of the curve produces exponentially more results. Fix the elephant first.</p>
+
+<div class="power-level">
+  <div class="power-bar" style="background: var(--elephant);"></div>
+  <div class="power-content" style="background: var(--elephant-bg);">
+    <div class="level-header">
+      <span class="level-icon">&#x1F418;</span>
+      <span class="level-name" style="color: var(--elephant);">THE ELEPHANT (1%)</span>
+      <span class="level-pct" style="background: var(--elephant); color: white;">50% of results</span>
+    </div>
+    <div class="level-body">
+      <strong>Fix your gut ecology.</strong> Bacterial dysbiosis and leaky gut release LPS toxins that migrate to the pelvis, triggering chronic immune attack at endo lesion sites. Your gut houses the immune system AND the estrobolome. Fix one organ, fix three systems.
+      <div class="cascade-inline"><strong>Cascade:</strong> Gut heals <span class="cascade-arrow">&rarr;</span> immune calms <span class="cascade-arrow">&rarr;</span> inflammation drops <span class="cascade-arrow">&rarr;</span> estrogen normalizes <span class="cascade-arrow">&rarr;</span> endo lesions starved</div>
+      <div class="cascade-inline" style="margin-top: 4px;"><strong>Status:</strong> SIBO + stool analysis never done. Constipation resolved Mar 30 but root cause unaddressed. Atchara fermentation started.</div>
+    </div>
+  </div>
+</div>
+
+<div class="power-level">
+  <div class="power-bar" style="background: var(--bear);"></div>
+  <div class="power-content" style="background: var(--bear-bg);">
+    <div class="level-header">
+      <span class="level-icon">&#x1F43B;</span>
+      <span class="level-name" style="color: var(--bear);">THE BEARS (4%)</span>
+      <span class="level-pct" style="background: var(--bear); color: white;">30% of results</span>
+    </div>
+    <div class="level-body">
+      <strong>Fix absorption + calm the nervous system.</strong><br>
+      <em>Absorption:</em> 15 years without gallbladder = fat-soluble nutrients flushed. Ultra-Zyme with ox bile is the missing connector.<br>
+      <em>Nervous system:</em> Central sensitization creates phantom pain even after lesions removed. Retrain the nervous system to feel safe.
+      <div class="cascade-inline"><strong>Absorption cascade:</strong> Ox bile <span class="cascade-arrow">&rarr;</span> Vit D (bones) <span class="cascade-arrow">&rarr;</span> Vit A (endo cell death) <span class="cascade-arrow">&rarr;</span> Omega-3 (inflammation) <span class="cascade-arrow">&rarr;</span> Mg (sleep, cortisol)</div>
+      <div class="cascade-inline" style="margin-top: 4px;"><strong>Status:</strong> Ultra-Zyme started Mar 25. Pelvic floor PT not yet consulted. Pain baseline 8/10.</div>
+    </div>
+  </div>
+</div>
+
+<div class="power-level">
+  <div class="power-bar" style="background: var(--panda);"></div>
+  <div class="power-content" style="background: var(--panda-bg);">
+    <div class="level-header">
+      <span class="level-icon">&#x1F43C;</span>
+      <span class="level-name" style="color: var(--panda);">THE PANDAS (15%)</span>
+      <span class="level-pct" style="background: var(--panda); color: white;">15% of results</span>
+    </div>
+    <div class="level-body">
+      <strong>Nutrition protocol + movement.</strong> Endo-9 nutrients, blood sugar balance, walking (Heal Endo's #1 movement for endo), hypopressive breathing.
+      <div class="cascade-inline"><strong>Status:</strong> HbA1c 4.30% (excellent). Diet active. 7/9 Endo-9 supplementing. Walking + hypopressives not yet started.</div>
+    </div>
+  </div>
+</div>
+
+<div class="power-level">
+  <div class="power-bar" style="background: var(--rat);"></div>
+  <div class="power-content" style="background: var(--rat-bg);">
+    <div class="level-header">
+      <span class="level-icon">&#x1F400;</span>
+      <span class="level-name" style="color: var(--rat);">THE RATS (80%)</span>
+      <span class="level-pct" style="background: var(--rat); color: white;">5% of results</span>
+    </div>
+    <div class="level-body">
+      <strong>Deprioritize:</strong> Individual symptom chasing. Expensive consults without baseline data. Supplements without fixing absorption. Exercise without fixing structure. Cosmetic symptoms (milia, KP) that resolve once fat-solubles absorb.
+    </div>
+  </div>
+</div>
+
+<!-- Cascade Map -->
+<h2 id="cascade">Cascade Connections</h2>
+
+<div class="cascade-row">
+  <div class="cascade-source" style="background: var(--gut);">Fix Gut</div>
+  <span class="arrow-sym">&rarr;</span>
+  <div class="cascade-targets">
+    <span class="cascade-target sb-immune">Immune calms</span>
+    <span class="cascade-target sb-endocrine">Estrogen metabolized</span>
+    <span class="cascade-target sb-reproductive">Endo starved</span>
+    <span class="cascade-target sb-nervous">Pain drops</span>
+    <span class="cascade-target sb-liver">Liver load down</span>
+  </div>
+</div>
+<div class="cascade-row">
+  <div class="cascade-source" style="background: var(--endocrine);">Fix Absorption</div>
+  <span class="arrow-sym">&rarr;</span>
+  <div class="cascade-targets">
+    <span class="cascade-target sb-skeletal">Vit D: bones</span>
+    <span class="cascade-target sb-reproductive">Vit A: endo cells</span>
+    <span class="cascade-target sb-immune">Omega-3: inflammation</span>
+    <span class="cascade-target sb-nervous">Mg: sleep/cortisol</span>
+    <span class="cascade-target sb-muscular">Skin clears</span>
+  </div>
+</div>
+<div class="cascade-row">
+  <div class="cascade-source" style="background: var(--nervous);">Fix Nervous System</div>
+  <span class="arrow-sym">&rarr;</span>
+  <div class="cascade-targets">
+    <span class="cascade-target sb-immune">Pain perception</span>
+    <span class="cascade-target sb-endocrine">Cortisol normalizes</span>
+    <span class="cascade-target sb-gut">Digestion improves</span>
+    <span class="cascade-target sb-muscular">Pelvic floor releases</span>
+    <span class="cascade-target sb-skeletal">Posture corrects</span>
+  </div>
+</div>
+<div class="cascade-row">
+  <div class="cascade-source" style="background: var(--skeletal);">Fix Pelvic Floor</div>
+  <span class="arrow-sym">&rarr;</span>
+  <div class="cascade-targets">
+    <span class="cascade-target sb-skeletal">Spine decompresses</span>
+    <span class="cascade-target sb-nervous">L4-L5 nerve relief</span>
+    <span class="cascade-target sb-gut">Bowel function</span>
+    <span class="cascade-target sb-urinary">Bladder pressure</span>
+  </div>
+</div>
+
+<!-- Interventions -->
+<h2 id="elephant">The 1% Elephant: Gut Ecology</h2>
+<div class="status-grid">
+  <div class="status-card card-win"><div class="card-label">Constipation</div><div class="card-value">Resolved</div><div class="card-note">Mar 30. Was 6+ consecutive days.</div></div>
+  <div class="status-card card-win"><div class="card-label">Rectal Bleeding</div><div class="card-value">Resolved</div><div class="card-note">5 clear days as of Mar 30.</div></div>
+  <div class="status-card card-alert"><div class="card-label">SIBO Test</div><div class="card-value">Never Done</div><div class="card-note">Priority next step.</div></div>
+  <div class="status-card card-alert"><div class="card-label">Stool Analysis</div><div class="card-value">Never Done</div><div class="card-note">Microbiome assessment needed.</div></div>
+  <div class="status-card card-caution"><div class="card-label">Probiotics</div><div class="card-value">Deferred</div><div class="card-note">NaturesPlus 40B + Fem-Dophilus next.</div></div>
+  <div class="status-card card-win"><div class="card-label">Atchara</div><div class="card-value">Active</div><div class="card-note">Lacto-fermented, sugar-free.</div></div>
+</div>
+
+<h2 id="bear">The 4% Bears: Absorption + Nervous System</h2>
+<div class="status-grid">
+  <div class="status-card card-win"><div class="card-label">Ultra-Zyme</div><div class="card-value">Active</div><div class="card-note">Ox bile 120mg. Every fatty meal.</div></div>
+  <div class="status-card card-caution"><div class="card-label">Vitamin D</div><div class="card-value">28.52 ng/mL</div><div class="card-note">+72% from 16.53. Still insufficient (target 50+).</div></div>
+  <div class="status-card card-caution"><div class="card-label">Vitamin A</div><div class="card-value">10,000 IU</div><div class="card-note">Needs cycling schedule + retinol test.</div></div>
+  <div class="status-card card-alert"><div class="card-label">Pelvic Floor PT</div><div class="card-value">Never Consulted</div><div class="card-note">Hypertonic vs hypotonic unknown.</div></div>
+  <div class="status-card card-caution"><div class="card-label">Pain Baseline</div><div class="card-value">8/10</div><div class="card-note">Sacrum 7/10. Pelvic tightness 7/10.</div></div>
+  <div class="status-card card-alert"><div class="card-label">HPA Axis</div><div class="card-value">Never Tested</div><div class="card-note">Salivary cortisol needed.</div></div>
+</div>
+
+<h2 id="panda">The 15% Pandas: Nutrition + Movement</h2>
+<div class="status-grid">
+  <div class="status-card card-win"><div class="card-label">Blood Sugar</div><div class="card-value">HbA1c 4.30%</div><div class="card-note">Excellent.</div></div>
+  <div class="status-card card-win"><div class="card-label">Eating Window</div><div class="card-value">8am-8pm</div><div class="card-note">No HPA-stressing fasting.</div></div>
+  <div class="status-card card-win"><div class="card-label">Endo-9</div><div class="card-value">7 of 9</div><div class="card-note">Missing: Zinc, Iron.</div></div>
+  <div class="status-card card-caution"><div class="card-label">Walking</div><div class="card-value">Not Started</div><div class="card-note">20 min daily target.</div></div>
+  <div class="status-card card-caution"><div class="card-label">Hypopressives</div><div class="card-value">Not Started</div><div class="card-note">Safe for DDD + hemangioma.</div></div>
+</div>
+
+<!-- Body Systems -->
+<h2 id="systems">11-System Status Map</h2>
+
+<details>
+  <summary>View Full System Table</summary>
+  <div class="detail-body">
+    <table>
+      <thead><tr><th>System</th><th>Status</th><th>Key Finding</th><th>Leverage</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sys-block sb-immune">Immune</span></td><td><span class="badge badge-caution">Altered</span></td><td>Post-splenectomy. WBC 10.74. NK cells untested.</td><td><span class="gap-leverage lev-high">Elephant</span></td></tr>
+        <tr><td><span class="sys-block sb-gut">Digestive</span></td><td><span class="badge badge-caution">Recovering</span></td><td>No gallbladder. SIBO untested. Ultra-Zyme started.</td><td><span class="gap-leverage lev-high">Elephant</span></td></tr>
+        <tr><td><span class="sys-block sb-endocrine">Endocrine</span></td><td><span class="badge badge-caution">Partial</span></td><td>Thyroid normal. Hormonal panel never done.</td><td><span class="gap-leverage lev-high">Bear</span></td></tr>
+        <tr><td><span class="sys-block sb-nervous">Nervous</span></td><td><span class="badge badge-caution">Guarding</span></td><td>Pain 8/10. Cavernoma grew 80%. Pelvic floor hypertonic.</td><td><span class="gap-leverage lev-high">Bear</span></td></tr>
+        <tr><td><span class="sys-block sb-reproductive">Reproductive</span></td><td><span class="badge badge-alert">Active DIE</span></td><td>Rectal lesion 16.5x6x20mm. Torus obliterated. Mirena in place.</td><td><span class="gap-leverage lev-med">Panda</span></td></tr>
+        <tr><td><span class="sys-block sb-skeletal">Skeletal</span></td><td><span class="badge badge-caution">Compromised</span></td><td>L4-L5 disc bulge. L5 hemangioma. Anterior pelvic tilt.</td><td><span class="gap-leverage lev-high">Bear</span></td></tr>
+        <tr><td><span class="sys-block sb-circulatory">Circulatory</span></td><td><span class="badge badge-alert">Watch</span></td><td>Platelets 1,130. BP 92/58. Sodium 133.20.</td><td><span class="gap-leverage lev-med">Panda</span></td></tr>
+        <tr><td><span class="sys-block sb-urinary">Urinary</span></td><td><span class="badge badge-caution">Unknown</span></td><td>Creatinine 1.17. IC not ruled out. CT urogram not done.</td><td><span class="gap-leverage lev-med">Panda</span></td></tr>
+        <tr><td><span class="sys-block sb-liver">Liver</span></td><td><span class="badge badge-win">OK</span></td><td>AST 22, ALT 30, GGT 28. LDL 131.66.</td><td><span class="gap-leverage lev-low">Rat</span></td></tr>
+        <tr><td><span class="sys-block sb-respiratory">Respiratory</span></td><td><span class="badge badge-caution">Unresolved</span></td><td>Pleural effusion 2024. Never diagnosed.</td><td><span class="gap-leverage lev-med">Panda</span></td></tr>
+        <tr><td><span class="sys-block sb-muscular">Muscular</span></td><td><span class="badge badge-caution">Deconditioned</span></td><td>Sedentary. Quad dominance. Glutes underactive.</td><td><span class="gap-leverage lev-med">Panda</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<!-- Posture -->
+<h2 id="posture">Posture Assessment</h2>
+
+<div class="posture-compare">
+  <div class="posture-col">
+    <div class="posture-col-label">Baseline<span class="date-tag">April 2, 2026</span></div>
+    <div class="posture-photos">
+      <div class="posture-slot"><div class="posture-placeholder">Side L</div><div class="posture-slot-label">Side Left</div></div>
+      <div class="posture-slot"><div class="posture-placeholder">Side R</div><div class="posture-slot-label">Side Right</div></div>
+      <div class="posture-slot"><div class="posture-placeholder">Front</div><div class="posture-slot-label">Front</div></div>
+      <div class="posture-slot"><div class="posture-placeholder">Back</div><div class="posture-slot-label">Back</div></div>
+    </div>
+  </div>
+  <div class="posture-col">
+    <div class="posture-col-label">Next Assessment<span class="date-tag">Target: 3 months</span></div>
+    <div class="posture-photos">
+      <div class="posture-slot"><div class="posture-placeholder" style="border-style: dashed;">Pending</div><div class="posture-slot-label">Side Left</div></div>
+      <div class="posture-slot"><div class="posture-placeholder" style="border-style: dashed;">Pending</div><div class="posture-slot-label">Side Right</div></div>
+      <div class="posture-slot"><div class="posture-placeholder" style="border-style: dashed;">Pending</div><div class="posture-slot-label">Front</div></div>
+      <div class="posture-slot"><div class="posture-placeholder" style="border-style: dashed;">Pending</div><div class="posture-slot-label">Back</div></div>
+    </div>
+  </div>
+</div>
+
+<details>
+  <summary>Posture Findings Detail</summary>
+  <div class="detail-body">
+    <table>
+      <thead><tr><th>Area</th><th>Finding</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Head</td><td>Forward head posture. Chin anterior to shoulder line.</td><td>Self-assessment</td></tr>
+        <tr><td>C7</td><td>Misalignment. Affects thyroid, shoulder bursa, elbows.</td><td>Chiropractor 2021</td></tr>
+        <tr><td>Thoracic</td><td>Hyperkyphosis. Shoulder blades not drawn back.</td><td>Chiro 2021 + MRI 2016</td></tr>
+        <tr><td>L4-L5</td><td>Disc bulge, bilateral foraminal narrowing. Nerve impingement.</td><td>MRI 2016 + Chiro 2021</td></tr>
+        <tr><td>L5</td><td>Vertebral hemangioma. Contraindication for some manipulation.</td><td>MRI 2016</td></tr>
+        <tr><td>Pelvis</td><td>Anterior pelvic tilt. Exaggerated arch. Structural belly protrusion.</td><td>Self-assessment</td></tr>
+        <tr><td>Pelvic Floor</td><td>Suspected hypertonic. Guarding. Never assessed by PT.</td><td>Heal Endo</td></tr>
+        <tr><td>Lower Body</td><td>Quad dominance. Glutes underactive.</td><td>Self-assessment</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box info-healendo" style="margin-top: 14px;">
+      <div class="src-label">Heal Endo: Rehabilitation Sequence</div>
+      <strong>1.</strong> Posture (elongated S-curve). <strong>2.</strong> Diaphragm + rib breathing. <strong>3.</strong> Hypopressives 15-20min 3-5x/week. <strong>4.</strong> Glute activation. <strong>5.</strong> Pelvic floor with professional.
+    </div>
+  </div>
+</details>
+
+<!-- Labs -->
+<h2 id="labs-snapshot">Lab Dashboard</h2>
+
+<div class="status-grid">
+  <div class="status-card card-win"><div class="card-label">CRP</div><div class="card-value">&lt;6 mg/L</div><div class="card-note">Was 192 in 2024. 32x improvement.</div></div>
+  <div class="status-card card-win"><div class="card-label">HbA1c</div><div class="card-value">4.30%</div><div class="card-note">Excellent blood sugar.</div></div>
+  <div class="status-card card-win"><div class="card-label">TSH</div><div class="card-value">1.08</div><div class="card-note">Optimal (1.0-2.0).</div></div>
+  <div class="status-card card-win"><div class="card-label">Triglycerides</div><div class="card-value">53.10</div><div class="card-note">Excellent.</div></div>
+  <div class="status-card card-alert"><div class="card-label">Platelets</div><div class="card-value">1,130</div><div class="card-note">Severe. Smear (Apr 7): microplatelets &rarr; reactive pattern.</div></div>
+  <div class="status-card card-caution"><div class="card-label">LDL</div><div class="card-value">131.66</div><div class="card-note">High. Diet protocol active.</div></div>
+  <div class="status-card card-caution"><div class="card-label">Sodium</div><div class="card-value">133.20</div><div class="card-note">Low. Adrenal signal?</div></div>
+  <div class="status-card card-caution"><div class="card-label">Creatinine</div><div class="card-value">1.17</div><div class="card-note">Borderline. Ureteral risk.</div></div>
+</div>
+
+<details id="labs-full">
+  <summary>Full Lab Panel: Functional Ranges (March 27, 2026)</summary>
+  <div class="detail-body">
+    <table>
+      <thead><tr><th>Test</th><th>Result</th><th>Standard</th><th>Functional</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td colspan="5" class="lab-cat" style="background: var(--endocrine-bg); color: var(--endocrine);">Blood Sugar</td></tr>
+        <tr><td>FBS</td><td>81.44</td><td>73-106</td><td>75-90</td><td><span class="badge badge-win">Optimal</span></td></tr>
+        <tr><td>HbA1c</td><td>4.30%</td><td>4.2-6.1%</td><td>&lt;5.3%</td><td><span class="badge badge-win">Excellent</span></td></tr>
+        <tr><td colspan="5" class="lab-cat" style="background: var(--circulatory-bg); color: var(--circulatory);">Lipids</td></tr>
+        <tr><td>Total Cholesterol</td><td>187.64</td><td>149-200</td><td>160-200</td><td><span class="badge badge-win">Good</span></td></tr>
+        <tr><td>Triglycerides</td><td>53.10</td><td>0-150</td><td>&lt;80</td><td><span class="badge badge-win">Excellent</span></td></tr>
+        <tr><td>HDL</td><td>45.17</td><td>30-85</td><td>&gt;55</td><td><span class="badge badge-caution">Low</span></td></tr>
+        <tr><td>LDL</td><td>131.66</td><td>&lt;110</td><td>&lt;100</td><td><span class="badge badge-alert">High</span></td></tr>
+        <tr><td colspan="5" class="lab-cat" style="background: var(--urinary-bg); color: var(--urinary);">Kidney</td></tr>
+        <tr><td>BUN</td><td>12.77</td><td>5.88-19.89</td><td>10-16</td><td><span class="badge badge-win">Good</span></td></tr>
+        <tr><td>Creatinine</td><td>1.17</td><td>0.57-1.13</td><td>0.7-1.0</td><td><span class="badge badge-caution">High</span></td></tr>
+        <tr><td colspan="5" class="lab-cat" style="background: var(--nervous-bg); color: var(--nervous);">Electrolytes</td></tr>
+        <tr><td>Sodium</td><td>133.20</td><td>135-148</td><td>136-142</td><td><span class="badge badge-alert">Low</span></td></tr>
+        <tr><td>Potassium</td><td>5.18</td><td>3.5-5.5</td><td>4.0-4.5</td><td><span class="badge badge-win">Good</span></td></tr>
+        <tr><td>Magnesium</td><td>1.63</td><td>1.58-2.51</td><td>2.0-2.5</td><td><span class="badge badge-caution">Low</span></td></tr>
+        <tr><td colspan="5" class="lab-cat" style="background: var(--liver-bg); color: var(--liver);">Liver</td></tr>
+        <tr><td>AST</td><td>22.20</td><td>0-37</td><td>10-26</td><td><span class="badge badge-win">Optimal</span></td></tr>
+        <tr><td>ALT</td><td>30.36</td><td>0-40</td><td>10-26</td><td><span class="badge badge-caution">Slightly above</span></td></tr>
+        <tr><td>GGT</td><td>28.20</td><td>0-55</td><td>&lt;25</td><td><span class="badge badge-caution">Slightly above</span></td></tr>
+        <tr><td colspan="5" class="lab-cat" style="background: var(--immune-bg); color: var(--immune);">CBC + Inflammation</td></tr>
+        <tr><td>Hemoglobin</td><td>13.60</td><td>12-16</td><td>13.5-14.5</td><td><span class="badge badge-win">Normal</span></td></tr>
+        <tr><td>Platelets</td><td>1,130</td><td>150-400</td><td>150-400</td><td><span class="badge badge-alert">Severe</span></td></tr>
+        <tr><td>WBC</td><td>10.74</td><td>4-11</td><td>5.5-7.5</td><td><span class="badge badge-caution">Elevated</span></td></tr>
+        <tr><td>CRP</td><td>&lt;6</td><td>&lt;10</td><td>&lt;1 (hs-CRP)</td><td><span class="badge badge-win">Normalized</span></td></tr>
+        <tr><td>ESR</td><td>10</td><td>0-20</td><td>&lt;10</td><td><span class="badge badge-win">Near-optimal</span></td></tr>
+        <tr><td colspan="5" class="lab-cat" style="background: var(--endocrine-bg); color: var(--endocrine);">Thyroid</td></tr>
+        <tr><td>TSH</td><td>1.08</td><td>0.27-4.2</td><td>1.0-2.0</td><td><span class="badge badge-win">Optimal</span></td></tr>
+        <tr><td>FT3</td><td>4.30</td><td>3.1-6.8</td><td>4.0-6.8</td><td><span class="badge badge-win">Low-normal</span></td></tr>
+        <tr><td>FT4</td><td>19.80</td><td>12-22</td><td>15-22</td><td><span class="badge badge-win">Good</span></td></tr>
+        <tr><td colspan="5" class="lab-cat" style="background: var(--circulatory-bg); color: var(--circulatory);">Iron</td></tr>
+        <tr><td>Serum Iron</td><td>121.68</td><td>50-170</td><td>60-120</td><td><span class="badge badge-win">Normal</span></td></tr>
+        <tr><td>Ferritin</td><td>--</td><td>--</td><td>&gt;50</td><td><span class="badge badge-urgent">Gap</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<details id="labs-trends">
+  <summary>Lab Trends: 2024 &rarr; 2026</summary>
+  <div class="detail-body">
+    <table>
+      <thead><tr><th>Marker</th><th>Mar 2024</th><th>Sep 2025</th><th>Mar 2026</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>CRP</td><td>192</td><td>--</td><td>&lt;6</td><td><span class="badge badge-win">32x better</span></td></tr>
+        <tr><td>ESR</td><td>32</td><td>--</td><td>10</td><td><span class="badge badge-win">Normalized</span></td></tr>
+        <tr><td>Platelets</td><td>762-810</td><td>927</td><td>1,130</td><td><span class="badge badge-alert">Rising 48%</span></td></tr>
+        <tr><td>WBC</td><td>10.79-12.0</td><td>13.0</td><td>10.74</td><td><span class="badge badge-caution">Mild</span></td></tr>
+        <tr><td>Hemoglobin</td><td>14.30</td><td>13.6</td><td>13.60</td><td><span class="badge badge-win">Stable</span></td></tr>
+        <tr><td>Vitamin D</td><td>16.53</td><td>--</td><td>28.52</td><td><span class="badge badge-caution">+72%, still low</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<!-- Gaps -->
+<h2 id="gaps">Diagnostic Gaps: Ranked by Leverage</h2>
+
+<details open>
+  <summary>Elephant + Bear Gaps (Do These First)</summary>
+  <div class="detail-body">
+    <table>
+      <thead><tr><th>#</th><th>Gap</th><th>Leverage</th><th>Status</th><th>Cascades Into</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>SIBO breath test</td><td><span class="gap-leverage lev-high">Elephant</span></td><td><span class="badge badge-urgent">Never done</span></td><td>Gut, immune, hormones</td></tr>
+        <tr><td>2</td><td>Stool analysis</td><td><span class="gap-leverage lev-high">Elephant</span></td><td><span class="badge badge-urgent">Never done</span></td><td>Microbiome, estrobolome</td></tr>
+        <tr><td>3</td><td>Pelvic floor PT</td><td><span class="gap-leverage lev-high">Bear</span></td><td><span class="badge badge-urgent">Never consulted</span></td><td>Spine, nerves, bowel, bladder</td></tr>
+        <tr><td>4</td><td>HPA axis cortisol</td><td><span class="gap-leverage lev-high">Bear</span></td><td><span class="badge badge-urgent">Never tested</span></td><td>Adrenals, stress, sodium</td></tr>
+        <tr><td>5</td><td>Ferritin + iron panel</td><td><span class="gap-leverage lev-high">Bear</span></td><td><span class="badge badge-urgent">Never done</span></td><td>Energy, RBC, Endo-9</td></tr>
+        <tr><td>6</td><td>Hematology consult</td><td><span class="gap-leverage lev-high">Bear</span></td><td><span class="badge badge-urgent">Needed</span></td><td>Thrombosis, bone marrow</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary>Panda + Rat Gaps (After Elephants Are Done)</summary>
+  <div class="detail-body">
+    <table>
+      <thead><tr><th>#</th><th>Gap</th><th>Leverage</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>7</td><td>CT urogram</td><td><span class="gap-leverage lev-med">Panda</span></td><td><span class="badge badge-urgent">Urgent</span></td></tr>
+        <tr><td>8</td><td>Flexible sigmoidoscopy</td><td><span class="gap-leverage lev-med">Panda</span></td><td><span class="badge badge-urgent">Urgent</span></td></tr>
+        <tr><td>9</td><td>Vitamin D numeric</td><td><span class="gap-leverage lev-med">Panda</span></td><td><span class="badge badge-win">28.52 (Apr 7)</span></td></tr>
+        <tr><td>10</td><td>Full hormonal panel</td><td><span class="gap-leverage lev-med">Panda</span></td><td><span class="badge badge-urgent">Never done</span></td></tr>
+        <tr><td>11</td><td>hs-CRP</td><td><span class="gap-leverage lev-med">Panda</span></td><td><span class="badge badge-pending">Next panel</span></td></tr>
+        <tr><td>12</td><td>Autoimmune panel</td><td><span class="gap-leverage lev-med">Panda</span></td><td><span class="badge badge-urgent">Never ordered</span></td></tr>
+        <tr><td>13</td><td>NK cell function</td><td><span class="gap-leverage lev-med">Panda</span></td><td><span class="badge badge-urgent">Never tested</span></td></tr>
+        <tr><td>14</td><td>TB Quantiferon</td><td><span class="gap-leverage lev-med">Panda</span></td><td><span class="badge badge-urgent">Most urgent lab</span></td></tr>
+        <tr><td>15</td><td>Reverse T3 + TPO</td><td><span class="gap-leverage lev-low">Rat</span></td><td><span class="badge badge-pending">Functional track</span></td></tr>
+        <tr><td>16</td><td>Serum retinol</td><td><span class="gap-leverage lev-low">Rat</span></td><td><span class="badge badge-pending">For cycling</span></td></tr>
+        <tr><td>17</td><td>Sodium recheck</td><td><span class="gap-leverage lev-low">Rat</span></td><td><span class="badge badge-pending">Next visit</span></td></tr>
+        <tr><td>18-24</td><td>Urologist, Immunologist, Pleural f/u, Heavy metals, EN root cause, PBS, Vit A cycle</td><td><span class="gap-leverage lev-low">Rat</span></td><td><span class="badge badge-pending">Various</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<!-- ============================================ -->
+<!-- HEMATOLOGY CONSULTATION PREP (Apr 7, 2026) -->
+<!-- ============================================ -->
+<h2 id="hema-consult" style="border-top:3px solid #c0392b;padding-top:20px;color:#c0392b;">🩸 Hematology Consultation Prep</h2>
+
+<div style="background:#fdf2f2;border-left:4px solid #c0392b;padding:16px;margin:16px 0;border-radius:6px;">
+  <p style="margin:0;"><strong>Bring this entire section to the hematology consult.</strong> The platelet trajectory (762 → 927 → 1,130 over 24 months) crossed with CRP normalization (192 → &lt;6) is the central diagnostic question. Shela's case sits at the intersection of four evidence bases (HS post-splenectomy, DIE-platelet axis, Vit D megakaryopoiesis, CCM antithrombotics) with no single guideline covering her phenotype.</p>
+</div>
+
+<h3>The One-Paragraph Story</h3>
+<p>36F Filipino, 16 years post-splenectomy for hereditary spherocytosis (autosomal dominant), post-cholecystectomy 2010 (chronic fat malabsorption), with deep infiltrating endometriosis (torus uterinus obliterated, rectal lesion 16.5×6×20mm), Mirena IUS in situ (amenorrheic, hemodynamically stable), growing left posterior parietal cavernoma (80% volume increase 2020-2025, no documented hemorrhage). Platelets rose 762 → 927 → 1,130 across 24 months <strong>despite</strong> CRP falling 192 → &lt;6 (32× improvement), thyroid normal first-ever testing, HbA1c 4.30, ESR normalized 32 → 10. Apr 7 smear: normocytic normochromic RBCs, neutrophil-predominant WBC (65%), <strong>platelets increased with some microplatelets</strong>. Vit D recovering 16.53 → 28.52 ng/mL (D3 5,000 IU + K2 MK-7 started Mar 25). Creatinine 1.17 (above ULN 1.13). BP 92/58.</p>
+
+<h3>The Central Paradox</h3>
+<div class="status-grid">
+  <div class="status-card card-alert"><div class="card-label">Platelets Trajectory</div><div class="card-value">762 → 1,130</div><div class="card-note">+48% rise across 24 months</div></div>
+  <div class="status-card card-win"><div class="card-label">CRP Trajectory</div><div class="card-value">192 → &lt;6</div><div class="card-note">32× improvement</div></div>
+  <div class="status-card card-caution"><div class="card-label">Decoupling</div><div class="card-value">Unexplained</div><div class="card-note">Inflammation cleared but platelets kept rising. No published kinetic framework for this pattern.</div></div>
+</div>
+
+<h3>Three Likely Drivers (literature-supported)</h3>
+<ol>
+  <li><strong>Post-splenectomy baseline</strong> — expected 400–600 baseline; explains chronic elevation but NOT ongoing escalation. <em>Schilling J Thromb Haemost 2008 (PMID 18485083): late HS arterial event HR 7.2, venous HR 3.3, events cluster ≥1 decade post-op.</em></li>
+  <li><strong>Endometriosis-platelet feedback loop</strong> — platelets actively drive endometriotic fibrogenesis via TGF-β/SMAD; advanced DIE shows the EXACT phenotype on Shela's smear (high platelets + microplatelets/low MPV). <em>Avcioğlu 2014 PMC4076665, Guo lab series 2015–2019 (PMID 25740881, 27519725, 27724926).</em></li>
+  <li><strong>Chronic Vit D deficiency disinhibiting megakaryopoiesis</strong> — VDR expressed on megakaryocytes; D activation inhibits maturation. Shela had ~24 months of severe deficiency exactly overlapping the platelet rise. <em>Silvagno PLoS ONE 2010 PMC2809087, Aihara JBC 2004.</em></li>
+</ol>
+
+<h3>What Was Already Tested (Mar 27 / Apr 7, 2026)</h3>
+<table>
+  <thead><tr><th>Category</th><th>Result</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>CBC</td><td>Hgb 13.60 · Hct 0.39 · RBC 4.67(H) · WBC 10.74(H) · Plt 1,130(H) · Neut 65 · Lymph 24 · Mono 7 · Eos 4 · MCV 82.60 · MCH 29 · MCHC 35.20</td><td>Plt severely elevated</td></tr>
+    <tr><td>Reticulocyte</td><td>1.0%</td><td>Normal</td></tr>
+    <tr><td>ESR</td><td>10 mm/hr (was 32 in 2024)</td><td>Normalized</td></tr>
+    <tr><td>CRP</td><td>&lt;6 mg/L (was 192 in 2024)</td><td>Normalized 32×</td></tr>
+    <tr><td>Coagulation</td><td>PT 14.2 · INR 0.94 · % Activity 106 · PTT 30.0</td><td>Normal range</td></tr>
+    <tr><td>Smear (Apr 7)</td><td>Normocytic normochromic RBCs · Neutrophil-predominant WBC 65% · <strong>Platelets increased with some microplatelets</strong></td><td>Reactive pattern; argues against ET (which features giant platelets)</td></tr>
+    <tr><td>Iron (serum)</td><td>121.68 µg/dL</td><td>Normal — but ferritin NOT measured</td></tr>
+    <tr><td>Thyroid (first-ever)</td><td>TSH 1.08 · FT3 4.30 · FT4 19.80</td><td>All normal</td></tr>
+    <tr><td>HbA1c</td><td>4.30%</td><td>Excellent</td></tr>
+    <tr><td>Liver</td><td>AST 22.2 · ALT 30.4 · GGT 28.2</td><td>Normal</td></tr>
+    <tr><td>Kidney</td><td>BUN 12.77 · <strong>Creatinine 1.17 (H, ULN 1.13)</strong></td><td>Borderline; concerning given DIE + ureter risk</td></tr>
+    <tr><td>Lipids</td><td>TC 187.6 · LDL 131.66(H) · HDL 45.17 · TG 53.10</td><td>LDL high</td></tr>
+    <tr><td>Electrolytes</td><td><strong>Na 133.20(L)</strong> · K 5.18 · iCa 1.40 · Mg 1.63</td><td>Mild hyponatremia (icteric sample)</td></tr>
+    <tr><td>Vitamin D (25-OH)</td><td>28.52 ng/mL (was 16.53 in 2024)</td><td>+72% recovery, still insufficient</td></tr>
+  </tbody>
+</table>
+
+<h3>📋 TESTS TO ASK FOR (in priority order)</h3>
+<table>
+  <thead><tr><th>#</th><th>Test</th><th>Why</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><strong>Ferritin + TSAT + TIBC + sTfR</strong></td><td>Iron 121 is normal but ferritin (real iron stores) NEVER measured. Functional iron deficiency in chronic inflammation can cause microplatelet thrombocytosis independent of TPO. The smear phenotype matches.</td><td>Evstatiev Am J Hematol 2014 PMC4114532; Xavier-Ferrucio Blood 2019</td></tr>
+    <tr><td>2</td><td><strong>JAK2 V617F + CALR exon 9 + MPL W515</strong> molecular panel</td><td>Single blood draw, three mutations. Rules out essential thrombocythemia and related MPNs. JAK2 only positive in ~50–60% of ET; CALR another ~25%; MPL ~5%. Triple-negative ~10–15% needs BM biopsy.</td><td>Tefferi/Barbui Am J Hematol 2024 PMID 38269572; BSH triple-negative thrombocytosis guideline</td></tr>
+    <tr><td>3</td><td><strong>vWF:Ag + vWF:RCo + multimer analysis</strong> — MUST be done BEFORE any aspirin</td><td>At platelet 1,000–1,500, acquired von Willebrand syndrome (AvWS) is a real risk. Aspirin in undiagnosed AvWS can trigger major bleeding. ELN expert consensus: VWF workup precedes antiplatelet at extreme thrombocytosis.</td><td>Lancellotti Cancers 2020 PMC7407619; Rottenstreich Thromb Res 2017</td></tr>
+    <tr><td>4</td><td><strong>LDH + haptoglobin + indirect bilirubin + direct Coombs</strong></td><td>Detect ongoing low-grade hemolysis from HS or accessory spleen tissue. Reticulocyte 1.0% argues against brisk hemolysis but doesn't fully exclude.</td><td>Standard HS surveillance</td></tr>
+    <tr><td>5</td><td><strong>Smear re-review for Howell-Jolly bodies and pitted RBCs</strong></td><td>Confirms functional asplenia. If ABSENT, suggests possible accessory spleen tissue (PMC12146168 documents this in HS).</td><td>Free; phone the pathologist</td></tr>
+    <tr><td>6</td><td><strong>Renal ultrasound</strong> (consider MR urography if abnormal)</td><td>Creatinine 1.17 in DIE patient with obliterated torus. Ureteral endometriosis carries 25–50% silent renal loss rate.</td><td>Barra Hum Reprod Update 2018; ESHRE 2022 endometriosis guideline</td></tr>
+    <tr><td>7</td><td><strong>Protein C, Protein S, Antithrombin III, Antiphospholipid panel (LA, aCL, anti-β2GP1), Homocysteine</strong></td><td>Inherited/acquired thrombophilia stack on top of post-splenectomy state. Endometriosis has documented APL associations.</td><td>Standard thrombophilia workup</td></tr>
+    <tr><td>8</td><td><strong>Abdominal Doppler ultrasound</strong> (portal/splenic remnant/hepatic veins)</td><td>Not urgent (most post-splenectomy SPVT occurs in first week; she is 16 years out), but baseline anatomy in HS at 1,130 platelets is reasonable.</td><td>Baseline assessment</td></tr>
+    <tr><td>9</td><td><strong>Vaccination audit</strong>: PPSV23/PCV20, MenACWY, MenB, Hib, annual flu, COVID</td><td><strong>POTENTIALLY THE HIGHEST-IMPACT INTERVENTION IN THE WHOLE CHART.</strong> 16 years post-splenectomy. OPSI mortality 50%. PPSV23 booster every 5 years. Last booster date unknown.</td><td>BSH Davies 2024 PMID 38600782; CDC adult schedule</td></tr>
+    <tr><td>10</td><td><strong>Thrombopoietin (TPO) level</strong> (if available)</td><td>TPO typically elevated in reactive thrombocytosis, low/normal in ET. Adds discrimination.</td><td>Niche but useful</td></tr>
+  </tbody>
+</table>
+
+<h3>⚠️ TESTS TO SKIP (low yield in Filipino patient)</h3>
+<ul>
+  <li><strong>Factor V Leiden</strong> — essentially absent in Filipino/Asian populations</li>
+  <li><strong>Prothrombin G20210A</strong> — same; near-zero prevalence</li>
+  <li>Source: <em>Ng HJ et al. Singapore Blood 2006</em> explicitly recommends against routine FVL/PT screening in SE Asian VTE patients</li>
+</ul>
+
+<h3>🚫 DO NOT START aspirin until vWF clears</h3>
+<p>Standard reflex is to start ASA 81mg in extreme thrombocytosis. <strong>This is wrong without a VWF workup first.</strong> Acquired vWD is documented at platelet counts in her range and aspirin in undiagnosed AvWS causes hemorrhage. After VWF results, the cavernoma question is also less restrictive than traditionally taught: <em>Kuroedov JAHA 2024 (PMID 38471833, n=2,709) found antithrombotics associated with LOWER intracranial hemorrhage in CCM patients (OR 0.21, 95% CI 0.13–0.35).</em> The 80% growth has not been studied as a stratification variable. Neurosurgery should weigh in if Shela's cavernoma has ever bled.</p>
+
+<h3>The Mirena Question (settled)</h3>
+<p>Mirena is <strong>NOT</strong> driving the platelet count. Published mechanism literature shows LNG-IUS <em>decreases</em> platelets (Maruo PubMed 12057782). Lidegaard Danish cohort (BMJ 2009 PMID 19679613) shows no VTE risk with LNG-IUS. WHO/CDC MEC Category 2 (safe) for thrombosis risk. Removal is not a hematologic intervention. Subtle caveat: years of amenorrhea CAN cause iron retention (PMC3682695) — ferritin will tell us. Removal would only be reconsidered if (a) ferritin is elevated, OR (b) gynecology decides to switch to dienogest/GnRH antagonist for stronger DIE control. <strong>Do not stop Mirena without an immediate replacement plan.</strong></p>
+
+<h3>3-Month Recheck Strategy</h3>
+<p>Repeat CBC + ferritin + Vitamin D in late June 2026. If platelets fall after Vit D reaches 50+ ng/mL and ferritin is normalized, the puzzle solves itself non-invasively. If platelets remain &gt;1,000 with all the above tests negative, bone marrow biopsy with reticulin staining is the next step (BSH threshold for mandatory BM biopsy is &gt;1,500, so she has runway).</p>
+
+<h3>Symptoms requiring immediate medical attention</h3>
+<ul>
+  <li>New unilateral headache, vision changes, weakness/numbness on one side (cavernoma + thrombocytosis)</li>
+  <li>Calf swelling, pain, warmth (DVT)</li>
+  <li>Sudden upper abdominal pain with nausea (portal/mesenteric vein thrombosis)</li>
+  <li>Chest pain or shortness of breath (PE)</li>
+  <li><strong>Fever &gt;38.5°C</strong> — needs antibiotics urgently due to functional asplenia (OPSI risk)</li>
+  <li>Unexplained bleeding (gums, nose, easy bruising) — could indicate AvWS</li>
+</ul>
+
+<h3>Key Primary Sources (bring this list to the consult)</h3>
+<ul style="font-size:0.9em;">
+  <li>Schilling et al. <em>J Thromb Haemost</em> 2008. PMID 18485083 — HS late thrombosis risk</li>
+  <li>Tefferi & Barbui <em>Am J Hematol</em> 2024. PMID 38269572 — ET diagnosis and management</li>
+  <li>Lancellotti et al. <em>Cancers</em> 2020. PMC7407619 — AvWS in MPNs (ELN consensus)</li>
+  <li>Kuroedov et al. <em>JAHA</em> 2024. PMID 38471833 — Antithrombotics in CCM meta-analysis</li>
+  <li>Avcioğlu et al. 2014. PMC4076665 — Platelet indices in severe endometriosis</li>
+  <li>Ding/Guo <em>Hum Reprod</em> 2015. PMID 25740881 — Platelets drive endometriosis</li>
+  <li>Silvagno et al. <em>PLoS ONE</em> 2010. PMC2809087 — VDR in megakaryocytes</li>
+  <li>Evstatiev <em>Am J Hematol</em> 2014. PMC4114532 — Iron deficiency megakaryopoiesis</li>
+  <li>Barra et al. <em>Hum Reprod Update</em> 2018 — Ureteral endometriosis silent renal loss</li>
+  <li>Davies BSH 2024. PMID 38600782 — Asplenia infection prevention guideline</li>
+  <li>Ng et al. <em>Blood</em> 2006 — Singapore: skip FVL/PT20210 in SE Asians</li>
+  <li>Maruo et al. PubMed 12057782 — LNG-IUS lowers platelets in menorrhagia</li>
+  <li>Lidegaard et al. <em>BMJ</em> 2009. PMID 19679613 — LNG-IUS no VTE risk</li>
+</ul>
+
+<!-- Update Log -->
+<h2 id="log">Update Log</h2>
+<table>
+  <thead><tr><th>Date</th><th>Update</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Apr 7</td><td><strong>Hema consult prep section added.</strong> Remaining labs in: Vit D 28.52 ng/mL (+72%). Peripheral smear: microplatelets → reactive pattern. Full literature review completed: Mirena NOT driving platelets (Maruo, Lidegaard). Three drivers identified: post-splenectomy + DIE-platelet feedback + Vit D deficiency. 10-test consult prep list with primary sources. <strong>HARD STOP on aspirin until vWF cleared.</strong></td><td>Claude Code research</td></tr>
+    <tr><td>Apr 2</td><td>Dashboard created. V2 redesign with Daily/Full views.</td><td>Claude Code</td></tr>
+    <tr><td>Apr 1</td><td>First BP reading: 92/58, pulse 71.</td><td>Claude Chat</td></tr>
+    <tr><td>Mar 30</td><td>Constipation + rectal bleeding resolved. Diet revised.</td><td>Patient Ecology</td></tr>
+    <tr><td>Mar 27</td><td>Full lab panel. CRP normalized. Platelets 1,130.</td><td>United Diagnostic</td></tr>
+    <tr><td>Mar 25</td><td>Supplement protocol initiated. Anti-inflammatory diet started.</td><td>Patient Ecology</td></tr>
+    <tr><td>Mar 11</td><td>DIE scan. Torus obliterated. Rectal lesion 16.5x6x20mm.</td><td>MMC</td></tr>
+  </tbody>
+</table>
+
+</div><!-- /full-only -->
+
+<!-- Footer -->
+<div class="footer-note">
+  <p><strong>Sources:</strong> Perry Marshall (80/20 Marketing + Life Hacks), Richard Koch (80/20 Principle), Katie Edmonds (Heal Endo), Patient Ecology Doc (Mar 30), United Diagnostic Lab (Mar 27).</p>
+  <p>Built by Claude Code for Lala. Updated via phone conversation exports.</p>
+</div>
+
+</div><!-- /main -->
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// View mode toggle
+function setView(mode) {
+  document.body.className = mode === 'daily' ? 'view-daily' : 'view-full';
+  // Update sidebar toggle
+  document.querySelectorAll('.mode-toggle button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.mode-toggle button').forEach(b => {
+    if ((mode === 'daily' && b.textContent === 'Today') || (mode === 'full' && b.textContent === 'Full Reference')) {
+      b.classList.add('active');
+    }
+  });
+  // Update mobile nav
+  document.querySelectorAll('.mobile-nav a').forEach(a => a.classList.remove('active'));
+  window.scrollTo(0, 0);
+}
+
+// Time-of-day awareness
+function updateTimeContext() {
+  const now = new Date();
+  const hour = now.getHours();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  // Greeting
+  let greeting = 'Good evening, Lala';
+  if (hour < 12) greeting = 'Good morning, Lala';
+  else if (hour < 17) greeting = 'Good afternoon, Lala';
+
+  const el = document.getElementById('greeting');
+  if (el) el.textContent = greeting;
+
+  // Date
+  const dateStr = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  const heroDate = document.getElementById('heroDate');
+  if (heroDate) heroDate.textContent = dateStr;
+  const mobileDate = document.getElementById('mobileDate');
+  if (mobileDate) mobileDate.textContent = dateStr;
+
+  // Supplement timeline: highlight current slot
+  const slots = document.querySelectorAll('.supp-slot');
+  slots.forEach(slot => {
+    slot.classList.remove('is-now');
+  });
+
+  // Find current slot
+  const slotHours = [8, 12, 18, 21];
+  let activeIdx = -1;
+  for (let i = slotHours.length - 1; i >= 0; i--) {
+    if (hour >= slotHours[i] - 1 && hour < slotHours[i] + 2) {
+      activeIdx = i;
+      break;
+    }
+  }
+  if (activeIdx === -1) {
+    // Find next upcoming
+    for (let i = 0; i < slotHours.length; i++) {
+      if (hour < slotHours[i]) { activeIdx = i; break; }
+    }
+  }
+  if (activeIdx >= 0 && slots[activeIdx]) {
+    slots[activeIdx].classList.remove('is-done');
+    slots[activeIdx].classList.add('is-now');
+  }
+
+  // Hero "now" section
+  const nowLabel = document.getElementById('nowLabel');
+  const nowSupps = document.getElementById('nowSupps');
+  if (nowLabel && nowSupps) {
+    const schedules = [
+      { label: 'Morning Tea first, then breakfast supplements:', pills: ['Morning Tea', 'Ultra-Zyme', 'Omega-3', 'Vitamin C'] },
+      { label: 'Lunch supplements with fatty meal:', pills: ['Ultra-Zyme', 'D3 + K2', 'CoQ10'] },
+      { label: 'Dinner supplements:', pills: ['Ultra-Zyme', 'Vitamin A 10,000 IU'] },
+      { label: 'Bedtime:', pills: ['Magnesium Glycinate'] }
+    ];
+
+    let idx = 0;
+    if (hour >= 20) idx = 3;
+    else if (hour >= 15) idx = 2;
+    else if (hour >= 11) idx = 1;
+    else idx = 0;
+
+    nowLabel.textContent = schedules[idx].label;
+    nowSupps.innerHTML = schedules[idx].pills.map((p, i) =>
+      `<span class="now-pill${i === 0 ? ' highlight' : ''}">${p}</span>`
+    ).join('');
+  }
+}
+
+// Wins Wall scroll animation
+function animateWins() {
+  const cards = document.querySelectorAll('.win-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  cards.forEach(card => observer.observe(card));
+}
+
+// Init
+updateTimeContext();
+setInterval(updateTimeContext, 60000);
+animateWins();
+
+// Sidebar active link tracking
+document.querySelectorAll('.sidebar a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
