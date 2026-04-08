@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community &mdash; Shela's Life Dashboard</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+:root {
+    --purple: #5a4a7a;
+    --purple-deep: #4a3a6a;
+    --purple-darker: #3a2a5a;
+    --purple-soft: #8a7aa0;
+    --purple-light: #b8a8cc;
+    --purple-tint: #e8dff0;
+    --purple-bg: #f4eef8;
+    --gold: #c8985f;
+    --bg-primary: #f5f1f0;
+    --card: #ffffff;
+    --text-primary: #3a3a3a;
+    --text-secondary: #6b6565;
+    --text-muted: #9a9090;
+    --border: #e0dbd8;
+}
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.65;
+    min-height: 100vh;
+}
+.faith-header {
+    text-align: center;
+    padding: 1.25rem 1.5rem 1rem;
+    background: linear-gradient(135deg, #faf7f5, #f5f0ee);
+    border-bottom: 1px solid var(--border);
+}
+.faith-mission {
+    font-size: 0.8rem; color: var(--purple); letter-spacing: 0.04em;
+    font-weight: 500; text-transform: uppercase; margin-bottom: 0.3rem;
+}
+.faith-piper {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: var(--purple-deep); font-size: 0.95rem; margin-bottom: 0.4rem;
+}
+.faith-verse {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;
+}
+.faith-verse-ref { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+.tab-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: #ffffff; border-bottom: 2px solid var(--border);
+    display: flex; padding: 0;
+    box-shadow: 0 2px 8px rgba(90,74,122,0.08);
+}
+.tab-btn {
+    flex: 1; background: none; border: none; color: var(--text-muted);
+    padding: 0.75rem 1.2rem; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+    white-space: nowrap; text-align: center;
+    text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+}
+.tab-btn:hover { color: var(--purple); background: rgba(90,74,122,0.04); }
+.tab-btn.active { color: var(--purple); border-bottom-color: var(--gold); font-weight: 600; }
+
+.wrap { max-width: 1100px; margin: 1.5rem auto 4rem; padding: 0 1.5rem; }
+
+.page-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--purple-deep);
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+.page-sub { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+.meta-bar {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    font-size: 0.8rem; color: var(--text-muted);
+    padding: 0.75rem 0 1.25rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+}
+.meta-bar strong { color: var(--text-primary); }
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-top: 3rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--purple-deep);
+}
+h3 {
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+h4 {
+    font-size: 0.82rem;
+    margin: 1.25rem 0 0.5rem;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+p { font-size: 0.92rem; }
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+.pullquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--purple-deep);
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--purple-bg);
+    border-radius: 10px;
+    margin: 1.5rem 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    background: var(--card);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(90,74,122,0.06);
+}
+th {
+    background: var(--purple-deep);
+    color: #fff;
+    padding: 0.75rem 0.85rem;
+    text-align: left;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: #faf8f5; }
+
+ul { padding-left: 1.2rem; }
+li { margin: 0.3rem 0; font-size: 0.9rem; }
+
+.phrase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    margin: 1rem 0;
+}
+.phrase {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-style: italic;
+    font-size: 0.85rem;
+}
+.pillar-tag {
+    display: inline-block;
+    background: var(--purple);
+    color: white;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 0.4rem;
+}
+.tag-life { background: var(--gold); }
+
+.prompt-box {
+    background: #2a2040;
+    color: #e8dff0;
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    font-family: 'SF Mono', Monaco, monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    margin: 0.75rem 0 1rem;
+    border-left: 4px solid var(--gold);
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+.toc {
+    background: var(--purple-bg);
+    padding: 1.25rem 1.75rem;
+    border-radius: 10px;
+    margin: 1.5rem 0 2rem;
+}
+.toc-title {
+    font-weight: 600;
+    color: var(--purple-deep);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+}
+.toc ul { list-style: none; padding: 0; column-count: 2; column-gap: 1.5rem; }
+.toc a { color: var(--purple); text-decoration: none; font-weight: 500; font-size: 0.85rem; }
+.toc a:hover { text-decoration: underline; }
+
+/* === FUNNEL === */
+.funnel {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+.funnel-col { display: flex; flex-direction: column; gap: 0.6rem; }
+.funnel-hero {
+    color: #fff;
+    padding: 1.25rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+}
+.funnel-hero .stage {
+    font-size: 0.72rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    display: block;
+    margin-bottom: 0.2rem;
+    font-family: 'Inter', sans-serif;
+}
+.funnel-hero .label { font-size: 1.25rem; font-weight: 700; }
+.hero-after  { background: linear-gradient(135deg, var(--purple-darker), var(--purple-deep)); }
+.hero-during { background: linear-gradient(135deg, var(--purple), var(--purple-soft)); }
+.hero-before { background: linear-gradient(135deg, var(--purple-soft), var(--purple-light)); }
+.sub-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.4rem;
+}
+.sub-box {
+    background: var(--purple);
+    color: #fff;
+    padding: 0.85rem 0.5rem;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.35;
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sub-box.dark { background: var(--purple-deep); }
+.sub-box.light { background: var(--purple-soft); }
+.tactic-list {
+    background: var(--purple-tint);
+    padding: 0.65rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+}
+.tactic-list strong {
+    display: block;
+    color: var(--purple-deep);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 0.35rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--purple-light);
+}
+.tactic-list ul { list-style: none; padding: 0; margin: 0; }
+.tactic-list li { padding: 0.15rem 0; color: var(--text-primary); font-size: 0.75rem; }
+
+/* === PYRAMID === */
+.pyramid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 1.5rem 0;
+}
+.pyramid-tier {
+    color: #fff;
+    padding: 0.9rem 1.25rem;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.pyramid-tier .tier-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+}
+.pyramid-tier .tier-desc {
+    font-size: 0.72rem;
+    opacity: 0.9;
+    font-weight: 400;
+    margin-top: 0.15rem;
+}
+.tier-1 { background: var(--purple-darker); width: 50%; }
+.tier-2 { background: var(--purple-deep); width: 65%; }
+.tier-3 { background: var(--purple); width: 80%; }
+.tier-4 { background: var(--purple-light); width: 95%; color: var(--text-primary); }
+
+/* === 7-STEP FLOW === */
+.flow {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.35rem;
+    margin: 1.5rem 0;
+}
+.flow-step {
+    background: var(--purple);
+    color: #fff;
+    padding: 0.75rem 0.4rem;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+.flow-step .num {
+    display: block;
+    font-size: 1.15rem;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 0.2rem;
+}
+.flow-step:nth-child(1) { background: var(--purple-darker); }
+.flow-step:nth-child(2) { background: #402a65; }
+.flow-step:nth-child(3) { background: var(--purple-deep); }
+.flow-step:nth-child(4) { background: var(--purple); }
+.flow-step:nth-child(5) { background: var(--purple-soft); }
+.flow-step:nth-child(6) { background: var(--purple-light); color: var(--text-primary); }
+.flow-step:nth-child(7) { background: var(--purple-tint); color: var(--text-primary); }
+
+/* === TWO COL === */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+.brand-card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    border-top: 4px solid var(--purple);
+    box-shadow: 0 1px 4px rgba(90,74,122,0.06);
+}
+.brand-card.b2 { border-top-color: var(--gold); }
+.brand-card h3 { margin-top: 0; color: var(--purple-deep); }
+.brand-card.b2 h3 { color: var(--gold); }
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin: 0.75rem 0;
+}
+.value-chip {
+    background: var(--purple-bg);
+    color: var(--purple-deep);
+    padding: 0.55rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.anti-persona {
+    background: #fdf0f0;
+    border-left: 4px solid #b84545;
+    padding: 1rem 1.4rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+}
+.anti-persona h4 { color: #b84545; margin-top: 0; }
+
+footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .flow { grid-template-columns: repeat(3, 1fr); }
+    .funnel { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .phrase-grid { grid-template-columns: 1fr; }
+    .toc ul { column-count: 1; }
+    .page-title { font-size: 1.5rem; }
+    .tab-btn { padding: 0.5rem 0.6rem; font-size: 0.72rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="faith-header">
+    <div class="faith-mission">spread a passion for the Supremacy of God in all things for the joy of all peoples</div>
+    <div class="faith-piper">"God is most glorified in us when we are most satisfied in Him"</div>
+    <div class="faith-verse">"For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do."</div>
+    <div class="faith-verse-ref">Ephesians 2:10</div>
+</div>
+
+<nav class="tab-bar">
+    <a class="tab-btn" href="index.html#anchor">Anchor</a>
+    <a class="tab-btn" href="index.html#word">Word</a>
+    <a class="tab-btn" href="index.html#moments">Moments</a>
+    <a class="tab-btn" href="body-ecology.html">Health</a>
+    <a class="tab-btn" href="work.html">Work</a>
+    <a class="tab-btn" href="system.html">System</a>
+    <a class="tab-btn active" href="community.html">Community</a>
+</nav>
+
+<div class="wrap">
+
+<div class="page-title">The Swag Team &amp; Lala &mdash; Brand &amp; Content System</div>
+<div class="page-sub">Unified brand, messaging, content, and funnel inventory for the freelancing community</div>
+<div class="meta-bar">
+    <span><strong>Sources:</strong> NotebookLM (100+ sources) &middot; SMR Brand Sheet (8 tabs) &middot; Marketing Funnel Framework</span>
+    <span><strong>Updated:</strong> April 9, 2026</span>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contents</div>
+  <ul>
+    <li><a href="#brand">1. Brand Identity</a></li>
+    <li><a href="#persona">2. Target Persona</a></li>
+    <li><a href="#positioning">3. Positioning</a></li>
+    <li><a href="#voice">4. Voice &amp; Phrase Bank</a></li>
+    <li><a href="#messaging">5. Messaging Architecture</a></li>
+    <li><a href="#pillars">6. Content Pillars &amp; Taxonomy</a></li>
+    <li><a href="#hierarchy">7. Content Hierarchy</a></li>
+    <li><a href="#formula">8. 7-Step Storytelling Formula</a></li>
+    <li><a href="#funnel">9. Customer Journey Funnel</a></li>
+    <li><a href="#inventory">10. Content Inventory</a></li>
+    <li><a href="#templates">11. Post Templates</a></li>
+    <li><a href="#prompts">12. AI Prompt Library</a></li>
+    <li><a href="#scripts">13. Interview &amp; Call Scripts</a></li>
+    <li><a href="#antipersona">14. Anti-Persona</a></li>
+  </ul>
+</div>
+
+<div class="pullquote">"Follow someone ahead of you and help someone behind you."</div>
+
+<h2 id="brand">1. Brand Identity</h2>
+
+<div class="two-col">
+  <div class="brand-card">
+    <h3>The Swag Team Community</h3>
+    <p><strong>AKA:</strong> Work at Home Geek &middot; SWAG = Shela's Work At Home Geeks<br>
+    <strong>Flagship:</strong> PRISMM (Philippines Royal Influencers &amp; SMMs)<br>
+    <strong>Audience:</strong> Aspiring Filipino freelancers</p>
+    <p><strong>Mission:</strong> Empower Filipino freelancers with a Christ-centered foundation &mdash; skills, confidence, and support to transform lives through purposeful, profitable careers that serve family, community, and glorify God.</p>
+  </div>
+  <div class="brand-card b2">
+    <h3>Lala Personal Brand (SMR)</h3>
+    <p><strong>Positioning:</strong> AI content systems + freelancing + faith, learned in public<br>
+    <strong>Audience:</strong> Filipino professionals, builders, believers<br>
+    <strong>Voice:</strong> Vulnerable, devotional, tactical, empathetic</p>
+    <p><strong>Core Message:</strong> "Real purposeful career meets the needs of people around them &mdash; professionally and personally." Built on a narrative of overcoming poverty, family responsibility, and chronic illness as a self-trained professional.</p>
+  </div>
+</div>
+
+<h3>Unified 4-Pillar Message</h3>
+<table>
+  <tr><th>#</th><th>Pillar</th><th>Meaning</th></tr>
+  <tr><td>1</td><td><strong>WHY</strong></td><td>Build success stories at work &amp; in life</td></tr>
+  <tr><td>2</td><td><strong>WHAT</strong></td><td>Grow their expertise</td></tr>
+  <tr><td>3</td><td><strong>HOW</strong></td><td>Find deep abiding joy in work &amp; real-purposeful career</td></tr>
+  <tr><td>4</td><td><strong>IMPACT</strong></td><td>Meet the needs of people around them &mdash; professionally &amp; personally</td></tr>
+</table>
+
+<h3>Core Values (3-Layer Model)</h3>
+<h4>Financial &middot; Functional &middot; Emotional</h4>
+<ul>
+  <li><strong>Financial:</strong> Hard work, fiscal responsibility, honest stewardship</li>
+  <li><strong>Functional:</strong> Deliver real expertise in Social Media Marketing and AI</li>
+  <li><strong>Emotional:</strong> Joy, redemption, accomplishment</li>
+</ul>
+
+<h4>Root Values</h4>
+<div class="values-grid">
+  <div class="value-chip">Duty</div>
+  <div class="value-chip">Validation</div>
+  <div class="value-chip">Redemption</div>
+  <div class="value-chip">Truths</div>
+  <div class="value-chip">Community</div>
+  <div class="value-chip">Accomplishment</div>
+  <div class="value-chip">Creation</div>
+  <div class="value-chip">Faith</div>
+  <div class="value-chip">Discipline</div>
+</div>
+
+<h3>Vision (5&ndash;10 years)</h3>
+<ul>
+  <li>Premier Christ-centered freelancer empowerment platform in the Philippines</li>
+  <li>Author a foundational book for Filipino freelancers</li>
+  <li>Launch a physical foundation in a rural area &mdash; reading &amp; writing programs for young minds</li>
+</ul>
+
+<h3>Origin Story</h3>
+<div class="card">
+Shela Heramis &mdash; Computer Engineering graduate &rarr; call center agent &rarr; Google technical support. Rare disease survivor (no spleen, no gallbladder, degenerative disc). Started freelancing 2016/17 with no money, no computer. Began at 16,000 PHP/month customer support, upskilled into a high-paying social media manager and Facebook Blueprint creative strategist. Founded Work at Home Geek and the Swag Team to freely share the resources, strategies, and faith that helped her survive her health and financial crises.
+</div>
+
+<h2 id="persona">2. Target Persona</h2>
+<div class="card">
+  <p><strong>Primary audience:</strong> Fresh starter / total newbie Filipino freelancers.</p>
+  <h4>Segments</h4>
+  <ul>
+    <li>Corporate professionals transitioning to remote (ex-call center, teachers, tech support)</li>
+    <li>Full-time parents, especially mothers</li>
+    <li>Overseas Filipino Workers (OFWs) seeking work-life balance</li>
+    <li>Individuals who feel "behind in life" or set dreams aside</li>
+  </ul>
+  <h4>Motivations</h4>
+  <ul><li>Financial independence &middot; lifestyle flexibility &middot; career longevity</li></ul>
+  <h4>Struggles</h4>
+  <ul><li>No experience &middot; empty portfolio &middot; low interview confidence &middot; can't afford courses &middot; fear of rejection</li></ul>
+</div>
+
+<h2 id="positioning">3. Positioning</h2>
+<table>
+  <tr><th>Differentiator</th><th>What It Means</th></tr>
+  <tr><td><strong>Actual Experience &gt; Theory</strong></td><td>PRISMM Internship &mdash; real tasks for real business owners. Build a rockstar portfolio instead of passive tutorials.</td></tr>
+  <tr><td><strong>Free &amp; Accessible</strong></td><td>Free SMM Handbook + Open University. Challenges the expensive VA course industry.</td></tr>
+  <tr><td><strong>AI-Native Curriculum</strong></td><td>Prompt engineering with ChatGPT, Midjourney, Perplexity. Creates "Version 2.0 Freelancers."</td></tr>
+  <tr><td><strong>Holistic Christ-Centered</strong></td><td>Rejects six-figure chasing and fake-it culture. Addresses spiritual/emotional poverty + resilience.</td></tr>
+</table>
+
+<h2 id="voice">4. Voice &amp; Phrase Bank</h2>
+<div class="card">
+  <p><strong>Voice adjectives:</strong> Authentic &middot; Empathetic &middot; Transparent &middot; Inspiring &middot; Direct &middot; Devotional</p>
+  <p><strong>Persona:</strong> "Impromptu Orator" and "Mover of the Masses" &mdash; emotional storytelling and personal vulnerability as connection device.</p>
+
+  <h4>Core Mottos</h4>
+  <div class="phrase-grid">
+    <div class="phrase">"It's not about perfection, it's about direction" <em>&mdash; SWAHG motto</em></div>
+    <div class="phrase">"Laging nananalo ang mga taong may mainit na pag-ibig" <em>&mdash; Community tagline</em></div>
+    <div class="phrase">"Follow someone ahead of you and help someone behind you"</div>
+    <div class="phrase">"#smashthelovebutton if this is helpful!" <em>&mdash; Signature CTA</em></div>
+  </div>
+
+  <h4>Signature Phrases</h4>
+  <div class="phrase-grid">
+    <div class="phrase">"#BonafideFilipinoFreelancer"</div>
+    <div class="phrase">"Less talking, more action"</div>
+    <div class="phrase">"The day you plant the seed is not the day you eat the fruit"</div>
+    <div class="phrase">"You don't dig the well when you're thirsty"</div>
+    <div class="phrase">"Royalties / Queens and Kings" (identity elevation)</div>
+    <div class="phrase">"Suffering yet always rejoicing"</div>
+  </div>
+
+  <h4>Phrase Bank Categories (71 entries)</h4>
+  <ul>
+    <li><strong>Hook Openers</strong> &mdash; attention-grabbing first lines</li>
+    <li><strong>Empathy Bridges</strong> &mdash; "I've been there" connectors</li>
+    <li><strong>Mindset Pivots</strong> &mdash; reframe lines</li>
+    <li><strong>Faith Anchors</strong> &mdash; scripture-grounded turning points</li>
+    <li><strong>CTAs</strong> &mdash; invitations to action</li>
+    <li><strong>Sign-offs</strong> &mdash; warm closers</li>
+  </ul>
+</div>
+
+<h2 id="messaging">5. Messaging Architecture</h2>
+
+<h3>Core Value Proposition</h3>
+<div class="card">
+Transform "broke and broken" Filipinos into high-paying #BonafideFilipinoFreelancers through <strong>actual experience + Christ-centered mindset</strong> &mdash; without taking expensive courses. Combines real-world portfolio building with a genuine loving support system to resolve "poverty of being" and "poverty of stewardship," leading to deep abiding joy.
+</div>
+
+<h3>Transformation Promise</h3>
+<table>
+  <tr><th>Before</th><th>After</th></tr>
+  <tr>
+    <td>Broke and broken &middot; Lonely, insecure, a bit of a fraud &middot; Behind in life &middot; Zero experience &middot; Empty portfolio &middot; Poverty of being</td>
+    <td>Confident #BonafideFilipinoFreelancer &middot; Rockstar portfolio &middot; Dollar income &middot; Family-balanced &middot; Thriving, purposeful career &middot; Deep abiding joy</td>
+  </tr>
+</table>
+
+<h3>Top Objections &rarr; Answers</h3>
+<table>
+  <tr><th>Objection</th><th>Answer</th></tr>
+  <tr><td>"No experience or portfolio"</td><td>Build your own FB page as your first case study. "Don't dig the well when you're thirsty."</td></tr>
+  <tr><td>"No money for courses"</td><td>Free SMM Handbook + Open University cover the foundation.</td></tr>
+  <tr><td>"Bad English / interview fear"</td><td>Practice introductions. Get an accountability partner. Use AI to script. Focus on value, not grammar.</td></tr>
+</table>
+
+<h3>Faith Messaging Layer</h3>
+<ul>
+  <li><strong>Identity as Royalty</strong> &mdash; members are "Queens and Kings," children of the King of kings</li>
+  <li><strong>Embracing hardship</strong> &mdash; "Suffering yet always rejoicing." "God never makes a mistake."</li>
+  <li><strong>Work as worship</strong> &mdash; "I am a social-media influencer for Christ." Every session opens and closes in prayer.</li>
+</ul>
+
+<h2 id="pillars">6. Content Pillars &amp; Topic Taxonomy</h2>
+
+<h3>Two-Track Taxonomy</h3>
+<div class="two-col">
+  <div class="brand-card">
+    <h3><span class="pillar-tag">PROFESSIONAL</span></h3>
+    <ul>
+      <li>ai-content-systems</li>
+      <li>prompt-engineering</li>
+      <li>automation</li>
+      <li>content-strategy</li>
+      <li>data-architecture</li>
+      <li>freelancing</li>
+      <li>newsletter-craft</li>
+      <li>b2b-saas</li>
+    </ul>
+  </div>
+  <div class="brand-card b2">
+    <h3><span class="pillar-tag tag-life">LIFE</span></h3>
+    <ul>
+      <li>faith-theology</li>
+      <li>health</li>
+      <li>filipino-professionals</li>
+      <li>community</li>
+      <li>marriage-family</li>
+      <li>learning-in-public</li>
+      <li>workstation-setup</li>
+    </ul>
+  </div>
+</div>
+
+<h3>LinkedIn 3-Pillar Post Framework</h3>
+<table>
+  <tr><th>Pillar</th><th>Post Type</th><th>When to use</th></tr>
+  <tr><td>1</td><td><strong>What I Figured Out</strong></td><td>Sharing a lesson or insight</td></tr>
+  <tr><td>2</td><td><strong>Mistake I Almost Made</strong></td><td>Vulnerability + reframe</td></tr>
+  <tr><td>3</td><td><strong>Here's Exactly How</strong></td><td>Tactical how-to</td></tr>
+</table>
+
+<h3>Official Content Types</h3>
+<table>
+  <tr><th>Type</th><th>Purpose</th><th>Voice Register</th></tr>
+  <tr><td><strong>guide</strong></td><td>Step-by-step tactical walkthrough</td><td>Professional + Directive</td></tr>
+  <tr><td><strong>story</strong></td><td>Personal narrative for deep connection</td><td>Casual + Passionate + Devotional</td></tr>
+  <tr><td><strong>note</strong></td><td>Quick lesson or observation</td><td>Conversational + Reflective</td></tr>
+  <tr><td><strong>reflection</strong></td><td>Devotional, faith-based writing</td><td>Intimate + Scriptural</td></tr>
+  <tr><td><strong>tool</strong></td><td>Downloadable or interactive resource</td><td>Clear + Instructional</td></tr>
+</table>
+
+<h2 id="hierarchy">7. Content Hierarchy (by engagement)</h2>
+<p>Ranked by actual past engagement from the <em>What Makes Powerful Content</em> analysis.</p>
+
+<div class="pyramid">
+  <div class="pyramid-tier tier-1">
+    <span class="tier-label">HEARTWORK</span>
+    <span class="tier-desc">Personal vulnerability &middot; Faith &middot; Health</span>
+  </div>
+  <div class="pyramid-tier tier-2">
+    <span class="tier-label">COMMUNITY PROOF</span>
+    <span class="tier-desc">Member spotlights &middot; Announcements</span>
+  </div>
+  <div class="pyramid-tier tier-3">
+    <span class="tier-label">MINDSET REFRAMES</span>
+    <span class="tier-desc">"Wrong Mindset" series</span>
+  </div>
+  <div class="pyramid-tier tier-4">
+    <span class="tier-label">TACTICAL TRAINING</span>
+    <span class="tier-desc">Step-by-step guides (lowest engagement)</span>
+  </div>
+</div>
+
+<p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;"><em>Insight: Lead with heart, land with tactics. Tactical content has its place, but vulnerability builds the audience.</em></p>
+
+<h2 id="formula">8. 7-Step Storytelling Formula</h2>
+<p>Signature SWAHG content structure for high-engagement posts.</p>
+<div class="flow">
+  <div class="flow-step"><span class="num">1</span>Open with Vulnerability</div>
+  <div class="flow-step"><span class="num">2</span>Paint the Scene</div>
+  <div class="flow-step"><span class="num">3</span>Name the Inner Critic</div>
+  <div class="flow-step"><span class="num">4</span>Pivot with Empathy</div>
+  <div class="flow-step"><span class="num">5</span>Deliver Lesson via Story</div>
+  <div class="flow-step"><span class="num">6</span>Anchor to Faith</div>
+  <div class="flow-step"><span class="num">7</span>Close with Warm Invitation</div>
+</div>
+
+<h2 id="funnel">9. Customer Journey Funnel</h2>
+<p>Three-stage marketing system: <strong>Before</strong> (attract) &rarr; <strong>During</strong> (convert) &rarr; <strong>After</strong> (retain and multiply).</p>
+
+<div class="funnel">
+  <div class="funnel-col">
+    <div class="funnel-hero hero-after">
+      <span class="stage">(After)</span>
+      <span class="label">Raving Fans</span>
+    </div>
+    <div class="sub-row">
+      <div class="sub-box dark">How I Orchestrate &amp; Stimulate Referrals</div>
+      <div class="sub-box dark">How I Increase Customer Lifetime Value</div>
+      <div class="sub-box dark">How I Deliver a World Class Experience</div>
+    </div>
+    <div class="tactic-list">
+      <strong>Referrals</strong>
+      <ul><li>&bull; Ambassador Programs</li><li>&bull; Partnership Programs</li></ul>
+    </div>
+    <div class="tactic-list">
+      <strong>Lifetime Value</strong>
+      <ul><li>&bull; Exclusive offers for loyal customers</li><li>&bull; Great products to offer</li></ul>
+    </div>
+    <div class="tactic-list">
+      <strong>World Class Experience</strong>
+      <ul><li>&bull; Website optimization</li><li>&bull; Product listing optimization</li><li>&bull; Excellent customer service</li><li>&bull; Reliable return &amp; claims policy</li></ul>
+    </div>
+  </div>
+
+  <div class="funnel-col">
+    <div class="funnel-hero hero-during">
+      <span class="stage">(During)</span>
+      <span class="label">Leads / Customers</span>
+    </div>
+    <div class="sub-row">
+      <div class="sub-box">Sales Conversion Strategy</div>
+      <div class="sub-box">Lead Nurturing / Indoctrination</div>
+      <div class="sub-box">Lead Capture System</div>
+    </div>
+    <div class="tactic-list">
+      <strong>Sales Conversion</strong>
+      <ul><li>&bull; High-quality videos &amp; images</li><li>&bull; Free shipping</li><li>&bull; Coupons</li><li>&bull; Pricing</li><li>&bull; Retargeting</li><li>&bull; Testimonials</li><li>&bull; Valuable website &amp; social content</li></ul>
+    </div>
+    <div class="tactic-list">
+      <strong>Lead Nurturing</strong>
+      <ul><li>&bull; Email</li><li>&bull; SMS</li><li>&bull; Live events</li><li>&bull; TLS FB Group</li></ul>
+    </div>
+    <div class="tactic-list">
+      <strong>Lead Capture</strong>
+      <ul><li>&bull; Discounts</li><li>&bull; E-book</li><li>&bull; Contest</li><li>&bull; Freebies</li><li>&bull; Ambassadors</li></ul>
+    </div>
+  </div>
+
+  <div class="funnel-col">
+    <div class="funnel-hero hero-before">
+      <span class="stage">(Before)</span>
+      <span class="label">Prospects</span>
+    </div>
+    <div class="sub-row">
+      <div class="sub-box light">Engaged Audience</div>
+      <div class="sub-box light">New Audience</div>
+      <div class="sub-box light">Cold Traffic</div>
+    </div>
+    <div class="tactic-list">
+      <strong>FB Messenger (Engaged)</strong>
+      <ul><li>&bull; Notify: live, contests, freebies</li><li>&bull; Invite to private FB group</li><li>&bull; Invite to email list + discounts</li></ul>
+    </div>
+    <div class="tactic-list">
+      <strong>FB TLS Group</strong>
+      <ul><li>&bull; Welcome newcomers</li><li>&bull; Exclusive content</li><li>&bull; Group challenges &amp; member-only giveaways</li></ul>
+    </div>
+    <div class="tactic-list">
+      <strong>FB Messenger (New)</strong>
+      <ul><li>&bull; Add brand label</li><li>&bull; Check FB profile &amp; engage</li><li>&bull; Add as friend &amp; group list</li></ul>
+    </div>
+    <div class="tactic-list">
+      <strong>Facebook Groups (Cold)</strong>
+      <ul><li>&bull; Find potential groups</li><li>&bull; Collect engaging posts</li><li>&bull; Connect with popular conversation starters</li><li>&bull; Interact &amp; stack engagement</li><li>&bull; Re-share / post value content</li></ul>
+    </div>
+    <div class="tactic-list">
+      <strong>Facebook Page (Cold)</strong>
+      <ul><li>&bull; Create content calendar</li><li>&bull; Run contests</li><li>&bull; Message engaged audience</li><li>&bull; Invite to like page</li></ul>
+    </div>
+  </div>
+</div>
+
+<h2 id="inventory">10. Content Inventory</h2>
+
+<h3><span class="pillar-tag">Pillar 1</span> Foundation &amp; Mindset</h3>
+<table>
+  <tr><th>Asset</th><th>Format</th><th>Key Takeaway</th></tr>
+  <tr><td><strong>SMM Handbook</strong></td><td>PDF</td><td>24-step social media checklist + jumpstart guide</td></tr>
+  <tr><td><strong>BFF Simplified Blueprint</strong></td><td>1-page roadmap</td><td>Master roadmap from prep to first client</td></tr>
+  <tr><td><strong>Royal Triangle Method (RTM)</strong></td><td>Framework</td><td>Diagnose career blocks: Desire &middot; Ability &middot; Opportunity</td></tr>
+</table>
+
+<h3><span class="pillar-tag">Pillar 2</span> Tools &amp; Tech</h3>
+<table>
+  <tr><th>Asset</th><th>Format</th><th>Key Takeaway</th></tr>
+  <tr><td><strong>Open University</strong></td><td>Free video library</td><td>Tools, digital marketing, chatbot, VA skills</td></tr>
+  <tr><td><strong>Content Shape Shifter + Hook Generator</strong></td><td>AI prompt tools</td><td>Long-tail keywords, titles, disruptive hooks</td></tr>
+</table>
+
+<h3><span class="pillar-tag">Pillar 3</span> Content Creation &amp; Strategy</h3>
+<table>
+  <tr><th>Asset</th><th>Format</th><th>Key Takeaway</th></tr>
+  <tr><td><strong>Tactical Triangle</strong></td><td>Framework</td><td>Traffic &middot; Conversion &middot; Economics</td></tr>
+  <tr><td><strong>SMM Masterclass</strong></td><td>Video course</td><td>1,000 true fans, niche discovery</td></tr>
+  <tr><td><strong>Message Framework</strong></td><td>Template</td><td>What we offer &middot; Why it matters &middot; Supporting facts</td></tr>
+  <tr><td><strong>Storytelling Framework</strong></td><td>Trello board</td><td>Story types, archetypes, emotional connection</td></tr>
+  <tr><td><strong>SMM Triple A</strong></td><td>Audit spreadsheet</td><td>Audit &middot; Analyze &middot; Accumulate client discovery</td></tr>
+  <tr><td><strong>SEO KPI Tracker</strong></td><td>Notion / Sheet</td><td>Organic traffic, booked calls, newsletter ROI</td></tr>
+  <tr><td><strong>5-Step Content Curation</strong></td><td>Framework</td><td>Strategy &rarr; sources &rarr; outline (PAS) &rarr; draft &rarr; finalize</td></tr>
+</table>
+
+<h3><span class="pillar-tag">Pillar 4</span> Client Acquisition</h3>
+<table>
+  <tr><th>Asset</th><th>Format</th><th>Key Takeaway</th></tr>
+  <tr><td><strong>The Freelancing Journey</strong></td><td>6-step course</td><td>Mindset &rarr; skill &rarr; resume &rarr; cover letter &rarr; interview</td></tr>
+  <tr><td><strong>PRISMM Level 1 &amp; 2</strong></td><td>Internship</td><td>Real client work &mdash; "do the actual thing"</td></tr>
+  <tr><td><strong>Resume Templates (3 variants)</strong></td><td>Templates</td><td>Related exp / career changer / no exp</td></tr>
+  <tr><td><strong>SMM Proposals &amp; Contracts</strong></td><td>Templates</td><td>Ready-made &middot; Special Need &middot; Project Specific</td></tr>
+  <tr><td><strong>Cold Calling Script</strong></td><td>Document</td><td>Outreach to decision-makers</td></tr>
+</table>
+
+<h2 id="templates">11. Post Templates (Content Playbook)</h2>
+
+<h3>Template 1 &mdash; Personal Story Post</h3>
+<div class="card">Opens with a vulnerable moment &rarr; paints the scene &rarr; names the inner critic &rarr; pivots with empathy &rarr; delivers the lesson through story &rarr; anchors to a scripture or faith truth &rarr; closes with a warm invitation. Best for: building trust and attracting your true audience.</div>
+
+<h3>Template 2 &mdash; "Wrong Mindset" Post</h3>
+<div class="card">Names a common belief the audience holds &rarr; explains why it's keeping them stuck &rarr; reframes with a better mindset &rarr; ends with the action that comes from the new mindset. Best for: mindset pivots that drive shares.</div>
+
+<h3>Template 3 &mdash; Community Proof Post</h3>
+<div class="card">Spotlights a member's before/after &rarr; shows the specific action that caused the transformation &rarr; credits the member by name &rarr; closes with the invitation for others to start their own journey. Best for: social proof without bragging.</div>
+
+<h3>Template 4 &mdash; Tactical Tips Post</h3>
+<div class="card">Names the exact problem &rarr; lists the 3&ndash;5 steps to solve it &rarr; shows a quick example &rarr; gives the reader permission to start messy. Best for: guides, how-tos, save-worthy posts.</div>
+
+<h2 id="prompts">12. AI Prompt Library</h2>
+
+<h3>Master Voice Prompt</h3>
+<div class="prompt-box">ROLE: You are writing as Lala (Shela) &mdash; a Filipino freelancer, AI content systems builder, and Christ-centered teacher.
+
+VOICE: Vulnerable, empathetic, tactical, devotional. Warm but direct. Never guru-posture.
+
+STRUCTURE: Use the 7-step formula &mdash; Vulnerability &rarr; Scene &rarr; Inner Critic &rarr; Empathy Pivot &rarr; Lesson via Story &rarr; Faith Anchor &rarr; Warm Invitation.
+
+NEVER DO:
+- No hustle culture language
+- No income bragging or scarcity marketing
+- No "fake it till you make it"
+- No em-dashes
+- No guru tone
+
+ALWAYS DO:
+- Lead with heartwork, land with tactics
+- Name the inner critic by what she actually says
+- Anchor lessons to scripture or faith when natural
+- Use signature phrases where they fit
+- Close with a warm invitation, not a hard sell
+
+SIGNATURE PHRASES: "It's not about perfection, it's about direction" &middot; "Follow someone ahead of you and help someone behind you" &middot; "#BonafideFilipinoFreelancer" &middot; "#smashthelovebutton"
+
+TASK: [insert the specific post brief here]</div>
+
+<h3>Target Audience Problem Identification</h3>
+<div class="prompt-box">"Attached is the details of our [product]. I need to know what are the possible work problems of the person working as [target job role] that our [product] can solve. Give me their specific pain points and how they say it in their language."</div>
+
+<h3>Brand Guidelines &amp; Persona</h3>
+<div class="prompt-box">"I am a millennial Filipina who wants to offer [service]. I need to create my branding guidelines &mdash; specifically brand identity and brand strategy &mdash; by answering the questions below. Here is the blog I wrote. Summon a branding expert and a [domain] expert with great marketing experience."</div>
+
+<h3>Resume Tailoring</h3>
+<div class="prompt-box">"I am rewriting my resume and I need your help. Act as a professional resume writer. Here is the job description. Ask me questions to clarify details so we create the resume effectively."</div>
+
+<h2 id="scripts">13. Interview &amp; Call Scripts</h2>
+
+<h3>"Can you guarantee my social media will grow?"</h3>
+<div class="card">"First, we'll identify the main source of our traffic and effective strategies to convert our audience. We'll map out your digital marketing ecosystem. I cannot guarantee growth because it depends on industry competition and your unique value proposition, but I guarantee I will implement effective strategies, provide high-quality content, and do my best to convert traffic."</div>
+
+<h3>"What's your content creation process?"</h3>
+<div class="card">"I start by developing a clear Message Framework &mdash; what we offer, why it matters. These become the foundation for topics. Before creating content, we define branding guidelines and visual identity so everything is consistent and reflects what makes your brand special."</div>
+
+<h3>"Tell me about a project showing your SMM skills"</h3>
+<div class="card">"I developed my own social media page and implemented a comprehensive branding strategy &mdash; purpose, target audience, unique value proposition. By sharing engaging, valuable content, I grew my following and built a strong presence, demonstrating my ability to execute a strategic plan."</div>
+
+<h3>Cold Calling Flow</h3>
+<div class="card">"I'm looking for the person at [Company] who manages [task]. We sent you an email with the details &mdash; did you receive it? Is there an email address we can send it to? Is it okay to get in touch with you in two days?"</div>
+
+<h2 id="antipersona">14. Anti-Persona (What the Brand Avoids)</h2>
+<div class="anti-persona">
+  <h4>Never be this</h4>
+  <ul>
+    <li><strong>The Guru</strong> &mdash; posturing as an untouchable expert</li>
+    <li><strong>Scarcity Marketer</strong> &mdash; "only 3 spots left" fake urgency</li>
+    <li><strong>Income Bragger</strong> &mdash; six-figure screenshots, Lambo shots</li>
+    <li><strong>Hustle Culture Evangelist</strong> &mdash; grind-at-all-costs language</li>
+    <li><strong>Fake It Till You Make It</strong> &mdash; performing expertise you don't have</li>
+  </ul>
+</div>
+
+<div class="pullquote">"Commit to the Lord whatever you do, and He will establish your plans." &mdash; Proverbs 16:3</div>
+
+<footer>
+  Extracted from NotebookLM "Shela's Work At Home Geek Chatbot" (100+ sources) + SMR Brand Sheet (8 tabs) + Customer Journey Funnel framework<br>
+  Last updated April 9, 2026 &middot; Shela's Life Dashboard
+</footer>
+
+</div>
+</body>
+</html>
