@@ -1782,7 +1782,7 @@
   </tr>
   <tr>
     <td>Blog Phase 5<br><em>Publish to Webflow</em></td>
-    <td><span class="comp-block cb-external">Webflow CMS API</span> via GitHub Actions (<code>webflow-blog-sync.yml</code>)</td>
+    <td><span class="comp-block cb-external">Webflow CMS API v2</span> direct via <code>publish_aus_blogs.py</code>. Sheet reconciliation runs separately every 6h via <code>webflow-blog-sync.yml</code>.</td>
     <td>Blog written but not published. Stuck in drafts.</td>
     <td>Save blog as Google Doc (already created in Phase 4). Jordan can publish manually from the doc.</td>
   </tr>
@@ -2753,10 +2753,10 @@ fi
   </tr>
   <tr>
     <td><strong>Blog Content Database</strong></td>
-    <td>Master Blog Inventory, Topical Map - Pillars &amp; Clusters, Topical Map - Gap Queue</td>
+    <td>Master Blog Inventory (16 cols), Topical Map - Pillars &amp; Clusters, Topical Map - Gap Queue</td>
     <td><span class="comp-block src-webflow">Webflow</span> + <span class="comp-block src-internal">Internal</span></td>
     <td><strong>Cat 2: Blog URLs</strong> (Master Inventory) + <strong>Cat 5: Keywords</strong> (Topical Maps)</td>
-    <td><span class="badge badge-yellow">Master Inventory needs column cleanup</span> Remove non-Webflow cols. Plan new topic tags.</td>
+    <td><span class="badge badge-green">Cleaned Apr 8 2026</span> 93 dupes removed, cols G-J dropped, Make.com real-time sync scenario disabled. Two writers only: <code>publish_aus_blogs.py</code> + <code>webflow-blog-sync.py</code>.</td>
   </tr>
   <tr>
     <td><strong>2026 News List</strong></td>
@@ -2942,10 +2942,10 @@ fi
     <th style="width:12%">Who</th>
   </tr>
   <tr>
-    <td><strong>Master Blog Inventory</strong><br>(41 columns)</td>
-    <td>Has columns not from Webflow API (primary_keyword, review_doc_url, etc.). Too many columns for visual review. Missing: topic tags for topical mapping, LLM citation flag, conversion flag.</td>
-    <td>Remove non-Webflow columns. Add: <code>topic_pillar</code>, <code>topic_cluster</code> (link to Topical Map), <code>llm_cited</code> (yes/no), <code>converts</code> (yes/no). Keep only columns that come from Webflow OR that you actively monitor.</td>
-    <td>Claude + Shela review</td>
+    <td><strong>Master Blog Inventory</strong><br>(16 columns, post Apr 8 2026 cleanup)</td>
+    <td><strong>FIXED Apr 8 2026.</strong> Was 20+ columns with stale empty fields and 93 duplicate rows from a Make.com Webflow real-time sync scenario that bypassed dedup. Cleanup: deleted 93 dupes, removed unused cols (target_keywords, has_faqs, has_schema, topics_tags), disabled the Make.com scenario, deleted legacy publish scripts, consolidated to two canonical writers.</td>
+    <td><strong>Done.</strong> Current schema: <code>item_id | title | slug | published_date | last_updated | status | blog_url | image_status | image_url | webflow_status | date_added | created_via | last_status_change | llm_cited | pillar_id | cluster_id</code>. Only two writers allowed: <code>publish_aus_blogs.py</code> (new publishes) + <code>webflow-blog-sync.py</code> (cron reconciliation).</td>
+    <td>Done</td>
   </tr>
   <tr>
     <td><strong>News Analysis</strong><br>(hidden rows)</td>
@@ -4708,7 +4708,7 @@ fi
 
 <div style="background:#f5f5f5; border-radius:8px; padding:16px; margin:16px 0; font-size:0.9em">
   <p style="margin-top:0"><strong>YT Script:</strong> Gap finder suggests topic &rarr; Shela confirms &rarr; Claude writes 3 versions + pushes to Script Queue (Status: Draft) &rarr; AJ uploads &rarr; Shela adds YT URL (Status: Published) &rarr; Bi-weekly analytics export &rarr; Next rebuild imports performance data &rarr; Next brief skips covered topics</p>
-  <p><strong>Blog:</strong> Gap finder suggests topic &rarr; Shela confirms &rarr; Claude writes draft + pushes to Blog Pipeline (Status: Draft) &rarr; Review &rarr; Publish via webflow-blog-sync &rarr; Next rebuild imports to content_inventory &rarr; Next brief skips covered topics</p>
+  <p><strong>Blog:</strong> Gap finder suggests topic &rarr; Shela confirms &rarr; Claude writes draft + pushes to Blog Pipeline (Status: Draft) &rarr; Review &rarr; Publish via <code>publish_aus_blogs.py</code> (Webflow API v2 direct) &rarr; <code>webflow-blog-sync.py</code> reconciles sheet on next cron run &rarr; Next rebuild imports to content_inventory &rarr; Next brief skips covered topics</p>
   <p style="margin-bottom:0"><strong>Newsletter:</strong> Current pipeline (Stage 1-9) unchanged. C2R integration planned but not active yet. Published editions tracked in news archive.</p>
 </div>
 
@@ -4796,7 +4796,7 @@ Gap Finder &rarr; Intake &rarr; Research &rarr; Draft &rarr; Quality Gate &rarr;
   <tr><td>4</td><td>Quality Gate: <code>qa-reviewer --tier [tier]</code> (target 8.5+)</td><td>Claude (parallel)</td><td>Rating + feedback</td></tr>
   <tr><td>5</td><td>Review Doc: Google Doc with Cobalt branding</td><td>Claude</td><td>Google Doc link</td></tr>
   <tr><td>5.5</td><td>Shela reviews and approves</td><td>Shela</td><td>Approved draft</td></tr>
-  <tr><td>6</td><td>Publish: <code>webflow-blog-sync.py</code> + GitHub Actions</td><td>Automated</td><td>Live on Webflow</td></tr>
+  <tr><td>6</td><td>Publish: <code>publish_aus_blogs.py</code> (Webflow API v2 direct). <code>webflow-blog-sync.py</code> reconciles the sheet on the next cron run.</td><td>Automated</td><td>Live on Webflow</td></tr>
   <tr><td>7</td><td>Repurpose: flag for YT, LinkedIn, newsletter</td><td>Claude</td><td>Script Queue row</td></tr>
 </table>
 
