@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Cobalt SEO KPI Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<style>
+  :root {
+    /* Cobalt brand palette — per cobalt-brand-visual-expert.md */
+    --navy: #0F172A;       /* Trust Navy */
+    --slate: #1E293B;      /* Deep Slate */
+    --blue: #0047AB;       /* Cobalt Blue — primary */
+    --blue-light: #2563C8; /* Cobalt Blue, lighter variant */
+    --amber: #D97706;      /* Caution Amber */
+    --bg: #F8FAFC;         /* Clean White */
+    --card: #ffffff;
+    --text: #0F172A;       /* Trust Navy */
+    --muted: #64748B;      /* Neutral Gray */
+    --border: #e2e8f0;
+    --green: #059669;      /* Success Green */
+    --red: #DC2626;        /* Alert Red */
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: white;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  header h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  header .sub { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .toggle {
+    display: inline-flex;
+    background: rgba(255,255,255,0.12);
+    border-radius: 999px;
+    padding: 4px;
+  }
+  .toggle button {
+    background: transparent;
+    border: 0;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .toggle button.active { background: white; color: var(--navy); }
+  main { padding: 32px 40px 60px; max-width: 1400px; margin: 0 auto; }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .kpi {
+    background: var(--card);
+    padding: 22px 24px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+  }
+  .kpi .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .kpi .value {
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 8px;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+  .kpi .delta {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .delta.up { color: var(--green); }
+  .delta.down { color: var(--red); }
+  .delta.flat { color: var(--muted); }
+  .chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+    gap: 24px;
+  }
+  .chart-card {
+    background: var(--card);
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+  }
+  .chart-card h3 {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .chart-card canvas { max-height: 280px; }
+  .status {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 20px;
+  }
+  .loading { text-align: center; padding: 60px; color: var(--muted); }
+  .table-card {
+    background: var(--card);
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+    margin-top: 28px;
+    overflow-x: auto;
+  }
+  .table-card h3 {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  table.kpi-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.kpi-table th, table.kpi-table td {
+    padding: 10px 14px;
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  table.kpi-table th:first-child, table.kpi-table td:first-child { text-align: left; }
+  table.kpi-table thead th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    position: sticky;
+    top: 0;
+  }
+  table.kpi-table tbody tr:hover { filter: brightness(0.96); }
+  .yoy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+  @media (max-width: 900px) { .yoy-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .yoy-grid { grid-template-columns: 1fr; } }
+  .month-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px 34px;
+    box-shadow: 0 2px 6px rgba(15,23,42,0.05);
+  }
+  .month-card h4 {
+    margin: 0 0 20px;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 14px;
+    border-bottom: 3px solid var(--border);
+  }
+  .month-card table { width: 100%; border-collapse: collapse; }
+  .month-card th {
+    text-align: right; color: var(--muted); font-weight: 700;
+    padding: 10px 4px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .month-card th:first-child { text-align: left; }
+  .month-card td { padding: 14px 4px; text-align: right; font-weight: 700; color: var(--navy); font-size: 26px; }
+  .month-card td:first-child { text-align: left; color: var(--muted); font-weight: 600; font-size: 17px; }
+  .month-card tr.current td { color: var(--blue); font-weight: 800; }
+  .month-card .pct { display: block; font-size: 13px; font-weight: 700; margin-top: 4px; }
+  .month-card .pct.up { color: var(--green); }
+  .month-card .pct.down { color: var(--red); }
+  .month-card .pct.flat { color: var(--muted); }
+  .month-card .global-peak,
+  .month-card .global-low {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 48px;
+    padding: 0 10px;
+    border-radius: 50%;
+    font-weight: 800;
+  }
+  .month-card .global-peak { background: rgba(16,185,129,0.25); color: #047857 !important; }
+  .month-card .global-low  { background: rgba(239,68,68,0.22);  color: #b91c1c !important; }
+  .legend {
+    display: flex; gap: 18px; flex-wrap: wrap;
+    margin: 0 0 16px; font-size: 12px; color: var(--muted); font-weight: 600;
+  }
+  .legend .dot {
+    display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+    margin-right: 6px; vertical-align: middle;
+  }
+  .legend .dot.peak-light { background: rgba(5,150,105,0.28); }
+  .legend .dot.peak-solid { background: rgba(5,150,105,0.55); }
+  .legend .dot.low        { background: rgba(220,38,38,0.28); }
+  table.week-grid tr.peak-summary td {
+    background: #ecfdf5; color: #047857; font-weight: 800;
+    font-size: 14px; border-top: 2px solid var(--navy);
+  }
+  table.week-grid tr.peak-summary td.label {
+    text-align: right; color: var(--navy); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  table.week-grid { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.week-grid th, table.week-grid td {
+    padding: 10px 8px; text-align: center; border: 1px solid var(--border); white-space: nowrap;
+  }
+  table.week-grid thead th {
+    background: var(--navy); color: white; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;
+  }
+  table.week-grid thead th.sub { background: #1E293B; font-size: 10px; font-weight: 600; }
+  table.week-grid thead th.total-col { background: #0ea5e9; }
+  table.week-grid td.month-label {
+    font-weight: 800; color: var(--navy); font-size: 15px; text-align: left; padding-left: 14px;
+  }
+  table.week-grid td.year-label { font-weight: 700; color: var(--muted); text-align: left; padding-left: 10px; }
+  table.week-grid tr.current td { background: #eff6ff; }
+  table.week-grid td.booked-cell { color: var(--navy); font-weight: 700; font-size: 15px; }
+  table.week-grid td.acct-cell { color: var(--blue); font-weight: 700; font-size: 15px; }
+  table.week-grid td.total-cell { background: #f0f9ff; font-weight: 800; color: var(--navy); font-size: 15px; }
+  table.week-grid .pct-sm { display: block; font-size: 10px; font-weight: 600; color: var(--muted); margin-top: 2px; }
+  table.week-grid tr td.peak,
+  table.week-grid tr.current td.peak {
+    position: relative;
+    background: radial-gradient(circle at center, rgba(16,185,129,0.28) 0%, rgba(16,185,129,0.28) 44%, transparent 45%) !important;
+  }
+  table.week-grid td.peak .peak-num {
+    display: inline-block;
+    color: #047857;
+    font-weight: 800;
+  }
+  table.week-grid td.total-cell.peak-year,
+  table.week-grid td.peak-year {
+    background: radial-gradient(circle at center, rgba(5,150,105,0.55) 0%, rgba(5,150,105,0.55) 46%, transparent 47%) !important;
+  }
+  table.week-grid td.peak-year .peak-num {
+    color: #ffffff;
+    font-weight: 900;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Cobalt Intelligence · SEO KPI Dashboard</h1>
+    <div class="sub">Live from SEO KPI Tracker 2026 · Weekly & Monthly trends</div>
+  </div>
+  <div class="toggle">
+    <button id="btn-weekly" class="active">Weekly</button>
+    <button id="btn-monthly">Monthly</button>
+    <button id="btn-yoy">Year-over-Year</button>
+    <button id="btn-wg-booked">Booked · Week Grid</button>
+    <button id="btn-wg-accounts">Accounts · Week Grid</button>
+  </div>
+</header>
+<main>
+  <div id="loading" class="loading">Loading latest data…</div>
+  <div id="dashboard" style="display:none;">
+    <div id="weekgrid-view" style="display:none;">
+      <h2 id="weekgrid-title" style="margin:0 0 12px; font-size:18px; color:var(--navy);"></h2>
+      <div class="legend">
+        <span><span class="dot peak-light"></span>Row peak week</span>
+        <span><span class="dot peak-solid"></span>Year top month</span>
+      </div>
+      <div class="table-card" style="margin-top:0;">
+        <table class="week-grid">
+          <thead id="weekgrid-head"></thead>
+          <tbody id="weekgrid-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="yoy-view" style="display:none;">
+      <h2 style="margin:0 0 12px; font-size:18px; color:var(--navy);">Year-over-Year · Booked Calls &amp; Created Accounts by Month</h2>
+      <div class="legend">
+        <span><span class="dot peak-light"></span>Year peak</span>
+        <span><span class="dot low"></span>Year low</span>
+      </div>
+      <div class="yoy-grid" id="yoy-grid"></div>
+    </div>
+    <div id="standard-view">
+    <div class="kpi-grid" id="kpis"></div>
+    <div class="chart-grid">
+      <div class="chart-card"><h3>Total Users</h3><canvas id="chart-users"></canvas></div>
+      <div class="chart-card"><h3>Sessions</h3><canvas id="chart-sessions"></canvas></div>
+      <div class="chart-card"><h3>Page Views</h3><canvas id="chart-views"></canvas></div>
+      <div class="chart-card"><h3>Booked Calls &amp; Created Accounts</h3><canvas id="chart-conv"></canvas></div>
+    </div>
+    <div class="table-card">
+      <h3 id="table-title">Data Table · Jan 2025 – Present</h3>
+      <table class="kpi-table">
+        <thead><tr id="table-head"></tr></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+    <div class="status" id="status"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const WEEKLY_CSV  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1gd0zqgK_ykEIPaqrnf_qR85N_cInigombDP83o3w1g0ZgdP-sTVd9OjYN_YD8ZOAE0V6QFk_XgaG/pub?gid=408956551&single=true&output=csv";
+const MONTHLY_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1gd0zqgK_ykEIPaqrnf_qR85N_cInigombDP83o3w1g0ZgdP-sTVd9OjYN_YD8ZOAE0V6QFk_XgaG/pub?gid=161346380&single=true&output=csv";
+
+const COLORS = {
+  blue: "#0047AB",      // Cobalt Blue
+  lightBlue: "#2563C8", // Cobalt Blue lighter
+  cyan: "#1E293B",      // Deep Slate (replaces off-brand cyan)
+  navy: "#0F172A",      // Trust Navy
+  amber: "#D97706",     // Caution Amber
+};
+
+let weeklyData = [], monthlyData = [], charts = {}, currentView = "weekly";
+
+function num(v) {
+  if (v === null || v === undefined) return 0;
+  const s = String(v).replace(/,/g, "").trim();
+  if (s === "" || s.toLowerCase() === "no data") return 0;
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+function fmt(n) { return n.toLocaleString("en-US", { maximumFractionDigits: 0 }); }
+
+// Parse "M/D/YYYY" (weekly) or "Mon YYYY" (monthly) to Date
+function parseLabelDate(label) {
+  if (!label) return null;
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(label)) {
+    const [m, d, y] = label.split("/").map(Number);
+    return new Date(y, m - 1, d);
+  }
+  const d = new Date(label + " 1");
+  return isNaN(d) ? null : d;
+}
+const CUTOFF_2025 = new Date(2025, 0, 1);
+
+// Palette — rows colored by month (weekly rows use the month of their Start Date)
+const MONTH_COLORS_IDX = [
+  "#dbeafe", "#fef3c7", "#dcfce7", "#fce7f3",
+  "#ede9fe", "#ffedd5", "#cffafe", "#fef9c3",
+  "#f3e8ff", "#ffe4e6", "#d1fae5", "#e0e7ff",
+];
+
+async function fetchCSV(url) {
+  const res = await fetch(url);
+  const text = await res.text();
+  return Papa.parse(text, { header: false, skipEmptyLines: true }).data;
+}
+
+function parseWeekly(rows) {
+  // Headers: Start Date, End Date, Days, Total Users, New Users, Sessions, Bounce Rate, Views, Booked Call, Created Account, Compare...
+  return rows.slice(1).filter(r => r[0] && r[0].trim()).map(r => ({
+    label: r[0],
+    endDate: r[1],
+    totalUsers: num(r[3]),
+    newUsers: num(r[4]),
+    sessions: num(r[5]),
+    views: num(r[7]),
+    bookedCall: num(r[8]),
+    createdAccount: num(r[9]),
+  }));
+}
+
+function parseMonthly(rows) {
+  // First col is month label (header mislabeled "Created Account")
+  return rows.slice(1).filter(r => r[0] && r[0].trim() && !r[0].toLowerCase().includes("total")).map(r => ({
+    label: r[0],
+    totalUsers: num(r[1]),
+    newUsers: num(r[2]),
+    sessions: num(r[3]),
+    views: num(r[5]),
+    bookedCall: num(r[6]),
+    createdAccount: num(r[7]),
+  }));
+}
+
+function delta(curr, prev) {
+  if (!prev) return { txt: "—", cls: "flat" };
+  const pct = ((curr - prev) / prev) * 100;
+  const arrow = pct > 0.5 ? "▲" : pct < -0.5 ? "▼" : "■";
+  const cls = pct > 0.5 ? "up" : pct < -0.5 ? "down" : "flat";
+  return { txt: `${arrow} ${pct.toFixed(1)}% vs prior`, cls };
+}
+
+function renderKPIs(data) {
+  const last = data[data.length - 1] || {};
+  const prev = data[data.length - 2] || {};
+  const cards = [
+    { label: "Total Users", key: "totalUsers" },
+    { label: "New Users", key: "newUsers" },
+    { label: "Sessions", key: "sessions" },
+    { label: "Page Views", key: "views" },
+    { label: "Booked Calls", key: "bookedCall" },
+    { label: "Created Accounts", key: "createdAccount" },
+  ];
+  document.getElementById("kpis").innerHTML = cards.map(c => {
+    const d = delta(last[c.key], prev[c.key]);
+    return `<div class="kpi">
+      <div class="label">${c.label}</div>
+      <div class="value">${fmt(last[c.key] || 0)}</div>
+      <div class="delta ${d.cls}">${d.txt}</div>
+    </div>`;
+  }).join("");
+}
+
+function lineChart(canvasId, labels, datasets) {
+  if (charts[canvasId]) charts[canvasId].destroy();
+  const ctx = document.getElementById(canvasId).getContext("2d");
+  charts[canvasId] = new Chart(ctx, {
+    type: "line",
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { display: datasets.length > 1, position: "bottom", labels: { boxWidth: 12, font: { size: 12 } } },
+        tooltip: { backgroundColor: "#0F172A", padding: 12, cornerRadius: 8 },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 10 } },
+        y: { grid: { color: "#f1f5f9" }, ticks: { font: { size: 11 }, callback: v => fmt(v) }, beginAtZero: true },
+      },
+    },
+  });
+}
+
+function render(view) {
+  currentView = view;
+  const all = view === "weekly" ? weeklyData : monthlyData;
+  const data = view === "weekly" ? all.slice(-16) : all; // last 16 weeks or all months
+  if (!data.length) return;
+
+  renderKPIs(all);
+
+  const labels = data.map(d => d.label);
+  const ds = (label, key, color) => ({
+    label, data: data.map(d => d[key]),
+    borderColor: color, backgroundColor: color + "22",
+    borderWidth: 2.5, tension: 0.35, fill: true,
+    pointRadius: 2, pointHoverRadius: 5,
+  });
+
+  lineChart("chart-users", labels, [
+    ds("Total Users", "totalUsers", COLORS.blue),
+    ds("New Users", "newUsers", COLORS.cyan),
+  ]);
+  lineChart("chart-sessions", labels, [ds("Sessions", "sessions", COLORS.lightBlue)]);
+  lineChart("chart-views", labels, [ds("Page Views", "views", COLORS.navy)]);
+  lineChart("chart-conv", labels, [
+    ds("Booked Calls", "bookedCall", COLORS.blue),
+    ds("Created Accounts", "createdAccount", COLORS.amber),
+  ]);
+
+  renderTable(view, all);
+
+  document.getElementById("status").textContent =
+    `Showing ${view === "weekly" ? "last " + data.length + " weeks" : data.length + " months"} · Refreshed ${new Date().toLocaleString()}`;
+}
+
+function renderTable(view, all) {
+  const rows = all.filter(d => {
+    const dt = parseLabelDate(d.label);
+    return dt && dt >= CUTOFF_2025;
+  });
+  const periodLabel = view === "weekly" ? "Week Starting" : "Month";
+  document.getElementById("table-title").textContent =
+    `Data Table · Jan 2025 – Present (${view === "weekly" ? "Weekly" : "Monthly"})`;
+  document.getElementById("table-head").innerHTML = `
+    <th>${periodLabel}</th>
+    <th>Total Users</th>
+    <th>New Users</th>
+    <th>Sessions</th>
+    <th>Page Views</th>
+    <th>Booked Calls</th>
+    <th>Created Accounts</th>`;
+  document.getElementById("table-body").innerHTML = rows.slice().reverse().map(r => {
+    const dt = parseLabelDate(r.label);
+    const bg = dt ? MONTH_COLORS_IDX[dt.getMonth()] : "transparent";
+    return `
+    <tr style="background:${bg};">
+      <td>${r.label}</td>
+      <td>${fmt(r.totalUsers)}</td>
+      <td>${fmt(r.newUsers)}</td>
+      <td>${fmt(r.sessions)}</td>
+      <td>${fmt(r.views)}</td>
+      <td>${fmt(r.bookedCall)}</td>
+      <td>${fmt(r.createdAccount)}</td>
+    </tr>`;
+  }).join("");
+}
+
+const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function renderWeekGrid(metric) {
+  // metric: "bookedCall" or "createdAccount"
+  const grid = {};
+  weeklyData.forEach(r => {
+    const d = parseLabelDate(r.label);
+    if (!d) return;
+    const y = d.getFullYear(), m = d.getMonth();
+    const w = Math.min(4, Math.floor((d.getDate() - 1) / 7));
+    grid[y] = grid[y] || {};
+    grid[y][m] = grid[y][m] || {};
+    grid[y][m][w] = (grid[y][m][w] || 0) + r[metric];
+  });
+  const years = Object.keys(grid).map(Number).sort();
+  const currentYear = new Date().getFullYear();
+  const isBooked = metric === "bookedCall";
+  const title = isBooked ? "Booked Calls" : "Created Accounts";
+  const cellClass = isBooked ? "booked-cell" : "acct-cell";
+
+  document.getElementById("weekgrid-title").textContent =
+    `Week-of-Month Performance · ${title} (% = share of that month's total)`;
+  document.getElementById("weekgrid-head").innerHTML = `
+    <tr>
+      <th>Month</th>
+      <th>Year</th>
+      ${[1,2,3,4,5].map(n => `<th>Week ${n}</th>`).join("")}
+      <th class="total-col">Month Total</th>
+    </tr>`;
+
+  // Find the month with the highest total per year (for Month Total column highlight)
+  const yearTopMonth = {}; // y -> monthIdx
+  years.forEach(y => {
+    let best = { val: -Infinity, mi: -1 };
+    MONTH_NAMES.forEach((_, mi) => {
+      let total = 0;
+      for (let w = 0; w < 5; w++) total += (grid[y]?.[mi]?.[w] || 0);
+      if (total > best.val) best = { val: total, mi };
+    });
+    if (best.val > 0) yearTopMonth[y] = best.mi;
+  });
+
+  const peakCounts = [0,0,0,0,0];
+  const rows = [];
+  MONTH_NAMES.forEach((name, mi) => {
+    years.forEach((y, yi) => {
+      const rowCls = y === currentYear ? "current" : "";
+      const monthCell = yi === 0
+        ? `<td class="month-label" rowspan="${years.length}" style="background:${MONTH_COLORS_IDX[mi]};">${name}</td>`
+        : "";
+      // Find peak week for THIS row (this year, this month)
+      const weekVals = [0,1,2,3,4].map(w => grid[y]?.[mi]?.[w]);
+      let total = 0, peakW = -1, peakVal = -Infinity;
+      weekVals.forEach((v, w) => {
+        if (v != null) {
+          total += v;
+          if (v > peakVal) { peakVal = v; peakW = w; }
+        }
+      });
+      const hasData = weekVals.some(v => v != null && v > 0);
+      if (hasData) peakCounts[peakW]++;
+      const weekCells = weekVals.map((v, w) => {
+        if (v == null) return `<td>—</td>`;
+        const pctStr = total > 0 ? `<span class="pct-sm">${((v/total)*100).toFixed(0)}%</span>` : "";
+        const isPeak = hasData && w === peakW;
+        const tdCls = `${cellClass}${isPeak ? " peak" : ""}`;
+        const inner = isPeak ? `<span class="peak-num">${fmt(v)}</span>` : fmt(v);
+        return `<td class="${tdCls}">${inner}${pctStr}</td>`;
+      }).join("");
+      const isYearTopMonth = yearTopMonth[y] === mi && total > 0;
+      const totalCell = `<td class="total-cell${isYearTopMonth ? " peak-year" : ""}">${isYearTopMonth ? `<span class="peak-num">${fmt(total)}</span>` : fmt(total)}</td>`;
+      rows.push(`<tr class="${rowCls}">${monthCell}<td class="year-label">${y}</td>${weekCells}${totalCell}</tr>`);
+    });
+  });
+  const summaryRow = `<tr class="peak-summary">
+    <td class="label" colspan="2">Peak Weeks (total rows where this week was highest) →</td>
+    ${peakCounts.map(c => `<td>${c}</td>`).join("")}
+    <td></td>
+  </tr>`;
+  document.getElementById("weekgrid-body").innerHTML = summaryRow + rows.join("");
+}
+
+function renderYoY() {
+  // Build {MonthIdx: {year: {bookedCall, createdAccount}}}
+  const grid = {};
+  MONTH_NAMES.forEach((_, i) => grid[i] = {});
+  monthlyData.forEach(r => {
+    const m = r.label.match(/^(\w+)\s+(\d{4})$/);
+    if (!m) return;
+    const idx = MONTH_NAMES.indexOf(m[1].slice(0,3));
+    if (idx < 0) return;
+    grid[idx][m[2]] = { bookedCall: r.bookedCall, createdAccount: r.createdAccount };
+  });
+  const currentYear = String(new Date().getFullYear());
+  const years = [...new Set(monthlyData.map(r => {
+    const m = r.label.match(/^(\w+)\s+(\d{4})$/);
+    return m ? m[2] : null;
+  }).filter(Boolean))].sort();
+
+  // Find peak (max) and low (min) month PER YEAR for booked and accounts
+  const peakBookedByYear = {}, peakAcctByYear = {};
+  const lowBookedByYear  = {}, lowAcctByYear  = {};
+  years.forEach(y => {
+    let bestB = { val: -Infinity, m: -1 }, bestA = { val: -Infinity, m: -1 };
+    let worstB = { val: Infinity, m: -1 }, worstA = { val: Infinity, m: -1 };
+    let countB = 0, countA = 0;
+    MONTH_NAMES.forEach((_, i) => {
+      const d = grid[i][y];
+      if (!d) return;
+      if (d.bookedCall > 0) {
+        countB++;
+        if (d.bookedCall > bestB.val)  bestB  = { val: d.bookedCall, m: i };
+        if (d.bookedCall < worstB.val) worstB = { val: d.bookedCall, m: i };
+      }
+      if (d.createdAccount > 0) {
+        countA++;
+        if (d.createdAccount > bestA.val)  bestA  = { val: d.createdAccount, m: i };
+        if (d.createdAccount < worstA.val) worstA = { val: d.createdAccount, m: i };
+      }
+    });
+    if (countB > 0) peakBookedByYear[y] = bestB.m;
+    if (countA > 0) peakAcctByYear[y] = bestA.m;
+    // Only mark low if there are at least 2 data points AND low ≠ peak
+    if (countB > 1 && worstB.m !== bestB.m) lowBookedByYear[y] = worstB.m;
+    if (countA > 1 && worstA.m !== bestA.m) lowAcctByYear[y] = worstA.m;
+  });
+
+  function pctBadge(curr, prev) {
+    if (!prev) return "";
+    const pct = ((curr - prev) / prev) * 100;
+    const cls = pct > 0.5 ? "up" : pct < -0.5 ? "down" : "flat";
+    const arrow = pct > 0.5 ? "▲" : pct < -0.5 ? "▼" : "■";
+    return `<span class="pct ${cls}">${arrow} ${pct.toFixed(0)}% YoY</span>`;
+  }
+
+  document.getElementById("yoy-grid").innerHTML = MONTH_NAMES.map((name, i) => {
+    const rows = years.map((y, yi) => {
+      const d = grid[i][y];
+      const prev = yi > 0 ? grid[i][years[yi - 1]] : null;
+      const cls = y === currentYear ? "current" : "";
+      if (!d) return `<tr class="${cls}"><td>${y}</td><td>—</td><td>—</td></tr>`;
+      const wrap = (content, isPeak, isLow) => {
+        if (isPeak) return `<span class="global-peak">${content}</span>`;
+        if (isLow)  return `<span class="global-low">${content}</span>`;
+        return content;
+      };
+      const bookedNum = wrap(fmt(d.bookedCall), peakBookedByYear[y] === i, lowBookedByYear[y] === i);
+      const acctNum   = wrap(fmt(d.createdAccount), peakAcctByYear[y] === i, lowAcctByYear[y] === i);
+      const bookedPct = prev && prev.bookedCall ? pctBadge(d.bookedCall, prev.bookedCall) : "";
+      const acctPct   = prev && prev.createdAccount ? pctBadge(d.createdAccount, prev.createdAccount) : "";
+      return `<tr class="${cls}"><td>${y}</td><td>${bookedNum}${bookedPct}</td><td>${acctNum}${acctPct}</td></tr>`;
+    }).join("");
+    const bg = MONTH_COLORS_IDX[i];
+    return `<div class="month-card" style="border-top:4px solid ${bg};">
+      <h4>${name}</h4>
+      <table>
+        <thead><tr><th>Year</th><th>Booked</th><th>Accounts</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join("");
+}
+
+async function init() {
+  try {
+    const [w, m] = await Promise.all([fetchCSV(WEEKLY_CSV), fetchCSV(MONTHLY_CSV)]);
+    weeklyData = parseWeekly(w);
+    monthlyData = parseMonthly(m);
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    render("weekly");
+  } catch (e) {
+    document.getElementById("loading").textContent = "Failed to load data: " + e.message;
+  }
+}
+
+function setView(view) {
+  const btnMap = {
+    weekly: "btn-weekly", monthly: "btn-monthly", yoy: "btn-yoy",
+    "wg-booked": "btn-wg-booked", "wg-accounts": "btn-wg-accounts",
+  };
+  Object.entries(btnMap).forEach(([v, id]) => {
+    document.getElementById(id).classList.toggle("active", v === view);
+  });
+  const std = document.getElementById("standard-view");
+  const yoy = document.getElementById("yoy-view");
+  const wg  = document.getElementById("weekgrid-view");
+  std.style.display = "none"; yoy.style.display = "none"; wg.style.display = "none";
+  if (view === "yoy") { yoy.style.display = "block"; renderYoY(); }
+  else if (view === "wg-booked")   { wg.style.display = "block"; renderWeekGrid("bookedCall"); }
+  else if (view === "wg-accounts") { wg.style.display = "block"; renderWeekGrid("createdAccount"); }
+  else { std.style.display = "block"; render(view); }
+}
+document.getElementById("btn-weekly").addEventListener("click", () => setView("weekly"));
+document.getElementById("btn-monthly").addEventListener("click", () => setView("monthly"));
+document.getElementById("btn-yoy").addEventListener("click", () => setView("yoy"));
+document.getElementById("btn-wg-booked").addEventListener("click", () => setView("wg-booked"));
+document.getElementById("btn-wg-accounts").addEventListener("click", () => setView("wg-accounts"));
+
+init();
+</script>
+</body>
+</html>
