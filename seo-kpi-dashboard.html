@@ -271,7 +271,7 @@
 <header>
   <div>
     <h1>Cobalt Intelligence · SEO KPI Dashboard</h1>
-    <div class="sub">Live from SEO KPI Tracker 2026 · Weekly & Monthly trends</div>
+    <div class="sub" id="header-sub">Live from SEO KPI Tracker 2026 · Weekly & Monthly trends</div>
   </div>
   <div class="toggle">
     <button id="btn-weekly" class="active">Weekly</button>
@@ -684,6 +684,15 @@ async function init() {
     const [w, m] = await Promise.all([fetchCSV(WEEKLY_CSV), fetchCSV(MONTHLY_CSV)]);
     weeklyData = parseWeekly(w);
     monthlyData = parseMonthly(m);
+    // Show latest data date in header
+    if (weeklyData.length) {
+      const lastLabel = weeklyData[weeklyData.length - 1].label;
+      const lastDate = parseLabelDate(lastLabel);
+      if (lastDate) {
+        document.getElementById("header-sub").textContent =
+          `Latest data: ${lastDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} · Weekly & Monthly trends`;
+      }
+    }
     document.getElementById("loading").style.display = "none";
     document.getElementById("dashboard").style.display = "block";
     render("weekly");
