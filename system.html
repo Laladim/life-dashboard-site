@@ -738,6 +738,15 @@
   <a href="#best-practices">Best Practices</a>
 
   <div class="section-group"></div>
+  <div class="section-label">Behavioral Enforcement</div>
+  <a href="#behavior-overview">The Problem + Solution</a>
+  <a href="#behavior-guardrails">The 5 Guardrails</a>
+  <a href="#behavior-hook-map">Hook Event Map</a>
+  <a href="#behavior-state">State Tracking</a>
+  <a href="#behavior-diagnosis">Diagnosing Failures</a>
+  <a href="#behavior-coach">Behavioral Coach Skill</a>
+
+  <div class="section-group"></div>
   <div class="section-label">Audit</div>
   <a href="#deviations">Where We Deviate</a>
   <a href="#upgrade-plan">The Upgrade Plan</a>
@@ -855,9 +864,9 @@
   </tr>
   <tr>
     <td><strong>Context Window</strong></td>
-    <td>Barn (910 capacity)</td>
+    <td>Barn (1M capacity)</td>
     <td><span class="comp-block cb-foundation">Foundation</span></td>
-    <td>Claude's working memory. Everything Claude is currently "thinking about" lives here. Has a hard limit. When full, oldest data gets compressed (compaction). Like being forced to sell barn items.</td>
+    <td>Claude's working memory (1M tokens on Opus 4.6). Everything Claude is currently "thinking about" lives here. Has a hard limit. When full, oldest data gets compressed (compaction). Like being forced to sell barn items.</td>
   </tr>
   <tr>
     <td><strong>Compaction</strong></td>
@@ -905,7 +914,7 @@
     <td><strong>MCP Server</strong></td>
     <td>Dealer / Island / Airport</td>
     <td><span class="comp-block cb-external">External</span></td>
-    <td>Connection to an external service (Google Sheets, Slack, Beehiiv, Searchable). Provides things you can't produce locally. Accessed on demand.</td>
+    <td>Connection to an external service. Active: Google Sheets, Slack, Beehiiv, Searchable, Telegram, Google Keep. Available: Gmail, Calendar, Canva, Ahrefs, Notion. Provides things you can't produce locally. Accessed on demand.</td>
   </tr>
   <tr>
     <td><strong>Pipeline/Workflow</strong></td>
@@ -923,7 +932,7 @@
     <td><strong>Session Save</strong></td>
     <td>End-of-day harvest + storage</td>
     <td><span class="comp-block cb-foundation">Foundation</span></td>
-    <td>The 8-file protocol that persists everything from the current session: log, file registry, context summary, backlog, learning sheets, component map. If skipped, the session's work is lost.</td>
+    <td>Multi-phase persistence protocol. Phase A: 6 local files (session log, FILE-REGISTRY, 7-DAY-CONTEXT, BACKLOG, knowledge-arsenal, active-workflow). Phase B: 3 sheets (Learning Evolution, Bible Journal, System Components Map). Phase C: related files scan. Phase D: goodput rating. If skipped, the session's work is lost.</td>
   </tr>
   <tr>
     <td><strong>active-workflow.md</strong></td>
@@ -953,13 +962,85 @@
     <td><strong>Launchd Job</strong></td>
     <td>Train schedule (timed arrivals)</td>
     <td><span class="comp-block cb-transport">Transport</span></td>
-    <td>macOS background job that runs at specific times. Daily news scout at 8:17 AM. Blog sync at 7:00 AM. Like setting train departure schedules.</td>
+    <td>macOS background job that runs at specific times. 5 active: blog sync (1 PM), health check (6 AM), news scout (8:17 AM), transcript sync (8 AM), SEO scraping monitor (pending). Like setting train departure schedules.</td>
   </tr>
   <tr>
     <td><strong>System Components Map</strong></td>
     <td>Town Map</td>
     <td><span class="comp-block cb-storage">Storage</span></td>
     <td>Google Sheet inventorying all 250+ components. Shows what exists, what type, what status, what depends on what. A wrong map = wrong decisions.</td>
+  </tr>
+  <tr>
+    <td><strong>TaskCreate / Task System</strong></td>
+    <td>Clipboard checklist (survives barn overflow)</td>
+    <td><span class="comp-block cb-foundation">Foundation</span></td>
+    <td>Claude's built-in task tracking. Tasks survive compaction (unlike regular messages). Used as hard gates (e.g., Stage 5.5 must complete before Stage 6). Break complex work into tracked phases with inputs, outputs, and dependencies.</td>
+  </tr>
+  <tr>
+    <td><strong>SHEETS-REGISTRY.md</strong></td>
+    <td>Warehouse directory (which shelf has what)</td>
+    <td><span class="comp-block cb-foundation">Foundation</span></td>
+    <td>Registry of all 19 Google Sheets with IDs, tab names, and 35 auto-suggest rules. When you mention a sheet topic, Claude consults this to find the right sheet. Loaded on demand.</td>
+  </tr>
+  <tr>
+    <td><strong>SKILL-INDEX.md</strong></td>
+    <td>Factory directory (which factory builds what)</td>
+    <td><span class="comp-block cb-foundation">Foundation</span></td>
+    <td>Task-to-skill routing table. When you make a request, Claude checks this to suggest the right skill. Maps keywords and task types to specific skill files.</td>
+  </tr>
+  <tr>
+    <td><strong>7-DAY-CONTEXT.md</strong></td>
+    <td>Weekly town newspaper</td>
+    <td><span class="comp-block cb-storage">Storage</span></td>
+    <td>Rolling 7-day summary of everything that happened. Read every session start (via gemini-session-brief.sh) so Claude knows recent context without reading every session log.</td>
+  </tr>
+  <tr>
+    <td><strong>Session Logs</strong></td>
+    <td>Daily town diary</td>
+    <td><span class="comp-block cb-storage">Storage</span></td>
+    <td>Daily narrative files in <code>session-logs/</code> (e.g., <code>20260410_Sessions.md</code>). Detailed record of what happened each session: outputs, decisions, wins, recommendations. Written during session save.</td>
+  </tr>
+  <tr>
+    <td><strong>gemini-sheets-triage.sh</strong></td>
+    <td>Messenger bird (reads warehouse without entering barn)</td>
+    <td><span class="comp-block cb-support">Support</span></td>
+    <td>Sends sheet reads to Gemini CLI instead of Claude. Returns a summary at zero Claude context cost. Critical for session saves and any bulk sheet reading. Has its own Google Sheets MCP.</td>
+  </tr>
+  <tr>
+    <td><strong>sheets-verifier.py</strong></td>
+    <td>Quality inspector at factory exit</td>
+    <td><span class="comp-block cb-support">Support</span></td>
+    <td>Deterministic sheet validation (1.4s, ~50 tokens). Runs before and after every Learning Evolution write. Confirms row count, column integrity, and data presence without burning context.</td>
+  </tr>
+  <tr>
+    <td><strong>NotebookLM CLI</strong></td>
+    <td>Research library card catalog</td>
+    <td><span class="comp-block cb-external">External</span></td>
+    <td>Pipx-installed CLI for Google NotebookLM. Creates notebooks, uploads sources (books, PDFs), generates audio overviews. Registry in <code>cobalt-skills/notebooklm-research.md</code>. Auth expires every 1-2 hours.</td>
+  </tr>
+  <tr>
+    <td><strong>Claude Code Built-in Skills</strong></td>
+    <td>Town Hall special services desk</td>
+    <td><span class="comp-block cb-production">Production</span></td>
+    <td>Built-in slash commands provided by Claude Code itself (not your .md skill files). Includes <code>/frontend-design</code>, <code>/schedule</code>, <code>/loop</code>, <code>/claude-api</code>, <code>/notebooklm</code>, <code>/simplify</code>, Telegram skills. Invoked via the Skill tool.</td>
+  </tr>
+  <tr>
+    <td><strong>Telegram MCP</strong></td>
+    <td>Carrier pigeon (two-way messaging)</td>
+    <td><span class="comp-block cb-external">External</span></td>
+    <td>Bidirectional Telegram channel. Claude can receive messages, reply, react, edit messages, and download attachments. Access managed via <code>/telegram:access</code> skill. Bot API has no history/search.</td>
+  </tr>
+  <tr>
+    <td><strong>Google Keep MCP</strong></td>
+    <td>Sticky notes on fridge</td>
+    <td><span class="comp-block cb-external">External</span></td>
+    <td>Full Google Keep access: create/update/delete notes and lists, manage labels, pin/archive, add collaborators. 17+ tools. Quick capture for ideas outside the session workflow.</td>
+  </tr>
+  <tr>
+    <td><strong>health-check.sh</strong></td>
+    <td>Town inspector (daily rounds)</td>
+    <td><span class="comp-block cb-transport">Transport</span></td>
+    <td>Runs daily at 6 AM via launchd. Checks system health across scripts, sheets, APIs. Can send Telegram alerts on failures. Your "silent between sessions" fix.</td>
   </tr>
 </table>
 
@@ -1002,7 +1083,7 @@
     <td><span class="comp-block cb-transport">Transport</span></td>
     <td>Trains, Helicopters</td>
     <td>~12</td>
-    <td>7 hooks, 2 launchd jobs, 1 GitHub Action, prevention rules</td>
+    <td>7 hooks, 5 launchd jobs, 1 GitHub Action, prevention rules</td>
     <td>Automated. Fire on events or schedules. You don't trigger them.</td>
   </tr>
   <tr>
@@ -1016,7 +1097,7 @@
     <td><span class="comp-block cb-external">External</span></td>
     <td>Dealer, Island</td>
     <td>~12</td>
-    <td>5 MCP servers (Sheets, Slack, Beehiiv, Searchable, Telegram), 7 APIs</td>
+    <td>8+ MCP servers (Sheets, Slack, Beehiiv, Searchable, Telegram, Keep, Gmail, Calendar + Ahrefs, Canva, Notion available), NotebookLM CLI, 7 APIs</td>
     <td>External services. Provide what you can't produce locally.</td>
   </tr>
   <tr>
@@ -1589,6 +1670,408 @@
 </table>
 
 <!-- ============================================================ -->
+<h2 id="behavior-overview">Behavioral Enforcement Hook System</h2>
+<!-- ============================================================ -->
+
+<p>Built Apr 10, 2026 after 5 documented failure patterns across Sessions 1-4. The core insight: <strong>text instructions don't reliably change LLM behavior; code-enforced hooks do.</strong> Rules written in CLAUDE.md and 17 feedback memory files were violated the same day they were written. The fix: convert behavioral rules from passive text into active code enforcement using Claude Code's hook infrastructure.</p>
+
+<div class="key-concept">
+  <h4>The One-Line Summary</h4>
+  <p>Stop writing rules for Claude to follow. Start writing code that blocks Claude when it doesn't.</p>
+</div>
+
+<div class="panel township">
+  <div class="panel-header">Township Translation: The Highway Guardrail System</div>
+  <p>Before this system, Claude was driving on an open highway with speed limit signs (CLAUDE.md rules, memory files). It could see the signs. It chose to ignore them when it thought it knew a shortcut. The guardrails are concrete barriers. Claude can still drive, but the barriers prevent it from going off the cliff. The signs are still there (for documentation), but the barriers are what actually keep the car on the road.</p>
+</div>
+
+<h3>The Problem: 5 Failure Patterns</h3>
+
+<p>These are real incidents from Apr 9-10 session logs, not hypotheticals. Each one maps to a specific frustration Shela expressed.</p>
+
+<table>
+  <tr>
+    <th style="width:25%">What Shela Said</th>
+    <th style="width:25%">What Went Wrong</th>
+    <th style="width:25%">Root Cause</th>
+    <th style="width:25%">Fix</th>
+  </tr>
+  <tr>
+    <td>"Why am I struggling to create newsletter today"</td>
+    <td>Skipped Stage 5.5, confused two different sheets</td>
+    <td>Claude "recognized" the newsletter task from training data and skipped reading the protocol file</td>
+    <td>Workflow Gate (must read protocol before editing)</td>
+  </tr>
+  <tr>
+    <td>"This is unacceptable"</td>
+    <td>20 minutes of circles trying to access Slack. 25+ tool calls, zero progress</td>
+    <td>Said "I can't" without checking session logs (which showed Slack worked yesterday)</td>
+    <td>Circuit Breaker (warns after 5 loops) + Active Feedback (research-first injection)</td>
+  </tr>
+  <tr>
+    <td>"Not being able to achieve the goal and telling me its done is poor performance"</td>
+    <td>Said "done" on a dashboard that couldn't load due to CORS. Three times in one session.</td>
+    <td>"File edit succeeded" treated as task completion. No verification gate.</td>
+    <td>Stop Verification Gate (blocks "done" without evidence)</td>
+  </tr>
+  <tr>
+    <td>"You said this before but you keep forgetting"</td>
+    <td>Same mistakes despite 17 feedback files and 3 layers of "Read Don't Assume" rules</td>
+    <td>Memory files are passive. Claude has to remember to read them, which is the behavior the files exist to fix. Circular.</td>
+    <td>Active Feedback Injection (lessons fire via hooks, not passive files)</td>
+  </tr>
+  <tr>
+    <td>"Incomplete and inaccurate processes"</td>
+    <td>"25 of 29 customers unknown" copied to 4 downstream files after the source was updated</td>
+    <td>No dependency graph between skill files. Source-of-truth changes don't alert downstream consumers.</td>
+    <td>Dependency Alerts (flags stale data on edit)</td>
+  </tr>
+</table>
+
+<div class="key-concept">
+  <h4>Why Text Rules Fail</h4>
+  <p>Anthropic's own context engineering research confirms: as instruction count increases, instruction-following quality decreases uniformly. CLAUDE.md has ~50 instructions competing with training data. When Claude "recognizes" a task, the training pattern races ahead of the written instruction. The fix isn't better instructions. It's code-enforced hooks that fire at the moment of decision.</p>
+  <p>We proved this ourselves: the hooks that DO fire (session-save reminder, image prompt reminder) actually work. The text rules that Claude is "supposed to remember" get pattern-matched away.</p>
+</div>
+
+<!-- ============================================================ -->
+<h3 id="behavior-guardrails">The 5 Guardrails</h3>
+<!-- ============================================================ -->
+
+<table>
+  <tr>
+    <th style="width:18%">Guardrail</th>
+    <th style="width:15%">Hook Type</th>
+    <th style="width:12%">Severity</th>
+    <th>What It Does</th>
+    <th style="width:20%">Township Equivalent</th>
+  </tr>
+  <tr>
+    <td><strong>1. Workflow Gate</strong></td>
+    <td>PreToolUse<br>(Edit/Write/Bash)</td>
+    <td><span class="badge badge-yellow">Warn</span></td>
+    <td>Detects what type of work is happening (blog, newsletter, session save, image gen) and checks if the right protocol file was read first. If not, warns Claude to read it. Only fires when a known workflow is active, so quick edits pass through.</td>
+    <td>Factory door that won't open until you badge in with the recipe book</td>
+  </tr>
+  <tr>
+    <td><strong>2. Circuit Breaker</strong></td>
+    <td>PreToolUse<br>(ToolSearch/Grep/Bash)</td>
+    <td><span class="badge badge-yellow">Warn</span></td>
+    <td>Counts how many times the same search tool is used in 2 minutes. After 5, warns Claude to stop and read a session log instead of looping. Reading a session log resets the counter. Never blocks (legitimate research can exceed 5 calls).</td>
+    <td>Train dispatcher who stops the 6th train and asks "are you sure you need another one?"</td>
+  </tr>
+  <tr>
+    <td><strong>3. Dependency Alerts</strong></td>
+    <td>PostToolUse<br>(Edit/Write)</td>
+    <td><span class="badge badge-green">Alert</span></td>
+    <td>When a source-of-truth file is edited, reads its YAML frontmatter, greps the codebase for files that depend on it, and lists them. Also checks SHEETS-REGISTRY for connected sheets. Alert only, never blocks.</td>
+    <td>Intercom announcement: "If you use parts from Factory 3, check your inventory; Factory 3 just changed its recipe"</td>
+  </tr>
+  <tr>
+    <td><strong>4. Stop Verification Gate</strong></td>
+    <td>Stop</td>
+    <td><span class="badge badge-red">Block</span></td>
+    <td>When Claude tries to declare "done," checks the response for verification evidence (verified, tested, live at, pushed, deployed). Blocks "I'm done" without proof. Also blocks "check it yourself" (delegation) and "I can't" without research evidence.</td>
+    <td>Factory exit inspector who won't let the truck leave until the quality sticker is on the box</td>
+  </tr>
+  <tr>
+    <td><strong>5. Active Feedback Injection</strong></td>
+    <td>UserPromptSubmit</td>
+    <td><span class="badge badge-yellow">Inject</span></td>
+    <td>When your prompt matches known problem areas (newsletter, blog, session save, tool access questions), injects the specific lesson learned from past mistakes. Lessons live in hook code, not passive memory files. Fires automatically at the moment of decision.</td>
+    <td>Safety signs that physically light up when you walk toward that machine, not signs you have to remember to read</td>
+  </tr>
+</table>
+
+<!-- ============================================================ -->
+<h3 id="behavior-hook-map">Hook Event Map: What Fires When</h3>
+<!-- ============================================================ -->
+
+<p>Every hook event in the system, what fires on it, and its enforcement level. This is the complete picture of when code intercepts Claude's actions.</p>
+
+<table>
+  <tr>
+    <th>Event</th>
+    <th>When It Fires</th>
+    <th>Hook Scripts</th>
+    <th>Enforcement</th>
+  </tr>
+  <tr>
+    <td><strong>SessionStart</strong></td>
+    <td>Session opens</td>
+    <td><code>session-start-enhanced.py</code></td>
+    <td>Creates per-session state directory (<code>/tmp/claude-hooks-{id}/</code>), injects foundational rules, active workflow context</td>
+  </tr>
+  <tr>
+    <td><strong>UserPromptSubmit</strong></td>
+    <td>Before processing your message</td>
+    <td><code>prompt-context-injector.py</code></td>
+    <td>Keyword-triggered reminders (session-save SOP, newsletter stages, blog protocol, research-first). Sets workflow type in state dir for workflow gate.</td>
+  </tr>
+  <tr>
+    <td><strong>PreToolUse</strong><br><em>(Edit/Write/Bash)</em></td>
+    <td>Before Claude edits a file or runs a command</td>
+    <td><code>workflow-gate.py</code></td>
+    <td>Warns if protocol file not read. 30-min window. No workflow detected = pass through.</td>
+  </tr>
+  <tr>
+    <td><strong>PreToolUse</strong><br><em>(ToolSearch/Grep/Bash)</em></td>
+    <td>Before Claude searches</td>
+    <td><code>circuit-breaker.py</code></td>
+    <td>Warns after 5 same-tool calls in 120s without session log read. Never blocks.</td>
+  </tr>
+  <tr>
+    <td><strong>PreToolUse</strong><br><em>(Sheet writes)</em></td>
+    <td>Before Claude writes to Google Sheets</td>
+    <td><code>validate-sheet-write.py</code></td>
+    <td><strong>Hard block (exit 2).</strong> Validates column count against 8 sheet schemas in <code>sheet-schemas.json</code>. Wrong columns = impossible to bypass.</td>
+  </tr>
+  <tr>
+    <td><strong>PostToolUse</strong><br><em>(Read)</em></td>
+    <td>After Claude reads a file</td>
+    <td><code>track-reads.py</code></td>
+    <td>Logs file path + timestamp to state dir. Session log reads also reset circuit breaker counter.</td>
+  </tr>
+  <tr>
+    <td><strong>PostToolUse</strong><br><em>(Edit/Write)</em></td>
+    <td>After Claude edits a file</td>
+    <td><code>frontmatter-deps.py</code></td>
+    <td>Checks YAML frontmatter for <code>source_of_truth_for</code>. If present, greps for downstream dependents and alerts.</td>
+  </tr>
+  <tr>
+    <td><strong>PostToolUse</strong><br><em>(Sheet writes)</em></td>
+    <td>After Claude writes to Google Sheets</td>
+    <td><code>log-sheet-write.py</code></td>
+    <td>Logs all sheet modifications to <code>sheet-writes.log</code> for audit trail.</td>
+  </tr>
+  <tr>
+    <td><strong>Stop</strong></td>
+    <td>When Claude tries to yield back to you</td>
+    <td><code>stop-gate.py</code></td>
+    <td>Blocks completion without verification evidence. Blocks delegation ("check it yourself"). Blocks giving up ("I can't") without research. Also checkpoints to <code>active-workflow.md</code> (5-min dedup cooldown).</td>
+  </tr>
+  <tr>
+    <td><strong>PreCompact</strong></td>
+    <td>When context window is about to compress</td>
+    <td><code>pre-compact-save.py</code></td>
+    <td>Saves semantic context before compaction to minimize data loss.</td>
+  </tr>
+  <tr>
+    <td><strong>SessionEnd</strong></td>
+    <td>Session exits</td>
+    <td><code>session-end.sh</code></td>
+    <td>Final cleanup.</td>
+  </tr>
+</table>
+
+<div class="panel township">
+  <div class="panel-header">Township Translation: The Train Schedule After the Upgrade</div>
+  <p>Before the behavioral enforcement build, you had 4 trains running (session start, prompt injector, sheet validator, sheet logger). After: 11 trains running across 7 events. Every major action Claude takes now has at least one guardrail. The trains that existed before (sheet validator, session start) still work exactly the same. The new trains layer on behavioral enforcement without disrupting existing infrastructure.</p>
+</div>
+
+<!-- ============================================================ -->
+<h3 id="behavior-state">State Tracking: How Guards Remember</h3>
+<!-- ============================================================ -->
+
+<p>Each session gets its own temporary state directory. This is how hooks communicate with each other across events.</p>
+
+<table>
+  <tr>
+    <th>State File</th>
+    <th>Written By</th>
+    <th>Read By</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td><code>/tmp/claude-hooks-{id}/files-read.txt</code></td>
+    <td>track-reads.py</td>
+    <td>workflow-gate.py</td>
+    <td>List of files Claude has read this session, with timestamps. Workflow gate checks this to verify protocol files were opened.</td>
+  </tr>
+  <tr>
+    <td><code>/tmp/claude-hooks-{id}/tool-calls.jsonl</code></td>
+    <td>circuit-breaker.py</td>
+    <td>circuit-breaker.py</td>
+    <td>Log of every search tool call with timestamp. Used to detect looping (5+ same tool in 120s).</td>
+  </tr>
+  <tr>
+    <td><code>/tmp/claude-hooks-{id}/circuit-breaker-reset.txt</code></td>
+    <td>track-reads.py</td>
+    <td>circuit-breaker.py</td>
+    <td>Written when a session log is read. Resets the loop counter because reading logs is the productive escape from circles.</td>
+  </tr>
+  <tr>
+    <td><code>/tmp/claude-hooks-{id}/active-workflow-type.txt</code></td>
+    <td>prompt-context-injector.py</td>
+    <td>workflow-gate.py</td>
+    <td>Current workflow type (newsletter, blog, session-save, image, keyword-blog). Cleared on task switch.</td>
+  </tr>
+  <tr>
+    <td><code>/tmp/claude-hooks-current-session</code></td>
+    <td>session-start-enhanced.py</td>
+    <td>All hooks</td>
+    <td>Points to the current session's state directory. Discovery file so hooks can find each other.</td>
+  </tr>
+</table>
+
+<div class="key-concept">
+  <h4>Safety Rules</h4>
+  <ul>
+    <li>Every <code>.py</code> hook wraps <code>main()</code> in try/except with <code>sys.exit(0)</code>. Hook bugs never block your work.</li>
+    <li>Missing state directory = exit 0 (allow everything). A broken state tracker doesn't break the system.</li>
+    <li>Unknown workflow type = exit 0. Quick edits pass through without friction.</li>
+    <li>Stop hook checks <code>stop_hook_active</code> flag to prevent infinite loops.</li>
+    <li>Circuit breaker warns, never blocks. Legitimate research can exceed 5 calls.</li>
+    <li>All hooks log to <code>hook-execution.log</code> for debugging.</li>
+    <li>Stale state dirs auto-cleaned after 24 hours.</li>
+  </ul>
+</div>
+
+<!-- ============================================================ -->
+<h3 id="behavior-diagnosis">Diagnosing Failures: When Something Goes Wrong</h3>
+<!-- ============================================================ -->
+
+<p>When a guardrail should have caught something but didn't, or fires when it shouldn't, here's how to diagnose.</p>
+
+<table>
+  <tr>
+    <th style="width:25%">What Happened</th>
+    <th style="width:20%">Pattern Name</th>
+    <th style="width:20%">Guardrail That Should Have Caught It</th>
+    <th style="width:35%">Diagnosis Steps</th>
+  </tr>
+  <tr>
+    <td>Claude edited files without reading the skill doc</td>
+    <td>Protocol skip</td>
+    <td>Workflow Gate</td>
+    <td>Check <code>hook-execution.log</code> for workflow-gate. Was workflow type detected? Was the protocol file in <code>files-read.txt</code>?</td>
+  </tr>
+  <tr>
+    <td>Claude ran 10+ searches and got nowhere</td>
+    <td>Search loop</td>
+    <td>Circuit Breaker</td>
+    <td>Check <code>tool-calls.jsonl</code>. Did counter reach 5? Was a session log read (which resets it)?</td>
+  </tr>
+  <tr>
+    <td>Claude said "done" but it wasn't working</td>
+    <td>False completion</td>
+    <td>Stop Verification Gate</td>
+    <td>Check if <code>stop-gate.py</code> fired. Did Claude's response contain "verified/tested/live at"? Pattern might need tightening.</td>
+  </tr>
+  <tr>
+    <td>Claude edited a master file, forgot to update dependents</td>
+    <td>Cascade miss</td>
+    <td>Dependency Alerts</td>
+    <td>Does the edited file have <code>source_of_truth_for</code> in frontmatter? Do dependent files list it in <code>data_sources</code>?</td>
+  </tr>
+  <tr>
+    <td>Claude repeated a mistake you've corrected before</td>
+    <td>Repeated mistake</td>
+    <td>Active Feedback / Prevention Rules</td>
+    <td>Is the lesson in <code>prevention-rules.md</code>? Does the keyword pattern match your prompt? Check <code>prompt-context-injector.py</code> rules.</td>
+  </tr>
+  <tr>
+    <td>Guardrail fires when it shouldn't (false positive)</td>
+    <td>Over-triggering</td>
+    <td>Any</td>
+    <td>Tighten the regex pattern. Test with: <code>echo '{"prompt":"your phrase"}' | python3 .claude/hooks/[hook].py</code>. Run <code>test-hooks.py</code> to catch regressions.</td>
+  </tr>
+</table>
+
+<div class="key-concept">
+  <h4>Quick Diagnostic Commands</h4>
+  <table>
+    <tr><th>What You Want</th><th>Command</th></tr>
+    <tr><td>See recent hook activity</td><td><code>tail -30 .claude/hooks/hook-execution.log</code></td></tr>
+    <tr><td>Run all hook tests</td><td><code>python3 .claude/hooks/test-hooks.py</code></td></tr>
+    <tr><td>Check which hooks are registered</td><td><code>python3 -c "import json; [print(f'{k}: {len(v)} hooks') for k,v in json.load(open('.claude/settings.local.json')).get('hooks',{}).items()]"</code></td></tr>
+    <tr><td>See current session state dir</td><td><code>cat /tmp/claude-hooks-current-session</code></td></tr>
+    <tr><td>Check what files Claude read this session</td><td><code>cat $(cat /tmp/claude-hooks-current-session)/files-read.txt</code></td></tr>
+    <tr><td>Check circuit breaker counter</td><td><code>cat $(cat /tmp/claude-hooks-current-session)/tool-calls.jsonl</code></td></tr>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<h3 id="behavior-coach">Behavioral Coach Skill</h3>
+<!-- ============================================================ -->
+
+<p>A dedicated skill file (<code>cobalt-skills/claude-code-behavioral-coach.md</code>) exists for when things break. It translates technical hook failures into plain language and gives clear, actionable fixes.</p>
+
+<table>
+  <tr>
+    <th>When to Use</th>
+    <th>When NOT to Use</th>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li>Claude keeps making the same mistake across sessions</li>
+        <li>A hook is firing when it shouldn't (false positive) or not firing when it should</li>
+        <li>After a bad session, to diagnose what went wrong and prevent it next time</li>
+        <li>When adding a new behavioral rule or tightening an existing one</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Content creation tasks (use blog, newsletter skills)</li>
+        <li>Sheet data issues (use sheets-verifier.py)</li>
+        <li>One-off mistakes that don't repeat (just fix and move on)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<h4>Talking to the System When It Breaks</h4>
+
+<table>
+  <tr>
+    <th style="width:50%">Instead of This (Frustration)</th>
+    <th style="width:50%">Say This (Diagnostic)</th>
+  </tr>
+  <tr>
+    <td>"Why do you keep doing this?!"</td>
+    <td>"Check hook-execution.log for the last 10 minutes. Which hooks fired? Why didn't [specific hook] catch this?"</td>
+  </tr>
+  <tr>
+    <td>"You're going in circles again"</td>
+    <td>"Circuit breaker should have fired. Check the search counter. Read the session log and try one focused diagnostic."</td>
+  </tr>
+  <tr>
+    <td>"You said done but it's broken"</td>
+    <td>"Stop gate should have caught this. Verify the output at [URL/path] before declaring done."</td>
+  </tr>
+  <tr>
+    <td>"I told you this before"</td>
+    <td>"Check prevention-rules.md. If this rule exists, why didn't it fire? If it doesn't exist, add it now."</td>
+  </tr>
+</table>
+
+<div class="panel township">
+  <div class="panel-header">Township Translation: The Maintenance Manual</div>
+  <p>The behavioral coach is the maintenance manual for your guardrail system. When a guardrail fails to catch something, you don't tear down the road. You check the manual: was the guardrail installed? Was it the right type? Did the car find a gap between barriers? Then you fix that specific gap. The manual also has communication templates so you can report the problem efficiently instead of just honking.</p>
+</div>
+
+<h4>File Reference</h4>
+
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>.claude/settings.local.json</code></td><td>All hook registrations, permissions, MCP connections, statusline config</td></tr>
+  <tr><td><code>.claude/hooks/session-start-enhanced.py</code></td><td>Creates state dir, injects session context + foundational rules</td></tr>
+  <tr><td><code>.claude/hooks/prompt-context-injector.py</code></td><td>Keyword-triggered reminders, workflow-type setter</td></tr>
+  <tr><td><code>.claude/hooks/track-reads.py</code></td><td>Logs file reads to state dir (serves workflow gate + circuit breaker)</td></tr>
+  <tr><td><code>.claude/hooks/circuit-breaker.py</code></td><td>Warns on search loops (5 same-tool in 120s)</td></tr>
+  <tr><td><code>.claude/hooks/workflow-gate.py</code></td><td>Warns when protocol file not read before editing</td></tr>
+  <tr><td><code>.claude/hooks/stop-gate.py</code></td><td>Blocks false completion, delegation, premature giving up</td></tr>
+  <tr><td><code>.claude/hooks/frontmatter-deps.py</code></td><td>Alerts on source-of-truth edits with downstream file list</td></tr>
+  <tr><td><code>.claude/hooks/validate-sheet-write.py</code></td><td>Hard-blocks sheet writes with wrong column counts (exit 2)</td></tr>
+  <tr><td><code>.claude/hooks/log-sheet-write.py</code></td><td>Audit trail for all sheet modifications</td></tr>
+  <tr><td><code>.claude/hooks/test-hooks.py</code></td><td>25-test suite covering all phases</td></tr>
+  <tr><td><code>memory/prevention-rules.md</code></td><td>Dynamic behavioral rules (4 active + 2 graduated)</td></tr>
+  <tr><td><code>cobalt-skills/scripts/sheet-schemas.json</code></td><td>Column schemas for 8 sheets (hard-block validation)</td></tr>
+  <tr><td><code>cobalt-skills/claude-code-behavioral-coach.md</code></td><td>Plain-language coaching skill for diagnosing hook failures</td></tr>
+</table>
+
+<!-- ============================================================ -->
 <h2 id="deviations">Where We Deviate (Honest Audit)</h2>
 <!-- ============================================================ -->
 
@@ -1668,7 +2151,7 @@
     <th>Why It Maps</th>
   </tr>
   <tr><td>Town Hall</td><td>CLAUDE.md + ORCHESTRATOR.md</td><td><span class="comp-block cb-foundation">Foundation</span></td><td>Central command. First thing checked. Everything routes through here.</td></tr>
-  <tr><td>Barn (910 capacity)</td><td>Context Window</td><td><span class="comp-block cb-foundation">Foundation</span></td><td>Hard capacity limit. Overflow = forced data loss.</td></tr>
+  <tr><td>Barn (1M capacity)</td><td>Context Window</td><td><span class="comp-block cb-foundation">Foundation</span></td><td>Hard capacity limit. Overflow = forced data loss.</td></tr>
   <tr><td>Feed Mill</td><td>Session Save Protocol</td><td><span class="comp-block cb-foundation">Foundation</span></td><td>If it stops, all downstream production halts.</td></tr>
   <tr><td>Factories</td><td>Skills (.md workflows)</td><td><span class="comp-block cb-production">Production</span></td><td>Transform inputs into outputs. Recipes. Shelf space.</td></tr>
   <tr><td>Factory Shelves</td><td>Google Sheets</td><td><span class="comp-block cb-storage">Storage</span></td><td>Persistent storage outside the barn. Accessible on demand.</td></tr>
@@ -1687,6 +2170,20 @@
   <tr><td>T-Cash</td><td>API Tokens (real cost)</td><td><span class="comp-block cb-external">External</span></td><td>Limited. Valuable. Don't waste on unnecessary reads.</td></tr>
   <tr><td>Compaction</td><td>Forced barn overflow</td><td><span class="comp-block cb-foundation">Foundation</span></td><td>When full, oldest data compressed. Lossy.</td></tr>
   <tr><td>Train Algorithm</td><td>Hook Execution Logic</td><td><span class="comp-block cb-transport">Transport</span></td><td>What gets delivered depends on current state.</td></tr>
+  <tr><td>Clipboard (survives overflow)</td><td>TaskCreate System</td><td><span class="comp-block cb-foundation">Foundation</span></td><td>Tasks survive compaction. Hard gates for multi-phase work.</td></tr>
+  <tr><td>Warehouse Directory</td><td>SHEETS-REGISTRY.md</td><td><span class="comp-block cb-foundation">Foundation</span></td><td>19 sheets + 35 auto-suggest rules. Sheet routing table.</td></tr>
+  <tr><td>Factory Directory</td><td>SKILL-INDEX.md</td><td><span class="comp-block cb-foundation">Foundation</span></td><td>Task-to-skill routing. Loaded when requests arrive.</td></tr>
+  <tr><td>Weekly Town Newspaper</td><td>7-DAY-CONTEXT.md</td><td><span class="comp-block cb-storage">Storage</span></td><td>Rolling 7-day summary. Read every session start.</td></tr>
+  <tr><td>Daily Town Diary</td><td>Session Logs</td><td><span class="comp-block cb-storage">Storage</span></td><td>Detailed daily narrative of each session's work.</td></tr>
+  <tr><td>Messenger Bird</td><td>gemini-sheets-triage.sh</td><td><span class="comp-block cb-support">Support</span></td><td>Reads sheets via Gemini at zero Claude context cost.</td></tr>
+  <tr><td>Quality Inspector</td><td>sheets-verifier.py</td><td><span class="comp-block cb-support">Support</span></td><td>Deterministic sheet validation. Fast, cheap, reliable.</td></tr>
+  <tr><td>Research Library</td><td>NotebookLM CLI</td><td><span class="comp-block cb-external">External</span></td><td>Google NotebookLM access. Books, PDFs, audio overviews.</td></tr>
+  <tr><td>Special Services Desk</td><td>Claude Code Built-in Skills</td><td><span class="comp-block cb-production">Production</span></td><td>Built-in /slash commands. Different from .md skill files.</td></tr>
+  <tr><td>Carrier Pigeon</td><td>Telegram MCP</td><td><span class="comp-block cb-external">External</span></td><td>Two-way messaging. Reply, react, edit, attachments.</td></tr>
+  <tr><td>Sticky Notes</td><td>Google Keep MCP</td><td><span class="comp-block cb-external">External</span></td><td>Quick capture. 17+ tools for notes, lists, labels.</td></tr>
+  <tr><td>Town Inspector</td><td>health-check.sh</td><td><span class="comp-block cb-transport">Transport</span></td><td>Daily 6 AM health check. Telegram alerts on failure.</td></tr>
+  <tr><td>Post Office</td><td>Gmail MCP</td><td><span class="comp-block cb-external">External</span></td><td>Email access. Available but not yet actively used.</td></tr>
+  <tr><td>Town Calendar</td><td>Google Calendar MCP</td><td><span class="comp-block cb-external">External</span></td><td>Calendar access. Available but not yet actively used.</td></tr>
 </table>
 
 <!-- ============================================================ -->
