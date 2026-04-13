@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remote &mdash; Shela's Life Dashboard</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+:root {
+    --purple: #5a4a7a;
+    --purple-deep: #4a3a6a;
+    --gold: #c8985f;
+    --bg-primary: #f5f1f0;
+    --text-primary: #3a3a3a;
+    --text-secondary: #6b6565;
+    --text-muted: #9a9090;
+    --border: #e0dbd8;
+    --green-bg: #e8f5e9;
+    --green-border: #2e7d32;
+    --red-bg: #ffebee;
+    --red-border: #c62828;
+    --warn-bg: #fff3e0;
+    --warn-border: #ef6c00;
+    --blue-bg: #e3f2fd;
+    --blue-border: #1565c0;
+}
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+.faith-header {
+    text-align: center;
+    padding: 1.25rem 1.5rem 1rem;
+    background: linear-gradient(135deg, #faf7f5, #f5f0ee);
+    border-bottom: 1px solid var(--border);
+}
+.faith-mission {
+    font-size: 0.8rem; color: var(--purple); letter-spacing: 0.04em;
+    font-weight: 500; text-transform: uppercase; margin-bottom: 0.3rem;
+}
+.faith-piper {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: var(--purple-deep); font-size: 0.95rem; margin-bottom: 0.4rem;
+}
+.faith-verse {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;
+}
+.faith-verse-ref {
+    font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;
+}
+.tab-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: #ffffff; border-bottom: 2px solid var(--border);
+    display: flex; padding: 0;
+    box-shadow: 0 2px 8px rgba(90,74,122,0.08);
+}
+.tab-btn {
+    flex: 1; background: none; border: none; color: var(--text-muted);
+    padding: 0.75rem 1.2rem; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+    white-space: nowrap; text-align: center;
+    text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+}
+.tab-btn:hover { color: var(--purple); background: rgba(90,74,122,0.04); }
+.tab-btn.active { color: var(--purple); border-bottom-color: var(--gold); font-weight: 600; }
+
+.remote-wrap { max-width: 800px; margin: 1.5rem auto; padding: 0 1.25rem; }
+.remote-title { font-family: 'Playfair Display', serif; color: var(--purple-deep); font-size: 1.4rem; margin-bottom: 0.25rem; }
+.remote-sub { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+
+.section-title {
+    font-family: 'Playfair Display', serif; color: var(--purple-deep);
+    font-size: 1.15rem; margin: 2rem 0 0.75rem; padding-top: 1.5rem;
+    border-top: 2px solid var(--border);
+}
+.section-title:first-of-type { border-top: none; padding-top: 0; margin-top: 0.5rem; }
+
+.card {
+    background: #fff; border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem 1.25rem; margin: 0.75rem 0;
+    box-shadow: 0 1px 4px rgba(90,74,122,0.06);
+}
+
+.step-row { display: flex; gap: 12px; margin: 12px 0; }
+.step-num {
+    background: var(--purple); color: #fff; width: 26px; height: 26px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px;
+}
+.step-body { flex: 1; font-size: 0.9rem; }
+
+.indicator {
+    border-radius: 8px; padding: 10px 12px; margin-top: 8px; font-size: 0.85rem;
+}
+.indicator-ok { background: var(--green-bg); border: 1px solid var(--green-border); }
+.indicator-fail { background: var(--red-bg); border: 1px solid var(--red-border); }
+.indicator-warn { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+.indicator-info { background: var(--blue-bg); border: 1px solid var(--blue-border); }
+
+.indicator strong { display: block; margin-bottom: 4px; font-size: 0.8rem; }
+.indicator code { background: rgba(0,0,0,0.06); padding: 2px 6px; border-radius: 3px; font-size: 0.8rem; }
+.indicator em { color: var(--text-secondary); font-size: 0.8rem; }
+
+.cred-table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.85rem; }
+.cred-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.cred-table td:first-child { color: var(--text-secondary); width: 170px; font-weight: 500; }
+.cred-table code { background: rgba(90,74,122,0.08); padding: 2px 6px; border-radius: 3px; font-size: 0.8rem; }
+
+pre.cmd {
+    background: #2d2a3e; color: #e0dce8; padding: 14px 16px; border-radius: 8px;
+    font-size: 0.8rem; line-height: 1.7; overflow-x: auto; margin: 10px 0;
+}
+pre.cmd code { color: #e0dce8; background: none; }
+pre.cmd .comment { color: #7a7590; }
+
+.do-list, .dont-list { list-style: none; padding: 0; margin: 8px 0; }
+.do-list li, .dont-list li { padding: 6px 0 6px 28px; position: relative; font-size: 0.88rem; }
+.do-list li::before { content: "DO"; position: absolute; left: 0; color: var(--green-border); font-weight: 700; font-size: 0.7rem; }
+.dont-list li::before { content: "NO"; position: absolute; left: 0; color: var(--red-border); font-weight: 700; font-size: 0.7rem; }
+
+.arch-diagram {
+    background: #2d2a3e; color: #e0dce8; padding: 20px; border-radius: 10px;
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.75rem;
+    line-height: 1.8; overflow-x: auto; margin: 10px 0;
+    white-space: pre;
+}
+
+@media (max-width: 768px) {
+    .tab-btn { padding: 0.5rem 0.6rem; font-size: 0.72rem; }
+    .faith-header { padding: 1rem; }
+    .cred-table td:first-child { width: 120px; }
+}
+</style>
+</head>
+<body>
+
+<div class="faith-header">
+    <div class="faith-mission">spread a passion for the Supremacy of God in all things for the joy of all peoples</div>
+    <div class="faith-piper">"God is most glorified in us when we are most satisfied in Him"</div>
+    <div class="faith-verse">"For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do."</div>
+    <div class="faith-verse-ref">Ephesians 2:10</div>
+</div>
+
+<nav class="tab-bar">
+    <a class="tab-btn" href="index.html#anchor">Anchor</a>
+    <a class="tab-btn" href="index.html#word">Word</a>
+    <a class="tab-btn" href="index.html#moments">Moments</a>
+    <a class="tab-btn" href="body-ecology.html">Health</a>
+    <a class="tab-btn" href="work.html">Work</a>
+    <a class="tab-btn" href="system.html">System</a>
+    <a class="tab-btn" href="community.html">Community</a>
+    <a class="tab-btn active" href="remote.html">Remote</a>
+</nav>
+
+<div class="remote-wrap">
+    <div class="remote-title">Remote Claude Code Access</div>
+    <div class="remote-sub">Control Claude Code from your iPhone via Telegram + SSH. Last updated: April 13, 2026</div>
+
+    <!-- ===== QUICK START ===== -->
+    <div class="section-title">Quick Start</div>
+
+    <div class="card">
+        <strong style="color:var(--green-border); font-size:0.9rem;">Normal Use: Just Chat via Telegram</strong>
+        <p style="font-size:0.88rem; margin-top:6px;">Open Telegram on your phone, message the <strong>Shela Claude Code</strong> bot. If the Mac is on and the session is running, Claude responds directly.</p>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">If the Bot Isn't Responding: Restart via Termius</strong>
+
+        <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-body">Open <strong>Termius</strong> on your iPhone</div>
+        </div>
+
+        <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-body">
+                Tap <strong>Lala Desktop</strong> to connect via SSH
+                <div class="indicator indicator-ok">
+                    <strong>Connected:</strong>
+                    <code>Last login: Mon Apr 13 18:31:54 2026 from 100.69.32.44</code><br>
+                    <code>laladimalanta@Lalas-MacBook-Pro ~ %</code><br>
+                    <em>The "from 100.69.32.44" is your iPhone's Tailscale IP.</em>
+                </div>
+                <div class="indicator indicator-fail">
+                    <strong>Failed:</strong>
+                    <code>Connection failed: connection refused.</code><br>
+                    <em>Check: SSH on? (System Settings > General > Sharing > Remote Login). Tailscale running on both devices?</em>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-body">
+                Check if a session is running: <code>tmux ls</code>
+                <div class="indicator indicator-ok">
+                    <strong>Running:</strong>
+                    <code>claude-telegram: 1 windows (created Mon Apr 13 18:34:44 2026)</code><br>
+                    <em>Skip to Step 5. The bot should already be responding on Telegram.</em>
+                </div>
+                <div class="indicator indicator-fail">
+                    <strong>Not running:</strong>
+                    <code>no server running on /private/tmp/tmux-501/default</code><br>
+                    <em>Go to Step 4 to start one.</em>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-row">
+            <div class="step-num">4</div>
+            <div class="step-body">
+                Start a new session: <code>~/.claude/start-telegram-session.sh</code>
+                <div class="indicator indicator-ok">
+                    <strong>Success:</strong>
+                    <em>Script runs silently. You get your prompt back. Run <code>tmux ls</code> again to confirm.</em>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-row">
+            <div class="step-num">5</div>
+            <div class="step-body">
+                View the live Claude terminal: <code>tmux attach -t claude-telegram</code>
+                <div class="indicator indicator-ok">
+                    <strong>Healthy session:</strong>
+                    <code style="display:block; white-space:pre; margin:4px 0;">Claude Code v2.1.104
+Opus 4.6 (1M context) - Claude Max
+~/Life-Dashboard
+
+Listening for channel messages from:
+  plugin:telegram@claude-plugins-official
+
+> _
+
+[--------] 0%OK | Opus 4.6 (1M context) $0.00
+>> bypass permissions on (shift+tab to cycle)</code>
+                    <em>"Listening for channel messages" = bot connected.<br>"bypass permissions on" = no permission prompts.</em>
+                </div>
+                <div class="indicator indicator-fail">
+                    <strong>Session crashed:</strong>
+                    <code>laladimalanta@Lalas-MacBook-Pro ~/Life-Dashboard %</code><br>
+                    <em>Plain shell prompt = Claude exited. Type <code>exit</code>, go back to Step 4.</em>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-row">
+            <div class="step-num">6</div>
+            <div class="step-body">
+                Detach (leave it running): press <code>Ctrl+B</code> then <code>D</code>
+                <div class="indicator indicator-ok">
+                    <strong>Success:</strong>
+                    <code>[detached (from session claude-telegram)]</code><br>
+                    <em>Claude keeps running. Telegram bot keeps responding.</em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">How to Verify Key States</strong>
+
+        <p style="font-size:0.85rem; margin-top:8px;"><strong>Permissions bypassed?</strong> Check the bottom statusline:</p>
+        <div class="indicator indicator-ok">
+            <code>>> bypass permissions on (shift+tab to cycle)</code><br>
+            <em>All permission checks are skipped. No prompts will appear.</em>
+        </div>
+        <div class="indicator indicator-fail">
+            <code>>> acceptEdits</code> or <code>>> default</code><br>
+            <em>Permissions NOT bypassed. Kill and restart with <code>--dangerously-skip-permissions</code>.</em>
+        </div>
+
+        <p style="font-size:0.85rem; margin-top:12px;"><strong>Mac caffeinated (won't sleep)?</strong> Detach from tmux, then run: <code>ps aux | grep caffeinate</code></p>
+        <div class="indicator indicator-ok">
+            <code>laladimalanta 12345 0.0 0.0 caffeinate -d</code><br>
+            <em>Running. Mac won't sleep.</em>
+        </div>
+        <div class="indicator indicator-fail">
+            <em>Only see <code>grep --color caffeinate</code>. Not running. Fix: <code>caffeinate -d &</code></em>
+        </div>
+    </div>
+
+    <!-- ===== CREDENTIALS ===== -->
+    <div class="section-title">Credentials</div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Tailscale Network</strong>
+        <table class="cred-table">
+            <tr><td>Account</td><td><code>shelaheramis@gmail.com</code></td></tr>
+            <tr><td>Mac Tailscale IP</td><td><code>100.104.9.62</code></td></tr>
+            <tr><td>iPhone Tailscale IP</td><td><code>100.69.32.44</code></td></tr>
+            <tr><td>Plan</td><td>Free (personal)</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">SSH (Termius on iPhone)</strong>
+        <table class="cred-table">
+            <tr><td>Host Label</td><td><code>Lala Desktop</code></td></tr>
+            <tr><td>Hostname</td><td><code>100.104.9.62</code></td></tr>
+            <tr><td>Port</td><td><code>22</code></td></tr>
+            <tr><td>Username</td><td><code>laladimalanta</code></td></tr>
+            <tr><td>Password</td><td>(your Mac login password)</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Telegram Bot</strong>
+        <table class="cred-table">
+            <tr><td>Bot Name</td><td><code>Shela Claude Code</code></td></tr>
+            <tr><td>Bot Token</td><td><code>8540616351:AAFG1LbjeZlwrZoH-hkli9-CxJzIpGPO3Ak</code></td></tr>
+            <tr><td>Token Location</td><td><code>~/.claude/channels/telegram/.env</code></td></tr>
+            <tr><td>Access Policy</td><td>allowlist (only your user ID)</td></tr>
+            <tr><td>Your Telegram ID</td><td><code>726712475</code></td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Claude Code Session</strong>
+        <table class="cred-table">
+            <tr><td>Working Directory</td><td><code>~/Life-Dashboard</code></td></tr>
+            <tr><td>Model</td><td>Opus 4.6 (1M context)</td></tr>
+            <tr><td>Permissions</td><td><code>--dangerously-skip-permissions</code></td></tr>
+            <tr><td>Hooks</td><td>10 behavioral hooks in <code>settings.local.json</code></td></tr>
+            <tr><td>Startup Script</td><td><code>~/.claude/start-telegram-session.sh</code></td></tr>
+            <tr><td>tmux Session</td><td><code>claude-telegram</code></td></tr>
+        </table>
+    </div>
+
+    <!-- ===== COMMANDS ===== -->
+    <div class="section-title">Commands Reference</div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Start a New Session</strong>
+        <pre class="cmd"><code><span class="comment"># Option 1: Use the startup script (recommended)</span>
+~/.claude/start-telegram-session.sh
+
+<span class="comment"># Option 2: Manual start</span>
+cd ~/Life-Dashboard
+tmux new -s claude-telegram
+caffeinate -d & claude --channels "plugin:telegram@claude-plugins-official" --dangerously-skip-permissions</code></pre>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Session Management</strong>
+        <pre class="cmd"><code><span class="comment"># Check if session is running</span>
+tmux ls
+
+<span class="comment"># Attach to see the live terminal</span>
+tmux attach -t claude-telegram
+
+<span class="comment"># Detach without killing (press in sequence)</span>
+Ctrl+B then D
+
+<span class="comment"># Kill the session (to restart fresh)</span>
+tmux kill-session -t claude-telegram
+
+<span class="comment"># Kill ALL tmux sessions</span>
+tmux kill-server</code></pre>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Inside Claude Code (when attached via tmux)</strong>
+        <pre class="cmd"><code><span class="comment"># Clear context and start fresh</span>
+/clear
+
+<span class="comment"># Exit Claude Code entirely</span>
+/exit   or   Ctrl+C</code></pre>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">System Commands</strong>
+        <pre class="cmd"><code><span class="comment"># Prevent Mac from sleeping</span>
+caffeinate -d &
+
+<span class="comment"># Check if caffeinate is running</span>
+ps aux | grep caffeinate
+
+<span class="comment"># Check hook execution log</span>
+tail -20 ~/Life-Dashboard/.claude/hooks/hook-execution.log
+
+<span class="comment"># Check LaunchAgent status</span>
+launchctl list | grep claude
+
+<span class="comment"># Reload LaunchAgent</span>
+launchctl unload ~/Library/LaunchAgents/com.claude.telegram-session.plist
+launchctl load ~/Library/LaunchAgents/com.claude.telegram-session.plist</code></pre>
+    </div>
+
+    <!-- ===== DO'S AND DON'TS ===== -->
+    <div class="section-title">Do's and Don'ts</div>
+
+    <div class="card">
+        <strong style="color:var(--green-border); font-size:0.9rem;">Do's</strong>
+        <ul class="do-list">
+            <li><strong>Keep your Mac plugged in and lid open</strong> (or use caffeinate) when running remote sessions</li>
+            <li><strong>Use Telegram for regular work</strong> (chatting, tasks, questions, session saves)</li>
+            <li><strong>Use Termius only for session management</strong> (restart, clear context, check status)</li>
+            <li><strong>Detach from tmux</strong> (Ctrl+B, D) before closing Termius</li>
+            <li><strong>Check <code>tmux ls</code> first</strong> before starting a new session to avoid duplicates</li>
+            <li><strong>Keep Tailscale running</strong> on both Mac and iPhone</li>
+            <li><strong>Use <code>/clear</code></strong> when context gets high (check statusline for %)</li>
+            <li><strong>Save session before clearing</strong> via Telegram first</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <strong style="color:var(--red-border); font-size:0.9rem;">Don'ts</strong>
+        <ul class="dont-list">
+            <li><strong>Don't close your Mac lid</strong> without caffeinate running</li>
+            <li><strong>Don't run multiple Claude Telegram sessions</strong> at once</li>
+            <li><strong>Don't share the bot token</strong> with anyone</li>
+            <li><strong>Don't change access policy to "pairing"</strong> unless intended</li>
+            <li><strong>Don't type sensitive passwords</strong> in Telegram chat</li>
+            <li><strong>Don't expect message history</strong> in the bot</li>
+            <li><strong>Don't force-quit Terminal</strong> while Claude is running</li>
+            <li><strong>Don't use Termius for long conversations</strong> (use Telegram)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <strong style="color:var(--gold); font-size:0.9rem;">Tips</strong>
+        <ul style="font-size:0.88rem; padding-left:18px; margin-top:6px;">
+            <li>Bot can see photos sent on Telegram</li>
+            <li>Long responses auto-chunk at 4096 chars</li>
+            <li>All 10 behavioral hooks fire in Telegram session</li>
+            <li>All MCP servers available (Sheets, Slack, Beehiiv, Searchable, Keep)</li>
+            <li>LaunchAgent auto-starts session on Mac login</li>
+        </ul>
+    </div>
+
+    <!-- ===== TROUBLESHOOTING ===== -->
+    <div class="section-title">Troubleshooting</div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Bot Not Responding on Telegram</strong>
+        <div class="indicator indicator-warn">
+            <strong>Cause:</strong> <em>Claude Code session died or Mac went to sleep.</em>
+            <ol style="font-size:0.85rem; margin:6px 0 0 18px;">
+                <li>Open Termius, connect to Lala Desktop</li>
+                <li>Run <code>tmux ls</code></li>
+                <li>If no session: <code>~/.claude/start-telegram-session.sh</code></li>
+                <li>If exists but unresponsive: <code>tmux kill-session -t claude-telegram</code> then restart</li>
+                <li>Check caffeinate: <code>ps aux | grep caffeinate</code></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Termius: "Connection Refused"</strong>
+        <div class="indicator indicator-warn">
+            <strong>Cause:</strong> <em>SSH not enabled or Tailscale not running.</em>
+            <ol style="font-size:0.85rem; margin:6px 0 0 18px;">
+                <li>Tailscale connected on both devices?</li>
+                <li>Mac: System Settings > General > Sharing > Remote Login = ON</li>
+                <li>IP should be <code>100.104.9.62</code></li>
+                <li>If IP changed: check <code>login.tailscale.com</code></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Termius: "Connection Timeout"</strong>
+        <div class="indicator indicator-warn">
+            <strong>Cause:</strong> <em>Mac is off, asleep, or Tailscale disconnected.</em>
+            <ol style="font-size:0.85rem; margin:6px 0 0 18px;">
+                <li>Mac powered on and awake?</li>
+                <li>Check Tailscale app on iPhone: Mac showing green/online?</li>
+                <li>If offline, need physical access to wake it</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">Permission Prompts in Terminal</strong>
+        <div class="indicator indicator-warn">
+            <strong>Cause:</strong> <em>Session started without <code>--dangerously-skip-permissions</code>.</em><br>
+            <em>Statusline shows <code>>> acceptEdits</code> instead of <code>>> bypass permissions on</code>.</em>
+            <pre class="cmd" style="margin-top:8px;"><code>tmux kill-session -t claude-telegram
+cd ~/Life-Dashboard
+tmux new -s claude-telegram
+caffeinate -d & claude --channels "plugin:telegram@claude-plugins-official" --dangerously-skip-permissions</code></pre>
+        </div>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">High Context (Statusline 70%+)</strong>
+        <div class="indicator indicator-warn">
+            <ol style="font-size:0.85rem; margin:6px 0 0 18px;">
+                <li>Telegram: ask Claude to "save session" first</li>
+                <li>Termius: <code>tmux attach -t claude-telegram</code></li>
+                <li>Type <code>/clear</code> inside Claude Code</li>
+                <li>Or kill and restart for fully fresh start</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="card">
+        <strong style="font-size:0.9rem;">tmux: "command not found"</strong>
+        <div class="indicator indicator-warn">
+            <em>Fix: </em><code>export PATH="/opt/homebrew/bin:$PATH"</code><br>
+            <em>Or full path: </em><code>/opt/homebrew/bin/tmux ls</code>
+        </div>
+    </div>
+
+    <!-- ===== ARCHITECTURE ===== -->
+    <div class="section-title">Architecture</div>
+
+    <div class="card" style="padding:0; overflow:hidden;">
+        <div class="arch-diagram">  iPhone                             Mac (Lalas-MacBook-Pro)
+  ------                             ------------------------
+
+  Telegram App                       Claude Code Session
+  (chat with bot)  ----internet----> Telegram Plugin listens
+       |                                 |
+       |                             tmux (keeps session alive)
+       |                                 |
+  Termius App                        SSH Server (port 22)
+  (terminal access) --Tailscale----->    |
+       |              (encrypted)        |
+       |                             Life-Dashboard/
+  Tailscale App                          .claude/settings.local.json
+  (VPN mesh)                             (10 behavioral hooks)
+                                         (all MCP servers)
+
+  Auto-start on Mac boot:
+  LaunchAgent --> start-telegram-session.sh --> tmux + caffeinate + claude</div>
+    </div>
+
+    <!-- ===== FILE LOCATIONS ===== -->
+    <div class="section-title">Key File Locations</div>
+
+    <div class="card">
+        <table class="cred-table">
+            <tr><td>Startup Script</td><td><code>~/Life-Dashboard/.claude/start-telegram-session.sh</code></td></tr>
+            <tr><td>LaunchAgent</td><td><code>~/Library/LaunchAgents/com.claude.telegram-session.plist</code></td></tr>
+            <tr><td>Bot Token</td><td><code>~/.claude/channels/telegram/.env</code></td></tr>
+            <tr><td>Access Config</td><td><code>~/.claude/channels/telegram/access.json</code></td></tr>
+            <tr><td>Hooks Directory</td><td><code>~/Life-Dashboard/.claude/hooks/</code></td></tr>
+            <tr><td>Hook Settings</td><td><code>~/Life-Dashboard/.claude/settings.local.json</code></td></tr>
+            <tr><td>Global Settings</td><td><code>~/.claude/settings.json</code></td></tr>
+            <tr><td>Hook Log</td><td><code>~/Life-Dashboard/.claude/hooks/hook-execution.log</code></td></tr>
+            <tr><td>LaunchAgent Log</td><td><code>~/Life-Dashboard/.claude/telegram-launchagent.log</code></td></tr>
+            <tr><td>Photo Inbox</td><td><code>~/.claude/channels/telegram/inbox/</code></td></tr>
+        </table>
+    </div>
+
+    <p style="text-align:center; color:var(--text-muted); font-size:0.75rem; margin-top:2rem;">
+        Remote Access Guide v1.0 - April 13, 2026
+    </p>
+</div>
+
+</body>
+</html>
