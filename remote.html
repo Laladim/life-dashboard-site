@@ -216,7 +216,7 @@ pre.cmd .comment { color: #7a7590; }
         <div class="step-row">
             <div class="step-num">4</div>
             <div class="step-body">
-                Start a new session: <code>~/.claude/start-telegram-session.sh</code>
+                Start a new session: <code>~/Life-Dashboard/.claude/start-telegram-session.sh</code>
                 <div class="indicator indicator-ok">
                     <strong>Success:</strong>
                     <em>Script runs silently. You get your prompt back. Run <code>tmux ls</code> again to confirm.</em>
@@ -329,7 +329,7 @@ Listening for channel messages from:
             <tr><td>Model</td><td>Opus 4.6 (1M context)</td></tr>
             <tr><td>Permissions</td><td><code>--dangerously-skip-permissions</code></td></tr>
             <tr><td>Hooks</td><td>10 behavioral hooks in <code>settings.local.json</code></td></tr>
-            <tr><td>Startup Script</td><td><code>~/.claude/start-telegram-session.sh</code></td></tr>
+            <tr><td>Startup Script</td><td><code>~/Life-Dashboard/.claude/start-telegram-session.sh</code></td></tr>
             <tr><td>tmux Session</td><td><code>claude-telegram</code></td></tr>
         </table>
     </div>
@@ -340,7 +340,7 @@ Listening for channel messages from:
     <div class="card">
         <strong style="font-size:0.9rem;">Start a New Session</strong>
         <pre class="cmd"><code><span class="comment"># Option 1: Use the startup script (recommended)</span>
-~/.claude/start-telegram-session.sh
+~/Life-Dashboard/.claude/start-telegram-session.sh
 
 <span class="comment"># Option 2: Manual start</span>
 cd ~/Life-Dashboard
@@ -446,7 +446,7 @@ launchctl load ~/Library/LaunchAgents/com.claude.telegram-session.plist</code></
             <ol style="font-size:0.85rem; margin:6px 0 0 18px;">
                 <li>Open Termius, connect to Lala Desktop</li>
                 <li>Run <code>tmux ls</code></li>
-                <li>If no session: <code>~/.claude/start-telegram-session.sh</code></li>
+                <li>If no session: <code>~/Life-Dashboard/.claude/start-telegram-session.sh</code></li>
                 <li>If exists but unresponsive: <code>tmux kill-session -t claude-telegram</code> then restart</li>
                 <li>Check caffeinate: <code>ps aux | grep caffeinate</code></li>
             </ol>
