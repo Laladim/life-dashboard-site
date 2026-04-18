@@ -86,6 +86,11 @@
   .bounce-yellow { background: var(--yellow-bg); color: var(--yellow); font-weight: 600; padding: 3px 8px; border-radius: 4px; }
   .bounce-red { background: var(--red-bg); color: var(--red); font-weight: 600; padding: 3px 8px; border-radius: 4px; }
 
+  .pct-strong { background: #A7F3D0; color: #065F46; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+  .pct-medium { background: #FEF3C7; color: #92400E; font-weight: 600; padding: 3px 8px; border-radius: 4px; }
+  .pct-light { background: #DBEAFE; color: #1E40AF; font-weight: 500; padding: 3px 8px; border-radius: 4px; }
+  .pct-tiny { background: #F1F5F9; color: #64748B; padding: 3px 8px; border-radius: 4px; }
+
   .channel-tag { font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
   .ch-direct { background: #F1F5F9; color: var(--slate); }
   .ch-organic { background: var(--green-bg); color: var(--green); }
@@ -132,7 +137,7 @@
   <div id="tab-weekly" class="tab-content" data-payload="weekly"></div>
   <div id="tab-monthly" class="tab-content" data-payload="monthly"></div>
 
-  <div class="footer">Data: GA4 Property 313387779 · Generated 2026-04-19 00:13  · SOS pages tracked separately in DAILY SCRAPING MONITOR sheet tab</div>
+  <div class="footer">Data: GA4 Property 313387779 · Generated 2026-04-19 00:17  · SOS pages tracked separately in DAILY SCRAPING MONITOR sheet tab</div>
 </main>
 
 <script>
@@ -142,6 +147,12 @@ function bounceClass(b) {
   if (b < 40) return 'bounce-green';
   if (b <= 70) return 'bounce-yellow';
   return 'bounce-red';
+}
+function pctClass(p) {
+  if (p >= 30) return 'pct-strong';
+  if (p >= 10) return 'pct-medium';
+  if (p >= 3)  return 'pct-light';
+  return 'pct-tiny';
 }
 function channelClass(c) {
   const m = {'Direct':'ch-direct','Organic Search':'ch-organic','AI Search':'ch-ai',
@@ -203,7 +214,8 @@ function renderPane(container, data) {
       <table class="data">
         <thead><tr>
           <th>Period</th><th>Bucket</th>
-          <th class="num">Sessions</th><th class="num">Users</th><th class="num">Bounce</th>
+          <th class="num">Sessions</th><th class="num">% of Period</th>
+          <th class="num">Users</th><th class="num">Bounce</th>
           <th>Top Channel</th>
           <th class="num">Direct</th><th class="num">Organic</th><th class="num">AI</th>
           <th class="num">Referral</th><th class="num">Social</th><th class="num">Paid</th><th class="num">Other</th>
@@ -214,7 +226,9 @@ function renderPane(container, data) {
   `;
 
   const tbody = container.querySelector('tbody');
+  const periodTotalSessions = data.buckets.reduce((a, b) => a + b.sessions, 0);
   data.buckets.forEach((b, idx) => {
+    const bPct = periodTotalSessions > 0 ? ((b.sessions / periodTotalSessions) * 100).toFixed(1) : '0.0';
     const bucketRow = document.createElement('tr');
     bucketRow.className = 'bucket-row';
     bucketRow.dataset.idx = idx;
@@ -222,6 +236,7 @@ function renderPane(container, data) {
       <td><span class="period-tag">${data.period}</span></td>
       <td><span class="expand-icon">▸</span><span class="bucket-name">${b.bucket}</span></td>
       <td class="num">${fmtNum(b.sessions)}</td>
+      <td class="num"><span class="${pctClass(parseFloat(bPct))}">${bPct}%</span></td>
       <td class="num">${fmtNum(b.users)}</td>
       <td class="num"><span class="${bounceClass(b.bounce)}">${b.bounce}%</span></td>
       <td><span class="channel-tag ${channelClass(b.top_channel)}">${b.top_channel}</span></td>
@@ -235,6 +250,7 @@ function renderPane(container, data) {
     tbody.appendChild(bucketRow);
 
     b.urls.forEach(u => {
+      const uPct = periodTotalSessions > 0 ? ((u.sessions / periodTotalSessions) * 100).toFixed(1) : '0.0';
       const ur = document.createElement('tr');
       ur.className = 'url-row';
       ur.dataset.parent = idx;
@@ -242,6 +258,7 @@ function renderPane(container, data) {
         <td></td>
         <td class="url-cell">${u.url}</td>
         <td class="num">${fmtNum(u.sessions)}</td>
+        <td class="num"><span class="${pctClass(parseFloat(uPct))}">${uPct}%</span></td>
         <td class="num">${fmtNum(u.users)}</td>
         <td class="num"><span class="${bounceClass(u.bounce)}">${u.bounce}%</span></td>
         <td><span class="channel-tag ${channelClass(u.top_channel)}">${u.top_channel}</span></td>
@@ -305,7 +322,7 @@ function renderTimeSeries(container, periods, mode) {
         <td><span class="period-tag">${p.period_label}</span></td>
         <td><span class="bucket-name">${b.bucket}</span></td>
         <td class="num">${fmtNum(b.sessions)}</td>
-        <td class="num"><strong>${pct}%</strong></td>
+        <td class="num"><span class="${pctClass(parseFloat(pct))}">${pct}%</span></td>
         <td class="num">${fmtNum(b.users)}</td>
         <td class="num"><span class="${bounceClass(b.bounce)}">${b.bounce}%</span></td>
         <td><span class="channel-tag ${channelClass(b.top_channel)}">${b.top_channel}</span></td>
