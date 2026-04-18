@@ -132,7 +132,7 @@
   <div id="tab-weekly" class="tab-content" data-payload="weekly"></div>
   <div id="tab-monthly" class="tab-content" data-payload="monthly"></div>
 
-  <div class="footer">Data: GA4 Property 313387779 · Generated 2026-04-19 00:02  · SOS pages tracked separately in DAILY SCRAPING MONITOR sheet tab</div>
+  <div class="footer">Data: GA4 Property 313387779 · Generated 2026-04-19 00:08  · SOS pages tracked separately in DAILY SCRAPING MONITOR sheet tab</div>
 </main>
 
 <script>
@@ -268,22 +268,22 @@ function renderPane(container, data) {
 function renderTimeSeries(container, periods, mode) {
   container.innerHTML = `
     <div class="table-card">
-      <h3>${mode === 'weekly' ? 'Last 52 weeks' : 'Last 12 months'} by bucket — click a period to see bucket breakdown · color-grouped by month</h3>
-      <div class="legend">
-        <span><span class="sw" style="background: #DBEAFE;"></span>Month A</span>
-        <span><span class="sw" style="background: #D1FAE5;"></span>Month B</span>
-        <span><span class="sw" style="background: #FEF3C7;"></span>Month C</span>
-        <span><span class="sw" style="background: #FCE7F3;"></span>Month D</span>
-      </div>
+      <h3>${mode === 'weekly' ? 'Last 52 weeks' : 'Last 12 months'} — every bucket shown, color-grouped by month</h3>
       <table class="data totals">
         <thead><tr>
-          <th>${mode === 'weekly' ? 'Week' : 'Month'}</th>
-          <th class="num">Total Sessions</th>
-          <th class="num">Total Users</th>
+          <th>Period</th>
+          <th>Bucket</th>
+          <th class="num">Sessions</th>
+          <th class="num">Users</th>
           <th class="num">Bounce</th>
-          <th>Top Bucket</th>
-          <th class="num">Top Bucket Sessions</th>
-          <th class="num">Buckets with traffic</th>
+          <th>Top Channel</th>
+          <th class="num">Direct</th>
+          <th class="num">Organic</th>
+          <th class="num">AI</th>
+          <th class="num">Referral</th>
+          <th class="num">Social</th>
+          <th class="num">Paid</th>
+          <th class="num">Other</th>
         </tr></thead>
         <tbody></tbody>
       </table>
@@ -291,50 +291,29 @@ function renderTimeSeries(container, periods, mode) {
   const tbody = container.querySelector('tbody');
   let prevMonth = null;
   let colorIdx = -1;
-  periods.forEach((p, idx) => {
+  periods.forEach(p => {
     if (p.month_key !== prevMonth) {
       colorIdx = (colorIdx + 1) % 4;
       prevMonth = p.month_key;
     }
-    const parent = document.createElement('tr');
-    parent.className = `bucket-row month-c${colorIdx}`;
-    parent.dataset.idx = idx;
-    parent.innerHTML = `
-      <td class="label"><span class="expand-icon">▸</span>${p.period_label}</td>
-      <td class="num">${fmtNum(p.total_sessions)}</td>
-      <td class="num">${fmtNum(p.total_users)}</td>
-      <td class="num"><span class="${bounceClass(p.total_bounce)}">${p.total_bounce}%</span></td>
-      <td><span class="bucket-name">${p.top_bucket}</span></td>
-      <td class="num">${fmtNum(p.top_bucket_sessions)}</td>
-      <td class="num">${p.buckets.length}</td>`;
-    tbody.appendChild(parent);
-
     p.buckets.forEach(b => {
-      const sub = document.createElement('tr');
-      sub.className = 'url-row';
-      sub.dataset.parent = idx;
-      sub.innerHTML = `
-        <td style="padding-left:36px;"><span class="bucket-name">${b.bucket}</span></td>
+      const tr = document.createElement('tr');
+      tr.className = `month-c${colorIdx}`;
+      tr.innerHTML = `
+        <td><span class="period-tag">${p.period_label}</span></td>
+        <td><span class="bucket-name">${b.bucket}</span></td>
         <td class="num">${fmtNum(b.sessions)}</td>
         <td class="num">${fmtNum(b.users)}</td>
         <td class="num"><span class="${bounceClass(b.bounce)}">${b.bounce}%</span></td>
         <td><span class="channel-tag ${channelClass(b.top_channel)}">${b.top_channel}</span></td>
-        <td class="num" colspan="2">
-          <span style="margin-right:12px;">D: ${fmtNum(b.direct)}</span>
-          <span style="margin-right:12px; color: var(--green);">O: ${fmtNum(b.organic)}</span>
-          <span style="margin-right:12px; color: var(--purple);">AI: ${fmtNum(b.ai)}</span>
-          <span style="margin-right:12px;">R: ${fmtNum(b.referral)}</span>
-          <span style="margin-right:12px;">S: ${fmtNum(b.social)}</span>
-          <span>P: ${fmtNum(b.paid)}</span>
-        </td>`;
-      tbody.appendChild(sub);
-    });
-  });
-  container.querySelectorAll('tr.bucket-row').forEach(row => {
-    row.addEventListener('click', () => {
-      row.classList.toggle('open');
-      const idx = row.dataset.idx;
-      container.querySelectorAll(`tr.url-row[data-parent="${idx}"]`).forEach(u => u.classList.toggle('open'));
+        <td class="num">${fmtNum(b.direct)}</td>
+        <td class="num">${fmtNum(b.organic)}</td>
+        <td class="num">${fmtNum(b.ai)}</td>
+        <td class="num">${fmtNum(b.referral)}</td>
+        <td class="num">${fmtNum(b.social)}</td>
+        <td class="num">${fmtNum(b.paid)}</td>
+        <td class="num">${fmtNum(b.other)}</td>`;
+      tbody.appendChild(tr);
     });
   });
 }
