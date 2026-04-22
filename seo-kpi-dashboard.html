@@ -5,34 +5,41 @@
 <title>Cobalt SEO KPI Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* Cobalt brand palette — per cobalt-brand-visual-expert.md */
-    --navy: #0F172A;       /* Trust Navy */
-    --slate: #1E293B;      /* Deep Slate */
-    --blue: #0047AB;       /* Cobalt Blue — primary */
-    --blue-light: #2563C8; /* Cobalt Blue, lighter variant */
-    --amber: #D97706;      /* Caution Amber */
-    --bg: #F8FAFC;         /* Clean White */
-    --card: #ffffff;
-    --text: #0F172A;       /* Trust Navy */
-    --muted: #64748B;      /* Neutral Gray */
-    --border: #e2e8f0;
-    --green: #059669;      /* Success Green */
-    --red: #DC2626;        /* Alert Red */
+    /* 2026 Cobalt brand — per cobalt-brand-visual-expert.md v3 (Apr 7, 2026) */
+    --lavender: #9F93E2;   /* Accent 1 */
+    --indigo:   #6366F1;   /* Accent 2 */
+    --navy:     #0B0915;   /* 2026 dark bg */
+    --slate:    #1a1538;   /* Mid dark */
+    --blue:     #6366F1;   /* Re-pointed to indigo for legacy references */
+    --blue-light: #9F93E2; /* Re-pointed to lavender */
+    --amber:    #D97706;   /* Caution — retained */
+    --bg:       #F8F7FD;   /* Lavender-tinted light */
+    --card:     #ffffff;
+    --text:     #1a1a2e;   /* 2026 dark-on-light */
+    --muted:    #5a5a7a;   /* 2026 muted */
+    --border:   #e0dff0;   /* 2026 light border */
+    --border-glow: rgba(159,147,226,0.25);
+    --green:    #059669;
+    --red:      #E11D48;   /* 2026 alert rose */
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: var(--bg);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
   }
+  h1, h2, .kpi .value, .sora { font-family: "Sora", "Inter", sans-serif; }
   header {
-    background: linear-gradient(135deg, var(--navy), var(--blue));
-    color: white;
+    background: linear-gradient(135deg, #0B0915 0%, #1a1538 55%, #6366F1 100%);
+    color: #F2F0FF;
     padding: 28px 40px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -236,8 +243,8 @@
     background: var(--navy); color: white; font-size: 12px;
     text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;
   }
-  table.week-grid thead th.sub { background: #1E293B; font-size: 10px; font-weight: 600; }
-  table.week-grid thead th.total-col { background: #0ea5e9; }
+  table.week-grid thead th.sub { background: #1a1538; font-size: 10px; font-weight: 600; }
+  table.week-grid thead th.total-col { background: #9F93E2; }
   table.week-grid td.month-label {
     font-weight: 800; color: var(--navy); font-size: 15px; text-align: left; padding-left: 14px;
   }
@@ -334,11 +341,11 @@ const WEEKLY_CSV  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1gd0zqgK_
 const MONTHLY_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1gd0zqgK_ykEIPaqrnf_qR85N_cInigombDP83o3w1g0ZgdP-sTVd9OjYN_YD8ZOAE0V6QFk_XgaG/pub?gid=161346380&single=true&output=csv";
 
 const COLORS = {
-  blue: "#0047AB",      // Cobalt Blue
-  lightBlue: "#2563C8", // Cobalt Blue lighter
-  cyan: "#1E293B",      // Deep Slate (replaces off-brand cyan)
-  navy: "#0F172A",      // Trust Navy
-  amber: "#D97706",     // Caution Amber
+  blue: "#6366F1",      // Indigo (2026 primary)
+  lightBlue: "#9F93E2", // Lavender (2026 accent)
+  cyan: "#1a1538",      // Mid dark (replaces Deep Slate)
+  navy: "#0B0915",      // 2026 dark bg
+  amber: "#D97706",     // Caution — retained
 };
 
 let weeklyData = [], monthlyData = [], charts = {}, currentView = "weekly";
@@ -445,7 +452,7 @@ function lineChart(canvasId, labels, datasets) {
       interaction: { mode: "index", intersect: false },
       plugins: {
         legend: { display: datasets.length > 1, position: "bottom", labels: { boxWidth: 12, font: { size: 12 } } },
-        tooltip: { backgroundColor: "#0F172A", padding: 12, cornerRadius: 8 },
+        tooltip: { backgroundColor: "#0B0915", padding: 12, cornerRadius: 8 },
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 11 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 10 } },
