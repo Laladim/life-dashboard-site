@@ -283,9 +283,20 @@ function renderPane(container, data) {
 }
 
 function renderTimeSeries(container, periods, mode) {
+  const allBuckets = [...new Set(periods.flatMap(p => p.buckets.map(b => b.bucket)))].sort();
+  const filterId = `bucket-filter-${mode}`;
+  const countId = `${filterId}-count`;
   container.innerHTML = `
     <div class="table-card">
       <h3>${mode === 'weekly' ? 'Last 52 weeks' : 'Last 12 months'} — every bucket shown, color-grouped by month</h3>
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+        <label for="${filterId}" style="color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.04em; font-size:11px;">Filter bucket</label>
+        <select id="${filterId}" style="padding:6px 28px 6px 10px; border:1px solid var(--border); border-radius:6px; font-size:13px; background:white; color:var(--navy); cursor:pointer; font-family:inherit; min-width:220px;">
+          <option value="__all__">All buckets</option>
+          ${allBuckets.map(b => `<option value="${b}">${b}</option>`).join('')}
+        </select>
+        <span id="${countId}" style="color:var(--muted); font-size:12px;"></span>
+      </div>
       <table class="data totals">
         <thead><tr>
           <th>Period</th>
@@ -307,35 +318,52 @@ function renderTimeSeries(container, periods, mode) {
       </table>
     </div>`;
   const tbody = container.querySelector('tbody');
-  let prevMonth = null;
-  let colorIdx = -1;
-  periods.forEach(p => {
-    if (p.month_key !== prevMonth) {
-      colorIdx = (colorIdx + 1) % 4;
-      prevMonth = p.month_key;
-    }
-    p.buckets.forEach(b => {
-      const pct = p.total_sessions > 0 ? ((b.sessions / p.total_sessions) * 100).toFixed(1) : '0.0';
-      const tr = document.createElement('tr');
-      tr.className = `month-c${colorIdx}`;
-      tr.innerHTML = `
-        <td><span class="period-tag">${p.period_label}</span></td>
-        <td><span class="bucket-name">${b.bucket}</span></td>
-        <td class="num">${fmtNum(b.sessions)}</td>
-        <td class="num"><span class="${pctClass(parseFloat(pct))}">${pct}%</span></td>
-        <td class="num">${fmtNum(b.users)}</td>
-        <td class="num"><span class="${bounceClass(b.bounce)}">${b.bounce}%</span></td>
-        <td><span class="channel-tag ${channelClass(b.top_channel)}">${b.top_channel}</span></td>
-        <td class="num">${fmtNum(b.direct)}</td>
-        <td class="num">${fmtNum(b.organic)}</td>
-        <td class="num">${fmtNum(b.ai)}</td>
-        <td class="num">${fmtNum(b.referral)}</td>
-        <td class="num">${fmtNum(b.social)}</td>
-        <td class="num">${fmtNum(b.paid)}</td>
-        <td class="num">${fmtNum(b.other)}</td>`;
-      tbody.appendChild(tr);
+  const select = container.querySelector(`#${filterId}`);
+  const countEl = container.querySelector(`#${countId}`);
+
+  function applyFilter(bucket) {
+    tbody.innerHTML = '';
+    let prevMonth = null;
+    let colorIdx = -1;
+    let rowCount = 0;
+    let totalSessions = 0;
+    periods.forEach(p => {
+      if (p.month_key !== prevMonth) {
+        colorIdx = (colorIdx + 1) % 4;
+        prevMonth = p.month_key;
+      }
+      p.buckets.forEach(b => {
+        if (bucket !== '__all__' && b.bucket !== bucket) return;
+        const pct = p.total_sessions > 0 ? ((b.sessions / p.total_sessions) * 100).toFixed(1) : '0.0';
+        const tr = document.createElement('tr');
+        tr.className = `month-c${colorIdx}`;
+        tr.innerHTML = `
+          <td><span class="period-tag">${p.period_label}</span></td>
+          <td><span class="bucket-name">${b.bucket}</span></td>
+          <td class="num">${fmtNum(b.sessions)}</td>
+          <td class="num"><span class="${pctClass(parseFloat(pct))}">${pct}%</span></td>
+          <td class="num">${fmtNum(b.users)}</td>
+          <td class="num"><span class="${bounceClass(b.bounce)}">${b.bounce}%</span></td>
+          <td><span class="channel-tag ${channelClass(b.top_channel)}">${b.top_channel}</span></td>
+          <td class="num">${fmtNum(b.direct)}</td>
+          <td class="num">${fmtNum(b.organic)}</td>
+          <td class="num">${fmtNum(b.ai)}</td>
+          <td class="num">${fmtNum(b.referral)}</td>
+          <td class="num">${fmtNum(b.social)}</td>
+          <td class="num">${fmtNum(b.paid)}</td>
+          <td class="num">${fmtNum(b.other)}</td>`;
+        tbody.appendChild(tr);
+        rowCount++;
+        totalSessions += b.sessions;
+      });
     });
-  });
+    countEl.textContent = bucket === '__all__'
+      ? `${rowCount} rows across ${periods.length} ${mode === 'weekly' ? 'weeks' : 'months'}`
+      : `${rowCount} ${mode === 'weekly' ? 'weeks' : 'months'} · ${fmtNum(totalSessions)} total sessions for ${bucket}`;
+  }
+
+  select.addEventListener('change', () => applyFilter(select.value));
+  applyFilter('__all__');
 }
 
 document.querySelectorAll('.tab-content').forEach(pane => {
