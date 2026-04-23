@@ -69,8 +69,8 @@
   main { padding: 32px 40px 60px; max-width: 1400px; margin: 0 auto; }
   .kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
     margin-bottom: 32px;
   }
   .kpi {
@@ -317,14 +317,6 @@
       <div class="yoy-grid" id="yoy-grid"></div>
     </div>
     <div id="standard-view">
-    <!-- Ahrefs Domain Rating — refresh via `Check domain rating` trigger (ahrefs-mcp-expert.md) -->
-    <div class="kpi-grid" style="grid-template-columns: minmax(220px, 320px); margin-bottom: 20px;">
-      <div class="kpi">
-        <div class="label">Ahrefs Domain Rating</div>
-        <div class="value">37</div>
-        <div class="delta flat">As of Apr 23, 2026</div>
-      </div>
-    </div>
     <div class="kpi-grid" id="kpis"></div>
     <div class="chart-grid">
       <div class="chart-card"><h3>Total Users</h3><canvas id="chart-users"></canvas></div>
@@ -438,7 +430,13 @@ function renderKPIs(data) {
     { label: "Booked Calls", key: "bookedCall" },
     { label: "Created Accounts", key: "createdAccount" },
   ];
-  document.getElementById("kpis").innerHTML = cards.map(c => {
+  // Ahrefs DR — static, refresh via `Check domain rating` trigger (ahrefs-mcp-expert.md)
+  const drCard = `<div class="kpi">
+      <div class="label">Domain Rating</div>
+      <div class="value">37</div>
+      <div class="delta flat">Ahrefs · Apr 23, 2026</div>
+    </div>`;
+  const gaCards = cards.map(c => {
     const d = delta(last[c.key], prev[c.key]);
     return `<div class="kpi">
       <div class="label">${c.label}</div>
@@ -446,6 +444,7 @@ function renderKPIs(data) {
       <div class="delta ${d.cls}">${d.txt}</div>
     </div>`;
   }).join("");
+  document.getElementById("kpis").innerHTML = drCard + gaCards;
 }
 
 function lineChart(canvasId, labels, datasets) {
