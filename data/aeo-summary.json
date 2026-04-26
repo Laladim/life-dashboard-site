@@ -1,0 +1,129 @@
+{
+  "run_date": "2026-04-26",
+  "generated_at": "2026-04-26T18:20:35.015363+00:00",
+  "n_prompts_tested": 154,
+  "n_cited_any": 73,
+  "combined_rate": 0.474,
+  "per_engine": {
+    "perplexity": {
+      "cited": 50,
+      "total": 154,
+      "rate": 0.3246753246753247
+    },
+    "openai": {
+      "cited": 37,
+      "total": 154,
+      "rate": 0.24025974025974026
+    },
+    "gemini": {
+      "cited": 0,
+      "total": 154,
+      "rate": 0.0
+    }
+  },
+  "wins": [
+    {
+      "pid": "P003",
+      "text": "real-time secretary of state data API",
+      "category": "SOS API",
+      "priority": "high",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai",
+        "gemini"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P317",
+      "text": "Top secretary of state API solutions for business verification",
+      "category": "SOS API",
+      "priority": "high",
+      "rate": 1.0,
+      "engines": [
+        "perplexity"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P336",
+      "text": "Cobalt Intelligence vs Middesk comparison for alternative lenders",
+      "category": "Business Verification",
+      "priority": "high",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai",
+        "gemini"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P005",
+      "text": "secretary of state business status API alternative to Middesk",
+      "category": "SOS API",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "gemini"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P010",
+      "text": "best business verification API 2026",
+      "category": "Business Verification",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "gemini"
+      ],
+      "comp": "Compliancely"
+    },
+    {
+      "pid": "P117",
+      "text": "Business verification API pricing for alternative lenders",
+      "category": "Business Verification",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai",
+        "gemini"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P319",
+      "text": "How to access secretary of state API for free",
+      "category": "SOS API",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai",
+        "gemini"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P321",
+      "text": "Secretary of state API for business document retrieval certificates annual reports",
+      "category": "SOS API",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai",
+        "gemini"
+      ],
+      "comp": "Middesk"
+    }
+  ],
+  "gaps": [],
+  "elapsed_sec": 2908.0,
+  "est_cost_usd": 2.552
+}
