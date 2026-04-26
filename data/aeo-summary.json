@@ -1,6 +1,6 @@
 {
   "run_date": "2026-04-26",
-  "generated_at": "2026-04-26T18:20:35.015363+00:00",
+  "generated_at": "2026-04-26T18:21:15.201349+00:00",
   "n_prompts_tested": 154,
   "n_cited_any": 73,
   "combined_rate": 0.474,
@@ -16,9 +16,9 @@
       "rate": 0.24025974025974026
     },
     "gemini": {
-      "cited": 0,
+      "cited": 38,
       "total": 154,
-      "rate": 0.0
+      "rate": 0.24675324675324675
     }
   },
   "wins": [
@@ -123,7 +123,128 @@
       "comp": "Middesk"
     }
   ],
-  "gaps": [],
+  "gaps": [
+    {
+      "pid": "P300",
+      "text": "Is this company a legitimate registered business",
+      "category": "Business Verification",
+      "priority": "high",
+      "source": "llm-traffic",
+      "notes": "LLM: 4800+ entity lookups. #1 citation driver across all states.",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P301",
+      "text": "Look up business registration status in Texas",
+      "category": "SOS API",
+      "priority": "high",
+      "source": "llm-traffic",
+      "notes": "LLM: 1030 sessions. TX is #1 state.",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P302",
+      "text": "Check if a company is registered in New York",
+      "category": "SOS API",
+      "priority": "high",
+      "source": "llm-traffic",
+      "notes": "LLM: 412 sessions. NY is #2 state.",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P200",
+      "text": "Indiana sos business search",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "gsc",
+      "notes": "",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P201",
+      "text": "What is ngs status for llc",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "gsc",
+      "notes": "",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P202",
+      "text": "Best api for lending compliance and audit trails fintech",
+      "category": "OFAC/Compliance",
+      "priority": "medium",
+      "source": "gsc",
+      "notes": "",
+      "rate": 0.0,
+      "comp": "Experian"
+    },
+    {
+      "pid": "P303",
+      "text": "Verify business entity status in Illinois",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "llm-traffic",
+      "notes": "LLM: 253 sessions.",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P304",
+      "text": "Florida secretary of state business entity lookup",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "llm-traffic",
+      "notes": "LLM: 246 sessions.",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P305",
+      "text": "Search Virginia corporation registration status",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "llm-traffic",
+      "notes": "LLM: 228 sessions.",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P306",
+      "text": "Nevada business entity registration search",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "llm-traffic",
+      "notes": "LLM: 171 sessions.",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P307",
+      "text": "Colorado secretary of state business search",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "llm-traffic",
+      "notes": "LLM: 177 sessions.",
+      "rate": 0.0,
+      "comp": ""
+    },
+    {
+      "pid": "P308",
+      "text": "New Jersey business entity search",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "llm-traffic",
+      "notes": "LLM: 152 sessions.",
+      "rate": 0.0,
+      "comp": ""
+    }
+  ],
   "elapsed_sec": 2908.0,
   "est_cost_usd": 2.552
 }
