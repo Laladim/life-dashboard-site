@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#5a4a7a" />
+<title>Writings by Lala — Content Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:        #5a4a7a;
+    --purple-deep:   #3d3257;
+    --purple-soft:   #8b7aa8;
+    --gold:          #c8985f;
+    --gold-soft:     #e3c794;
+    --sage:          #5a8a72;
+    --sage-soft:     #9bbeac;
+    --cream:         #f5f1f0;
+    --cream-warm:    #fdfaf7;
+    --charcoal:      #3a3a3a;
+    --muted:         #6f6a78;
+    --border:        #e6dfd8;
+    --rose:          #c0556a;
+    --card:          #ffffff;
+    --text:          #2a2334;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+  }
+  h1, h2, h3, h4, .serif, .kpi .value { font-family: "Cormorant Garamond", "Iowan Old Style", Georgia, serif; }
+  header {
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 60%, var(--gold) 130%);
+    color: var(--cream-warm);
+    padding: clamp(20px, 4vw, 32px) clamp(20px, 4vw, 44px) calc(clamp(20px, 4vw, 32px) + env(safe-area-inset-bottom, 0px));
+    padding-top: calc(clamp(20px, 4vw, 32px) + env(safe-area-inset-top, 0px));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: clamp(22px, 3.4vw, 30px);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  header .sub {
+    font-size: clamp(12px, 1.4vw, 14px);
+    opacity: 0.85;
+    margin-top: 4px;
+    font-family: "Inter", sans-serif;
+  }
+  header .meta {
+    text-align: right;
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.85;
+    font-family: "Inter", sans-serif;
+  }
+  header .meta a { color: var(--gold-soft); text-decoration: none; }
+  header .meta a:hover { text-decoration: underline; }
+  main {
+    padding: clamp(18px, 3vw, 32px) clamp(16px, 4vw, 44px) 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .section { margin-bottom: clamp(28px, 4vw, 44px); }
+  .section h2 {
+    font-size: clamp(18px, 2.4vw, 24px);
+    font-weight: 600;
+    margin: 0 0 14px;
+    color: var(--purple-deep);
+    letter-spacing: -0.005em;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .section h2 .hint {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+  }
+  .kpi {
+    background: var(--card);
+    padding: 20px 22px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(58,49,87,0.05);
+    min-height: 110px;
+  }
+  .kpi .label {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .kpi .value {
+    font-size: clamp(26px, 3.2vw, 36px);
+    font-weight: 700;
+    margin-top: 6px;
+    color: var(--purple-deep);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .kpi .delta {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: "Inter", sans-serif;
+    color: var(--muted);
+  }
+  .delta.up { color: var(--sage); }
+  .delta.down { color: var(--rose); }
+  .delta.flat { color: var(--muted); }
+  .funnel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    gap: 12px;
+  }
+  .funnel-card {
+    background: var(--card);
+    padding: 18px 18px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(90,74,122,0.15);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .funnel-card:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(58,49,87,0.08); }
+  .funnel-card.active { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(90,74,122,0.15); }
+  .funnel-card .stage {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .funnel-card .count {
+    font-size: clamp(28px, 3.2vw, 36px);
+    font-weight: 700;
+    margin-top: 6px;
+    color: var(--purple-deep);
+    letter-spacing: -0.02em;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    line-height: 1;
+  }
+  .funnel-card .stage-emoji {
+    float: right;
+    font-size: 16px;
+    opacity: 0.5;
+    margin-top: 2px;
+  }
+  .chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card);
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(58,49,87,0.05);
+  }
+  .card h3 {
+    margin: 0 0 14px;
+    font-size: clamp(15px, 1.8vw, 17px);
+    font-weight: 600;
+    color: var(--purple-deep);
+  }
+  .card canvas { max-height: 280px; }
+  .legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    font-family: "Inter", sans-serif;
+  }
+  .legend .swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-family: "Inter", sans-serif;
+  }
+  table.data th, table.data td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table.data thead th {
+    font-weight: 600;
+    color: var(--purple-deep);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--cream-warm);
+    position: sticky;
+    top: 0;
+  }
+  table.data tbody tr:hover { background: var(--cream); }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-family: "Inter", sans-serif;
+  }
+  .badge.heartwork { background: #f4ebe0; color: #9b7733; }
+  .badge.community { background: #e3eee5; color: #3f6a52; }
+  .badge.mindset   { background: #ece7f1; color: #5a4a7a; }
+  .badge.tactical  { background: #ecedf2; color: #475063; }
+  .badge.before    { background: #f7e9d6; color: #8a6c2c; }
+  .badge.during    { background: #e2eef6; color: #3a6a8a; }
+  .badge.after     { background: #e6e9f3; color: #4a5278; }
+  .badge.live      { background: #e3eee5; color: #3f6a52; }
+  .badge.down      { background: #f7dde1; color: #a13144; }
+  .badge.warn      { background: #f7e9d6; color: #8a6c2c; }
+  .badge.priority  { background: var(--purple); color: #fff; }
+  .heatmap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .heat-cell {
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: var(--cream-warm);
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+  }
+  .heat-cell .topic { color: var(--purple-deep); font-weight: 500; line-height: 1.2; }
+  .heat-cell .count { font-weight: 700; font-size: 16px; }
+  .heat-cell.cold   { background: #fdfaf7; }
+  .heat-cell.warm   { background: #f1e8da; }
+  .heat-cell.hot    { background: #e3c794; }
+  .heat-cell.zero   { color: var(--muted); border-style: dashed; }
+  .heat-cell.zero .topic, .heat-cell.zero .count { color: var(--muted); }
+  .activity {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+  }
+  .activity li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .activity li:last-child { border-bottom: 0; }
+  .activity .when {
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 90px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .activity .what { flex: 1; color: var(--text); }
+  .activity .what a { color: var(--purple); text-decoration: none; }
+  .activity .what a:hover { text-decoration: underline; }
+  .status-row {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: "Inter", sans-serif;
+  }
+  .status-row a { color: var(--purple); text-decoration: none; }
+  .loading { padding: 24px; text-align: center; color: var(--muted); font-family: "Inter", sans-serif; }
+  .empty   { padding: 18px; text-align: center; color: var(--muted); font-style: italic; font-family: "Inter", sans-serif; font-size: 13px; }
+  .filtered-table-wrap { margin-top: 14px; }
+  .filtered-table-wrap.hidden { display: none; }
+  .filter-banner {
+    background: var(--cream-warm);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--purple-deep);
+    font-family: "Inter", sans-serif;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .filter-banner button {
+    background: transparent;
+    border: 1px solid var(--purple);
+    color: var(--purple);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    min-height: 28px;
+  }
+  @media (max-width: 600px) {
+    main { padding-left: 16px; padding-right: 16px; }
+    .chart-grid { grid-template-columns: 1fr; }
+    header { padding-left: 18px; padding-right: 18px; }
+    header .meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Writings by Lala — Content Dashboard</h1>
+    <div class="sub">Pipeline health for <a href="https://laladim.github.io/writings/" style="color:inherit;text-decoration:underline;">laladim.github.io/writings</a></div>
+  </div>
+  <div class="meta">
+    <div id="last-refresh">Loading…</div>
+    <div><a id="open-sheet" href="#" target="_blank">Open Moments DB →</a></div>
+    <div><a href="https://laladim.github.io/life-dashboard-site/community.html">← Back to Life Dashboard</a></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Section 1: Site Health -->
+  <section class="section">
+    <h2>Site Health <span class="hint">live status + deploy + total posts</span></h2>
+    <div class="kpi-grid" id="site-health-grid">
+      <div class="kpi"><div class="label">Site Status</div><div class="value" id="site-status">…</div><div class="delta flat" id="site-status-detail">checking…</div></div>
+      <div class="kpi"><div class="label">Last Deploy</div><div class="value" id="last-deploy">…</div><div class="delta flat" id="last-deploy-detail">—</div></div>
+      <div class="kpi"><div class="label">Total Posts</div><div class="value" id="total-posts">…</div><div class="delta flat" id="total-posts-detail">—</div></div>
+      <div class="kpi"><div class="label">Newest Post</div><div class="value serif" id="newest-post" style="font-size:clamp(16px,2vw,20px);line-height:1.2;">…</div><div class="delta flat" id="newest-post-detail">—</div></div>
+    </div>
+  </section>
+
+  <!-- Section 2: Production Funnel -->
+  <section class="section">
+    <h2>Content Production Funnel <span class="hint">click any card to filter the table below</span></h2>
+    <div class="funnel-grid" id="funnel-grid">
+      <div class="funnel-card" data-stage="idea"><span class="stage-emoji">✦</span><div class="stage">Ideas</div><div class="count" id="count-idea">…</div></div>
+      <div class="funnel-card" data-stage="selected"><span class="stage-emoji">●</span><div class="stage">Selected</div><div class="count" id="count-selected">…</div></div>
+      <div class="funnel-card" data-stage="drafting"><span class="stage-emoji">✎</span><div class="stage">Drafting</div><div class="count" id="count-drafting">…</div></div>
+      <div class="funnel-card" data-stage="ready"><span class="stage-emoji">◆</span><div class="stage">Ready</div><div class="count" id="count-ready">…</div></div>
+      <div class="funnel-card" data-stage="shipped-month"><span class="stage-emoji">✓</span><div class="stage">Shipped this month</div><div class="count" id="count-shipped-month">…</div></div>
+    </div>
+    <div id="filtered-table" class="filtered-table-wrap hidden">
+      <div class="filter-banner">
+        <span>Showing <strong id="filter-stage-label"></strong> (<span id="filter-count">0</span>)</span>
+        <button id="filter-clear">Clear</button>
+      </div>
+      <div class="card" style="padding:0;">
+        <div style="overflow-x:auto;">
+          <table class="data" id="filtered-table-body"><thead><tr><th>ID</th><th>Title</th><th>Tier</th><th>Track</th><th>Priority</th><th>Last updated</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3 + 6: Engagement Tier Mix + Funnel Stage Mix -->
+  <section class="section">
+    <h2>Engagement Mix <span class="hint">target ≥50% Heartwork · last 30 / last 10</span></h2>
+    <div class="chart-grid">
+      <div class="card">
+        <h3>Engagement Tier Mix</h3>
+        <canvas id="tier-mix-chart"></canvas>
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--gold);"></span>Heartwork</span>
+          <span><span class="swatch" style="background:var(--sage);"></span>Community Proof</span>
+          <span><span class="swatch" style="background:var(--purple);"></span>Mindset</span>
+          <span><span class="swatch" style="background:var(--charcoal);"></span>Tactical</span>
+        </div>
+        <div class="status-row" id="tier-mix-flag" style="margin-top:10px;text-align:left;"></div>
+      </div>
+      <div class="card">
+        <h3>Funnel Stage Mix (last 30)</h3>
+        <canvas id="funnel-mix-chart"></canvas>
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--gold);"></span>Before</span>
+          <span><span class="swatch" style="background:var(--sage);"></span>During</span>
+          <span><span class="swatch" style="background:var(--purple);"></span>After</span>
+        </div>
+        <div class="status-row" id="funnel-mix-flag" style="margin-top:10px;text-align:left;">target 60% Before / 25% During / 15% After</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Audience Coverage -->
+  <section class="section">
+    <h2>Audience Segment Coverage <span class="hint">red flag = no post in 60 days</span></h2>
+    <div class="card">
+      <canvas id="audience-chart"></canvas>
+      <div class="status-row" id="audience-flag" style="text-align:left;margin-top:10px;"></div>
+    </div>
+  </section>
+
+  <!-- Section 5: Topic Coverage -->
+  <section class="section">
+    <h2>Topic Coverage <span class="hint">15 topics · count in last 30 published</span></h2>
+    <div class="card">
+      <div class="heatmap" id="topic-heatmap"><div class="loading">Loading topic counts…</div></div>
+    </div>
+  </section>
+
+  <!-- Section 7: Source Pipeline Health -->
+  <section class="section">
+    <h2>Source Pipeline Health <span class="hint">red row = no mining in 14 days</span></h2>
+    <div class="card" style="padding:0;">
+      <div style="overflow-x:auto;">
+        <table class="data" id="source-table">
+          <thead><tr><th>Source</th><th>In Inbox</th><th>Used (Published)</th><th>Last mining</th><th>Status</th></tr></thead>
+          <tbody><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Recent Activity Feed -->
+  <section class="section">
+    <h2>Recent Activity <span class="hint">last 10 events across published + Inbox + mining</span></h2>
+    <div class="card">
+      <ul class="activity" id="activity-feed"><li class="empty">Loading…</li></ul>
+    </div>
+  </section>
+
+  <!-- Section 9: Hero Image Health -->
+  <section class="section">
+    <h2>Hero Image Health <span class="hint">Cloudinary coverage</span></h2>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="label">Hero coverage</div><div class="value" id="hero-coverage">…</div><div class="delta flat" id="hero-coverage-detail">—</div></div>
+      <div class="kpi"><div class="label">Posts missing hero</div><div class="value" id="hero-missing">…</div><div class="delta flat" id="hero-missing-detail">—</div></div>
+    </div>
+    <div id="hero-missing-list" class="card" style="margin-top:14px;display:none;">
+      <h3>Missing hero (action needed)</h3>
+      <ul class="activity" id="hero-missing-ul"></ul>
+    </div>
+  </section>
+
+  <div class="status-row">
+    <span id="status-line">Auto-refreshes on browser reload · cmd-R</span> · <a href="#" id="reload-link">Reload now</a>
+  </div>
+</main>
+
+<script>
+// ----- Config -----
+const SHEET_ID = "1pjRRIqiGhPrlFuPkxO0nQyxvqqtsJKQPF6xn71K9Rp8";
+const SITE_URL = "https://laladim.github.io/writings/";
+const REPO     = "Laladim/writings";
+// Inlined so the dashboard works on GitHub Pages (no relative data-sources.json fetch).
+const CSV_URLS = {
+  inbox:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vT8D6L60af0P-H68VjNXbYBainRaq6hdm77MCCZgWP97AY3fy17NX9Aidg-8V03edR0x27MI0YynlW_/pub?gid=343417393&single=true&output=csv",
+  published: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT8D6L60af0P-H68VjNXbYBainRaq6hdm77MCCZgWP97AY3fy17NX9Aidg-8V03edR0x27MI0YynlW_/pub?gid=1358755977&single=true&output=csv",
+  tier_mix:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vT8D6L60af0P-H68VjNXbYBainRaq6hdm77MCCZgWP97AY3fy17NX9Aidg-8V03edR0x27MI0YynlW_/pub?gid=144675452&single=true&output=csv",
+};
+const TOPICS = [
+  {slug:"ai-content-systems", name:"AI Content Systems"},
+  {slug:"prompt-engineering", name:"Prompt Engineering"},
+  {slug:"automation",         name:"Automation & Workflows"},
+  {slug:"content-strategy",   name:"Content Strategy & SEO"},
+  {slug:"data-architecture",  name:"Data Architecture"},
+  {slug:"freelancing",        name:"Freelancing & Remote Work"},
+  {slug:"newsletter-craft",   name:"Newsletter Craft"},
+  {slug:"b2b-saas",           name:"B2B SaaS Marketing"},
+  {slug:"faith-theology",     name:"Faith & Theology"},
+  {slug:"health",             name:"Health & Chronic Illness"},
+  {slug:"filipino-professionals", name:"Filipino Professionals"},
+  {slug:"community",          name:"Community Building"},
+  {slug:"marriage-family",    name:"Marriage & Family"},
+  {slug:"learning-in-public", name:"Learning in Public"},
+  {slug:"workstation-setup",  name:"My Workstation & Tools"},
+];
+const SOURCES = ["Google Keep", "Writings Doc", "BSF", "NotebookLM", "Piper", "Sessions"];
+// Map any free-form source string from the sheet to the canonical bucket above.
+function bucketSource(raw) {
+  const s = (raw || "").toLowerCase();
+  if (s.includes("keep"))         return "Google Keep";
+  if (s.includes("writings doc") || s.includes("writings-doc") || s.includes("doc")) return "Writings Doc";
+  if (s.includes("bsf"))          return "BSF";
+  if (s.includes("notebooklm") || s.includes("notebook lm")) return "NotebookLM";
+  if (s.includes("piper"))        return "Piper";
+  if (s.includes("session"))      return "Sessions";
+  return raw || "Other";
+}
+
+// ----- Helpers -----
+async function fetchCSV(url) {
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const text = await res.text();
+  return Papa.parse(text, { header: true, skipEmptyLines: true }).data;
+}
+function fmtRelative(dStr) {
+  if (!dStr) return "—";
+  const d = new Date(dStr);
+  if (isNaN(d.getTime())) return dStr;
+  const ms = Date.now() - d.getTime();
+  const days = Math.floor(ms / 86_400_000);
+  if (days < 0) return d.toISOString().slice(0,10);
+  if (days === 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return days + " days ago";
+  if (days < 365) return Math.floor(days/30) + " mo ago";
+  return Math.floor(days/365) + " yr ago";
+}
+function isThisCalendarMonth(dStr) {
+  if (!dStr) return false;
+  const d = new Date(dStr);
+  if (isNaN(d.getTime())) return false;
+  const now = new Date();
+  return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+}
+function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
+function setHTML(id, v) { const el = document.getElementById(id); if (el) el.innerHTML = v; }
+
+let inboxRows = [];
+let publishedRows = [];
+
+// ----- Section 1: Site Health -----
+async function checkSiteStatus() {
+  try {
+    await fetch(SITE_URL, { mode: "no-cors", cache: "no-store" });
+    setText("site-status", "Live");
+    setText("site-status-detail", "200 OK · " + SITE_URL.replace(/^https?:\/\//, ""));
+    document.getElementById("site-status-detail").classList.remove("flat","down");
+    document.getElementById("site-status-detail").classList.add("up");
+  } catch (e) {
+    setText("site-status", "Down");
+    setText("site-status-detail", "fetch failed");
+    document.getElementById("site-status-detail").classList.add("down");
+  }
+}
+
+async function fetchLastDeploy() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/actions/runs?per_page=1`, { cache: "no-store" });
+    if (!res.ok) throw new Error("GH " + res.status);
+    const data = await res.json();
+    const run = data.workflow_runs && data.workflow_runs[0];
+    if (!run) { setText("last-deploy", "—"); setText("last-deploy-detail", "no runs"); return; }
+    setText("last-deploy", fmtRelative(run.created_at));
+    const sha = (run.head_sha || "").slice(0,7);
+    const status = run.conclusion || run.status || "unknown";
+    setText("last-deploy-detail", `${sha} · ${status}`);
+    const detail = document.getElementById("last-deploy-detail");
+    detail.classList.remove("flat","up","down");
+    detail.classList.add(status === "success" ? "up" : (status === "failure" ? "down" : "flat"));
+  } catch (e) {
+    setText("last-deploy", "—");
+    setText("last-deploy-detail", "GitHub API unreachable");
+  }
+}
+
+function renderTotalPosts() {
+  setText("total-posts", String(publishedRows.length));
+  // Group by tier badge in detail
+  const tiers = {};
+  publishedRows.forEach(r => {
+    const t = (r["Engagement Tier"] || "").trim();
+    if (t) tiers[t] = (tiers[t] || 0) + 1;
+  });
+  const heart = tiers["Heartwork"] || 0;
+  const pct = publishedRows.length ? Math.round(100 * heart / publishedRows.length) : 0;
+  setText("total-posts-detail", `Heartwork ${pct}%`);
+}
+
+function renderNewestPost() {
+  if (!publishedRows.length) { setText("newest-post", "—"); setText("newest-post-detail", "no posts yet"); return; }
+  const sorted = [...publishedRows].sort((a,b) => (b["Published Date"] || "").localeCompare(a["Published Date"] || ""));
+  const newest = sorted[0];
+  setText("newest-post", newest.Title || newest.ID || "—");
+  const rel = fmtRelative(newest["Published Date"]);
+  setText("newest-post-detail", `${rel} · ${newest["Engagement Tier"] || "—"}`);
+}
+
+// ----- Section 2: Funnel -----
+function renderFunnel() {
+  const counts = { idea:0, selected:0, drafting:0, ready:0, "shipped-month":0 };
+  inboxRows.forEach(r => {
+    const status = (r.Status || "").toLowerCase().trim();
+    if (counts.hasOwnProperty(status)) counts[status]++;
+  });
+  publishedRows.forEach(r => {
+    if (isThisCalendarMonth(r["Published Date"])) counts["shipped-month"]++;
+  });
+  setText("count-idea", counts.idea);
+  setText("count-selected", counts.selected);
+  setText("count-drafting", counts.drafting);
+  setText("count-ready", counts.ready);
+  setText("count-shipped-month", counts["shipped-month"]);
+}
+
+function bindFunnelClicks() {
+  document.querySelectorAll(".funnel-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const stage = card.dataset.stage;
+      document.querySelectorAll(".funnel-card").forEach(c => c.classList.remove("active"));
+      card.classList.add("active");
+      const wrap = document.getElementById("filtered-table");
+      const tbody = document.querySelector("#filtered-table-body tbody");
+      let rows = [];
+      let label = "";
+      if (stage === "shipped-month") {
+        rows = publishedRows.filter(r => isThisCalendarMonth(r["Published Date"]));
+        label = "Shipped this month";
+        tbody.innerHTML = rows.map(r => `
+          <tr>
+            <td>${r.ID || ""}</td>
+            <td><a href="${r.URL || "#"}" target="_blank">${r.Title || ""}</a></td>
+            <td>${badge("tier", r["Engagement Tier"])}</td>
+            <td>${r.Track || ""}</td>
+            <td>${badge("stage", r["Funnel Stage"])}</td>
+            <td>${r["Published Date"] || ""}</td>
+          </tr>`).join("") || `<tr><td colspan="6" class="empty">No posts shipped this month yet.</td></tr>`;
+      } else {
+        rows = inboxRows.filter(r => (r.Status || "").toLowerCase().trim() === stage);
+        label = stage.charAt(0).toUpperCase() + stage.slice(1);
+        tbody.innerHTML = rows.map(r => `
+          <tr>
+            <td>${r.ID || ""}</td>
+            <td>${r["Proposed Title"] || ""}</td>
+            <td>${badge("tier", r["Engagement Tier"])}</td>
+            <td>${r.Track || ""}</td>
+            <td>${r.Priority ? `<span class="badge priority">${r.Priority}</span>` : ""}</td>
+            <td>${r["Last Updated"] || r.Created || ""}</td>
+          </tr>`).join("") || `<tr><td colspan="6" class="empty">No ideas at this stage.</td></tr>`;
+      }
+      document.getElementById("filter-stage-label").textContent = label;
+      document.getElementById("filter-count").textContent = String(rows.length);
+      wrap.classList.remove("hidden");
+      wrap.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  });
+  document.getElementById("filter-clear").addEventListener("click", () => {
+    document.getElementById("filtered-table").classList.add("hidden");
+    document.querySelectorAll(".funnel-card").forEach(c => c.classList.remove("active"));
+  });
+}
+
+function badge(kind, value) {
+  const v = (value || "").trim();
+  if (!v) return "";
+  const cls = v.toLowerCase().replace(/\s+/g,"-").replace(/[^a-z-]/g,"");
+  return `<span class="badge ${cls}">${v}</span>`;
+}
+
+// ----- Section 3: Tier Mix -----
+let tierChart = null;
+function renderTierMix() {
+  const sorted = [...publishedRows].sort((a,b) => (b["Published Date"]||"").localeCompare(a["Published Date"]||""));
+  const last10 = sorted.slice(0,10);
+  const last30 = sorted.slice(0,30);
+  const tiers = ["Heartwork","Community Proof","Mindset","Tactical"];
+  const colors = {Heartwork: getCSS("--gold"), "Community Proof": getCSS("--sage"), Mindset: getCSS("--purple"), Tactical: getCSS("--charcoal")};
+  function counts(set) { const c = {}; tiers.forEach(t => c[t] = 0); set.forEach(r => { const t=(r["Engagement Tier"]||"").trim(); if (c.hasOwnProperty(t)) c[t]++; }); return c; }
+  const c10 = counts(last10), c30 = counts(last30);
+  const ctx = document.getElementById("tier-mix-chart");
+  if (tierChart) tierChart.destroy();
+  tierChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Last 10","Last 30"],
+      datasets: tiers.map(t => ({
+        label: t,
+        data: [c10[t], c30[t]],
+        backgroundColor: colors[t],
+        borderRadius: 4,
+        stack: "tiers",
+      })),
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: "y",
+      scales: {
+        x: { stacked: true, ticks: { font: { family: "Inter" } } },
+        y: { stacked: true, ticks: { font: { family: "Inter" } } },
+      },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.x}` } } },
+    },
+  });
+  // Heartwork flag
+  const total10 = Object.values(c10).reduce((a,b)=>a+b,0);
+  const heart10 = c10["Heartwork"] || 0;
+  const pct10 = total10 ? Math.round(100*heart10/total10) : 0;
+  const flag = document.getElementById("tier-mix-flag");
+  if (total10 < 10) {
+    flag.innerHTML = `<span style="color:var(--muted);">Last 10 sample size: ${total10} posts (need 10 for full read).</span>`;
+  } else if (pct10 < 50) {
+    flag.innerHTML = `<span class="badge warn">Heartwork ${pct10}% — below 50% target in last 10.</span>`;
+  } else {
+    flag.innerHTML = `<span class="badge live">Heartwork ${pct10}% — on target.</span>`;
+  }
+}
+
+// ----- Section 4: Audience Coverage -----
+let audienceChart = null;
+function renderAudience() {
+  const sorted = [...publishedRows].sort((a,b) => (b["Published Date"]||"").localeCompare(a["Published Date"]||""));
+  const last30 = sorted.slice(0,30);
+  const segCounts = {};
+  const segLastSeen = {};
+  last30.forEach(r => {
+    const seg = (r["Audience Segment"] || "").trim();
+    if (!seg) return;
+    segCounts[seg] = (segCounts[seg] || 0) + 1;
+    if (!segLastSeen[seg] || r["Published Date"] > segLastSeen[seg]) segLastSeen[seg] = r["Published Date"];
+  });
+  // Add zero-count segments seen in Inbox so we surface what we plan to cover
+  inboxRows.forEach(r => {
+    const seg = (r["Audience Segment"] || "").trim();
+    if (seg && !(seg in segCounts)) segCounts[seg] = 0;
+  });
+  const labels = Object.keys(segCounts).sort();
+  const data = labels.map(l => segCounts[l]);
+  const ctx = document.getElementById("audience-chart");
+  if (audienceChart) audienceChart.destroy();
+  audienceChart = new Chart(ctx, {
+    type: "bar",
+    data: { labels, datasets: [{ label: "Last 30 published", data, backgroundColor: getCSS("--purple"), borderRadius: 4 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
+  });
+  // 60-day under-served check
+  const cutoff = new Date(Date.now() - 60*86_400_000);
+  const flags = labels.filter(l => {
+    const last = segLastSeen[l];
+    return !last || (new Date(last) < cutoff);
+  });
+  const flagEl = document.getElementById("audience-flag");
+  if (!labels.length) {
+    flagEl.innerHTML = `<span style="color:var(--muted);">No audience segments tagged yet.</span>`;
+  } else if (flags.length) {
+    flagEl.innerHTML = `<span class="badge warn">Under-served (no post in 60 days):</span> ${flags.map(f => `<span style="color:var(--purple-deep);">${f}</span>`).join(", ")}`;
+  } else {
+    flagEl.innerHTML = `<span class="badge live">All segments active in last 60 days.</span>`;
+  }
+}
+
+// ----- Section 5: Topic Heatmap -----
+function renderTopicHeatmap() {
+  const sorted = [...publishedRows].sort((a,b) => (b["Published Date"]||"").localeCompare(a["Published Date"]||""));
+  const last30 = sorted.slice(0,30);
+  const counts = {};
+  TOPICS.forEach(t => counts[t.slug] = 0);
+  last30.forEach(r => {
+    const list = (r.Topics || "").split(/[,;]/).map(s => s.trim().toLowerCase()).filter(Boolean);
+    list.forEach(slug => { if (counts.hasOwnProperty(slug)) counts[slug]++; });
+  });
+  const max = Math.max(1, ...Object.values(counts));
+  const html = TOPICS.map(t => {
+    const c = counts[t.slug];
+    const ratio = c / max;
+    let cls = "zero";
+    if (c >= 3) cls = "hot";
+    else if (c >= 1) cls = (ratio > 0.5 ? "warm" : "cold");
+    return `<div class="heat-cell ${cls}"><span class="topic">${t.name}</span><span class="count">${c}</span></div>`;
+  }).join("");
+  document.getElementById("topic-heatmap").innerHTML = html;
+}
+
+// ----- Section 7: Source Pipeline Health -----
+function renderSourceTable() {
+  const inboxBy = {};
+  const lastMining = {};
+  inboxRows.forEach(r => {
+    const src = bucketSource(r.Source);
+    if (!inboxBy[src]) inboxBy[src] = 0;
+    if ((r.Status || "").toLowerCase() !== "shipped" && (r.Status || "").toLowerCase() !== "killed") inboxBy[src]++;
+    if (r.Created && (!lastMining[src] || r.Created > lastMining[src])) lastMining[src] = r.Created;
+  });
+  const usedBy = {};
+  publishedRows.forEach(r => {
+    // Source Ref column may be free text — bucket it
+    const ref = bucketSource(r["Source Ref"]);
+    usedBy[ref] = (usedBy[ref] || 0) + 1;
+  });
+  const all = Array.from(new Set([...SOURCES, ...Object.keys(inboxBy), ...Object.keys(usedBy)]));
+  const cutoff = new Date(Date.now() - 14*86_400_000);
+  const rows = all.map(src => {
+    const last = lastMining[src];
+    const stale = last ? (new Date(last) < cutoff) : true;
+    const inb = inboxBy[src] || 0;
+    const used = usedBy[src] || 0;
+    let status = "—";
+    if (last && !stale) status = `<span class="badge live">Active</span>`;
+    else if (last && stale) status = `<span class="badge warn">Stale (>14d)</span>`;
+    else if (inb || used) status = `<span class="badge warn">No date</span>`;
+    return `<tr style="${stale && last ? 'background:#fcefe2;' : ''}">
+      <td>${src}</td>
+      <td>${inb}</td>
+      <td>${used}</td>
+      <td>${last ? fmtRelative(last) : "—"}</td>
+      <td>${status}</td>
+    </tr>`;
+  });
+  document.querySelector("#source-table tbody").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="5" class="empty">No source data yet.</td></tr>`;
+}
+
+// ----- Section 8: Recent Activity -----
+function renderActivity() {
+  const events = [];
+  // Last 5 published
+  const sortedPub = [...publishedRows].sort((a,b) => (b["Published Date"]||"").localeCompare(a["Published Date"]||"")).slice(0,5);
+  sortedPub.forEach(r => events.push({
+    when: r["Published Date"],
+    text: `<strong>Published</strong> · ${r.Title ? `<a href="${r.URL || '#'}" target="_blank">${r.Title}</a>` : (r.ID || "")} · ${r["Engagement Tier"] || ""}`,
+  }));
+  // Last 5 shipped-from-Inbox (status shipped)
+  const shippedInbox = inboxRows
+    .filter(r => (r.Status || "").toLowerCase() === "shipped")
+    .sort((a,b) => (b["Last Updated"]||"").localeCompare(a["Last Updated"]||""))
+    .slice(0,5);
+  shippedInbox.forEach(r => events.push({
+    when: r["Last Updated"],
+    text: `<strong>Inbox → shipped</strong> · ${r.ID} · ${r["Proposed Title"] || ""}`,
+  }));
+  // Last 3 mining runs (max Created date per source)
+  const sourceCreated = {};
+  inboxRows.forEach(r => {
+    const src = bucketSource(r.Source);
+    if (r.Created && (!sourceCreated[src] || r.Created > sourceCreated[src])) sourceCreated[src] = r.Created;
+  });
+  Object.entries(sourceCreated).sort((a,b) => b[1].localeCompare(a[1])).slice(0,3).forEach(([src, d]) => {
+    events.push({ when: d, text: `<strong>Mining run</strong> · ${src}` });
+  });
+  events.sort((a,b) => (b.when||"").localeCompare(a.when||""));
+  const top = events.slice(0,10);
+  const ul = document.getElementById("activity-feed");
+  ul.innerHTML = top.length
+    ? top.map(e => `<li><span class="when">${fmtRelative(e.when)}</span><span class="what">${e.text}</span></li>`).join("")
+    : `<li class="empty">No activity yet.</li>`;
+}
+
+// ----- Section 9: Hero Image Health -----
+function renderHeroHealth() {
+  const total = publishedRows.length;
+  const withHero = publishedRows.filter(r => (r["Hero URL"] || "").trim().length > 0).length;
+  const missing = publishedRows.filter(r => !(r["Hero URL"] || "").trim());
+  const pct = total ? Math.round(100*withHero/total) : 0;
+  setText("hero-coverage", `${pct}%`);
+  setText("hero-coverage-detail", `${withHero} of ${total} posts`);
+  setText("hero-missing", String(missing.length));
+  setText("hero-missing-detail", missing.length ? "needs hero generation" : "all covered");
+  const detail = document.getElementById("hero-missing-detail");
+  detail.classList.remove("flat","up","down");
+  detail.classList.add(missing.length ? "down" : "up");
+  const wrap = document.getElementById("hero-missing-list");
+  if (missing.length) {
+    wrap.style.display = "block";
+    document.getElementById("hero-missing-ul").innerHTML = missing.map(r =>
+      `<li><span class="when">${r.ID || ""}</span><span class="what">${r.Title ? `<a href="${r.URL || '#'}" target="_blank">${r.Title}</a>` : ""}</span></li>`
+    ).join("");
+  } else {
+    wrap.style.display = "none";
+  }
+}
+
+// ----- Bootstrap -----
+function getCSS(varName) {
+  return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || "#5a4a7a";
+}
+async function main() {
+  document.getElementById("open-sheet").href = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit`;
+  // Fire site/deploy checks first (they're independent)
+  checkSiteStatus();
+  fetchLastDeploy();
+  // Fetch CSVs (URLs inlined in CSV_URLS so the dashboard works locally + on GitHub Pages)
+  try {
+    const [inbox, log] = await Promise.all([
+      fetchCSV(CSV_URLS.inbox),
+      fetchCSV(CSV_URLS.published),
+    ]);
+    inboxRows = inbox;
+    publishedRows = log;
+  } catch (e) {
+    console.error("CSV fetch failed", e);
+    document.getElementById("status-line").innerHTML = `<span style="color:var(--rose);">CSV fetch failed: ${e.message}. Check that all 3 tabs are still published in Moments DB.</span>`;
+    return;
+  }
+  // Section 1 (post-data parts)
+  renderTotalPosts();
+  renderNewestPost();
+  // Section 2
+  renderFunnel();
+  bindFunnelClicks();
+  // Section 3 + 6 share canvas placement; render both
+  renderTierMix();
+  renderFunnelMix();
+  // Section 4
+  renderAudience();
+  // Section 5
+  renderTopicHeatmap();
+  // Section 7
+  renderSourceTable();
+  // Section 8
+  renderActivity();
+  // Section 9
+  renderHeroHealth();
+  // Refresh meta
+  setText("last-refresh", `Refreshed ${new Date().toLocaleString("en-US", { weekday: "short", hour: "numeric", minute: "2-digit" })}`);
+}
+
+// Section 6 — defined after main() reference but used in main()
+let funnelChart = null;
+function renderFunnelMix() {
+  const sorted = [...publishedRows].sort((a,b) => (b["Published Date"]||"").localeCompare(a["Published Date"]||""));
+  const last30 = sorted.slice(0,30);
+  const stages = ["Before","During","After"];
+  const counts = {Before:0, During:0, After:0};
+  last30.forEach(r => { const s=(r["Funnel Stage"]||"").trim(); if (counts.hasOwnProperty(s)) counts[s]++; });
+  const total = Object.values(counts).reduce((a,b)=>a+b,0);
+  const ctx = document.getElementById("funnel-mix-chart");
+  if (funnelChart) funnelChart.destroy();
+  funnelChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: stages,
+      datasets: [{
+        data: stages.map(s => counts[s]),
+        backgroundColor: [getCSS("--gold"), getCSS("--sage"), getCSS("--purple")],
+        borderColor: getCSS("--cream"),
+        borderWidth: 3,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => {
+          const pct = total ? Math.round(100*ctx.parsed/total) : 0;
+          return `${ctx.label}: ${ctx.parsed} (${pct}%)`;
+        }}},
+      },
+    },
+  });
+  const flag = document.getElementById("funnel-mix-flag");
+  if (!total) {
+    flag.innerHTML = `<span style="color:var(--muted);">No published posts yet to chart funnel mix.</span>`;
+  } else {
+    const pctBefore = Math.round(100*counts.Before/total);
+    flag.innerHTML = `Last 30: ${pctBefore}% Before · ${Math.round(100*counts.During/total)}% During · ${Math.round(100*counts.After/total)}% After · target 60 / 25 / 15`;
+  }
+}
+
+document.getElementById("reload-link").addEventListener("click", e => { e.preventDefault(); location.reload(); });
+main();
+</script>
+
+</body>
+</html>
