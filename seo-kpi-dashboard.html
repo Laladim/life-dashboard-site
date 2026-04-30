@@ -272,134 +272,6 @@
     color: #ffffff;
     font-weight: 900;
   }
-  /* AEO Visibility panel */
-  .aeo-section {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 2px solid var(--border);
-  }
-  .aeo-section h2 {
-    margin: 0 0 6px;
-    font-size: 22px;
-    color: var(--navy);
-    letter-spacing: -0.01em;
-  }
-  .aeo-section .aeo-sub {
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 24px;
-  }
-  .aeo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 14px;
-    margin-bottom: 22px;
-  }
-  .aeo-engine-bars {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-  @media (max-width: 720px) { .aeo-engine-bars { grid-template-columns: 1fr; } }
-  .aeo-engine {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px 20px;
-  }
-  .aeo-engine .name {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    margin-bottom: 6px;
-    font-weight: 600;
-  }
-  .aeo-engine .pct {
-    font-family: "Sora", sans-serif;
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--navy);
-    font-variant-numeric: tabular-nums;
-  }
-  .aeo-engine .bar {
-    height: 8px;
-    background: #ede9fe;
-    border-radius: 999px;
-    overflow: hidden;
-    margin-top: 12px;
-  }
-  .aeo-engine .bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #9F93E2 0%, #6366F1 100%);
-    border-radius: 999px;
-    transition: width 0.4s ease;
-  }
-  .aeo-tables {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  @media (max-width: 1000px) { .aeo-tables { grid-template-columns: 1fr; } }
-  .aeo-list {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 22px;
-  }
-  .aeo-list h3 {
-    margin: 0 0 14px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .aeo-list h3 .count {
-    color: var(--muted);
-    font-weight: 500;
-    margin-left: 6px;
-  }
-  .aeo-list .row {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 10px;
-    align-items: center;
-  }
-  .aeo-list .row:last-child { border-bottom: 0; }
-  .aeo-list .pid {
-    font-family: ui-monospace, "SF Mono", monospace;
-    font-size: 11px;
-    background: #ede9fe;
-    color: #4c1d95;
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-weight: 600;
-  }
-  .aeo-list .text {
-    color: var(--text);
-    font-size: 13px;
-    line-height: 1.4;
-  }
-  .aeo-list .text small {
-    color: var(--muted);
-    font-size: 11px;
-    display: block;
-    margin-top: 3px;
-  }
-  .aeo-list .badge {
-    font-size: 11px;
-    padding: 3px 9px;
-    border-radius: 999px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .aeo-list .badge.win  { background: #dcfce7; color: #047857; }
-  .aeo-list .badge.gap  { background: #ffe4ec; color: #b91c1c; }
-  .aeo-list .badge.high { background: #ddd6fe; color: #4c1d95; }
 </style>
 </head>
 <body>
@@ -416,6 +288,7 @@
       <button id="btn-wg-booked">Booked · Week Grid</button>
       <button id="btn-wg-accounts">Accounts · Week Grid</button>
     </div>
+    <a href="aeo-dashboard.html" style="color:rgba(255,255,255,0.95); font-size:13px; text-decoration:none; padding:6px 12px; border:1px solid rgba(255,255,255,0.35); border-radius:999px; background:rgba(159,147,226,0.18); font-weight:500;">AI Visibility →</a>
     <a href="traffic-insights.html" style="color:rgba(255,255,255,0.8); font-size:13px; text-decoration:none;">Traffic Insights</a>
     <a href="top-keywords.html" style="color:rgba(255,255,255,0.8); font-size:13px; text-decoration:none;">Keyword Insights</a>
   </div>
@@ -463,25 +336,7 @@
     </div>
   </div>
 
-  <!-- AEO Visibility panel — fed by aeo-monitor.py weekly -->
-  <section class="aeo-section" id="aeo-section">
-    <h2>AI Visibility · Answer Engine Optimization</h2>
-    <div class="aeo-sub" id="aeo-sub">Loading latest run from aeo-monitor.py…</div>
-
-    <div class="aeo-grid" id="aeo-kpis"></div>
-    <div class="aeo-engine-bars" id="aeo-engine-bars"></div>
-
-    <div class="aeo-tables">
-      <div class="aeo-list">
-        <h3>Top Wins · Cobalt Cited <span class="count" id="aeo-wins-count"></span></h3>
-        <div id="aeo-wins"></div>
-      </div>
-      <div class="aeo-list">
-        <h3>Top Gaps · Cobalt Invisible <span class="count" id="aeo-gaps-count"></span></h3>
-        <div id="aeo-gaps"></div>
-      </div>
-    </div>
-  </section>
+  <!-- AEO Visibility moved to standalone page: aeo-dashboard.html -->
 </main>
 
 <script>
@@ -892,81 +747,6 @@ document.getElementById("btn-wg-accounts").addEventListener("click", () => setVi
 
 init();
 
-// ---------- AEO Visibility panel ----------
-async function loadAEO() {
-  try {
-    const res = await fetch("data/aeo-summary.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const d = await res.json();
-    renderAEO(d);
-  } catch (e) {
-    document.getElementById("aeo-sub").textContent =
-      "AEO data not available yet — run aeo-monitor.py --apply to populate. (" + e.message + ")";
-  }
-}
-
-function pct(v) { return ((v || 0) * 100).toFixed(1) + "%"; }
-
-function renderAEO(d) {
-  const sub = document.getElementById("aeo-sub");
-  sub.innerHTML = `Last run: <strong>${d.run_date}</strong> · ${d.n_prompts_tested} prompts × `
-    + `${Object.keys(d.per_engine).length} engines · `
-    + `<strong>${d.n_cited_any}</strong> cited in any engine · `
-    + `cost <strong>$${(d.est_cost_usd || 0).toFixed(3)}</strong> · `
-    + `Source: <a href="https://docs.google.com/spreadsheets/d/1OuHl5KvZvLTfulmzCHdUWUookpePigQGAw1hqy4CbUs/edit" target="_blank" style="color:var(--blue);text-decoration:none;">Newsletter Data + AI Citations</a>`;
-
-  // KPIs
-  const kpis = [
-    { label: "Combined Mention Rate", value: pct(d.combined_rate), delta: `${d.n_cited_any}/${d.n_prompts_tested} prompts`, cls: "flat" },
-    { label: "Wins (≥1 engine cited)", value: d.wins.length, delta: "incl. high-priority", cls: "up" },
-    { label: "Gaps (0% mention rate)", value: d.gaps.length, delta: "AEO content targets", cls: "down" },
-    { label: "Last Run", value: d.run_date, delta: `${d.elapsed_sec ? Math.round(d.elapsed_sec) : "?"}s wall time`, cls: "flat" },
-  ];
-  document.getElementById("aeo-kpis").innerHTML = kpis.map(k => `
-    <div class="kpi">
-      <div class="label">${k.label}</div>
-      <div class="value">${k.value}</div>
-      <div class="delta ${k.cls}">${k.delta}</div>
-    </div>`).join("");
-
-  // Per-engine bars
-  const engines = ["perplexity", "openai", "gemini"];
-  const engineLabels = { perplexity: "Perplexity Sonar", openai: "OpenAI gpt-4o", gemini: "Gemini 2.0 Flash" };
-  document.getElementById("aeo-engine-bars").innerHTML = engines.map(e => {
-    const v = d.per_engine[e] || { rate: 0, cited: 0, total: 0 };
-    return `<div class="aeo-engine">
-      <div class="name">${engineLabels[e]}</div>
-      <div class="pct">${pct(v.rate)}</div>
-      <div class="bar"><div class="bar-fill" style="width:${(v.rate * 100).toFixed(1)}%"></div></div>
-      <div style="margin-top:8px; font-size:11px; color:var(--muted);">${v.cited} cited · ${v.total} tested</div>
-    </div>`;
-  }).join("");
-
-  // Wins
-  document.getElementById("aeo-wins-count").textContent = `· ${d.wins.length}`;
-  document.getElementById("aeo-wins").innerHTML = d.wins.length ? d.wins.map(w => `
-    <div class="row">
-      <span class="pid">${w.pid}</span>
-      <div class="text">${escapeHTML(w.text)}<small>${w.category} · ${(w.engines || []).join(", ")}${w.priority === "high" ? " · <strong style='color:#4c1d95'>HIGH</strong>" : ""}</small></div>
-      <span class="badge win">${pct(w.rate)}</span>
-    </div>`).join("") : `<div style="color:var(--muted); font-size:13px; padding:10px 0;">No wins yet.</div>`;
-
-  // Gaps
-  document.getElementById("aeo-gaps-count").textContent = `· ${d.gaps.length}`;
-  document.getElementById("aeo-gaps").innerHTML = d.gaps.length ? d.gaps.map(g => `
-    <div class="row">
-      <span class="pid">${g.pid}</span>
-      <div class="text">${escapeHTML(g.text)}<small>${g.category} · ${g.source}${g.notes ? " · " + escapeHTML(g.notes) : ""}${g.priority === "high" ? " · <strong style='color:#b91c1c'>HIGH</strong>" : ""}</small></div>
-      <span class="badge gap">${pct(g.rate)}</span>
-    </div>`).join("") : `<div style="color:var(--muted); font-size:13px; padding:10px 0;">No zero-rate gaps.</div>`;
-}
-
-function escapeHTML(s) {
-  return String(s || "").replace(/[&<>"']/g, c =>
-    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-}
-
-loadAEO();
 </script>
 </body>
 </html>
