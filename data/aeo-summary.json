@@ -1,48 +1,36 @@
 {
-  "run_date": "2026-04-26",
-  "generated_at": "2026-04-26T18:21:15.201349+00:00",
+  "run_date": "2026-05-04",
+  "generated_at": "2026-05-04T08:33:42.436348+00:00",
   "n_prompts_tested": 154,
-  "n_cited_any": 73,
-  "combined_rate": 0.474,
+  "n_cited_any": 72,
+  "combined_rate": 0.4675,
   "per_engine": {
     "perplexity": {
-      "cited": 50,
+      "cited": 49,
       "total": 154,
-      "rate": 0.3246753246753247
+      "rate": 0.3181818181818182
     },
     "openai": {
-      "cited": 37,
+      "cited": 32,
       "total": 154,
-      "rate": 0.24025974025974026
+      "rate": 0.2077922077922078
     },
     "gemini": {
-      "cited": 38,
+      "cited": 39,
       "total": 154,
-      "rate": 0.24675324675324675
+      "rate": 0.2532467532467532
     }
   },
   "wins": [
     {
-      "pid": "P003",
-      "text": "real-time secretary of state data API",
-      "category": "SOS API",
+      "pid": "P102",
+      "text": "Replace manual business verification with API",
+      "category": "Business Verification",
       "priority": "high",
       "rate": 1.0,
       "engines": [
         "perplexity",
-        "openai",
         "gemini"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P317",
-      "text": "Top secretary of state API solutions for business verification",
-      "category": "SOS API",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity"
       ],
       "comp": "Middesk"
     },
@@ -84,9 +72,9 @@
       "comp": "Compliancely"
     },
     {
-      "pid": "P117",
-      "text": "Business verification API pricing for alternative lenders",
-      "category": "Business Verification",
+      "pid": "P121",
+      "text": "Is secretary of state API data real-time or cached",
+      "category": "SOS API",
       "priority": "medium",
       "rate": 1.0,
       "engines": [
@@ -110,8 +98,8 @@
       "comp": "Middesk"
     },
     {
-      "pid": "P321",
-      "text": "Secretary of state API for business document retrieval certificates annual reports",
+      "pid": "P323",
+      "text": "Secretary of state API real-time status checks",
       "category": "SOS API",
       "priority": "medium",
       "rate": 1.0,
@@ -121,6 +109,19 @@
         "gemini"
       ],
       "comp": "Middesk"
+    },
+    {
+      "pid": "P325",
+      "text": "Secretary of state API business match rates accuracy",
+      "category": "SOS API",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai",
+        "gemini"
+      ],
+      "comp": "OpenCorporates"
     }
   ],
   "gaps": [
@@ -182,7 +183,7 @@
       "source": "gsc",
       "notes": "",
       "rate": 0.0,
-      "comp": "Experian"
+      "comp": "Alloy"
     },
     {
       "pid": "P303",
@@ -245,6 +246,6 @@
       "comp": ""
     }
   ],
-  "elapsed_sec": 2908.0,
-  "est_cost_usd": 2.552
+  "elapsed_sec": 3500.6,
+  "est_cost_usd": 2.508
 }
