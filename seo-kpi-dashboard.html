@@ -510,11 +510,21 @@ function renderTable(view, all) {
     const dt = parseLabelDate(d.label);
     return dt && dt >= CUTOFF_2025;
   });
-  const periodLabel = view === "weekly" ? "Week Starting" : "Month";
+  const isWeekly = view === "weekly";
   document.getElementById("table-title").textContent =
-    `Data Table · Jan 2025 – Present (${view === "weekly" ? "Weekly" : "Monthly"})`;
-  document.getElementById("table-head").innerHTML = `
-    <th>${periodLabel}</th>
+    `Data Table · Jan 2025 – Present (${isWeekly ? "Weekly" : "Monthly"})`;
+  document.getElementById("table-head").innerHTML = isWeekly
+    ? `
+    <th>Week Starting</th>
+    <th>Week Ending</th>
+    <th>Total Users</th>
+    <th>New Users</th>
+    <th>Sessions</th>
+    <th>Page Views</th>
+    <th>Booked Calls</th>
+    <th>Created Accounts</th>`
+    : `
+    <th>Month</th>
     <th>Total Users</th>
     <th>New Users</th>
     <th>Sessions</th>
@@ -527,6 +537,7 @@ function renderTable(view, all) {
     return `
     <tr style="background:${bg};">
       <td>${r.label}</td>
+      ${isWeekly ? `<td>${r.endDate || ""}</td>` : ""}
       <td>${fmt(r.totalUsers)}</td>
       <td>${fmt(r.newUsers)}</td>
       <td>${fmt(r.sessions)}</td>
@@ -705,10 +716,10 @@ async function init() {
     const [w, m] = await Promise.all([fetchCSV(WEEKLY_CSV), fetchCSV(MONTHLY_CSV)]);
     weeklyData = parseWeekly(w);
     monthlyData = parseMonthly(m);
-    // Show latest data date in header
+    // Show latest data date in header (use END date of most recent week, not start)
     if (weeklyData.length) {
-      const lastLabel = weeklyData[weeklyData.length - 1].label;
-      const lastDate = parseLabelDate(lastLabel);
+      const last = weeklyData[weeklyData.length - 1];
+      const lastDate = parseLabelDate(last.endDate || last.label);
       if (lastDate) {
         document.getElementById("header-sub").textContent =
           `Latest data: ${lastDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} · Weekly & Monthly trends`;
