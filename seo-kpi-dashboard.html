@@ -434,11 +434,18 @@ function renderKPIs(data) {
     { label: "Booked Calls", key: "bookedCall" },
     { label: "Created Accounts", key: "createdAccount" },
   ];
-  // Ahrefs DR — static, refresh via `Check domain rating` trigger (ahrefs-mcp-expert.md)
+  // OpenPageRank — auto-refreshed weekly by cobalt-skills/scripts/dr-refresh.py
+  // The OPR_DATA block below is rewritten by that script on each run. Do not edit by hand.
+  /* OPR_DATA_START */
+  const OPR_DATA = { value: "3.27", integer: 3, updated_at: "2026-03-28", checked_at: "2026-05-05" };
+  /* OPR_DATA_END */
+  const oprChecked = new Date(OPR_DATA.checked_at);
+  const oprCheckedStr = isNaN(oprChecked) ? OPR_DATA.checked_at
+    : oprChecked.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   const drCard = `<div class="kpi">
-      <div class="label">Domain Rating</div>
-      <div class="value">37</div>
-      <div class="delta flat">Ahrefs · Apr 23, 2026</div>
+      <div class="label">Page Rank</div>
+      <div class="value">${OPR_DATA.value} <span style="font-size:14px;color:var(--muted);font-weight:500;">/ 10</span></div>
+      <div class="delta flat">OpenPageRank · checked ${oprCheckedStr}</div>
     </div>`;
   const gaCards = cards.map(c => {
     const d = delta(last[c.key], prev[c.key]);
