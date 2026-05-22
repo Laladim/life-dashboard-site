@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* 2026 Cobalt brand — per cobalt-brand-visual-expert.md v3 */
+    /* 2026 Cobalt brand, per cobalt-brand-visual-expert.md v3 */
     --lavender: #9F93E2;
     --indigo:   #6366F1;
     --navy:     #0B0915;
@@ -15,8 +15,9 @@
     --blue:     #6366F1;
     --blue-light: #9F93E2;
     --amber:    #D97706;
-    --bg:       #F8F7FD;
-    --card:     #ffffff;
+    --bg:       #FAFAFF;
+    --soft:     #F3F1FB;
+    --card:     #FFFFFE;
     --text:     #1a1a2e;
     --muted:    #5a5a7a;
     --border:   #e0dff0;
@@ -28,13 +29,15 @@
   body {
     margin: 0;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: var(--bg);
+    background:
+      radial-gradient(circle at top left, rgba(159,147,226,0.18), transparent 28rem),
+      linear-gradient(180deg, #FAFAFF 0%, #F8F7FD 100%);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, .kpi .value, .sora { font-family: "Sora", "Inter", sans-serif; }
   header {
-    background: linear-gradient(135deg, #0B0915 0%, #1a1538 55%, #6366F1 100%);
+    background: linear-gradient(135deg, #0B0915 0%, #1a1538 62%, #312e81 100%);
     color: #F2F0FF;
     padding: 28px 40px;
     display: flex;
@@ -55,10 +58,47 @@
     transition: border-color 0.2s;
   }
   header .nav a:hover { border-bottom-color: rgba(255,255,255,0.6); }
-  main { padding: 32px 40px 60px; max-width: 1400px; margin: 0 auto; }
+  main { padding: 28px 32px 60px; max-width: 1400px; margin: 0 auto; }
   .panel-sub { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
   .panel-sub a { color: var(--indigo); text-decoration: none; }
   .panel-sub a:hover { text-decoration: underline; }
+  .brief {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.85fr);
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+  .brief-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 22px;
+    box-shadow: 0 1px 3px rgba(99,102,241,0.04);
+  }
+  .brief-panel h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: var(--navy);
+  }
+  .brief-panel p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 72ch;
+  }
+  .brief-list {
+    display: grid;
+    gap: 9px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .brief-list b {
+    display: block;
+    color: var(--navy);
+    font-family: "Sora", "Inter", sans-serif;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
 
   /* KPI cards */
   .kpi-grid {
@@ -70,7 +110,7 @@
   .kpi {
     background: var(--card);
     padding: 22px 24px;
-    border-radius: 14px;
+    border-radius: 8px;
     border: 1px solid var(--border);
     box-shadow: 0 1px 3px rgba(99,102,241,0.04);
   }
@@ -104,7 +144,7 @@
   .engine {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 8px;
     padding: 18px 20px;
   }
   .engine .name {
@@ -146,7 +186,7 @@
   .list {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 8px;
     padding: 20px 22px;
   }
   .list h3 {
@@ -207,6 +247,44 @@
     color: var(--muted);
     text-align: right;
   }
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 0 0 24px;
+  }
+  .priority-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .priority-card .eyebrow {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .priority-card .headline {
+    font-family: "Sora", "Inter", sans-serif;
+    font-size: 15px;
+    color: var(--navy);
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .priority-card .note {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+    line-height: 1.45;
+  }
+  @media (max-width: 760px) {
+    header, main { padding-left: 18px; padding-right: 18px; }
+    header { align-items: flex-start; }
+    .brief { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -217,15 +295,24 @@
   </div>
   <div class="nav">
     <a href="seo-kpi-dashboard.html">SEO KPI</a>
+    <a href="newsletter-kpi-dashboard.html">Newsletter KPI</a>
     <a href="traffic-insights.html">Traffic Insights</a>
     <a href="top-keywords.html">Keyword Insights</a>
   </div>
 </header>
 <main>
   <div class="panel-sub" id="panel-sub">Loading latest run from aeo-monitor.py…</div>
+  <section class="brief">
+    <div class="brief-panel">
+      <h2>Answer-engine visibility cockpit</h2>
+      <p>See where Cobalt is cited by AI engines, where competitor answers still win, and which high-intent prompts need content support.</p>
+    </div>
+    <div class="brief-panel brief-list" id="brief-list"></div>
+  </section>
 
   <div class="kpi-grid" id="kpis"></div>
   <div class="engine-bars" id="engine-bars"></div>
+  <div class="priority-grid" id="priority-grid"></div>
 
   <div class="lists">
     <div class="list">
@@ -252,11 +339,23 @@ async function loadAEO() {
     renderAEO(d);
   } catch (e) {
     document.getElementById("panel-sub").textContent =
-      "AEO data not available yet — run aeo-monitor.py --apply to populate. (" + e.message + ")";
+      "AEO data not available yet. Run aeo-monitor.py --apply to populate. (" + e.message + ")";
   }
 }
 
 function pct(v) { return ((v || 0) * 100).toFixed(1) + "%"; }
+function countBy(items, key) {
+  return items.reduce((acc, item) => {
+    const value = item[key] || "Uncategorized";
+    acc[value] = (acc[value] || 0) + 1;
+    return acc;
+  }, {});
+}
+function topEntry(counts) {
+  const entries = Object.entries(counts);
+  if (!entries.length) return ["None", 0];
+  return entries.sort((a, b) => b[1] - a[1])[0];
+}
 
 function escapeHTML(s) {
   return String(s || "").replace(/[&<>"']/g, c =>
@@ -270,6 +369,17 @@ function renderAEO(d) {
     + `<strong>${d.n_cited_any}</strong> cited in any engine · `
     + `cost <strong>$${(d.est_cost_usd || 0).toFixed(3)}</strong> · `
     + `Source: <a href="https://docs.google.com/spreadsheets/d/1OuHl5KvZvLTfulmzCHdUWUookpePigQGAw1hqy4CbUs/edit" target="_blank">Newsletter Data + AI Citations</a>`;
+
+  const highGaps = (d.gaps || []).filter(g => g.priority === "high");
+  const highWins = (d.wins || []).filter(w => w.priority === "high");
+  const [gapCategory, gapCount] = topEntry(countBy(d.gaps || [], "category"));
+  const [winCategory, winCount] = topEntry(countBy(d.wins || [], "category"));
+
+  document.getElementById("brief-list").innerHTML = `
+    <div><b>${pct(d.combined_rate)} combined mention rate</b>${d.n_cited_any}/${d.n_prompts_tested} prompts cited by at least one engine</div>
+    <div><b>${highGaps.length} high-priority gaps</b>${gapCategory} carries ${gapCount} open gaps</div>
+    <div><b>${highWins.length} high-priority wins</b>${winCategory} carries ${winCount} cited prompts</div>
+  `;
 
   const kpis = [
     { label: "Combined Mention Rate", value: pct(d.combined_rate), delta: `${d.n_cited_any}/${d.n_prompts_tested} prompts`, cls: "flat" },
@@ -295,6 +405,35 @@ function renderAEO(d) {
       <div style="margin-top:8px; font-size:11px; color:var(--muted);">${v.cited} cited · ${v.total} tested</div>
     </div>`;
   }).join("");
+
+  const bestEngine = engines
+    .map(e => ({ engine: e, ...(d.per_engine[e] || { rate: 0, cited: 0, total: 0 }) }))
+    .sort((a, b) => b.rate - a.rate)[0];
+  const firstGap = highGaps[0] || (d.gaps || [])[0];
+  const firstWin = highWins[0] || (d.wins || [])[0];
+  document.getElementById("priority-grid").innerHTML = [
+    {
+      eyebrow: "Strongest engine",
+      headline: `${engineLabels[bestEngine.engine]}: ${pct(bestEngine.rate)}`,
+      note: `${bestEngine.cited} cited prompts out of ${bestEngine.total} tested.`,
+    },
+    {
+      eyebrow: "Top gap to close",
+      headline: firstGap ? `${firstGap.pid}: ${escapeHTML(firstGap.text)}` : "No zero-rate gaps",
+      note: firstGap ? `${firstGap.category} · ${firstGap.source || "source pending"}` : "Current run has no gaps.",
+    },
+    {
+      eyebrow: "Best proof point",
+      headline: firstWin ? `${firstWin.pid}: ${escapeHTML(firstWin.text)}` : "No wins yet",
+      note: firstWin ? `${firstWin.category} · ${(firstWin.engines || []).join(", ")}` : "Current run has no cited prompts.",
+    },
+  ].map(card => `
+    <div class="priority-card">
+      <div class="eyebrow">${card.eyebrow}</div>
+      <div class="headline">${card.headline}</div>
+      <div class="note">${card.note}</div>
+    </div>
+  `).join("");
 
   document.getElementById("wins-count").textContent = `· ${d.wins.length}`;
   document.getElementById("wins").innerHTML = d.wins.length ? d.wins.map(w => `
