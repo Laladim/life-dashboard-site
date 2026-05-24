@@ -1,35 +1,36 @@
 {
-  "run_date": "2026-05-04",
-  "generated_at": "2026-05-04T08:33:42.436348+00:00",
+  "run_date": "2026-05-24",
+  "generated_at": "2026-05-24T23:54:41.964989+00:00",
   "n_prompts_tested": 154,
-  "n_cited_any": 72,
-  "combined_rate": 0.4675,
+  "n_cited_any": 68,
+  "combined_rate": 0.4416,
   "per_engine": {
     "perplexity": {
-      "cited": 49,
+      "cited": 43,
       "total": 154,
-      "rate": 0.3181818181818182
+      "rate": 0.2792207792207792
     },
     "openai": {
-      "cited": 32,
+      "cited": 34,
       "total": 154,
-      "rate": 0.2077922077922078
+      "rate": 0.22077922077922077
     },
     "gemini": {
-      "cited": 39,
+      "cited": 35,
       "total": 154,
-      "rate": 0.2532467532467532
+      "rate": 0.22727272727272727
     }
   },
   "wins": [
     {
-      "pid": "P102",
-      "text": "Replace manual business verification with API",
-      "category": "Business Verification",
+      "pid": "P003",
+      "text": "real-time secretary of state data API",
+      "category": "SOS API",
       "priority": "high",
       "rate": 1.0,
       "engines": [
         "perplexity",
+        "openai",
         "gemini"
       ],
       "comp": "Middesk"
@@ -55,6 +56,7 @@
       "rate": 1.0,
       "engines": [
         "perplexity",
+        "openai",
         "gemini"
       ],
       "comp": "Middesk"
@@ -67,9 +69,10 @@
       "rate": 1.0,
       "engines": [
         "perplexity",
+        "openai",
         "gemini"
       ],
-      "comp": "Compliancely"
+      "comp": "Middesk"
     },
     {
       "pid": "P121",
@@ -85,9 +88,22 @@
       "comp": "Middesk"
     },
     {
-      "pid": "P319",
-      "text": "How to access secretary of state API for free",
+      "pid": "P322",
+      "text": "Multi-state secretary of state verification API coverage",
       "category": "SOS API",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai",
+        "gemini"
+      ],
+      "comp": "Compliancely"
+    },
+    {
+      "pid": "P337",
+      "text": "Cobalt Intelligence vs Middesk vs Trulioo verification",
+      "category": "Business Verification",
       "priority": "medium",
       "rate": 1.0,
       "engines": [
@@ -98,9 +114,9 @@
       "comp": "Middesk"
     },
     {
-      "pid": "P323",
-      "text": "Secretary of state API real-time status checks",
-      "category": "SOS API",
+      "pid": "P341",
+      "text": "Cobalt Intelligence API pricing and credit model",
+      "category": "Business Verification",
       "priority": "medium",
       "rate": 1.0,
       "engines": [
@@ -108,20 +124,7 @@
         "openai",
         "gemini"
       ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P325",
-      "text": "Secretary of state API business match rates accuracy",
-      "category": "SOS API",
-      "priority": "medium",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai",
-        "gemini"
-      ],
-      "comp": "OpenCorporates"
+      "comp": ""
     }
   ],
   "gaps": [
@@ -156,6 +159,16 @@
       "comp": ""
     },
     {
+      "pid": "P318",
+      "text": "How to use secretary of state API step by step guide",
+      "category": "SOS API",
+      "priority": "high",
+      "source": "llm-traffic",
+      "notes": "LLM: 41 sessions. Cited by ChatGPT + Claude + Perplexity + Copilot.",
+      "rate": 0.0,
+      "comp": "Middesk"
+    },
+    {
       "pid": "P200",
       "text": "Indiana sos business search",
       "category": "SOS API",
@@ -183,7 +196,7 @@
       "source": "gsc",
       "notes": "",
       "rate": 0.0,
-      "comp": "Alloy"
+      "comp": "Experian"
     },
     {
       "pid": "P303",
@@ -234,18 +247,8 @@
       "notes": "LLM: 177 sessions.",
       "rate": 0.0,
       "comp": ""
-    },
-    {
-      "pid": "P308",
-      "text": "New Jersey business entity search",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "llm-traffic",
-      "notes": "LLM: 152 sessions.",
-      "rate": 0.0,
-      "comp": ""
     }
   ],
-  "elapsed_sec": 3500.6,
-  "est_cost_usd": 2.508
+  "elapsed_sec": 2672.3,
+  "est_cost_usd": 2.772
 }
