@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reformed Sunday School in 4 Hours &mdash; Shela's Life Dashboard</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+:root {
+    --purple: #5a4a7a;
+    --purple-deep: #4a3a6a;
+    --gold: #c8985f;
+    --gold-deep: #a87a42;
+    --green: #5a8a72;
+    --bg-primary: #f5f1f0;
+    --text-primary: #3a3a3a;
+    --text-secondary: #6b6565;
+    --text-muted: #9a9090;
+    --border: #e0dbd8;
+}
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+.faith-header {
+    text-align: center;
+    padding: 1.25rem 1.5rem 1rem;
+    background: linear-gradient(135deg, #faf7f5, #f5f0ee);
+    border-bottom: 1px solid var(--border);
+}
+.faith-mission {
+    font-size: 0.8rem; color: var(--purple); letter-spacing: 0.04em;
+    font-weight: 500; text-transform: uppercase; margin-bottom: 0.3rem;
+}
+.faith-piper {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: var(--purple-deep); font-size: 0.95rem; margin-bottom: 0.4rem;
+}
+.faith-verse {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;
+}
+.faith-verse-ref {
+    font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;
+}
+.tab-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: #ffffff; border-bottom: 2px solid var(--border);
+    display: flex; padding: 0;
+    box-shadow: 0 2px 8px rgba(90,74,122,0.08);
+}
+.tab-btn {
+    flex: 1; background: none; border: none; color: var(--text-muted);
+    padding: 0.75rem 1.2rem; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+    white-space: nowrap; text-align: center;
+    text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+}
+.tab-btn:hover { color: var(--purple); background: rgba(90,74,122,0.04); }
+.tab-btn.active { color: var(--purple); border-bottom-color: var(--gold); font-weight: 600; }
+
+.wrap { max-width: 820px; margin: 1.5rem auto 4rem; padding: 0 1.25rem; }
+
+.doc-hero {
+    background: linear-gradient(135deg, rgba(90,74,122,0.06), rgba(200,152,95,0.05));
+    border: 1px solid var(--border); border-left: 4px solid var(--purple);
+    border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.75rem;
+}
+.doc-kicker {
+    font-size: 0.72rem; color: var(--gold-deep); letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;
+}
+.doc-title {
+    font-family: 'Playfair Display', serif; color: var(--purple-deep);
+    font-size: 1.85rem; line-height: 1.2; margin-bottom: 0.6rem;
+}
+.doc-source {
+    font-size: 0.85rem; color: var(--text-secondary); font-style: italic;
+}
+
+.section { margin-bottom: 1.5rem; }
+.section-head {
+    font-family: 'Playfair Display', serif; color: var(--purple-deep);
+    font-size: 1.25rem; margin: 2rem 0 0.4rem;
+    padding-bottom: 0.3rem; border-bottom: 2px solid var(--gold);
+    display: inline-block;
+}
+.section p { margin: 0.7rem 0; font-size: 0.98rem; color: var(--text-primary); }
+.section p .ref { color: var(--text-muted); font-size: 0.85rem; }
+em { color: var(--purple-deep); font-style: italic; }
+strong { color: var(--purple-deep); }
+
+.callout {
+    background: rgba(90,138,114,0.06); border-left: 4px solid var(--green);
+    border-radius: 8px; padding: 0.9rem 1.1rem; margin: 1rem 0;
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: var(--purple-deep); font-size: 1.02rem;
+}
+
+.ladder {
+    background: #fff; border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden; margin: 1rem 0; box-shadow: 0 2px 10px rgba(90,74,122,0.06);
+}
+.ladder-rung {
+    display: flex; gap: 0.9rem; padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+.ladder-rung:last-child { border-bottom: none; }
+.ladder-age {
+    flex: 0 0 130px; font-size: 0.78rem; font-weight: 700;
+    color: var(--gold-deep); text-transform: uppercase; letter-spacing: 0.03em;
+    padding-top: 0.1rem;
+}
+.ladder-say { flex: 1; font-size: 0.92rem; color: var(--text-primary); }
+
+.exercise {
+    background: linear-gradient(135deg, rgba(200,152,95,0.07), rgba(90,74,122,0.04));
+    border: 1px solid var(--border); border-left: 4px solid var(--gold);
+    border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1rem 0;
+}
+.step {
+    display: flex; gap: 0.9rem; margin: 0.85rem 0;
+}
+.step-num {
+    flex: 0 0 28px; height: 28px; border-radius: 50%;
+    background: var(--purple); color: #fff; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+}
+.step-body { flex: 1; font-size: 0.94rem; }
+.step-body strong { color: var(--purple-deep); }
+
+.footer-note {
+    margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border);
+    font-size: 0.8rem; color: var(--text-muted); text-align: center;
+}
+
+@media (max-width: 768px) {
+    .tab-btn { padding: 0.5rem 0.8rem; font-size: 0.75rem; }
+    .faith-header { padding: 1rem; }
+    .doc-title { font-size: 1.5rem; }
+    .ladder-age { flex-basis: 100px; }
+}
+</style>
+</head>
+<body>
+
+<div class="faith-header">
+    <div class="faith-mission">spread a passion for the Supremacy of God in all things for the joy of all peoples</div>
+    <div class="faith-piper">"God is most glorified in us when we are most satisfied in Him"</div>
+    <div class="faith-verse">"Give ear, O my people, to my teaching... We will not hide them from their children, but tell to the coming generation the glorious deeds of the Lord."</div>
+    <div class="faith-verse-ref">Psalm 78:1-4</div>
+</div>
+
+<nav class="tab-bar">
+    <a class="tab-btn" href="index.html#anchor">Anchor</a>
+    <a class="tab-btn active" href="index.html#word">Word</a>
+    <a class="tab-btn" href="index.html#moments">Moments</a>
+    <a class="tab-btn" href="body-ecology.html">Health</a>
+    <a class="tab-btn" href="work.html">Work</a>
+    <a class="tab-btn" href="system.html">System</a>
+    <a class="tab-btn" href="community.html">Community</a>
+    <a class="tab-btn" href="remote.html">Remote</a>
+</nav>
+
+<div class="wrap">
+
+    <div class="doc-hero">
+        <div class="doc-kicker">A 4-Hour Teaching Session</div>
+        <div class="doc-title">Becoming a Functional Reformed Sunday School Teacher</div>
+        <div class="doc-source">Grounded in <em>Indestructible Joy for the Next Generations</em> (Truth78). Drawing on John Piper, ch. 3, and Sally Michael, ch. 5.</div>
+    </div>
+
+    <div class="section">
+        <div class="section-head">First, hold the one idea the whole book is built on</div>
+        <p>Everything in this book is one conviction with one method hanging off it.</p>
+        <p>The conviction is Piper's, and he says it by shouting a question from 1 Corinthians 6 three times: <em>"Do you not know? Do you not know? Do you not know?"</em> <span class="ref">(p. 44)</span>. His point is that the people suing each other in Corinth were not behaving badly because they lacked willpower. They were behaving badly because they did not <em>know</em> something true about God. "Right knowing produces right behavior" <span class="ref">(p. 44)</span>. And then he makes it heavier: it is not just behavior, it is salvation. "The Word of God rightly taught... awakens faith" <span class="ref">(p. 51)</span>. "Right teaching saves souls" <span class="ref">(p. 52)</span>. So when you teach a child a true, solid thing about who God is, you are not filling time until the snack. You are handing that child the one weapon, "the sword, which is the Word of God," that is "tailor-made for every demonic temptation" so "they can duke the devil" <span class="ref">(p. 55)</span>.</p>
+        <p>That is the Reformed difference in a single move. Most children's teaching aims at behavior: be kind, share, obey. Piper says do not aim there. He tells his own sons that "what's wrong with this music?" is "the wrong question." The right question is "Is it helping you love Jesus?" <span class="ref">(p. 56)</span>. You are not building good little citizens. You are showing children a God so big, so sovereign, and so glorious that they cannot help but worship, and so they end up happy in Him forever. That last word is the title: the goal is <em>joy</em>. Piper says he does not want his kids merely to have forgiveness or justification, "I want them to have God" <span class="ref">(p. 58)</span>.</p>
+        <div class="callout">Hold that, and the method makes sense.</div>
+    </div>
+
+    <div class="section">
+        <div class="section-head">What to learn first</div>
+        <p>Learn one method, and learn it so well you can do it without notes. Sally Michael calls it <strong>teaching precept upon precept</strong> and <strong>relating doctrine to real life</strong>, and it is the only thing that travels from the church classroom to your kitchen to the street, which is exactly where you said you want to be functional. It has two halves.</p>
+
+        <p><strong>The first half is the ladder.</strong> Take one big true thing about God and learn to say it at the height of the child in front of you, knowing it is the <em>same</em> truth, just a different rung. Sally Michael shows it with the doctrine of sin <span class="ref">(p. 89-90)</span>:</p>
+
+        <div class="ladder">
+            <div class="ladder-rung"><div class="ladder-age">Toddler</div><div class="ladder-say">"We do bad things."</div></div>
+            <div class="ladder-rung"><div class="ladder-age">Preschool</div><div class="ladder-say">"We have bad hearts that make us do bad things. We disobey God. We need new hearts."</div></div>
+            <div class="ladder-rung"><div class="ladder-age">Early elementary</div><div class="ladder-say">"Sin is disobeying God. Everyone was born a sinner and only Jesus can give us new hearts."</div></div>
+            <div class="ladder-rung"><div class="ladder-age">Later elementary</div><div class="ladder-say">God is holy and righteous; we were born sinful, and our disobedience to God must be punished.</div></div>
+        </div>
+
+        <p>Notice she never lies down to the child by making the truth smaller or false. She climbs down the ladder while the truth stays full-size. She calls this giving children "big truths they will grow into rather than light explanations they will grow out of" <span class="ref">(p. 78)</span>. That sentence is worth memorizing tonight.</p>
+
+        <p><strong>The second half is the bridge from concrete to spiritual,</strong> because a child cannot hold an abstraction, only a thing they can see. This is how Jesus Himself taught, with lilies and a camel and a treasure in a field <span class="ref">(p. 90)</span>. So Sally Michael teaches God's holiness by holding up a clean white shirt and asking, "Would you put this shirt in a toolbox? Would you let it get grease on it?... God is like the white shirt. He is so pure and spotless that we cannot bring sin near Him" <span class="ref">(p. 90)</span>. She teaches God's sovereignty with "God is the boss of all things," then connects it: daddy is the boss of the family, mommy is the boss when daddy is gone, but "God is the boss of everyone and everything... and God is the boss of me" <span class="ref">(p. 88)</span>. The child now owns a doctrine because it is hanging on a coat-hook they can reach.</p>
+
+        <p>Now here is why this is the <em>first</em> thing to learn and not church-classroom technique: the engine of both halves is Deuteronomy 6:7, which Sally Michael quotes as the model, "talking of them as we sit in our houses, walk by the way, when we lie down, and when we rise" <span class="ref">(p. 91)</span>. Doctrine, she says, "is not something we assign to classroom teaching or family devotions. It is to be woven into everyday life" <span class="ref">(p. 90-91)</span>. This is your street. A class field trip to the zoo gets cancelled by rain, and a four-year-old says, "Teacher, God probably looked down and saw a little flower that needed watering and sent the rain" <span class="ref">(p. 81)</span>. That child was not in a lesson. He was interpreting his real, disappointing afternoon through a true thing about God, because someone had built that rung in him. When a child is treated meanly by another child, the trained adult does not say "use your words." Sally Michael's script is: "That was wrong, it was sinful... I wonder if that is how Joseph felt when his brothers threw him into the pit... 'You meant it for evil but God meant it for good'" <span class="ref">(p. 91-92)</span>. She has just taught sin, suffering, and the sovereignty of God on a sidewalk, in sixty seconds, with no flannelgraph.</p>
+
+        <div class="callout">A big true thing about God, brought down to the child's eye level, spoken into the actual moment in front of you. Master that one move and you are functional anywhere there is a child.</div>
+    </div>
+
+    <div class="section">
+        <div class="section-head">What to completely ignore</div>
+        <p>Ignore, for now, everything in the book that is argument <em>about</em> the position rather than the practice of it. Piper's statistics from Ron Sider and George Barna <span class="ref">(p. 45-47)</span> and his Athanasius and Arius history <span class="ref">(p. 47-48)</span> are there to convince a skeptical adult reader that doctrine matters. You are already convinced; you bought in by reading this far. Spending your four hours there is studying the case for the medicine instead of taking it. Set it down.</p>
+        <p>Ignore Sally Michael's entire "Objections" section <span class="ref">(p. 86-88)</span>: that it is too hard, too controversial, the children will be bored. Those pages exist to answer a nervous committee. If you carry that anxiety in with you it will make you teach small. Walk in assuming a child can take the real thing, because the book's repeated evidence is that they can, including the three-year-old who connected "no one can serve two masters" to Shadrach refusing the golden statue, all on her own <span class="ref">(p. 83)</span>.</p>
+        <p>Ignore the instinct that says preparation means crafts, songs, attendance, classroom control, and "making it fun." Piper is blunt that fun is the wrong starting point and lists are the wrong tool; he refuses to hand children "a longer list" of dos and don'ts <span class="ref">(p. 56)</span>. Notice that you, too, asked not to be given a list. Same instinct, and it is correct. A child fed only moral rules grows into the "evangelical who lives like the world" that Piper grieves over <span class="ref">(p. 45)</span>. Aim at the heart's affection for God, and behavior follows. Aim at behavior, and you get neither.</p>
+        <p>And ignore the fear of not knowing enough. Sally Michael gives you the only sentence you need for the question you cannot answer: "I don't know, but I'll find out" <span class="ref">(p. 87)</span>. That permission frees you to start this week instead of someday.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-head">The one exercise that puts you ahead of 70%</div>
+        <p>Most people who have "studied" children's ministry for months can run a Bible-story lesson off a curriculum sheet inside a classroom. Almost none of them can do the thing the book is actually about, which is interpret a real, unplanned moment through a true doctrine of God, out loud, for a specific child. Do this exercise once and you will be able to.</p>
+        <div class="exercise">
+            <p style="margin-top:0;"><strong>Pick one doctrine.</strong> Use the sovereignty of God, because it is the most Reformed and the most useful in real life: God is the boss of everything and He is always doing good, even through hard things. Then do three things on one page.</p>
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-body"><strong>Build the ladder,</strong> the way Sally Michael built the sin ladder. Write that one doctrine at four heights in your own words: a sentence for a toddler, a fuller one for a preschooler, a fuller one for an early-elementary child, and one for an older child that does not flinch from the hard edge (God rules even the things that hurt, and He still means them for good). Keep the truth full-size on every rung.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-body"><strong>Find the bridge.</strong> Decide on one concrete object or picture a child can see that carries it, the way the white shirt carried holiness. For sovereignty, Sally Michael's own is good: God's eye that watches over the whole universe and God's hand that is at work in it <span class="ref">(p. 87)</span>. Make it yours so you can produce it without thinking.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-body"><strong>Rehearse three real moments, out loud, alone,</strong> before you ever face a child. A trip gets cancelled. Another child is cruel to yours. A new child you have never met walks up in the street. For each one, say the sentence a trained teacher would say. "I'm so glad God brought you to us, it wasn't chance, God planned it" <span class="ref">(p. 91)</span>. "Larry was wrong to do that, and it grieved God, and still, like Joseph's brothers, God can mean it for good" <span class="ref">(p. 91-92)</span>. Say them aloud until they come without effort, because the whole point is that they have to arrive in the half-second the moment gives you, not after you go home and look it up.</div>
+            </div>
+        </div>
+        <p>If you do only that, one page and ten minutes of saying it aloud, you will walk out of these four hours able to do the single thing this entire book is pleading with the church to recover. You will not be a person who <em>knows about</em> teaching children. You will be a person who, when life happens in front of a child at home or on the street, opens her mouth and hands that child a true, indestructible thing about God. That is the whole book, and that is you, functional.</p>
+    </div>
+
+    <div class="footer-note">
+        Source: <em>Indestructible Joy for the Next Generations</em>, Truth78, 2018. Page references to that edition (Piper ch. 3, pp. 43-58; Sally Michael ch. 5, pp. 77-92).
+    </div>
+
+</div>
+
+</body>
+</html>
