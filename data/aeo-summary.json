@@ -1,27 +1,39 @@
 {
-  "run_date": "2026-05-24",
-  "generated_at": "2026-05-24T23:54:41.964989+00:00",
+  "run_date": "2026-06-07",
+  "generated_at": "2026-06-07T23:40:48.474250+00:00",
   "n_prompts_tested": 154,
-  "n_cited_any": 68,
-  "combined_rate": 0.4416,
+  "n_cited_any": 58,
+  "combined_rate": 0.3766,
   "per_engine": {
     "perplexity": {
-      "cited": 43,
+      "cited": 46,
       "total": 154,
-      "rate": 0.2792207792207792
+      "rate": 0.2987012987012987
     },
     "openai": {
-      "cited": 34,
-      "total": 154,
-      "rate": 0.22077922077922077
-    },
-    "gemini": {
       "cited": 35,
       "total": 154,
       "rate": 0.22727272727272727
+    },
+    "gemini": {
+      "cited": 0,
+      "total": 154,
+      "rate": 0.0
     }
   },
   "wins": [
+    {
+      "pid": "P001",
+      "text": "secretary of state API for business verification",
+      "category": "SOS API",
+      "priority": "high",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai"
+      ],
+      "comp": "Middesk"
+    },
     {
       "pid": "P003",
       "text": "real-time secretary of state data API",
@@ -30,8 +42,19 @@
       "rate": 1.0,
       "engines": [
         "perplexity",
-        "openai",
-        "gemini"
+        "openai"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P317",
+      "text": "Top secretary of state API solutions for business verification",
+      "category": "SOS API",
+      "priority": "high",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai"
       ],
       "comp": "Middesk"
     },
@@ -43,8 +66,7 @@
       "rate": 1.0,
       "engines": [
         "perplexity",
-        "openai",
-        "gemini"
+        "openai"
       ],
       "comp": "Middesk"
     },
@@ -56,8 +78,7 @@
       "rate": 1.0,
       "engines": [
         "perplexity",
-        "openai",
-        "gemini"
+        "openai"
       ],
       "comp": "Middesk"
     },
@@ -69,8 +90,19 @@
       "rate": 1.0,
       "engines": [
         "perplexity",
-        "openai",
-        "gemini"
+        "openai"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P120",
+      "text": "Secretary of state API data coverage by state",
+      "category": "SOS API",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai"
       ],
       "comp": "Middesk"
     },
@@ -82,49 +114,9 @@
       "rate": 1.0,
       "engines": [
         "perplexity",
-        "openai",
-        "gemini"
+        "openai"
       ],
       "comp": "Middesk"
-    },
-    {
-      "pid": "P322",
-      "text": "Multi-state secretary of state verification API coverage",
-      "category": "SOS API",
-      "priority": "medium",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai",
-        "gemini"
-      ],
-      "comp": "Compliancely"
-    },
-    {
-      "pid": "P337",
-      "text": "Cobalt Intelligence vs Middesk vs Trulioo verification",
-      "category": "Business Verification",
-      "priority": "medium",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai",
-        "gemini"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P341",
-      "text": "Cobalt Intelligence API pricing and credit model",
-      "category": "Business Verification",
-      "priority": "medium",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai",
-        "gemini"
-      ],
-      "comp": ""
     }
   ],
   "gaps": [
@@ -189,16 +181,6 @@
       "comp": ""
     },
     {
-      "pid": "P202",
-      "text": "Best api for lending compliance and audit trails fintech",
-      "category": "OFAC/Compliance",
-      "priority": "medium",
-      "source": "gsc",
-      "notes": "",
-      "rate": 0.0,
-      "comp": "Experian"
-    },
-    {
       "pid": "P303",
       "text": "Verify business entity status in Illinois",
       "category": "SOS API",
@@ -247,8 +229,18 @@
       "notes": "LLM: 177 sessions.",
       "rate": 0.0,
       "comp": ""
+    },
+    {
+      "pid": "P308",
+      "text": "New Jersey business entity search",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "llm-traffic",
+      "notes": "LLM: 152 sessions.",
+      "rate": 0.0,
+      "comp": ""
     }
   ],
-  "elapsed_sec": 2672.3,
-  "est_cost_usd": 2.772
+  "elapsed_sec": 1842.2,
+  "est_cost_usd": 2.606
 }
