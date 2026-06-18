@@ -8,93 +8,120 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 :root {
-  --purple: #6366F1; --purple-deep: #9F93E2; --lavender: #C4B8FF; --indigo: #4F46E5;
-  --bg-dark: #0B0915; --bg-light: #F8F7FD; --card: #ffffff; --navy: #0F172A;
-  --text: #0F172A; --text-secondary: #64748B; --muted: #94a3b8; --border: #E2DCF4;
-  --green: #059669; --red: #DC2626; --amber: #D97706; --rose: #E11D48;
-  --missing: #B4A7E8;
+  --purple: #6366F1;
+  --purple-deep: #9F93E2;
+  --lavender: #C4B8FF;
+  --indigo: #4F46E5;
+  --bg-dark: #0B0915;
+  --bg-light: #F8F7FD;
+  --card: #ffffff;
+  --navy: #0F172A;
+  --text: #0F172A;
+  --text-secondary: #64748B;
+  --muted: #94a3b8;
+  --border: #E2DCF4;
+  --green: #059669;
+  --red: #DC2626;
+  --amber: #D97706;
+  --rose: #E11D48;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-light); color: var(--text); -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-light);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
 h1, h2, h3, .brand-title { font-family: 'Sora', sans-serif; }
-.site-header { background: linear-gradient(135deg, var(--bg-dark), #1a1035);
-  color: white; padding: 24px 32px 18px; text-align: center; }
-.brand-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+.site-header {
+  background: linear-gradient(135deg, var(--bg-dark), #1a1035);
+  color: white; padding: 24px 32px 18px; text-align: center;
+}
+.brand-title {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
   background: linear-gradient(135deg, var(--purple-deep), var(--purple));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 .brand-sub { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
 .brand-meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px; }
-.brand-badge { display: inline-block; padding: 3px 10px; margin-top: 8px; border-radius: 999px;
-  background: rgba(159,147,226,0.18); color: var(--lavender); font-size: 10px; font-weight: 600;
-  letter-spacing: 0.05em; text-transform: uppercase; }
 .wrap { max-width: 1400px; margin: 0 auto; padding: 28px 32px 60px; }
-.banner { background: rgba(217,119,6,0.08); border: 1px solid rgba(217,119,6,0.25); border-radius: 10px;
-  padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: var(--navy); line-height: 1.5; }
-.banner b { color: var(--amber); }
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px; margin-bottom: 28px; }
-.kpi { background: var(--card); padding: 18px 20px; border-radius: 14px;
-  border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(99,102,241,0.06); }
-.kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--text-secondary); font-weight: 600; }
-.kpi .value { font-size: 26px; font-weight: 700; margin-top: 6px;
-  color: var(--navy); letter-spacing: -0.02em; font-family: 'Sora', sans-serif; }
-.kpi .value.muted { color: var(--muted); font-size: 22px; }
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px; margin-bottom: 28px;
+}
+.kpi {
+  background: var(--card); padding: 18px 20px; border-radius: 14px;
+  border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(99,102,241,0.06);
+}
+.kpi .label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-secondary); font-weight: 600;
+}
+.kpi .value {
+  font-size: 26px; font-weight: 700; margin-top: 6px;
+  color: var(--navy); letter-spacing: -0.02em; font-family: 'Sora', sans-serif;
+}
 .kpi .delta { margin-top: 4px; font-size: 11px; font-weight: 600; }
-.delta.up { color: var(--green); } .delta.down { color: var(--red); } .delta.flat { color: var(--muted); }
-.chart-card, .table-card { background: var(--card); padding: 22px 24px; border-radius: 14px;
-  border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(99,102,241,0.06); margin-bottom: 22px; }
-.table-card { overflow-x: auto; }
-.chart-card h3, .table-card h3 { margin: 0 0 14px; font-size: 14px; font-weight: 600;
-  color: var(--navy); font-family: 'Sora', sans-serif; }
+.delta.up { color: var(--green); }
+.delta.down { color: var(--red); }
+.delta.flat { color: var(--muted); }
+.chart-card {
+  background: var(--card); padding: 22px 24px; border-radius: 14px;
+  border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(99,102,241,0.06);
+  margin-bottom: 22px;
+}
+.chart-card h3 {
+  margin: 0 0 14px; font-size: 14px; font-weight: 600; color: var(--navy);
+  font-family: 'Sora', sans-serif;
+}
 .chart-card canvas { max-height: 320px; }
-.sub { font-size: 12px; color: var(--text-secondary); margin: -8px 0 14px; }
+.table-card {
+  background: var(--card); padding: 22px 24px; border-radius: 14px;
+  border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(99,102,241,0.06);
+  margin-bottom: 22px; overflow-x: auto;
+}
+.table-card h3 {
+  margin: 0 0 14px; font-size: 14px; font-weight: 600; color: var(--navy);
+  font-family: 'Sora', sans-serif;
+}
+.table-card .sub { font-size: 12px; color: var(--text-secondary); margin: -8px 0 14px; }
 table.kpi-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-table.kpi-table th, table.kpi-table td { padding: 9px 12px; text-align: right;
-  border-bottom: 1px solid var(--border); white-space: nowrap; }
+table.kpi-table th, table.kpi-table td {
+  padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
 table.kpi-table th:first-child, table.kpi-table td:first-child { text-align: left; }
-table.kpi-table thead th { background: #F8F7FD; font-weight: 600; color: var(--navy);
-  font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+table.kpi-table thead th {
+  background: #F8F7FD; font-weight: 600; color: var(--navy); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
 table.kpi-table tbody tr:hover { background: #F8F7FD; }
 table.kpi-table td a { color: var(--purple); text-decoration: none; }
 table.kpi-table td a:hover { text-decoration: underline; }
 table.kpi-table td.title-cell { max-width: 420px; white-space: normal; }
-.pill { display: inline-block; padding: 2px 10px; border-radius: 999px;
-  font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-.pill-purple { background: rgba(159,147,226,0.18); color: var(--purple-deep); }
-.pill-indigo { background: rgba(99,102,241,0.12); color: var(--indigo); }
 .status { font-size: 11px; color: var(--muted); text-align: right; margin-top: 14px; }
 </style>
 </head>
 <body>
+
 <div class="site-header">
   <div class="brand-title">YouTube KPI Dashboard</div>
   <div class="brand-sub" id="channel-sub">Cobalt Intelligence YouTube</div>
   <div class="brand-meta" id="window-sub"></div>
-  <div class="brand-badge" id="source-badge">CSV source</div>
 </div>
 
 <div class="wrap">
-  <div class="banner" id="banner"></div>
-
   <div class="kpi-grid" id="kpis"></div>
 
   <div class="chart-card">
-    <h3>New Subscribers &middot; Export Window</h3>
-    <div class="sub" id="chart-new-sub"></div>
-    <canvas id="chart-new-subs"></canvas>
+    <h3>Subscriber Growth &middot; Monthly (Jan 2025 &rarr; Present)</h3>
+    <canvas id="chart-subs"></canvas>
   </div>
 
   <div class="chart-card">
-    <h3>Unsubscribes &middot; Export Window</h3>
-    <div class="sub" id="chart-unsub-sub"></div>
-    <canvas id="chart-unsubs"></canvas>
-  </div>
-
-  <div class="chart-card">
-    <h3>Likes, Dislikes, Comments, Shares &middot; Export Window</h3>
-    <div class="sub" id="chart-engagement-sub"></div>
+    <h3>Engagement Over Time &middot; Monthly (Jan 2025 &rarr; Present)</h3>
     <canvas id="chart-engagement"></canvas>
   </div>
 
@@ -103,10 +130,9 @@ table.kpi-table td.title-cell { max-width: 420px; white-space: normal; }
     <div class="sub" id="shorts-sub"></div>
     <table class="kpi-table">
       <thead><tr>
-        <th>Video</th><th>Type</th><th>Published</th><th>Dur</th>
-        <th>Views</th><th>Watch (hrs)</th><th>Subs net</th>
-        <th>Likes</th><th>Dislikes</th><th>Comments</th><th>Shares</th>
-        <th>Impressions</th><th>CTR %</th>
+        <th>Video</th><th>Published</th><th>Duration</th>
+        <th>Views</th><th>Watch (min)</th><th>Avg View (s)</th>
+        <th>Likes</th><th>Comments</th><th>Shares</th>
       </tr></thead>
       <tbody id="shorts-body"></tbody>
     </table>
@@ -117,10 +143,9 @@ table.kpi-table td.title-cell { max-width: 420px; white-space: normal; }
     <div class="sub" id="videos-sub"></div>
     <table class="kpi-table">
       <thead><tr>
-        <th>Video</th><th>Type</th><th>Published</th><th>Dur</th>
-        <th>Views</th><th>Watch (hrs)</th><th>Subs net</th>
-        <th>Likes</th><th>Dislikes</th><th>Comments</th><th>Shares</th>
-        <th>Impressions</th><th>CTR %</th>
+        <th>Video</th><th>Published</th><th>Duration</th>
+        <th>Views</th><th>Watch (min)</th><th>Avg View (s)</th>
+        <th>Likes</th><th>Comments</th><th>Shares</th>
       </tr></thead>
       <tbody id="videos-body"></tbody>
     </table>
@@ -130,20 +155,26 @@ table.kpi-table td.title-cell { max-width: 420px; white-space: normal; }
 </div>
 
 <script>
-const DATA = {"dataSource": "YouTube Studio Content CSV export", "channel": {"title": "Cobalt Intelligence", "videoCount": 0}, "channelId": "UCUxMci5TVxxh8sugiMcfViA", "channelHandle": "@CobaltIntelligence", "windows": {"historyStart": "2026-03", "currentMonth": "2026-05", "priorMonth": "2026-04", "exportWindow": "2026-03-06 -> 2026-06-03"}, "has": {"subscribersGained": null, "subscribersLost": null, "likes": null, "dislikes": null, "comments": null, "shares": null, "watchTime": null}, "hasWindow": {"subscribersGained": true, "subscribersLost": true, "likes": true, "dislikes": true, "comments": true, "shares": true, "watchHours": true}, "kpis": {"views": {"curr": 1568, "prev": 2515}, "subscribersGained": {"curr": 0, "prev": 0}, "subscribersLost": {"curr": 0, "prev": 0}, "likes": {"curr": 0, "prev": 0}, "dislikes": {"curr": 0, "prev": 0}, "comments": {"curr": 0, "prev": 0}, "shares": {"curr": 0, "prev": 0}, "watchTimeMin": {"curr": 0, "prev": 0}, "window": {"views": 11759, "engagedViews": 7041, "watchHours": 105.0293, "subscribersNet": -12, "subscribersGained": 36, "subscribersLost": 48, "likes": 38, "dislikes": 12, "comments": 5, "shares": 30}, "videoCount": 0, "shortsCount": 0, "vodCount": 0}, "months": [{"month": "2026-03", "views": 2863, "viewsShorts": 1813, "viewsVOD": 1050, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0, "watchTimeMin": 0, "subscribersNet": 0}, {"month": "2026-04", "views": 2515, "viewsShorts": 1545, "viewsVOD": 970, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0, "watchTimeMin": 0, "subscribersNet": 0}, {"month": "2026-05", "views": 1568, "viewsShorts": 876, "viewsVOD": 719, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0, "watchTimeMin": 0, "subscribersNet": 0}, {"month": "2026-06", "views": 95, "viewsShorts": 21, "viewsVOD": 74, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0, "watchTimeMin": 0, "subscribersNet": 0}], "videos": [], "contentTypes": [{"contentType": "Shorts", "views": 8972, "engagedViews": 4255, "watchHours": 30.6351, "avgViewDuration": "0:00:24", "avgPercentViewed": 39.28, "stayedToWatch": 44.72, "uniqueViewers": 3927, "newViewers": 3728, "returningViewers": 198, "videosPublished": 23, "impressions": 21364, "ctr": 1.5, "likes": 36, "dislikes": 11, "comments": 2, "shares": 5, "subscribersGained": 8, "subscribersLost": 1, "subscribersNet": 7}, {"contentType": "Videos", "views": 2813, "engagedViews": 2813, "watchHours": 74.8522, "avgViewDuration": "0:01:35", "avgPercentViewed": 20.49, "stayedToWatch": 0.0, "uniqueViewers": 2278, "newViewers": 2158, "returningViewers": 76, "videosPublished": 0, "impressions": 8925, "ctr": 6.14, "likes": 2, "dislikes": 1, "comments": 3, "shares": 25, "subscribersGained": 14, "subscribersLost": 0, "subscribersNet": 14}, {"contentType": "Other", "views": 0, "engagedViews": 0, "watchHours": 0.0, "avgViewDuration": "", "avgPercentViewed": 0.0, "stayedToWatch": 0.0, "uniqueViewers": 0, "newViewers": 0, "returningViewers": 0, "videosPublished": 0, "impressions": 0, "ctr": 0.0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 14, "subscribersLost": 47, "subscribersNet": -33}], "contentTypeMode": true, "generatedAt": "2026-06-04T13:38:58.447008+00:00"};
+const DATA = {"channel": {"title": "Cobalt Intelligence", "subscriberCount": 7680, "viewCount": 125164, "videoCount": 532}, "channelId": "UCUxMci5TVxxh8sugiMcfViA", "channelHandle": "@CobaltIntelligence", "windows": {"currentStart": "2026-05-20", "currentEnd": "2026-06-16", "priorStart": "2026-04-22", "priorEnd": "2026-05-19", "historyStart": "2025-01-01"}, "current": {"views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, "prior": {"views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, "months": [{"month": "2025-01", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-02", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-03", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-04", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-05", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-06", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-07", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-08", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-09", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-10", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-11", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2025-12", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2026-01", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2026-02", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2026-03", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2026-04", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}, {"month": "2026-05", "views": 0, "estimatedMinutesWatched": 0, "likes": 0, "dislikes": 0, "comments": 0, "shares": 0, "subscribersGained": 0, "subscribersLost": 0}], "videos": [], "generatedAt": "2026-06-18T22:25:00.583384+00:00"};
+
 const COLORS = {
   purple: "#6366F1", purpleDeep: "#9F93E2", lavender: "#C4B8FF",
   indigo: "#4F46E5", green: "#059669", red: "#DC2626",
   amber: "#D97706", rose: "#E11D48", navy: "#0F172A",
 };
 
-function fmt(n) { if (n == null) return "—"; return (+n).toLocaleString("en-US", { maximumFractionDigits: 0 }); }
-function fmtDec(n, d=1) { if (n == null) return "—"; return (+n).toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d }); }
+function fmt(n) { return (n || 0).toLocaleString("en-US", { maximumFractionDigits: 0 }); }
+function fmtMin(n) { return fmt(Math.round(n || 0)); }
 function fmtDur(sec) {
   sec = Math.max(0, Math.round(sec || 0));
   const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
   if (h) return `${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
   return `${m}:${String(s).padStart(2,"0")}`;
+}
+function fmtShortDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "2-digit" });
 }
 function delta(curr, prev) {
   curr = +curr || 0; prev = +prev || 0;
@@ -151,7 +182,7 @@ function delta(curr, prev) {
   const pct = ((curr - prev) / prev) * 100;
   const arrow = pct > 0.5 ? "▲" : pct < -0.5 ? "▼" : "■";
   const cls = pct > 0.5 ? "up" : pct < -0.5 ? "down" : "flat";
-  return { txt: `${arrow} ${pct.toFixed(1)}% vs prior month`, cls };
+  return { txt: `${arrow} ${pct.toFixed(1)}% vs prior 28d`, cls };
 }
 function monthLabel(ym) {
   if (!ym) return "";
@@ -160,291 +191,141 @@ function monthLabel(ym) {
 }
 
 function renderHeader() {
-  const k = DATA.kpis || {};
-  const has = DATA.has || {};
-  const contentTypes = DATA.contentTypes || [];
-  document.getElementById("channel-sub").textContent = DATA.contentTypeMode
-    ? `Cobalt Intelligence YouTube · Content Type export (${contentTypes.length} rows)`
-    : `Cobalt Intelligence YouTube · ${fmt(k.videoCount)} videos in report (${fmt(k.shortsCount)} Shorts · ${fmt(k.vodCount)} long-form)`;
-  const win = DATA.windows || {};
-  const windowLabel = win.exportWindow || `${win.historyStart || "?"} -> ${win.currentMonth || "?"}`;
+  const ch = DATA.channel || {};
+  const w = DATA.windows || {};
+  document.getElementById("channel-sub").textContent =
+    `${ch.title || "Cobalt Intelligence"} · ${fmt(ch.subscriberCount)} subscribers · ${fmt(ch.viewCount)} lifetime views · ${fmt(ch.videoCount)} videos`;
   document.getElementById("window-sub").textContent =
-    `Window: ${windowLabel} · Comparison: ${win.currentMonth} vs ${win.priorMonth}`;
-  document.getElementById("status").textContent =
-    `Generated ${new Date(DATA.generatedAt).toLocaleString()} · source: ${DATA.dataSource}`;
-
-  const hw = DATA.hasWindow || {};
-  const missingMonthly = [];
-  if (!has.subscribersGained) missingMonthly.push("New Subs");
-  if (!has.subscribersLost)   missingMonthly.push("Unsubs");
-  if (!has.likes)             missingMonthly.push("Likes");
-  if (!has.dislikes)          missingMonthly.push("Dislikes");
-  if (!has.comments)          missingMonthly.push("Comments");
-  if (!has.shares)            missingMonthly.push("Shares");
-
-  const missingWindow = [];
-  if (!hw.subscribersGained) missingWindow.push("New Subs");
-  if (!hw.subscribersLost)   missingWindow.push("Unsubs");
-  if (!hw.likes)             missingWindow.push("Likes");
-  if (!hw.dislikes)          missingWindow.push("Dislikes");
-  if (!hw.comments)          missingWindow.push("Comments");
-  if (!hw.shares)            missingWindow.push("Shares");
-
-  const banner = document.getElementById("banner");
-  if (DATA.contentTypeMode) {
-    banner.innerHTML = `<b>Content Type export mode.</b> KPI boxes are populated from Shela's corrected YouTube Studio export. Per-video rows are not available in this export, so the table below shows the content type split instead.`;
-    banner.style.background = "rgba(5,150,105,0.08)";
-    banner.style.borderColor = "rgba(5,150,105,0.25)";
-  } else if (missingMonthly.length === 0 && missingWindow.length === 0) {
-    banner.innerHTML = `<b>All 8 KPIs + both charts populated from monthly data.</b> For automatic daily refresh without manual exports, switch to the Analytics API build (<code>youtube-kpi-build.py</code>) once Jordan grants Brand Account Manager access.`;
-    banner.style.background = "rgba(5,150,105,0.08)";
-    banner.style.borderColor = "rgba(5,150,105,0.25)";
-  } else if (missingWindow.length === 0) {
-    banner.innerHTML = `<b>All 8 KPI boxes populated (window totals).</b> Monthly splits still missing for: ${missingMonthly.join(" · ")} — so the Subscriber Growth and Engagement charts show empty state. ` +
-      `To fill charts: in YouTube Studio → Analytics → Advanced mode → change dimension from <strong>Content</strong> to <strong>Date</strong> → add metrics (Subscribers gained/lost, Likes, Dislikes, Comments added, Shares) → Export CSV → drop as <code>Engagement data.csv</code> + <code>Audience data.csv</code> into <code>youtube-exports/latest/</code>.`;
-  } else {
-    banner.innerHTML = `<b>CSV snapshot mode.</b> Missing entirely: ${missingWindow.join(" · ")}. ` +
-      `Export more columns from YT Studio — see walkthrough in <code>youtube-kpi-from-csv.py</code> docstring.`;
-  }
+    `KPI window: ${w.currentStart} → ${w.currentEnd} (prior: ${w.priorStart} → ${w.priorEnd}) · History from ${w.historyStart}`;
+  document.getElementById("status").textContent = `Refreshed ${new Date(DATA.generatedAt).toLocaleString()}`;
 }
 
 function renderKpis() {
-  const k = DATA.kpis || {};
-  const has = DATA.has || {};
-  const w = k.window || {};
-
-  // If monthly series present → compare curr vs prev.
-  // Else if window total present → show window total with scope label.
-  // Else → "—" with export prompt.
-  function build(label, monthlyHave, monthlyObj, windowValue, exportNote) {
-    if (monthlyHave && monthlyObj && monthlyObj.curr != null) {
-      const d = delta(monthlyObj.curr, monthlyObj.prev);
-      return { label, value: fmt(monthlyObj.curr), valueCls: "", deltaTxt: d.txt, deltaCls: d.cls };
-    }
-    if (windowValue != null && windowValue !== 0) {
-      return { label, value: fmt(windowValue), valueCls: "",
-               deltaTxt: `window total (${(DATA.windows || {}).exportWindow || "export window"})`, deltaCls: "flat" };
-    }
-    return { label, value: "—", valueCls: "muted", deltaTxt: exportNote, deltaCls: "flat" };
-  }
-
+  const c = DATA.current || {}, p = DATA.prior || {};
   const cards = [
-    build("New Subscribers", has.subscribersGained, k.subscribersGained, w.subscribersGained, "export Audience Chart CSV for monthly"),
-    build("Unsubscribes",    has.subscribersLost,   k.subscribersLost,   w.subscribersLost,   "export Audience Chart CSV for monthly"),
-    build("Likes",           has.likes,             k.likes,             w.likes,             "export Engagement Chart CSV for monthly"),
-    build("Dislikes",        has.dislikes,          k.dislikes,          w.dislikes,          "export Engagement Chart CSV for monthly"),
-    build("Comments",        has.comments,          k.comments,          w.comments,          "export Engagement Chart CSV for monthly"),
-    build("Shares",          has.shares,            k.shares,            w.shares,            "export Engagement Chart CSV for monthly"),
-    build("Views",           !DATA.contentTypeMode,  k.views,             w.views,             ""),
-    build("Engaged Views",   false,                  null,                w.engagedViews,      ""),
-    build("Watch Time (hrs)",has.watchTime,         null,                w.watchHours,        "export Audience Chart CSV for monthly"),
+    { label: "New Subscribers", key: "subscribersGained" },
+    { label: "Unsubscribes", key: "subscribersLost" },
+    { label: "Views", key: "views" },
+    { label: "Watch Time (min)", key: "estimatedMinutesWatched" },
+    { label: "Likes", key: "likes" },
+    { label: "Dislikes", key: "dislikes" },
+    { label: "Comments", key: "comments" },
+    { label: "Shares", key: "shares" },
   ];
-  document.getElementById("kpis").innerHTML = cards.map(c =>
-    `<div class="kpi"><div class="label">${c.label}</div>
-     <div class="value ${c.valueCls}">${c.value}</div>
-     <div class="delta ${c.deltaCls}">${c.deltaTxt}</div></div>`
-  ).join("");
+  document.getElementById("kpis").innerHTML = cards.map(card => {
+    const d = delta(c[card.key], p[card.key]);
+    return `<div class="kpi"><div class="label">${card.label}</div>
+      <div class="value">${fmt(c[card.key] || 0)}</div>
+      <div class="delta ${d.cls}">${d.txt}</div></div>`;
+  }).join("");
 }
 
-function renderSingleMetricChart(canvasId, subId, metricKey, label, color, monthlyHave, windowValue, exportNote) {
+function renderSubsChart() {
   const months = DATA.months || [];
   const labels = months.map(m => monthLabel(m.month));
-  const ctx = document.getElementById(canvasId).getContext("2d");
-  const sub = document.getElementById(subId);
-
-  if (monthlyHave) {
-    const data = months.map(m => +m[metricKey] || 0);
-    sub.textContent = `Monthly ${label} · Jan 2025 → present`;
-    new Chart(ctx, {
-      type: "line",
-      data: { labels, datasets: [{
-        label, data, borderColor: color, backgroundColor: color + "22",
-        fill: true, tension: 0.3, borderWidth: 2.5, pointRadius: 3 }] },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        interaction: { mode: "index", intersect: false },
-        plugins: { legend: { display: false },
-          tooltip: { backgroundColor: COLORS.navy, padding: 10, cornerRadius: 8 } },
-        scales: { x: { grid: { display: false } },
-          y: { beginAtZero: true, grid: { color: "#EEEAF9" } } },
-      },
-    });
-    return;
-  }
-  // No monthly data — render a single bar showing the window total.
-  if (windowValue != null && windowValue !== 0) {
-    sub.textContent = `Window total only: ${fmt(windowValue)} (${(DATA.windows || {}).exportWindow || "export window"}). ${exportNote}`;
-    new Chart(ctx, {
-      type: "bar",
-      data: { labels: ["Window total"], datasets: [{ label, data: [windowValue], backgroundColor: color }] },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false },
-          tooltip: { backgroundColor: COLORS.navy, padding: 10, cornerRadius: 8 } },
-        scales: { y: { beginAtZero: true, grid: { color: "#EEEAF9" } },
-          x: { grid: { display: false } } },
-      },
-    });
-    return;
-  }
-  sub.textContent = `No data. ${exportNote}`;
+  const gained = months.map(m => +m.subscribersGained || 0);
+  const lost = months.map(m => +m.subscribersLost || 0);
+  const net = months.map((m, i) => gained[i] - lost[i]);
+  let running = 0;
+  const cumulative = net.map(v => (running += v));
+  const ctx = document.getElementById("chart-subs").getContext("2d");
   new Chart(ctx, {
     type: "line",
-    data: { labels, datasets: [{ label: "(no data)", data: labels.map(() => 0),
-      borderColor: "#CBD5E1", borderWidth: 1, pointRadius: 0 }] },
-    options: { responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true, grid: { color: "#EEEAF9" } },
-        x: { grid: { display: false } } } },
+    data: {
+      labels,
+      datasets: [
+        { label: "Cumulative Net Subs (since Jan 2025)", data: cumulative,
+          borderColor: COLORS.indigo, backgroundColor: "rgba(79,70,229,0.14)",
+          fill: true, tension: 0.3, borderWidth: 2.5, pointRadius: 3, yAxisID: "y" },
+        { label: "New Subscribers (monthly)", data: gained,
+          borderColor: COLORS.green, backgroundColor: "transparent",
+          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: "y1" },
+        { label: "Unsubscribes (monthly)", data: lost,
+          borderColor: COLORS.red, backgroundColor: "transparent",
+          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: "y1" },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 12 } } },
+        tooltip: { backgroundColor: COLORS.navy, padding: 10, cornerRadius: 8 },
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { position: "left", title: { display: true, text: "Cumulative" }, beginAtZero: true, grid: { color: "#EEEAF9" } },
+        y1: { position: "right", title: { display: true, text: "Monthly" }, beginAtZero: true, grid: { display: false } },
+      },
+    },
   });
 }
 
 function renderEngagementChart() {
   const months = DATA.months || [];
   const labels = months.map(m => monthLabel(m.month));
-  const has = DATA.has || {};
-  const w = (DATA.kpis || {}).window || {};
   const series = [
-    { key: "likes",    label: "Likes",    color: COLORS.purple, have: has.likes,    windowValue: w.likes },
-    { key: "dislikes", label: "Dislikes", color: COLORS.rose,   have: has.dislikes, windowValue: w.dislikes },
-    { key: "comments", label: "Comments", color: COLORS.amber,  have: has.comments, windowValue: w.comments },
-    { key: "shares",   label: "Shares",   color: COLORS.indigo, have: has.shares,   windowValue: w.shares },
+    { key: "likes", label: "Likes", color: COLORS.purple },
+    { key: "dislikes", label: "Dislikes", color: COLORS.rose },
+    { key: "comments", label: "Comments", color: COLORS.amber },
+    { key: "shares", label: "Shares", color: COLORS.indigo },
   ];
-  const available = series.filter(s => s.have);
+  const datasets = series.map(s => ({
+    label: s.label,
+    data: months.map(m => +m[s.key] || 0),
+    borderColor: s.color, backgroundColor: s.color + "22",
+    borderWidth: 2, tension: 0.3, pointRadius: 2,
+  }));
   const ctx = document.getElementById("chart-engagement").getContext("2d");
-  const sub = document.getElementById("chart-engagement-sub");
-
-  if (available.length) {
-    sub.textContent = `Monthly: ${available.map(s => s.label).join(" · ")}`;
-    new Chart(ctx, {
-      type: "line",
-      data: { labels, datasets: available.map(s => ({
-        label: s.label,
-        data: months.map(m => +m[s.key] || 0),
-        borderColor: s.color, backgroundColor: s.color + "22",
-        borderWidth: 2, tension: 0.3, pointRadius: 2 })) },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        interaction: { mode: "index", intersect: false },
-        plugins: { legend: { position: "bottom", labels: { boxWidth: 12 } },
-          tooltip: { backgroundColor: COLORS.navy, padding: 10, cornerRadius: 8 } },
-        scales: { x: { grid: { display: false } },
-          y: { beginAtZero: true, grid: { color: "#EEEAF9" } } },
-      },
-    });
-    return;
-  }
-
-  // No monthly data for any — show window totals as a single bar chart per metric.
-  const hasAnyWindow = series.some(s => s.windowValue);
-  if (hasAnyWindow) {
-    sub.textContent = `Window totals (${(DATA.windows || {}).exportWindow || "export window"}). Export Date-dimension CSV from YT Studio Advanced mode for monthly.`;
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: series.map(s => s.label),
-        datasets: [{ label: "Window total", data: series.map(s => s.windowValue || 0),
-          backgroundColor: series.map(s => s.color) }],
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false },
-          tooltip: { backgroundColor: COLORS.navy, padding: 10, cornerRadius: 8 } },
-        scales: { y: { beginAtZero: true, grid: { color: "#EEEAF9" } },
-          x: { grid: { display: false } } },
-      },
-    });
-    return;
-  }
-  sub.textContent = "No data. Export Engagement CSV from YT Studio.";
   new Chart(ctx, {
     type: "line",
-    data: { labels, datasets: [{ label: "(no data)", data: labels.map(() => 0),
-      borderColor: "#CBD5E1", borderWidth: 1, pointRadius: 0 }] },
-    options: { responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true, grid: { color: "#EEEAF9" } },
-        x: { grid: { display: false } } } },
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 12 } } },
+        tooltip: { backgroundColor: COLORS.navy, padding: 10, cornerRadius: 8 },
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { beginAtZero: true, grid: { color: "#EEEAF9" } },
+      },
+    },
   });
 }
 
 function renderVideoTable(bodyId, subId, isShort, noDataMsg) {
-  if (DATA.contentTypeMode && bodyId === "shorts-body") {
-    const rows = DATA.contentTypes || [];
-    const body = document.getElementById(bodyId);
-    document.getElementById(subId).textContent = rows.length
-      ? `${rows.length} content type rows from the corrected export`
-      : "No content type rows in this export.";
-    body.innerHTML = rows.map(v => {
-      const typePill = v.contentType === "Shorts"
-        ? `<span class="pill pill-purple">Shorts</span>`
-        : `<span class="pill pill-indigo">${String(v.contentType).replace(/</g,"&lt;")}</span>`;
-      return `<tr>
-        <td class="title-cell">${String(v.contentType).replace(/</g,"&lt;")}</td>
-        <td>${typePill}</td>
-        <td>—</td>
-        <td>—</td>
-        <td>${fmt(v.views)}</td>
-        <td>${fmtDec(v.watchHours, 1)}</td>
-        <td>${fmt(v.subscribersNet)}</td>
-        <td>${fmt(v.likes)}</td>
-        <td>${fmt(v.dislikes)}</td>
-        <td>${fmt(v.comments)}</td>
-        <td>${fmt(v.shares)}</td>
-        <td>${fmt(v.impressions)}</td>
-        <td>${fmtDec(v.ctr, 2)}</td>
-      </tr>`;
-    }).join("");
-    return;
-  }
-  if (DATA.contentTypeMode && bodyId === "videos-body") {
-    document.getElementById(subId).textContent = "Per-video rows are not included in the corrected Content Type export.";
-    document.getElementById(bodyId).innerHTML = "";
-    return;
-  }
   const rows = (DATA.videos || []).filter(v => v.isShort === isShort);
   rows.sort((a, b) => b.views - a.views);
   const body = document.getElementById(bodyId);
-  document.getElementById(subId).textContent = rows.length
-    ? `${rows.length} videos · sorted by window views`
+  const sub = document.getElementById(subId);
+  sub.textContent = rows.length
+    ? `${rows.length} videos · since ${DATA.windows.historyStart} · sorted by views`
     : noDataMsg;
   body.innerHTML = rows.map(v => {
     const url = `https://www.youtube.com/watch?v=${v.videoId}`;
     const titleCell = `<a href="${url}" target="_blank" rel="noopener">${v.title.replace(/</g,"&lt;")}</a>`;
-    const typeLabel = v.isShort ? "Short" : "Regular";
-    const typePill = v.isShort
-      ? `<span class="pill pill-purple">${typeLabel}</span>`
-      : `<span class="pill pill-indigo">${typeLabel}</span>`;
     return `<tr>
       <td class="title-cell">${titleCell}</td>
-      <td>${typePill}</td>
-      <td>${v.publishedAt || "—"}</td>
+      <td>${fmtShortDate(v.publishedAt)}</td>
       <td>${fmtDur(v.durationSec)}</td>
       <td>${fmt(v.views)}</td>
-      <td>${fmtDec(v.watchHours, 1)}</td>
-      <td>${fmt(v.subscribersNet)}</td>
+      <td>${fmtMin(v.estimatedMinutesWatched)}</td>
+      <td>${fmt(v.averageViewDuration)}</td>
       <td>${fmt(v.likes)}</td>
-      <td>${fmt(v.dislikes)}</td>
       <td>${fmt(v.comments)}</td>
       <td>${fmt(v.shares)}</td>
-      <td>${fmt(v.impressions)}</td>
-      <td>${fmtDec(v.ctr, 2)}</td>
     </tr>`;
   }).join("");
 }
 
 renderHeader();
 renderKpis();
-// 3 charts per spec: New Subscribers, Unsubscribes, Likes/Dislikes/Comments/Shares
-renderSingleMetricChart("chart-new-subs", "chart-new-sub", "subscribersGained", "New Subscribers",
-  COLORS.green, (DATA.has||{}).subscribersGained, ((DATA.kpis||{}).window||{}).subscribersGained,
-  "Export Audience Date-dimension CSV for monthly trend.");
-renderSingleMetricChart("chart-unsubs", "chart-unsub-sub", "subscribersLost", "Unsubscribes",
-  COLORS.red, (DATA.has||{}).subscribersLost, ((DATA.kpis||{}).window||{}).subscribersLost,
-  "Export Audience Date-dimension CSV for monthly trend.");
+renderSubsChart();
 renderEngagementChart();
-renderVideoTable("shorts-body", "shorts-sub", true, "No Shorts in this export.");
-renderVideoTable("videos-body", "videos-sub", false, "No long-form videos in this export.");
+renderVideoTable("shorts-body", "shorts-sub", true, "No Shorts data yet.");
+renderVideoTable("videos-body", "videos-sub", false, "No long-form videos with reported views in this window.");
 </script>
 </body>
 </html>
