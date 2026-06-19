@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Lesson - L5 Sharing Skills</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="../../index.html">Back to operating system</a></header>
+  <main>
+<hr>
+<p>lesson: 5 course: Introduction to Agent Skills title: Sharing skills video: https://www.youtube.com/watch?v=OCBi3eScNLk duration: &quot;3:53&quot; exam_domain: &quot;Domain 3 (3.2) + Domain 1 (subagents inherit nothing, 1.3) + Domain 2 (managed settings 2.4)&quot; captured: 2026-06-16 sources: PDF course companion + YouTube auto-captions (cleaned) ---</p>
+<h1>Lesson 5  -  Sharing skills</h1>
+<h2>Learning objectives (from the course)</h2>
+<ul>
+<li>Share skills with your team by committing them to a Git repository</li>
+<li>Distribute skills across projects through plugins and marketplaces</li>
+<li>Deploy skills organization-wide using enterprise managed settings</li>
+<li>Configure custom subagents to use specific skills</li>
+</ul>
+<h2>The lesson in plain English</h2>
+<p>A skill only you use is helpful; the same skill shared across the team standardizes everyone. <strong>Three distribution methods:</strong></p>
+<ol>
+<li><strong>Commit to your repo</strong> (simplest)  -  put skills in <code>.claude/skills/</code>; anyone who clones gets them, no install. Push updates → everyone gets them on next pull. Good for team coding standards, project workflows, codebase-specific skills.</li>
+<li><strong>Plugins</strong>  -  package skills (a <code>skills/</code> dir mirroring the <code>.claude</code> structure, each skill its own folder + <code>SKILL.md</code>) and distribute via a <strong>marketplace</strong>. Others install into their own Claude Code. Best for skills that aren&#x27;t too project-specific and help the broader community.</li>
+<li><strong>Enterprise managed settings</strong>  -  admins deploy org-wide. <strong>Enterprise skills take highest priority</strong>, overriding personal/project/plugin skills of the same name. For mandatory standards, security, compliance  -  keyword <strong>&quot;must.&quot;</strong></li>
+</ol>
+<p><strong>The gotcha people miss: subagents don&#x27;t automatically see your skills.</strong> A delegated subagent starts with a fresh, clean context.</p>
+<ul>
+<li><strong>Built-in agents (Explorer, Plan, Verify) can&#x27;t access skills at all.</strong></li>
+<li><strong>Custom subagents</strong> can  -  but <strong>only when you explicitly list them</strong> in the agent&#x27;s frontmatter <code>skills:</code> field (in a <code>.claude/agents/*.md</code> file).</li>
+<li>For subagents, <strong>skills load when the subagent starts</strong> (not on demand like the main conversation), so <strong>only list skills always relevant</strong> to that agent&#x27;s purpose.</li>
+</ul>
+<h2>Key takeaways (verbatim from course companion)</h2>
+<ul>
+<li>Project skills in .claude/skills are shared automatically through Git  -  anyone who clones the repo gets them</li>
+<li>Plugins let you distribute skills across repositories via marketplaces for broader community use</li>
+<li>Enterprise managed settings deploy skills organization-wide with the highest priority, ideal for mandatory standards and compliance</li>
+<li>Subagents don&#x27;t automatically see your skills  -  you must explicitly list skills in a custom agent&#x27;s frontmatter skills field</li>
+<li>Built-in agents (Explorer, Plan, Verify) can&#x27;t access skills at all  -  only custom subagents defined in .claude/agents can</li>
+</ul>
+<h2>Exam watch-outs (CCA-F)  -  high-yield orchestration tie-in</h2>
+<ul>
+<li><strong>&quot;Subagents inherit nothing&quot;</strong> is core Domain 1 doctrine, and here it&#x27;s concrete: subagents don&#x27;t see skills unless explicitly listed. Expect a question where the wrong answer assumes a subagent automatically has the team&#x27;s skills.</li>
+<li><strong>Built-in agents can&#x27;t use skills</strong>  -  only custom agents in <code>.claude/agents/</code>. The <code>skills:</code> field is the mechanism.</li>
+<li><strong>Enterprise = highest priority</strong> (managed settings) → use it for <em>must-be-consistent</em> standards. Maps to the priority hierarchy from Lesson 2.</li>
+<li>Subagent skills load <strong>at start</strong>, so listing rarely-relevant skills wastes that agent&#x27;s context  -  list only always-relevant ones.</li>
+</ul>
+<h2>Terms introduced</h2>
+<ul>
+<li><strong>Plugin / marketplace</strong> = packaged, shareable Claude Code extension (can carry skills) others install.</li>
+<li><strong>Managed settings (enterprise)</strong> = admin-deployed, org-wide, highest-priority configuration.</li>
+<li><strong>agent <code>skills:</code> field</strong> = frontmatter list in a <code>.claude/agents/*.md</code> file naming which skills that custom subagent loads.</li>
+<li><strong>Built-in vs. custom subagent</strong> = built-ins (Explorer/Plan/Verify) get no skills; custom agents can, if listed.</li>
+</ul>
+<h2>Full transcript (cleaned auto-captions; &quot;claw/cloud&quot;=Claude Code, &quot;sub aents&quot;=subagents, &quot;agent.md&quot;=agent markdown file)</h2>
+<p>&gt; Skills become more valuable when shared. A PR review skill that only you use is helpful; the same skill shared across your team standardizes code review and provides a consistent experience across your organization, which is much better. Here are ways you can share your skills. The simplest sharing method is committing skills to your repository. Place them in .claude/skills. Anyone who clones the repository gets these skills automatically  -  no extra installation. It&#x27;s just what you&#x27;re doing already. When you push updates, everyone gets them on the next pull. This works well for team coding standards, project-specific workflows, and skills that reference your codebase structure. Another way to distribute skills is through plugins. Think of plugins as ways to extend Claude Code with custom functionality, designed to be shared across teams and projects. In your plugin project, create a directory called skills. It follows a similar file structure to the .claude directory in our project  -  the name of the skill with a SKILL.md file. After you distribute your plugin to a marketplace, other users can download it into Claude Code for themselves. This is best if your skills aren&#x27;t too project-specific and can be used by community members. Administrators can deploy skills organization-wide through managed settings. Enterprise skills take highest priority  -  like we discussed, they override personal, project, and plugin skills with the same name. This is for mandatory standards, security requirements, compliance workflows, coding practices that must be consistent across the organization. Keyword: must. Here&#x27;s something that surprises people. Subagents don&#x27;t automatically see your skills. When you delegate a task to a subagent, it starts with a fresh, clean context. Built-in agents like Explorer, Plan, and Verify can&#x27;t access skills at all. Only custom subagents you define can use them, and only when you explicitly list them. To create a custom subagent with skills, add an agent markdown file in .claude/agents. The skills field lists which skills to load. These skills are loaded when the subagent starts, not on demand like in the main conversation. So take that into consideration. First ensure the skills exist. Then create the subagent using the Claude Code subagent creator. If you have a subagent you want to add these skills to already, just go to the existing agent.md file, create the skills field, and add your skills. When you delegate to the subagent it has both skills loaded and applies them to every single review. This pattern works well when you want isolated task delegation with specific expertise, different subagents need different skills (front-end reviewer vs. back-end reviewer), or you want to enforce standards in delegated work without relying on prompts. Only list skills that are always relevant to the subagent&#x27;s purpose. Share skills through project directories for team access, plugins for cross-repository distribution, or enterprise deployment for organization-wide standards. Subagents don&#x27;t inherit skills automatically, so list them explicitly in the subagent&#x27;s skills field. Built-in agents can&#x27;t access skills; only custom subagents in your .claude/agents can. Skills load when the subagent starts, so only list skills that are always relevant to its purpose.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Operating System Verifier</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+
+<h1>CCA Operating System Verifier</h1>
+<p>This page shows the verifier script in readable form. Run it from the trainer folder with <code>python3 verify_operating_system.py</code>.</p>
+<pre><code>#!/usr/bin/env python3
+&quot;&quot;&quot;Verify the CCA trainer operating-system artifacts.
+
+This is a lightweight structural verifier. It does not grade Shela&#x27;s knowledge;
+it checks that the operating system has the required files and coverage scaffolds.
+&quot;&quot;&quot;
+
+from pathlib import Path
+import re
+import sys
+
+
+ROOT = Path(__file__).resolve().parent
+
+REQUIRED_FILES = [
+    &quot;SKILL.md&quot;,
+    &quot;CCA-Operating-System.html&quot;,
+    &quot;knowledge-base.md&quot;,
+    &quot;progress.md&quot;,
+    &quot;commitments-tracker.md&quot;,
+    &quot;guide-mastery-matrix.md&quot;,
+    &quot;daily-study-loop.md&quot;,
+    &quot;readiness-gates.md&quot;,
+    &quot;daily-review-sheet.md&quot;,
+    &quot;mastery-dashboard.md&quot;,
+    &quot;trainer-session-checklist.md&quot;,
+    &quot;mock-exam-bank.md&quot;,
+    &quot;weekly-review-protocol.md&quot;,
+    &quot;operating-system-review.md&quot;,
+]
+
+FORBIDDEN_PATTERNS = [
+    r&quot;60\s*Q&quot;,
+    r&quot;120\s*min&quot;,
+    r&quot;Launched March 12&quot;,
+    r&quot;source of truth:\s*knowledge-base&quot;,
+    r&quot;Domain 4.*tool descriptions&quot;,
+]
+
+
+def read(name: str) -&gt; str:
+    return (ROOT / name).read_text(encoding=&quot;utf-8&quot;)
+
+
+def fail(message: str, failures: list[str]) -&gt; None:
+    failures.append(message)
+
+
+def count_task_rows(matrix: str) -&gt; int:
+    return len(re.findall(r&quot;^\| [1-5]\.\d+ \|&quot;, matrix, flags=re.MULTILINE))
+
+
+def count_scenario_rows(matrix: str) -&gt; int:
+    scenario_section = matrix.split(&quot;## Scenario Mastery&quot;, 1)[-1]
+    return len(re.findall(r&quot;^\| (Customer Support Resolution Agent|Code Generation with Claude Code|Multi-Agent Research System|Developer Productivity with Claude|Claude Code for Continuous Integration|Structured Data Extraction) \|&quot;, scenario_section, flags=re.MULTILINE))
+
+
+def count_mock_questions(bank: str) -&gt; int:
+    return len(re.findall(r&quot;^### Q\d+&quot;, bank, flags=re.MULTILINE))
+
+
+def parse_matrix_rows(matrix: str) -&gt; list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for line in matrix.splitlines():
+        if not re.match(r&quot;^\| [1-5]\.\d+ \|&quot;, line):
+            continue
+        parts = [part.strip() for part in line.strip(&quot;|&quot;).split(&quot;|&quot;)]
+        if len(parts) &lt; 6:
+            continue
+        rows.append(
+            {
+                &quot;id&quot;: parts[0],
+                &quot;domain&quot;: parts[1],
+                &quot;task&quot;: parts[2],
+                &quot;meaning&quot;: parts[3],
+                &quot;status&quot;: parts[4],
+                &quot;evidence&quot;: parts[5],
+            }
+        )
+    return rows
+
+
+def parse_scenario_rows(matrix: str) -&gt; list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    scenario_section = matrix.split(&quot;## Scenario Mastery&quot;, 1)[-1]
+    known = {
+        &quot;Customer Support Resolution Agent&quot;,
+        &quot;Code Generation with Claude Code&quot;,
+        &quot;Multi-Agent Research System&quot;,
+        &quot;Developer Productivity with Claude&quot;,
+        &quot;Claude Code for Continuous Integration&quot;,
+        &quot;Structured Data Extraction&quot;,
+    }
+    for line in scenario_section.splitlines():
+        if not line.startswith(&quot;| &quot;):
+            continue
+        parts = [part.strip() for part in line.strip(&quot;|&quot;).split(&quot;|&quot;)]
+        if len(parts) &lt; 4 or parts[0] not in known:
+            continue
+        rows.append(
+            {
+                &quot;scenario&quot;: parts[0],
+                &quot;task&quot;: parts[1],
+                &quot;status&quot;: parts[2],
+                &quot;evidence&quot;: parts[3],
+            }
+        )
+    return rows
+
+
+def status_counts(rows: list[dict[str, str]]) -&gt; dict[str, int]:
+    counts: dict[str, int] = {}
+    for row in rows:
+        counts[row[&quot;status&quot;]] = counts.get(row[&quot;status&quot;], 0) + 1
+    return counts
+
+
+def write_dashboard(task_rows: list[dict[str, str]], scenario_rows: list[dict[str, str]]) -&gt; None:
+    counts = status_counts(task_rows)
+    scenario_counts = status_counts(scenario_rows)
+    practiced_or_passed = sum(1 for row in task_rows if row[&quot;status&quot;] in {&quot;Practiced&quot;, &quot;Passed&quot;})
+    passed = sum(1 for row in task_rows if row[&quot;status&quot;] == &quot;Passed&quot;)
+    needs_review = [row for row in task_rows if row[&quot;status&quot;] == &quot;Needs review&quot;]
+    not_started = [row for row in task_rows if row[&quot;status&quot;] == &quot;Not started&quot;]
+
+    lines = [
+        &quot;# CCA Mastery Dashboard&quot;,
+        &quot;&quot;,
+        &quot;Generated by `verify_operating_system.py` from `guide-mastery-matrix.md`.&quot;,
+        &quot;&quot;,
+        &quot;## Coverage&quot;,
+        &quot;&quot;,
+        f&quot;- Guide task rows: {len(task_rows)}&quot;,
+        f&quot;- Practiced or passed: {practiced_or_passed} / {len(task_rows)}&quot;,
+        f&quot;- Passed: {passed} / {len(task_rows)}&quot;,
+        f&quot;- Scenario rows: {len(scenario_rows)}&quot;,
+        &quot;&quot;,
+        &quot;## Task Status Counts&quot;,
+        &quot;&quot;,
+    ]
+    for status in [&quot;Not started&quot;, &quot;Explained&quot;, &quot;Practiced&quot;, &quot;Passed&quot;, &quot;Needs review&quot;]:
+        lines.append(f&quot;- {status}: {counts.get(status, 0)}&quot;)
+
+    lines.extend([&quot;&quot;, &quot;## Scenario Status Counts&quot;, &quot;&quot;])
+    for status in [&quot;Not started&quot;, &quot;Explained&quot;, &quot;Practiced&quot;, &quot;Passed&quot;, &quot;Needs review&quot;]:
+        lines.append(f&quot;- {status}: {scenario_counts.get(status, 0)}&quot;)
+
+    lines.extend([&quot;&quot;, &quot;## Highest Priority Needs Review&quot;, &quot;&quot;])
+    if needs_review:
+        for row in needs_review[:8]:
+            lines.append(f&quot;- {row[&#x27;id&#x27;]} {row[&#x27;task&#x27;]} ({row[&#x27;domain&#x27;]})&quot;)
+    else:
+        lines.append(&quot;- None marked `Needs review`.&quot;)
+
+    lines.extend([&quot;&quot;, &quot;## Next Not Started Rows&quot;, &quot;&quot;])
+    if not_started:
+        for row in not_started[:8]:
+            lines.append(f&quot;- {row[&#x27;id&#x27;]} {row[&#x27;task&#x27;]} ({row[&#x27;domain&#x27;]})&quot;)
+    else:
+        lines.append(&quot;- No task rows are `Not started`.&quot;)
+
+    lines.extend(
+        [
+            &quot;&quot;,
+            &quot;## Readiness Snapshot&quot;,
+            &quot;&quot;,
+            &quot;- Gate 1 requires all 30 rows at least `Practiced`, 25 rows `Passed`, no Domain 1 row below `Practiced`, and no stale `Needs review` row.&quot;,
+            &quot;- This dashboard is structural. It does not replace graded drills or Shela&#x27;s teach-back evidence.&quot;,
+            &quot;&quot;,
+        ]
+    )
+
+    (ROOT / &quot;mastery-dashboard.md&quot;).write_text(&quot;\n&quot;.join(lines), encoding=&quot;utf-8&quot;)
+
+
+def main() -&gt; int:
+    failures: list[str] = []
+
+    for filename in REQUIRED_FILES:
+        if not (ROOT / filename).exists():
+            fail(f&quot;Missing required file: {filename}&quot;, failures)
+
+    if failures:
+        print(&quot;CCA OS VERIFY: FAIL&quot;)
+        for item in failures:
+            print(f&quot;- {item}&quot;)
+        return 1
+
+    combined = &quot;\n&quot;.join(read(name) for name in REQUIRED_FILES if name.endswith(&quot;.md&quot;))
+    for pattern in FORBIDDEN_PATTERNS:
+        if re.search(pattern, combined, flags=re.IGNORECASE):
+            fail(f&quot;Forbidden/stale pattern present: {pattern}&quot;, failures)
+
+    skill = read(&quot;SKILL.md&quot;)
+    for required_ref in [
+        &quot;guide-mastery-matrix.md&quot;,
+        &quot;daily-study-loop.md&quot;,
+        &quot;readiness-gates.md&quot;,
+        &quot;trainer-session-checklist.md&quot;,
+    ]:
+        if required_ref not in skill:
+            fail(f&quot;SKILL.md does not require/reference {required_ref}&quot;, failures)
+
+    matrix = read(&quot;guide-mastery-matrix.md&quot;)
+    task_count = count_task_rows(matrix)
+    if task_count != 30:
+        fail(f&quot;Expected 30 guide task rows, found {task_count}&quot;, failures)
+
+    scenario_count = count_scenario_rows(matrix)
+    if scenario_count != 6:
+        fail(f&quot;Expected 6 scenario rows, found {scenario_count}&quot;, failures)
+
+    task_rows = parse_matrix_rows(matrix)
+    scenario_rows = parse_scenario_rows(matrix)
+    write_dashboard(task_rows, scenario_rows)
+
+    readiness = read(&quot;readiness-gates.md&quot;)
+    for gate in range(1, 8):
+        if f&quot;Gate {gate}&quot; not in readiness:
+            fail(f&quot;Missing readiness Gate {gate}&quot;, failures)
+
+    bank = read(&quot;mock-exam-bank.md&quot;)
+    mock_count = count_mock_questions(bank)
+    if mock_count != 30:
+        fail(f&quot;Expected 30 mock questions, found {mock_count}&quot;, failures)
+
+    if &quot;practice questions, not official exam questions&quot; not in bank:
+        fail(&quot;Mock bank does not clearly label questions as practice&quot;, failures)
+
+    page = read(&quot;CCA-Operating-System.html&quot;)
+    for required_text in [
+        &quot;How the CCA study operating system works&quot;,
+        &quot;The trainer loop&quot;,
+        &quot;Current mastery snapshot&quot;,
+        &quot;Daily study workflow&quot;,
+        &quot;Readiness gates&quot;,
+        &quot;Operating files&quot;,
+    ]:
+        if required_text not in page:
+            fail(f&quot;Operating-system HTML missing section text: {required_text}&quot;, failures)
+
+    if failures:
+        print(&quot;CCA OS VERIFY: FAIL&quot;)
+        for item in failures:
+            print(f&quot;- {item}&quot;)
+        return 1
+
+    print(&quot;CCA OS VERIFY: PASS&quot;)
+    print(f&quot;- Required files: {len(REQUIRED_FILES)}&quot;)
+    print(f&quot;- Guide task rows: {task_count}&quot;)
+    print(f&quot;- Scenario rows: {scenario_count}&quot;)
+    print(f&quot;- Mock questions: {mock_count}&quot;)
+    print(&quot;- Readiness gates: 7&quot;)
+    print(&quot;- Mastery dashboard: refreshed&quot;)
+    print(&quot;- HTML operating page: present&quot;)
+    return 0
+
+
+if __name__ == &quot;__main__&quot;:
+    sys.exit(main())
+</code></pre>
+  </main>
+</body>
+</html>

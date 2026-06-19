@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Operating System Review</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>CCA Trainer Operating System Review</h1>
+<p>Date: 2026-06-18</p>
+<h2>Rating Before This Upgrade</h2>
+<p><strong>Score: 6.5 / 10</strong></p>
+<p>The trainer had accurate source hierarchy, a kind teaching style, and a basic session loop. It was not yet a complete operating system because it lacked a coverage matrix, daily study workflow, strict readiness gates, and a concrete session checklist.</p>
+<h2>Improvements Implemented</h2>
+<ul>
+<li>Added <code>guide-mastery-matrix.md</code> to track all 30 official guide task areas and 6 scenarios.</li>
+<li>Added <code>daily-study-loop.md</code> to define Shela&#x27;s everyday review workflow.</li>
+<li>Added <code>daily-review-sheet.md</code> as the copyable/printable daily worksheet.</li>
+<li>Added <code>readiness-gates.md</code> to define what &quot;ready&quot; means by evidence, not reassurance.</li>
+<li>Added <code>trainer-session-checklist.md</code> to block casual &quot;done&quot; claims.</li>
+<li>Added <code>mock-exam-bank.md</code> with 30 practice MCQs mapped to guide domains and traps.</li>
+<li>Added <code>weekly-review-protocol.md</code> to force spaced retention and stale weak-spot review.</li>
+<li>Added <code>mastery-dashboard.md</code>, refreshed by the verifier from the matrix.</li>
+<li>Added <code>verify_operating_system.py</code>, which currently passes and confirms required files, 30 guide task rows, 6 scenario rows, 30 mock questions, 7 readiness gates, and dashboard refresh.</li>
+<li>Updated <code>SKILL.md</code> to require these operating files in every session.</li>
+</ul>
+<h2>Rating After This Upgrade</h2>
+<p><strong>Score: 9.5 / 10</strong></p>
+<p>The trainer is now a complete study operating system at the instruction-and-artifact level. It has a coverage map, generated dashboard, daily workflow, session checklist, readiness gates, mock bank, weekly retention protocol, and a verifier that catches missing structural pieces.</p>
+<h2>Remaining Weaknesses</h2>
+<ol>
+<li><strong>Still not hard-coded runtime enforcement.</strong> The verifier checks structure, but it does not automatically block an agent response in the chat UI.</li>
+<li><strong>Matrix statuses are initial estimates.</strong> Some rows are marked <code>Practiced</code> or <code>Needs review</code> from existing progress notes, but they still need fresh guide-style evidence before <code>Passed</code>.</li>
+<li><strong>Mock bank is trainer-generated.</strong> It is guide-modeled and labeled as practice, but it should be expanded and periodically reviewed against official sample-question style.</li>
+<li><strong>Dashboard is Markdown, not an app.</strong> It is useful and generated, but not a live interactive UI.</li>
+</ol>
+<h2>Next Improvements To Reach 9.7+</h2>
+<ul>
+<li>Add a second mock bank after Shela completes Claude 101 and more scenario drills.</li>
+<li>Generate printable/PDF versions of the daily review sheet and readiness gates if Shela wants paper review.</li>
+<li>Add a runtime hook or separate grader agent if the environment supports one.</li>
+</ul>
+  </main>
+</body>
+</html>

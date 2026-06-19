@@ -583,7 +583,9 @@
     <div class="topbar-inner">
       <div class="brand"><span class="mark">CCA</span><span>Study Operating System</span></div>
       <nav class="nav" aria-label="Page sections">
+        <a href="#roles">Roles</a>
         <a href="#loop">Loop</a>
+        <a href="#audit">Audit</a>
         <a href="#coverage">Coverage</a>
         <a href="#daily">Daily</a>
         <a href="#gates">Gates</a>
@@ -596,33 +598,58 @@
     <div class="hero">
       <div>
         <h1>How the CCA study operating system works</h1>
-        <p class="subhead">A guide-governed workflow that turns every exam-guide detail into a plain-English concept, an active recall drill, a logged mastery status, and a readiness gate.</p>
+        <p class="subhead">A guide-governed workflow where the trainer teaches Shela one exam concept at a time, and the companion audits coverage, accuracy, freshness, and readiness before confidence is allowed to rise.</p>
         <div class="truth-strip" aria-label="Current operating-system metrics">
-          <div class="metric"><b>29</b><span>official guide task rows tracked</span></div>
+          <div class="metric"><b>2</b><span>agentic roles: trainer plus companion</span></div>
+          <div class="metric"><b>30</b><span>official guide task rows tracked</span></div>
           <div class="metric"><b>6</b><span>official scenarios tracked</span></div>
-          <div class="metric"><b>30</b><span>practice MCQs in the local bank</span></div>
-          <div class="metric"><b>9.5</b><span>operating-system rating after upgrade</span></div>
+          <div class="metric"><b>0</b><span>passed rows right now, so no false readiness</span></div>
         </div>
       </div>
       <aside class="panel">
-        <h2>Source hierarchy</h2>
-        <p>The exam guide governs the system. Local files make the guide teachable, measurable, and reviewable.</p>
+        <h2><a href="source-hierarchy.html">Source hierarchy</a></h2>
+        <p>The exam guide governs exam truth. The companion checks current Anthropic sources when product freshness matters.</p>
         <ul class="source-list">
           <li><span class="dot"></span><span>Official exam guide: source of truth.</span></li>
-          <li><span class="dot"></span><span><code>knowledge-base.md</code>: guide-derived digest for speed.</span></li>
-          <li><span class="dot"></span><span><code>guide-mastery-matrix.md</code>: what has been explained, practiced, and passed.</span></li>
-          <li><span class="dot"></span><span><code>verify_operating_system.py</code>: structural verifier for the operating files.</span></li>
+          <li><span class="dot"></span><span><a href="knowledge-base.html">knowledge-base.html</a>: guide-derived digest for speed.</span></li>
+          <li><span class="dot"></span><span><a href="guide-mastery-matrix.html">guide-mastery-matrix.html</a>: what has been explained, practiced, and passed.</span></li>
+          <li><span class="dot"></span><span><a href="cca-trainer-companion.html">cca-trainer-companion.html</a>: independent audit loop for relevance, freshness, and readiness.</span></li>
+          <li><span class="dot"></span><span><a href="verify-operating-system.html">verify-operating-system.html</a>: structural verifier for the operating files.</span></li>
         </ul>
       </aside>
     </div>
   </header>
+
+  <section id="roles">
+    <div class="section-inner">
+      <div class="section-head">
+        <div>
+          <h2>Two roles, one exam goal</h2>
+          <p>The trainer and companion should not collapse into one vague helper. Each role has a different job and a different stop condition.</p>
+        </div>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <h3>CCA Trainer: teaches</h3>
+          <p>The trainer acts as a patient study-coach agent. It opens the guide-backed files, picks one matrix row, teaches in plain English, tests Shela with active recall, grades the answer, logs evidence, and names the next target.</p>
+        </div>
+        <div class="card">
+          <h3>CCA Trainer Companion: audits</h3>
+          <p>The companion acts as an independent verifier. It checks whether the trainer stayed exam-aligned, avoided irrelevant material, used current Anthropic sources when needed, and refused to mark Shela ready without evidence.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:16px;">
+        A skill is not an agent by itself. The AI becomes agentic when it loads the skill and follows the loop: look, think, act, check, repeat, and stop only after verification.
+      </div>
+    </div>
+  </section>
 
   <section id="loop">
     <div class="section-inner">
       <div class="section-head">
         <div>
           <h2>The trainer loop</h2>
-          <p>Every study session should move through the same loop. No passive notes. No "done" without recall and logging.</p>
+          <p>Every study session should move through the same loop. No passive notes. No "done" without recall, logging, and companion audit when the session triggers it.</p>
         </div>
         <span class="button static">Internal checklist</span>
       </div>
@@ -633,7 +660,38 @@
         <div class="step"><div class="step-num">4</div><h3>Check</h3><p>Run teach-back, flashcard, spot-the-trap, scenario, or mock MCQ recall.</p></div>
         <div class="step"><div class="step-num">5</div><h3>Grade</h3><p>Compare the answer against the guide-backed source and explain the trap.</p></div>
         <div class="step"><div class="step-num">6</div><h3>Log</h3><p>Update progress, matrix status, evidence, weak spots, and next target.</p></div>
-        <div class="step"><div class="step-num">7</div><h3>Verify</h3><p>Confirm the session checklist before calling the session complete.</p></div>
+        <div class="step"><div class="step-num">7</div><h3>Verify</h3><p>Confirm the checklist. If readiness, artifacts, mock questions, freshness, or Passed status is involved, run the companion audit.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="audit">
+    <div class="section-inner">
+      <div class="section-head">
+        <div>
+          <h2>The companion audit loop</h2>
+          <p>The companion exists to challenge the trainer before Shela trusts a lesson, artifact, or readiness claim.</p>
+        </div>
+        <span class="button static">Internal companion skill</span>
+      </div>
+      <div class="grid three">
+        <div class="card"><h3>Coverage audit</h3><p>Checks all 30 guide task areas, all 6 scenarios, matrix statuses, and whether Passed rows have real evidence.</p></div>
+        <div class="card"><h3>Relevance audit</h3><p>Flags course-only trivia, out-of-scope topics, and product details that do not help Shela pass the CCA-F exam.</p></div>
+        <div class="card"><h3>Accuracy and freshness audit</h3><p>Separates exam-guide truth from current Claude product truth, then checks official Anthropic sources when freshness matters.</p></div>
+      </div>
+      <div class="table-wrap" style="margin-top:16px;">
+        <table>
+          <thead><tr><th>Verdict</th><th>Meaning</th><th>What happens next</th></tr></thead>
+          <tbody>
+            <tr><td><span class="status green">PASS</span></td><td>Evidence supports the trainer, artifact, or readiness claim.</td><td>Proceed and keep logging evidence.</td></tr>
+            <tr><td><span class="status amber">WARNING</span></td><td>The work is mostly sound, but one risk should be fixed.</td><td>Fix the smallest issue before relying on it.</td></tr>
+            <tr><td><span class="status red">FAIL</span></td><td>The issue could mislead Shela, waste study time, or inflate readiness.</td><td>Do not call the artifact or readiness claim reliable yet.</td></tr>
+            <tr><td><span class="status">NEEDS LIVE VERIFICATION</span></td><td>The claim depends on current Anthropic product truth.</td><td>Check official Anthropic sources and mark verified as of the current date.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout" style="margin-top:18px;">
+        Supporting audit files stay private in the trainer workspace. The public takeaway is the behavior: the companion can challenge the trainer and block false confidence.
       </div>
     </div>
   </section>
@@ -651,10 +709,10 @@
         <div class="card">
           <h3>Guide task coverage</h3>
           <div class="bar-wrap">
-            <div class="bar-row"><span>Not started</span><div class="bar"><div class="fill red" style="width:58.6%"></div></div><span>17 / 29</span></div>
-            <div class="bar-row"><span>Practiced</span><div class="bar"><div class="fill blue" style="width:31%"></div></div><span>9 / 29</span></div>
-            <div class="bar-row"><span>Needs review</span><div class="bar"><div class="fill amber" style="width:10.3%"></div></div><span>3 / 29</span></div>
-            <div class="bar-row"><span>Passed</span><div class="bar"><div class="fill green" style="width:0%"></div></div><span>0 / 29</span></div>
+            <div class="bar-row"><span>Not started</span><div class="bar"><div class="fill red" style="width:60%"></div></div><span>18 / 30</span></div>
+            <div class="bar-row"><span>Practiced</span><div class="bar"><div class="fill blue" style="width:30%"></div></div><span>9 / 30</span></div>
+            <div class="bar-row"><span>Needs review</span><div class="bar"><div class="fill amber" style="width:10%"></div></div><span>3 / 30</span></div>
+            <div class="bar-row"><span>Passed</span><div class="bar"><div class="fill green" style="width:0%"></div></div><span>0 / 30</span></div>
           </div>
         </div>
         <div class="card">
@@ -673,7 +731,7 @@
         </div>
       </div>
       <div class="callout" style="margin-top:16px;">
-        Readiness is not close yet. The dashboard currently shows 0 passed rows and all 6 scenarios not started. That is useful because it prevents false confidence.
+        Companion finding: readiness is not close yet. The matrix currently shows 0 passed rows and all 6 scenarios not started. That is useful because it prevents false confidence.
       </div>
     </div>
   </section>
@@ -706,12 +764,12 @@
           <h3>Responsibilities</h3>
           <div class="table-wrap" style="margin-top:10px;">
             <table>
-              <thead><tr><th>Shela</th><th>Trainer</th></tr></thead>
+              <thead><tr><th>Shela</th><th>Trainer</th><th>Companion</th></tr></thead>
               <tbody>
-                <tr><td>Answer before seeing explanations.</td><td>Keep the official guide as authority.</td></tr>
-                <tr><td>Explain terms in her own words.</td><td>Teach one concept at a time.</td></tr>
-                <tr><td>Rate confidence honestly.</td><td>Grade against guide-backed material.</td></tr>
-                <tr><td>Repeat weak spots until passed.</td><td>Update progress and matrix evidence.</td></tr>
+                <tr><td>Answer before seeing explanations.</td><td>Keep the official guide as authority.</td><td>Check whether the source hierarchy was followed.</td></tr>
+                <tr><td>Explain terms in her own words.</td><td>Teach one concept at a time.</td><td>Flag passive exposure that is not mastery evidence.</td></tr>
+                <tr><td>Rate confidence honestly.</td><td>Grade against guide-backed material.</td><td>Block false readiness when gates are not satisfied.</td></tr>
+                <tr><td>Repeat weak spots until passed.</td><td>Update progress and matrix evidence.</td><td>Audit current Claude claims against official Anthropic sources.</td></tr>
               </tbody>
             </table>
           </div>
@@ -725,12 +783,12 @@
       <div class="section-head">
         <div>
           <h2>Readiness gates</h2>
-          <p>The trainer can only say "ready" when evidence passes the gates. A quick quiz cannot override them.</p>
+          <p>The trainer can only say "ready" when evidence passes the gates, and the companion can challenge any readiness claim. A quick quiz cannot override them.</p>
         </div>
         <span class="button static">Internal gates</span>
       </div>
       <div class="gate-list">
-        <div class="gate"><strong>Gate 1</strong><span>29 guide rows practiced, 24 passed, Domain 1 protected.</span></div>
+        <div class="gate"><strong>Gate 1</strong><span>30 guide rows practiced, 25 passed, Domain 1 protected.</span></div>
         <div class="gate"><strong>Gate 2</strong><span>45 of 50 vocabulary prompts correct without notes.</span></div>
         <div class="gate"><strong>Gate 3</strong><span>All 6 official scenarios explained without notes.</span></div>
         <div class="gate"><strong>Gate 4</strong><span>30 mixed mock MCQs, 24 correct, no domain under 70%.</span></div>
@@ -759,6 +817,8 @@
         <div class="artifact"><div><h3>Session checklist</h3><p>Done gate for each trainer session.</p></div><span class="artifact-label">Private trainer artifact</span></div>
         <div class="artifact"><div><h3>Mock exam bank</h3><p>30 practice MCQs mapped to guide domains.</p></div><span class="artifact-label">Private trainer artifact</span></div>
         <div class="artifact"><div><h3>Weekly review</h3><p>Spaced retention and stale weak-spot review.</p></div><span class="artifact-label">Private trainer artifact</span></div>
+        <div class="artifact"><div><h3>Companion skill</h3><p>Independent verifier for readiness, relevance, accuracy, and freshness.</p></div><span class="artifact-label">Private audit artifact</span></div>
+        <div class="artifact"><div><h3>Coverage audit script</h3><p>Counts matrix rows and flags obvious Gate 1 coverage failures.</p></div><span class="artifact-label">Private audit artifact</span></div>
       </div>
       <div class="callout" style="margin-top:18px;">
         Supporting files stay private in the trainer workspace. This public page summarizes how the system works without exposing progress logs or internal study artifacts.
@@ -767,7 +827,7 @@
   </section>
 
   <footer>
-    Generated for Shela's CCA-F preparation. Current date: 2026-06-19. The official exam guide remains the source of truth; this page explains the local study operating system.
+    Updated for Shela's CCA-F preparation on 2026-06-19. The official exam guide remains the source of truth; the companion audits the trainer so readiness means demonstrated mastery, not encouragement.
   </footer>
 </body>
 </html>

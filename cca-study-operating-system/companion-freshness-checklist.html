@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Companion Freshness Checklist</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>Claude Freshness Checklist</h1>
+<p>Use this checklist when auditing whether a lesson note, trainer response, mock question, or study artifact may be stale against current Anthropic sources.</p>
+<h2>Claims That Need Freshness Checks</h2>
+<p>Check official Anthropic sources before accepting claims about:</p>
+<ul>
+<li>Claude model names, availability, model IDs, or recommended model choices.</li>
+<li>Context windows, output limits, beta headers, deprecations, or retired API behavior.</li>
+<li>Claude Code commands, flags, hooks, plan mode behavior, output formats, or changelog items.</li>
+<li>Tool use behavior, server tools, web search, code execution, web fetch, or tool result handling.</li>
+<li>MCP features, MCP server configuration, resources, prompts, annotations, and security boundaries.</li>
+<li>Claude app features, connectors, projects, artifacts, memory, enterprise controls, or role permissions.</li>
+<li>Anthropic Academy recommended courses or course availability.</li>
+<li>Pricing, rate limits, account policy, auth, billing, or admin features.</li>
+</ul>
+<h2>What To Flag</h2>
+<p>Flag as <code>Critical</code> if the stale claim could cause Shela to pick the wrong exam answer.</p>
+<p>Flag as <code>Moderate</code> if the stale claim wastes study time, confuses surfaces, or changes a real-world Claude workflow.</p>
+<p>Flag as <code>Minor</code> if the issue is wording or naming and does not affect exam judgment.</p>
+<p>Flag as <code>Context only</code> if the current product update is interesting but not needed for the exam.</p>
+<h2>Required Freshness Language</h2>
+<p>When current product sources are checked, include:</p>
+<pre><code>Verified as of: YYYY-MM-DD
+Source checked: [official source name]
+Exam relevance: in scope / out of scope / context only</code></pre>
+<p>When current product sources are not checked, include:</p>
+<pre><code>Verdict: NEEDS LIVE VERIFICATION
+Reason: This claim depends on current Anthropic product behavior.</code></pre>
+<h2>Stale-Claim Examples</h2>
+<ul>
+<li>A lesson says an older Claude model is the latest model.</li>
+<li>A mock question drills product trivia that the exam guide lists as out of scope.</li>
+<li>A trainer response treats an Academy quiz topic as exam-required without guide support.</li>
+<li>A Claude Code workflow references flags, paths, or behavior without checking current docs.</li>
+<li>A note says schema guarantees factual truth instead of only output shape.</li>
+</ul>
+<h2>Freshness Does Not Override The Exam Guide</h2>
+<p>If a current Anthropic product source differs from the exam guide, mark both truths:</p>
+<pre><code>EXAM GUIDE CANONICAL: [exam-relevant statement]
+PRODUCT UPDATED: [current product statement]
+Recommended study action: Keep the exam answer guide-aligned, and add a real-world note separately.</code></pre>
+  </main>
+</body>
+</html>

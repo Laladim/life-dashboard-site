@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Lesson - L4 Skills Vs Other Features</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="../../index.html">Back to operating system</a></header>
+  <main>
+<hr>
+<p>lesson: 4 course: Introduction to Agent Skills title: How skills compare to other Claude Code features video: https://www.youtube.com/watch?v=IgNN4v0BJdU duration: &quot;3:01&quot; exam_domain: &quot;Domain 3 (3.2) + Domain 1 (subagents, hooks 1.5) + Domain 2 (MCP 2.4)&quot; captured: 2026-06-16 sources: PDF course companion + YouTube auto-captions (cleaned) ---</p>
+<h1>Lesson 4  -  Skills vs. other Claude Code features</h1>
+<h2>Learning objectives (from the course)</h2>
+<ul>
+<li>Compare skills to CLAUDE.md, subagents, hooks, and MCP servers</li>
+<li>Choose the right Claude Code customization feature for a given use case</li>
+<li>Design a complementary setup that combines multiple features effectively</li>
+</ul>
+<h2>The lesson in plain English</h2>
+<p>Five customization options, each solving a different problem. Picking the wrong one creates needless complexity. The distinctions (this is the heart of the exam&#x27;s &quot;choose the right tool&quot; questions):</p>
+<div class="table-wrap"><table><thead><tr><th>Feature</th><th>Trigger model</th><th>Context</th><th>Best for</th></tr></thead><tbody><tr><td><strong>CLAUDE.md</strong></td><td>Always-on (every conversation)</td><td>Joins every chat</td><td>Project-wide standards, constraints (&quot;never modify the DB schema&quot;), framework/style prefs</td></tr><tr><td><strong>Skills</strong></td><td>Request-driven (auto on match)</td><td>Joins current conversation</td><td>Task-specific expertise; knowledge only sometimes relevant; procedures that would clutter every chat</td></tr><tr><td><strong>Subagents</strong></td><td>You delegate</td><td><strong>Isolated/separate context</strong></td><td>Delegating a task; needing different tool access; isolation from the main context</td></tr><tr><td><strong>Hooks</strong></td><td>Event-driven (file save, tool call)</td><td>n/a</td><td>Run-on-every-save ops, validation before specific tool calls, automated side effects</td></tr><tr><td><strong>MCP servers</strong></td><td>External integration</td><td>n/a</td><td>External tools and integrations (a different category entirely)</td></tr></tbody></table></div>
+<p>The punchline: <strong>each handles its own specialty  -  combine them, don&#x27;t force everything into skills.</strong> A typical setup: CLAUDE.md for always-on standards + skills for task-specific expertise + hooks for automated ops + subagents for isolated delegation + MCP for external tools.</p>
+<h2>Key takeaways (verbatim from course companion)</h2>
+<ul>
+<li>CLAUDE.md loads into every conversation and is best for always-on project standards. Skills load on demand and are best for task-specific expertise</li>
+<li>Subagents run in isolated execution contexts  -  use them for delegated work. Skills add knowledge to your current conversation</li>
+<li>Hooks are event-driven (fire on file saves, tool calls). Skills are request-driven (activate based on what you&#x27;re asking)</li>
+<li>MCP servers provide external tools and integrations  -  a different category entirely from skills</li>
+<li>Each feature handles its own specialty  -  combine them rather than forcing everything into one approach</li>
+</ul>
+<h2>Exam watch-outs (CCA-F)  -  this lesson is high-yield</h2>
+<ul>
+<li>The <strong>two axes</strong> that separate them: <em>trigger</em> (always-on vs. request vs. event vs. delegated) and <em>context</em> (shared current conversation vs. isolated). Skills = request-driven + shared; subagents = delegated + isolated; hooks = event-driven.</li>
+<li><strong>Hooks vs. prompts/skills for guarantees</strong> (Domain 1, task 1.5): hooks are <em>deterministic</em> (code, fire on events); skills/prompts are <em>probabilistic</em> guidance. For financial/legal/safety guarantees, the exam wants <strong>hooks</strong>, not a skill.</li>
+<li><strong>Subagents are isolated and inherit nothing</strong>  -  ties directly to Domain 1 orchestration. (Lesson 5 adds: they don&#x27;t even see skills unless explicitly listed.)</li>
+<li>Over-engineering trap: &quot;force everything into one approach&quot; is the wrong answer; the boring &quot;combine the right feature for each job&quot; is right.</li>
+</ul>
+<h2>Terms introduced</h2>
+<ul>
+<li><strong>Always-on vs. on-demand</strong> = CLAUDE.md is always loaded; skills load only when matched.</li>
+<li><strong>Event-driven vs. request-driven</strong> = hooks fire on events (saves, tool calls); skills fire on what you ask.</li>
+<li><strong>Isolated execution context</strong> = a subagent&#x27;s separate context that doesn&#x27;t share the main conversation.</li>
+</ul>
+<h2>Full transcript (cleaned auto-captions; &quot;claw/cloud&quot;=Claude, &quot;cloud.md&quot;=CLAUDE.md, &quot;sub aents&quot;=subagents, &quot;MCP&quot;)</h2>
+<p>&gt; Claude Code offers several customization options: skills, CLAUDE.md, subagents, hooks, MCP servers. They solve different problems. Knowing when to use each prevents you from building the wrong thing. So let&#x27;s run them down. CLAUDE.md loads into every conversation, always. So if you want Claude to use TypeScript strict mode in this project, put it in your CLAUDE.md file. Skills load on demand  -  when Claude matches a request. Your PR review checklist doesn&#x27;t need to be in the context when you&#x27;re writing new code; it activates when you ask for a review. So use CLAUDE.md for project-wide standards that always apply, constraints like &quot;never modify the database schema,&quot; framework preferences, and coding style. Then use skills for task-specific expertise, knowledge that&#x27;s only relevant sometimes, and detailed procedures that would clutter every conversation. Skills add knowledge to your current conversation. When a skill activates, its instructions join the existing context. Subagents run in a separate context. They receive a task, work on it independently, and return results. They&#x27;re isolated from your main conversation. Use subagents when you want to delegate a task to a separate execution context, you need different tool access than the main conversation, or you want isolation between delegated work and your main context. Use skills when you want to enhance Claude&#x27;s knowledge for the current task and the expertise applies throughout a conversation. Hooks fire on events. A hook might run a linter every time Claude saves a file, or validate input before certain tool calls. They&#x27;re event-driven, while skills are request-driven  -  they activate based on what you&#x27;re asking. So use hooks for operations that should run on every file save, validation before specific tool calls, or automated side effects of Claude&#x27;s actions. Then use skills for knowledge that informs how Claude handles requests and guidelines that affect Claude&#x27;s reasoning. A typical setup might include a CLAUDE.md file for always-on project standards, skills for task-specific expertise, hooks for automated operations. Each handles its own specialty. Don&#x27;t force everything into skills when another option fits best. You can use multiple at a time. Skills provide automatic task-specific expertise. CLAUDE.md is for always-on instructions. Subagents run in isolated context. Hooks fire on events. MCP provides external tools. Use skills when you have knowledge that Claude should apply automatically when the topic is relevant, and combine them with other features for comprehensive customization.</p>
+  </main>
+</body>
+</html>

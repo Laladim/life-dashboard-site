@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Lesson - L6 Troubleshooting Skills</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="../../index.html">Back to operating system</a></header>
+  <main>
+<hr>
+<p>lesson: 6 course: Introduction to Agent Skills title: Troubleshooting skills video: https://www.youtube.com/watch?v=YBa1cwaG7is duration: &quot;3:37&quot; exam_domain: &quot;Domain 3 (3.2); reliability/debugging&quot; captured: 2026-06-16 sources: PDF course companion + YouTube auto-captions (cleaned) ---</p>
+<h1>Lesson 6  -  Troubleshooting skills</h1>
+<h2>Learning objectives (from the course)</h2>
+<ul>
+<li>Use the skills validator to catch structural issues before debugging</li>
+<li>Diagnose and fix common skill triggering and loading problems</li>
+<li>Resolve skill priority conflicts between enterprise, personal, project, and plugin skills</li>
+<li>Debug runtime errors including missing dependencies, permissions, and path issues</li>
+</ul>
+<h2>The lesson in plain English</h2>
+<p>When a skill misbehaves it falls into one of a few categories. <strong>Start with the agent skills validator</strong> (install via <code>uv</code>; run from the skill dir or anywhere)  -  it catches structural problems before you waste time elsewhere.</p>
+<ul>
+<li><strong>Doesn&#x27;t trigger</strong> → almost always the <strong>description</strong>. Claude uses semantic matching; your request must overlap the description&#x27;s meaning. Add trigger phrases users would actually say; test variations (&quot;help me profile this,&quot; &quot;why is this slow?&quot;, &quot;make this faster&quot;); add any that fail to the description.</li>
+<li><strong>Doesn&#x27;t load</strong> → <strong>structure</strong>. The <code>SKILL.md</code> must be inside a <strong>named directory</strong> (not the skills root), and the filename must be <strong>exactly <code>SKILL.md</code></strong> (caps SKILL, lowercase md). Run <strong><code>claude --debug</code></strong> to see loading errors mentioning your skill name.</li>
+<li><strong>Wrong skill used</strong> → descriptions too <strong>similar</strong>. Make them distinct and specific.</li>
+<li><strong>Priority conflict / being shadowed</strong> → an enterprise (or higher-priority) skill has the same name and wins. Fix: rename yours to something distinct (easier), or talk to your admin.</li>
+<li><strong>Plugin skills not appearing</strong> → clear the cache, restart Claude Code, reinstall. Still missing → plugin structure is likely wrong (validator earns its keep here).</li>
+<li><strong>Runtime errors</strong> (loads but fails) → missing <strong>dependencies</strong> (install them; note them in the description), <strong>permission</strong> issues (<code>chmod +x</code> scripts), and <strong>path separators</strong> (use <strong>forward slashes</strong> everywhere, even on Windows).</li>
+</ul>
+<p><strong>Quick checklist:</strong> not triggering → improve description/trigger phrases; not loading → check path, filename, YAML syntax; wrong skill → make descriptions distinct; shadowed → check priority, rename; plugins missing → clear cache + reinstall; runtime failure → check deps, permissions, paths.</p>
+<h2>Key takeaways (verbatim from course companion)</h2>
+<ul>
+<li>Start with the skills validator tool  -  it catches structural problems before you spend time debugging other things</li>
+<li>If a skill doesn&#x27;t trigger, the cause is almost always the description  -  add trigger phrases that match how you actually phrase requests</li>
+<li>If a skill doesn&#x27;t load, check that SKILL.md is inside a named directory (not the skills root) and the file name is exactly SKILL.md</li>
+<li>If the wrong skill gets used, your descriptions are too similar  -  make them distinct</li>
+<li>For runtime errors, check dependencies, file permissions (chmod +x), and path separators (use forward slashes everywhere)</li>
+</ul>
+<h2>Exam watch-outs (CCA-F)</h2>
+<ul>
+<li><strong>Symptom → cause mapping is the testable shape.</strong> Triggering = description; loading = structure (named dir + exact <code>SKILL.md</code>); wrong skill = too-similar descriptions; ignored = priority/shadowing; fails-at-run = deps/permissions/paths.</li>
+<li><strong><code>claude --debug</code></strong> and the <strong>validator</strong> are the named diagnostic tools  -  recognize them.</li>
+<li>Reinforces earlier facts: description drives matching (L1/L3), priority hierarchy (L2/L5), forward slashes + chmod +x for scripts.</li>
+</ul>
+<h2>Terms introduced</h2>
+<ul>
+<li><strong>Skills validator</strong> = the agent-skills verifier command (install via <code>uv</code>) that catches structural issues.</li>
+<li><strong><code>claude --debug</code></strong> = run mode that surfaces skill loading errors.</li>
+<li><strong>Shadowing</strong> = a higher-priority same-named skill overriding yours.</li>
+<li><strong>Semantic matching (failure mode)</strong> = no trigger when request doesn&#x27;t overlap the description&#x27;s meaning.</li>
+</ul>
+<h2>Full transcript (cleaned auto-captions; &quot;claw/cloud&quot;=Claude, &quot;skill.md&quot;=SKILL.md, &quot;UV&quot;=uv)</h2>
+<p>&gt; When skills don&#x27;t work, the problem usually falls into one of a few categories: the skill doesn&#x27;t trigger, doesn&#x27;t load, has conflicts, or fails at runtime. Good news  -  most fixes are straightforward. First, try the agent skills verifier command. Depending on your operating system, installation steps differ, but we recommend using uv as the easiest way to install fast. Once installed, navigate to your skill directory or run the command from anywhere. If your skill exists and passes the validator but Claude isn&#x27;t using it when expected, the cause is almost always the description. Claude uses semantic matching, so your request needs to overlap with the description&#x27;s meaning. If there&#x27;s not enough overlap, no match. Check your description against how you&#x27;re phrasing requests, add trigger phrases users would actually say, test with variations: &quot;help me profile this,&quot; &quot;why is this slow?&quot;, &quot;make this faster.&quot; If any fail to trigger, add those keywords to your description. If your skill doesn&#x27;t appear when you ask Claude what skills are available, check these: skills must be in the right location with the right structure. The SKILL.md file must be inside a named directory, not at the skills root. The file name must be exactly SKILL.md  -  all caps on SKILL, lowercase md. Run claude --debug to see loading errors; look for messages mentioning your skill name. Sometimes this alone solves the problem. If Claude uses the wrong skill or seems confused, your descriptions are probably too similar. Make them distinct. Being as specific as possible doesn&#x27;t just help Claude decide when to use your skill  -  it prevents conflicts with similar-sounding skills. If your personal skill is being ignored, an enterprise or higher-priority skill might have the same name; investigate that. If there&#x27;s an enterprise code review and you also have a personal code review, the enterprise one wins every time. Your solution is to rename your skill to something more distinct, or talk to your admin about the enterprise skill  -  but you&#x27;ll have a better chance with option one. Installed a plugin but can&#x27;t see its skills? Clear the cache, restart Claude Code, and reinstall. If skills still don&#x27;t appear, the plugin structure might be wrong  -  this is when the validator tool makes sense. The skill loads but fails during execution: if your skill uses external packages, they must be installed (add this info to your description); scripts need execute permission; use forward slashes everywhere, even on Windows. Quick checklist: Not triggering? Improve your description and trigger phrases. Not loading? Check your path, file name, and YAML syntax. Wrong skill used? Make descriptions more distinct. Being shadowed? Check the priority and rename if needed. Plugins missing? Clear cache and reinstall. Runtime failure? Check dependencies, permissions, and paths.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Lesson - L3 Configuration And Multi File Skills</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="../../index.html">Back to operating system</a></header>
+  <main>
+<hr>
+<p>lesson: 3 course: Introduction to Agent Skills title: Configuration and multi-file skills video: https://www.youtube.com/watch?v=98KaK_rn5rQ duration: &quot;4:04&quot; exam_domain: &quot;Domain 3 (task 3.2) + Domain 2 (task 2.3 allowed-tools) + Domain 5 (context efficiency)&quot; captured: 2026-06-16 sources: PDF course companion + YouTube auto-captions (cleaned) ---</p>
+<h1>Lesson 3  -  Configuration and multi-file skills</h1>
+<h2>Learning objectives (from the course)</h2>
+<ul>
+<li>Configure advanced skill metadata fields including allowed-tools and model</li>
+<li>Write effective skill descriptions that reliably trigger on the right requests</li>
+<li>Use allowed-tools to restrict what Claude can do when a skill is active</li>
+<li>Organize complex skills using progressive disclosure and multi-file structures</li>
+</ul>
+<h2>The lesson in plain English</h2>
+<p>The <strong>agentskills.io open standard</strong> defines the <code>SKILL.md</code> frontmatter fields:</p>
+<ul>
+<li><strong><code>name</code></strong> (required)  -  lowercase letters, numbers, hyphens only; <strong>max 64 chars</strong>; should match the directory name.</li>
+<li><strong><code>description</code></strong> (required)  -  <strong>max 1,024 chars</strong>; the <strong>most important</strong> field because Claude matches on it. A good description answers two questions: <em>what does the skill do?</em> and <em>when should Claude use it?</em> If it isn&#x27;t triggering, add keywords matching how you actually phrase requests.</li>
+<li><strong><code>allowed-tools</code></strong> (optional)  -  restricts which tools Claude may use while the skill is active. Omit it and the skill uses Claude&#x27;s normal permission model. Useful for read-only / security-sensitive workflows (e.g. <code>Read, Grep, Glob</code> only  -  no editing, writing, or bash).</li>
+<li><strong><code>model</code></strong> (optional)  -  specifies which Claude model the skill should use.</li>
+</ul>
+<p><strong>Progressive disclosure</strong> (the big idea): skills share Claude&#x27;s context window with your conversation, and loading one pulls its <code>SKILL.md</code> into context. Don&#x27;t cram everything into one giant file. Keep <code>SKILL.md</code> <strong>under 500 lines</strong> with essential instructions, and <strong>link to supporting files</strong> that Claude reads <em>only when needed</em>. The standard suggests organizing a skill directory with:</p>
+<ul>
+<li><code>scripts/</code>  -  executable code</li>
+<li><code>references/</code>  -  additional documentation</li>
+<li><code>assets/</code>  -  images, templates, data files</li>
+</ul>
+<p>It&#x27;s &quot;a table of contents in the context window rather than the whole document.&quot; Claude reads <code>references/architecture.md</code> only when someone asks about system design.</p>
+<p><strong>Scripts run without loading their contents into context</strong>  -  the script executes and only its <em>output</em> consumes tokens. Tell Claude to <strong>run</strong> the script, not read it. Best for environment validation, consistent data transformations, and operations more reliable as tested code than as generated code.</p>
+<h2>Key takeaways (verbatim from course companion)</h2>
+<ul>
+<li>name and description are required  -  allowed-tools and model are optional but powerful additions</li>
+<li>A good description answers two questions: What does the skill do? When should Claude use it?</li>
+<li>allowed-tools restricts which tools Claude can use when the skill is active  -  useful for read-only or security-sensitive workflows</li>
+<li>Progressive disclosure: keep SKILL.md under 500 lines and link to supporting files (references, scripts, assets) that Claude reads only when needed</li>
+<li>Scripts execute without loading their contents into context  -  only the output consumes tokens, keeping context efficient</li>
+</ul>
+<h2>Exam watch-outs (CCA-F)</h2>
+<ul>
+<li><strong>allowed-tools = a guardrail, not a security boundary.</strong> It scopes tools when the skill is active (Domain 2, task 2.3 tool allocation). Real security is enforced in code (see MCP lessons).</li>
+<li><strong>Progressive disclosure is a context-management answer</strong> (Domain 5): the &quot;right&quot; choice when a skill&#x27;s reference material is large is <em>link it, load on demand</em>, not &quot;put it all in SKILL.md.&quot;</li>
+<li><strong>Run-don&#x27;t-read scripts</strong>: only output costs tokens. A likely &quot;how do you keep context efficient&quot; item.</li>
+<li>Field constraints worth remembering: name ≤64 chars / matches dir; description ≤1,024 chars and is the matching field.</li>
+</ul>
+<h2>Terms introduced</h2>
+<ul>
+<li><strong>allowed-tools</strong> = optional frontmatter field restricting tools while the skill is active.</li>
+<li><strong>model</strong> = optional field naming which Claude model the skill uses.</li>
+<li><strong>Progressive disclosure</strong> = keep SKILL.md lean (&lt;500 lines), link out to scripts/references/assets loaded only when needed.</li>
+<li><strong>scripts/ references/ assets/</strong> = the open-standard sub-folders of a multi-file skill.</li>
+</ul>
+<h2>Full transcript (cleaned auto-captions; &quot;claw/cla&quot;=Claude, &quot;skill.md/skill.mmp&quot;=SKILL.md)</h2>
+<p>&gt; A basic skill works with just a name and description, but here are some advanced tips that make your skills really effective in Claude Code. The agentskills.io open standard has many available fields. We already went over the name, which identifies your skill  -  uses lowercase letters, numbers, and hyphens only, a maximum of 64 characters, and should match your directory name. A description, also required, tells Claude when to use the skill  -  a maximum of 1,024 characters and the most important field. Claude uses this for matching. But we can also add other optional fields. One is the allowed-tools field, which restricts which tools Claude can use when the skill is active. The model field specifies which Claude model to use for the skill. Try to be explicit with your instructions. For example, if someone told me my job was to help with dogs, I wouldn&#x27;t know what to do  -  assume Claude would think the same way. A good description answers two questions: What does this skill do? And when should Claude use it? If your skill isn&#x27;t triggering, add more keywords that match how you phrase requests. Sometimes you want a skill that can only read files, not modify them  -  for security-sensitive workflows, read-only tasks, or more. The allowed-tools field makes this possible. When this skill is active, Claude can only use those tools without asking permission. No editing, no writing, no bash commands. If you omit allowed-tools, the skill doesn&#x27;t restrict anything; Claude uses its normal permission model. Skills share Claude&#x27;s context window with your conversation. When Claude wants to use a skill, it loads the contents of that skill into context. However, sometimes you&#x27;ll need references, examples, or utility scripts required by the skill. But cramming it all into one 20,000-line text file means you take up a lot of space in the context window  -  and it&#x27;s not fun to maintain. This is where progressive disclosure comes in. Put your essential instructions in SKILL.md and detailed reference material in separate files that Claude reads only when needed. The open standard suggests a scripts folder for executable code, references for additional documentation, and assets for images, templates, or other data files. Then in SKILL.md, link to the supporting files. Here, Claude reads architecture.md only when someone asks about system design. If they&#x27;re asking where to add a component, it never loads. It&#x27;s like having a table of contents in the context window rather than the whole document. Keep SKILL.md under 500 lines. If you&#x27;re exceeding that, consider whether it should be split up. Scripts in your skill directory can run without loading their contents into context. The script executes and only the output consumes tokens. Tell Claude to run the script, not read it. This is useful for environment validation, data transformations that need to be consistent, and operations more reliable as tested code than generated code.</p>
+  </main>
+</body>
+</html>

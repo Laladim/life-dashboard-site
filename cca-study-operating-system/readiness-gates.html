@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Readiness Gates</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>CCA Readiness Gates</h1>
+<p><strong>Purpose:</strong> Define what &quot;ready for the CCA-F exam&quot; means. Do not rely on reassurance or course completion.</p>
+<h2>Gate 1: Guide Coverage</h2>
+<p>Shela is not ready until:</p>
+<ul>
+<li>all 30 task rows in <code>guide-mastery-matrix.md</code> are at least <code>Practiced</code>;</li>
+<li>at least 25 of 30 task rows are <code>Passed</code>;</li>
+<li>no Domain 1 row is below <code>Practiced</code>;</li>
+<li>no row marked <code>Needs review</code> has gone unaddressed for more than 3 study sessions.</li>
+</ul>
+<h2>Gate 2: Vocabulary</h2>
+<p>Shela must answer at least 45 of 50 vocabulary prompts correctly without notes.</p>
+<p>Required vocabulary groups:</p>
+<ul>
+<li>API and stateless requests</li>
+<li>agent, agent loop, coordinator, subagent</li>
+<li>tool, tool schema, structured error</li>
+<li>MCP tool, MCP resource, MCP prompt, MCP server</li>
+<li>JSON, JSON schema, optional/nullable fields</li>
+<li>context window, summarization, case facts, source mapping</li>
+<li>Claude Code, CLAUDE.md, slash commands, skills, plan mode</li>
+<li>hooks, escalation, human review, confidence calibration</li>
+</ul>
+<h2>Gate 3: Scenario Judgment</h2>
+<p>Shela must explain all 6 official scenarios without notes:</p>
+<ol>
+<li>What is being built.</li>
+<li>Which domains are reinforced.</li>
+<li>Which tools or Claude surface are involved.</li>
+<li>What can fail.</li>
+<li>Which answer choices are traps.</li>
+<li>What the safe, boring design instinct is.</li>
+</ol>
+<p>Passing threshold: 5 of 6 scenarios strong, and the weak one immediately reviewed.</p>
+<h2>Gate 4: Mixed Mock MCQs</h2>
+<p>Run 30 mixed mock MCQs across all domains.</p>
+<p>Passing threshold:</p>
+<ul>
+<li>24/30 or higher overall;</li>
+<li>no domain below 70%;</li>
+<li>every missed question has a written wrong-answer explanation.</li>
+</ul>
+<p>The trainer must label these as practice questions, not official exam questions.</p>
+<h2>Gate 5: Explain-It-Back</h2>
+<p>Shela must explain these without notes:</p>
+<ul>
+<li>why subagents need explicit context;</li>
+<li>why schema guarantees shape, not truth;</li>
+<li>why hooks enforce better than prompts;</li>
+<li>why sentiment/confidence are bad escalation triggers;</li>
+<li>why plan mode differs from extended thinking;</li>
+<li>why Batch API is wrong for blocking CI;</li>
+<li>why exact question count/time limit should not be memorized from community sources.</li>
+</ul>
+<p>Passing threshold: plain explanation plus a concrete example for each.</p>
+<h2>Gate 6: Out-of-Scope Recognition</h2>
+<p>Shela must identify at least 12 out-of-scope topics from the official guide and say why they should not be over-studied.</p>
+<p>Passing threshold: 12/15 correct in a mixed in-scope/out-of-scope drill.</p>
+<h2>Gate 7: Hands-On Design</h2>
+<p>Shela must complete at least one design exercise:</p>
+<ul>
+<li>a coordinator;</li>
+<li>two subagents;</li>
+<li>one MCP-style tool with a clear schema;</li>
+<li>structured error handling;</li>
+<li>JSON schema final output;</li>
+<li>one failure case and one escalation path.</li>
+</ul>
+<p>This can be a design document or small implementation. The goal is design judgment, not production coding.</p>
+<h2>Final Readiness Rule</h2>
+<p>The trainer can say &quot;ready&quot; only when Gates 1-6 pass and Gate 7 is at least designed. If any gate fails, the trainer must name the smallest next fix instead of reassuring.</p>
+  </main>
+</body>
+</html>

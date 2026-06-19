@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Lesson - L2 Creating Your First Skill</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="../../index.html">Back to operating system</a></header>
+  <main>
+<hr>
+<p>lesson: 2 course: Introduction to Agent Skills title: Creating your first skill video: https://www.youtube.com/watch?v=Wx6_vjFFyHM duration: &quot;3:47&quot; exam_domain: &quot;Domain 3  -  Claude Code Configuration &amp; Workflows (20%), task 3.2&quot; captured: 2026-06-16 sources: PDF course companion + YouTube auto-captions (cleaned) ---</p>
+<h1>Lesson 2  -  Creating your first skill</h1>
+<h2>Learning objectives (from the course)</h2>
+<ul>
+<li>Create a skill from scratch with proper frontmatter structure</li>
+<li>Test and verify that a skill loads correctly in Claude Code</li>
+<li>Explain how Claude Code matches incoming requests to available skills</li>
+<li>Describe the skill priority hierarchy (Enterprise, Personal, Project, Plugins)</li>
+</ul>
+<h2>The lesson in plain English</h2>
+<p><strong>Build a skill = make a directory whose name matches the skill, put a <code>SKILL.md</code> inside.</strong> Frontmatter has <code>name</code> (identifies it) and <code>description</code> (the matching criteria). Everything after the closing <code>---</code> is the <strong>instructions</strong> Claude follows.</p>
+<p>The walkthrough builds a personal <code>pr-description</code> skill in <code>~/.claude/skills/pr-description/</code>. Then: <strong>restart Claude Code</strong> (skills load at startup), verify it appears in the skills list, and test it (&quot;write a PR description for my changes&quot;).</p>
+<p><strong>How matching works under the hood:</strong> at startup Claude scans <strong>four locations</strong> (enterprise, personal, project, plugins) and loads <strong>only the name + description</strong> of each skill, not the full content. When you send a request, Claude compares it to those descriptions via <strong>semantic matching</strong> (&quot;explain what this function does&quot; matches a skill described as &quot;explain code with visual diagrams&quot; because intent overlaps). On a match it <strong>asks you to confirm</strong> loading the skill  -  keeping you aware of what context it&#x27;s pulling  -  then reads the full <code>SKILL.md</code> and follows it.</p>
+<p><strong>Priority for name conflicts (memorize):</strong> <strong>Enterprise → Personal → Project → Plugins.</strong> Enterprise (managed settings) wins; plugins lose. This lets orgs enforce standards while individuals still customize via <em>differently named</em> skills. To avoid conflicts, use descriptive names (<code>frontend-pr-review</code>, not <code>review</code>).</p>
+<p>Maintenance: edit <code>SKILL.md</code> to update; delete the directory to remove; <strong>restart Claude Code</strong> for changes to take effect.</p>
+<h2>Key takeaways (verbatim from course companion)</h2>
+<ul>
+<li>A skill is a directory containing a SKILL.md file with metadata (name, description) in frontmatter and instructions below</li>
+<li>Claude loads only skill names and descriptions at startup, then matches incoming requests against those descriptions using semantic matching</li>
+<li>You get a confirmation prompt before Claude loads the full skill content into context</li>
+<li>Priority for name conflicts: Enterprise → Personal → Project → Plugins</li>
+<li>To update a skill, edit its SKILL.md. To remove one, delete its directory. Always restart Claude Code for changes to take effect</li>
+</ul>
+<h2>Exam watch-outs (CCA-F, Domain 3)</h2>
+<ul>
+<li><strong>Startup loads name + description ONLY</strong>  -  the full body loads on match. This is <em>why</em> skills are context-cheap, and it&#x27;s flagged &quot;important later.&quot;</li>
+<li><strong>Priority order is testable</strong>: Enterprise &gt; Personal &gt; Project &gt; Plugins.</li>
+<li><strong>Restart required</strong> after any skill change  -  a likely &quot;why isn&#x27;t my skill showing?&quot; distractor.</li>
+<li>Directory name should <strong>match the skill name</strong>; the file must be exactly <code>SKILL.md</code>.</li>
+</ul>
+<h2>Terms introduced</h2>
+<ul>
+<li><strong>Frontmatter instructions split</strong> = frontmatter (name/description) above <code>---</code>, instructions below.</li>
+<li><strong>Semantic matching</strong> = Claude matches by <em>meaning</em> overlap between your request and the description, not exact keywords.</li>
+<li><strong>Confirmation step</strong> = the prompt before the full skill loads, so you stay aware of context.</li>
+<li><strong>Priority hierarchy</strong> = Enterprise → Personal → Project → Plugins (conflict resolution by same name).</li>
+</ul>
+<h2>Full transcript (cleaned auto-captions; &quot;cloud/claw&quot;=Claude Code, &quot;skill.md&quot;=SKILL.md)</h2>
+<p>&gt; So, let&#x27;s create a skill. This skill will teach Claude how we would like it to explain code using visual diagrams and analogies. Then, we&#x27;ll look at what happens under the hood when Claude uses it. First, let&#x27;s create a directory for your skill. We&#x27;re going to be making a personal skill, so it&#x27;ll live in many projects, so it will go in your home directory. Take into consideration that we&#x27;re creating a directory with the skill name inside of the skills directory. Now create the skill. The name identifies your skill. The description tells Claude when to use it. This is the matching criteria. And then everything after the second dashes is the instructions that Claude follows. Claude Code loads skills at startup. So restart your session. Then verify it&#x27;s available. You should see PR description in the list. Now test it. Make some changes on a branch and say, &quot;Write a PR description for my changes.&quot; Claude will then show you that it&#x27;s using the PR description skill. After that, it&#x27;ll check your diff and write a description following your template. Same format every single time. When Claude Code starts, it scans four locations for skills. Enterprise paths, your personal Claude skills, the project&#x27;s Claude skills, and installed plugins. It loads only the name and description of each skill, not the full content. This is important later. When you send a request, Claude compares it to the descriptions of your skills. &quot;Explain what this function does&quot; matches a skill described as &quot;explain code with visual diagrams&quot; because the intent overlaps. It will then ask you to confirm loading up the skill. This confirmation step keeps you aware of what context Claude is using. After you confirm, Claude reads the complete file and follows its instructions. Now, let&#x27;s say you clone a Git repository and have an overlapping skill name. Which one wins? Here&#x27;s the priority list. The highest is enterprise, which lives in the managed settings. Two is personal, which lives in your root directory configuration like we&#x27;re doing right now. Three is the project, which is the .claude directory inside of your repository. And the lowest is plugins, where you store plugins you got online. This lets organizations enforce standards while allowing individual customization through differently named skills. If your company has an enterprise code review skill and you create a personal code review skill, the enterprise version takes precedence. To avoid conflicts, use descriptive names. Instead of &quot;review,&quot; use &quot;front-end PR review&quot; or &quot;security review.&quot; To update a skill, edit its skill.md file. To remove one, delete its directory. Restart Claude Code after changes for them to take effect.</p>
+  </main>
+</body>
+</html>

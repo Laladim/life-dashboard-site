@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Companion Source Hierarchy</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>CCA Companion Source Hierarchy</h1>
+<p>Use this file when sources conflict.</p>
+<h2>Authority Order</h2>
+<ol>
+<li><strong>Official CCA-F exam guide PDF</strong></li>
+</ol>
+<ul>
+<li>Governs exam scope, domains, task areas, scenarios, sample-question style, readiness standard, and out-of-scope topics.</li>
+<li>If it conflicts with any local note, the guide wins.</li>
+</ul>
+<ol>
+<li><strong>CCA trainer operating files</strong></li>
+</ol>
+<ul>
+<li><code>knowledge-base.md</code> is a derived digest, not the primary authority.</li>
+<li><code>guide-mastery-matrix.md</code> governs coverage tracking.</li>
+<li><code>readiness-gates.md</code> governs whether Shela can be called ready.</li>
+<li><code>progress.md</code> and <code>learning-log.md</code> govern what has actually been practiced.</li>
+</ul>
+<ol>
+<li><strong>Official Anthropic sources for current Claude product truth</strong></li>
+</ol>
+<ul>
+<li>Anthropic platform release notes: https://platform.claude.com/docs/en/release-notes/overview</li>
+<li>Claude app release notes: https://support.claude.com/en/articles/12138966-release-notes</li>
+<li>Claude Code changelog: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md</li>
+<li>Models overview: https://platform.claude.com/docs/en/about-claude/models/overview</li>
+<li>Anthropic Academy courses page: https://anthropic.skilljar.com/</li>
+<li>Anthropic Newsroom: https://www.anthropic.com/news</li>
+</ul>
+<p>These URLs were live-probed with browser-style <code>curl</code> on 2026-06-19.</p>
+<ol>
+<li><strong>Anthropic Academy course pages and lesson notes</strong></li>
+</ol>
+<ul>
+<li>Useful for study context.</li>
+<li>Do not override the official exam guide.</li>
+<li>May include product education broader than exam scope.</li>
+</ul>
+<ol>
+<li><strong>Community guides, screenshots, model memory, and summaries</strong></li>
+</ol>
+<ul>
+<li>Lowest authority.</li>
+<li>Use only as hints to verify against official sources.</li>
+</ul>
+<h2>Conflict Labels</h2>
+<p>Use these labels in audits:</p>
+<ul>
+<li><code>EXAM GUIDE CANONICAL</code>: The official guide governs the answer.</li>
+<li><code>PRODUCT UPDATED</code>: Current Claude behavior or feature set has changed.</li>
+<li><code>COURSE BROADER THAN EXAM</code>: The course may be useful, but the topic is not exam-critical.</li>
+<li><code>LOCAL DIGEST NEEDS UPDATE</code>: A trainer file appears stale against the guide or official source.</li>
+<li><code>INSUFFICIENT EVIDENCE</code>: The claim may be true, but the companion cannot prove it from opened sources.</li>
+</ul>
+<h2>Exam Truth Vs Product Truth</h2>
+<p>When product information changes after the exam guide date, do not collapse the two.</p>
+<p>Use this wording:</p>
+<pre><code>For exam prep, follow the official guide unless Anthropic has updated the exam guide itself.
+For real-world Claude work, also note that the current product source says: [current fact].</code></pre>
+  </main>
+</body>
+</html>

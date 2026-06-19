@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Knowledge Base</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>CCA Trainer Knowledge Base (Derived From Official Guide)</h1>
+<p><strong>Primary source of truth:</strong> the official PDF guide, &quot;Claude Certified Architect - Foundations Certification Exam Guide&quot;, Version 0.1, dated Feb 10 2025. This file is a derived working digest for trainer sessions. On June 17, 2026 the full official guide was read end to end and this file reconciled against it, but any conflict must be resolved in favor of the official guide. Do not teach exam facts from memory. Read this file first for session speed, then verify against the guide whenever wording, scope, or exam facts matter.</p>
+<p><strong>Last verified:</strong> 2026-06-17 (against the official 40-page PDF guide, at <code>~/Desktop/CCA Resources/</code>). <strong>Source confidence:</strong> Domains + weights, 6 scenarios, candidate profile, 12 sample questions, in-scope and out-of-scope topic lists, prep recommendations = HIGH (read verbatim off the official PDF). Hard facts/task statements = HIGH (the PDF&#x27;s own &quot;Knowledge of / Skills in&quot; bullets). <strong>Correction made Jun 17:</strong> the domain table below previously had Domain 2 and Domain 4 swapped (it listed Claude Code as Domain 2 and Tool Design/MCP as Domain 4). The official order is Domain 2 = Tool Design &amp; MCP (18%), Domain 3 = Claude Code (20%), Domain 4 = Prompt Engineering (20%). Fixed here and in the scenario domain tags. The detailed task-statement section further down already used the correct numbering. <strong>Note on format figures:</strong> the official guide does NOT state a question count or a time limit. Do not memorize community estimates as official exam facts.</p>
+<hr>
+<h2>What the exam actually is</h2>
+<ul>
+<li><strong>Name:</strong> Claude Certified Architect - Foundations (CCA-F). The official guide does not state a launch date.</li>
+<li><strong>Format:</strong> all multiple choice, 1 correct answer of 4 options (the 3 wrong ones are &quot;distractors&quot; a candidate with incomplete knowledge might pick). No penalty for guessing, so answer everything. The exact question count and time limit are NOT in the official guide.</li>
+<li><strong>Score:</strong> pass/fail against a minimum standard set by subject-matter experts, reported as a scaled score of 100-1000, <strong>720 to pass</strong>. Scaled scoring equates across exam forms of slightly different difficulty.</li>
+<li><strong>Official practice exam exists:</strong> the guide says to complete the official practice exam before the real one (link provided separately). It uses the same scenarios and format and shows explanations after each answer. This is the closest proxy to the real thing, much closer than the Academy course quizzes.</li>
+<li><strong>Attempts/cost:</strong> The official guide does not state retake, cost, or discount policy. Treat those as registration/admin details to verify outside this guide, not exam-study facts.</li>
+<li><strong>The key structural fact:</strong> every question is anchored to a production scenario. The exam picks <strong>4 of the 6 scenarios at random</strong> and writes all questions against those. So the unit of study is the scenario, not the topic.</li>
+<li><strong>What it tests:</strong> practitioner judgment and trade-offs, NOT theory and NOT writing code. It shows a situation and asks which design is right.</li>
+<li><strong>Candidate profile (this is Shela):</strong> &quot;a solution architect who designs and implements production applications with Claude.&quot; Not a developer. Hands-on experience with the Claude Agent SDK, Claude Code, the Claude API, and MCP.</li>
+</ul>
+<hr>
+<h2>The 5 domains (with real weights and plain-English meaning)</h2>
+<p>Teach a newbie the plain-English line first, then the formal name.</p>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Domain</th><th>Weight</th><th>Plain English</th></tr></thead><tbody><tr><td>1</td><td>Agentic Architecture &amp; Orchestration</td><td><strong>27%</strong></td><td>When you have one AI helper vs a team of them, and how the &quot;manager&quot; hands work to &quot;workers&quot; and recovers when one fails.</td></tr><tr><td>2</td><td>Tool Design &amp; MCP Integration</td><td><strong>18%</strong></td><td>How you give the AI buttons to press (tools), so it picks the right one and fails gracefully. MCP is the standard plug for connecting those buttons.</td></tr><tr><td>3</td><td>Claude Code Configuration &amp; Workflows</td><td><strong>20%</strong></td><td>How you set up Claude Code for a team: shared instruction files, custom commands, when to let it plan vs just run, and wiring it into automated pipelines.</td></tr><tr><td>4</td><td>Prompt Engineering &amp; Structured Output</td><td><strong>20%</strong></td><td>How you ask so you get back clean, machine-readable data (JSON) reliably, with examples, validation, and retries.</td></tr><tr><td>5</td><td>Context Management &amp; Reliability</td><td><strong>15%</strong></td><td>How the AI remembers what matters across a long conversation, when to hand off to a human, and how it stays trustworthy.</td></tr></tbody></table></div>
+<p>The spread is flat. Domain 1 leads at 27%, then 3 and 4 at 20% each and 2 at 18%, with 5 at 15%. This is not &quot;study one thing.&quot; (Official order, verified Jun 17.)</p>
+<hr>
+<h2>The 6 production scenarios (official text, plain gloss, and domains)</h2>
+<p>Drawn 4-of-6 at random. A newbie should be able to say, for each: what is being built, and which decisions it forces.</p>
+<ol>
+<li><strong>Customer Support Resolution Agent.</strong> Build a support agent on the <strong>Claude Agent SDK</strong> handling high-ambiguity requests (returns, billing disputes, account issues) via custom MCP tools (<code>get_customer</code>, <code>lookup_order</code>, <code>process_refund</code>, <code>escalate_to_human</code>). Target 80%+ first-contact resolution while knowing when to escalate. <em>Domains: 1, 2, 5.</em></li>
+<li><strong>Code Generation with Claude Code.</strong> Use Claude Code for code gen, refactoring, debugging, docs. Custom slash commands, CLAUDE.md config, plan mode vs direct execution. <em>Domains: 3, 5.</em></li>
+<li><strong>Multi-Agent Research System.</strong> A coordinator delegates to specialized subagents (one searches web, one analyzes docs, one synthesizes, one writes reports). Produces comprehensive, cited reports with graceful failure handling. <em>Domains: 1, 2, 5.</em></li>
+<li><strong>Developer Productivity with Claude.</strong> Build dev-productivity tools on the <strong>Claude Agent SDK</strong>: explore unfamiliar codebases, understand legacy systems, generate boilerplate, automate repetitive tasks. Uses built-in tools (Read, Write, Bash, Grep, Glob) + MCP servers. <em>Domains: 2, 3, 1.</em></li>
+<li><strong>Claude Code for Continuous Integration.</strong> Integrate Claude Code into CI/CD: automated code reviews, test generation, feedback on pull requests. Design prompts that give actionable feedback and minimize false positives. <em>Domains: 3, 4.</em></li>
+<li><strong>Structured Data Extraction.</strong> Extract info from unstructured documents, validate with JSON schemas, maintain accuracy, handle edge cases gracefully, integrate downstream. <em>Domains: 4, 5.</em></li>
+</ol>
+<p>Note: scenarios 1, 3, and 4 are built on the <strong>Claude Agent SDK</strong> (half the exam). The Agent SDK is the biggest gap not deeply taught by the Anthropic Academy courses.</p>
+<hr>
+<h2>The 5 decisions (the judgment spine)</h2>
+<p>~80% of questions reduce to one of these. For each, the exam plants a TRAP and rewards a RIGHT instinct.</p>
+<ol>
+<li><strong>One agent, or many?</strong> Trap: the impressive multi-agent answer. Right: the simplest thing that works. Multi-agent only when tasks are genuinely parallel and specialized. The exam punishes over-engineering.</li>
+<li><strong>What can this tool do, and what does it return when it fails?</strong> Trap: a broad tool that throws a raw exception. Right: narrow boundary, clear schema, structured error the agent can handle.</li>
+<li><strong>How do I force parseable output?</strong> Trap: &quot;prompt it more nicely.&quot; Right: JSON schema + validation + retry.</li>
+<li><strong>What when the model is unsure or context is too long?</strong> Trap: trust the model&#x27;s confidence or the customer&#x27;s sentiment. Right: explicit deterministic triggers (human request, policy gap, no progress) + summarize state at handoffs. (The exam calls confidence self-ratings and sentiment &quot;unreliable proxies.&quot;)</li>
+<li><strong>Claude Code: run or plan, and how into CI?</strong> Trap: full autonomy everywhere. Right: plan mode for ambiguity/large changes, prompts tuned for actionable feedback and few false positives.</li>
+</ol>
+<hr>
+<h2>The hard facts (the only things worth rote-learning)</h2>
+<p>Grouped by decision. These appear as questions; you either know them or you don&#x27;t.</p>
+<h3>Orchestration (Domain 1)</h3>
+<ul>
+<li>Only <code>stop_reason == &quot;end_turn&quot;</code> reliably signals completion. Never parse assistant text or use iteration caps as the stop condition.</li>
+<li>Subagents inherit <strong>nothing</strong> from the coordinator. Every needed piece of context must be put in the subagent&#x27;s prompt explicitly.</li>
+<li>If the coordinator already has the context and the task is small, do it <strong>inline</strong>. Spawning a subagent is slower and costs more.</li>
+<li>For guarantees with financial, legal, or safety stakes, use <strong>hooks (code), not prompts</strong>. Prompts are probabilistic guidance only.</li>
+<li>Match the pattern to the work: prompt chaining (fixed steps), routing (distinct categories), orchestrator-workers (delegation), dynamic decomposition (investigations where the next step depends on the last finding).</li>
+<li>Hub-and-spoke: all communication flows through the coordinator for observability and error control.</li>
+</ul>
+<h3>Tool design &amp; MCP (Domain 2)</h3>
+<ul>
+<li>Tool descriptions are the <strong>primary</strong> mechanism the model uses to choose a tool. Overlapping descriptions cause misrouting. Fix by <strong>renaming to remove overlap</strong>, not by adding a classifier.</li>
+<li>A good tool makes the right action easy and the wrong action hard or impossible. Prefer parameters that match the real domain model; don&#x27;t make the model reconstruct business rules from loose strings.</li>
+<li>Errors: return <code>isError: true</code> with structured fields (category, isRetryable, attempted query, partial results, alternatives). Never throw a raw exception. Never return an empty list to signal failure (empty = success with no matches).</li>
+<li>Classify failures: transient infra (retry inside the tool), validation (structured detail so the agent corrects), business rule (non-retryable + explanation), permission (escalation path), uncertain write (do NOT auto-retry; report uncertainty).</li>
+<li><code>tool_choice: &quot;any&quot;</code> forces a tool call; <code>&quot;auto&quot;</code> allows a text reply; a named tool forces that specific one.</li>
+<li>Use lookup-then-act: a search tool returns candidates, a separate tool acts on an unambiguous ID. For destructive actions, preview-then-execute with a single-use confirmation token.</li>
+<li>MCP: Tools = actions; Resources = passive reference context (schemas, catalogs, docs); Prompts = reusable templates. Annotations like <code>readOnlyHint</code> are <strong>not</strong> a security boundary; enforce security in code.</li>
+</ul>
+<h3>Structured output (Domain 4)</h3>
+<ul>
+<li><code>tool_use</code> with a JSON Schema is the most reliable way to guarantee valid JSON. It guarantees <strong>shape, not source truth</strong> or correctness of values.</li>
+<li>Make fields <strong>optional/nullable</strong> when the source may not contain them. Required fields encourage fabrication. Add <code>&quot;other&quot;</code>/<code>&quot;unclear&quot;</code> escape hatches for evolving domains.</li>
+<li>Few-shot examples (2-4 targeted ones) are the most effective way to get consistent, actionable output.</li>
+<li>On a validation failure, resend: original document + the bad extraction + the exact errors. Blind retry fails when the info is simply absent.</li>
+<li>Self-check trick: extract both <code>calculated_total</code> and <code>stated_total</code> to detect discrepancies. Normalize in the prompt (dates to ISO 8601, currency to amount+code).</li>
+<li>Batch API: ~50% cheaper, up to 24h, no latency SLA. Good for overnight reports; never for a blocking pre-merge check.</li>
+</ul>
+<h3>Context &amp; escalation (Domain 5)</h3>
+<ul>
+<li>Escalation triggers are <strong>explicit</strong>: customer asks for a human, policy gap/exception, agent cannot make progress, unsafe/uncertain state. <strong>Not</strong> sentiment, <strong>not</strong> model confidence self-ratings (poorly calibrated). Don&#x27;t use simplistic counters like &quot;escalate after 3 failed tools.&quot;</li>
+<li>Progressive summarization destroys numbers, percentages, and dates. Keep a separate structured &quot;case facts&quot; block outside the summarized history, and preserve <code>claim -&gt; source</code> mappings (URL, doc, quote, date).</li>
+<li>The model sees a request, not your database. You decide what to include each turn. A big context window does not mean every detail is salient (capacity != attention).</li>
+<li>Don&#x27;t resume an old transcript with stale tool results; start from a structured summary + fresh lookups.</li>
+<li>Escalation handoff carries: customer ID, issue type, root cause, relevant records, amounts, actions taken, recommended next action.</li>
+</ul>
+<h3>Claude Code &amp; CI (Domain 3)</h3>
+<ul>
+<li>Plan mode = <strong>workflow gating</strong> (explore read-only -&gt; propose plan -&gt; wait for approval). Extended thinking = <strong>reasoning quality</strong>. Different mechanisms; confusing them is a planted trap.</li>
+<li>Plan mode for: many-file changes, architectural choices, migrations/breaking changes, unfamiliar codebases, when approval is needed. Direct execution for a single clear low-risk fix.</li>
+<li>CLAUDE.md hierarchy: project <code>.claude/CLAUDE.md</code> (shared via version control, all contributors) vs user <code>~/.claude/CLAUDE.md</code> (only you, not shared). Common bug: putting team instructions at user-level so teammates miss them.</li>
+<li>Share slash commands via <code>.claude/commands/</code> in the repo. Personal commands go in <code>~/.claude/commands/</code>.</li>
+<li>Path-specific rules live in <code>.claude/rules/</code> with YAML <code>paths</code> glob frontmatter; they load only when editing matching files (saves context).</li>
+<li>CI: use <code>-p</code>/<code>--print</code> for non-interactive mode; <code>--output-format json</code> for structured output. Isolate the review context from the session that wrote the code (a fresh instance finds more). When re-running, report only new/unfixed issues.</li>
+<li>Grep searches text inside files; Glob searches filenames/paths. Don&#x27;t use filename search for code references.</li>
+</ul>
+<hr>
+<h2>The build-and-break exercise (the differentiator)</h2>
+<p>The single highest-leverage practical task. Doing it once beats months of watching videos, and it doubles as a deployment artifact toward partner status.</p>
+<p>Build the smallest possible system on the <strong>Claude Agent SDK</strong>:</p>
+<ul>
+<li>a coordinator that delegates to two subagents (one &quot;searches,&quot; one &quot;synthesizes&quot;),</li>
+<li>wired to one custom MCP tool you design yourself with a clean schema and a structured error,</li>
+<li>with the final answer forced into a JSON schema.</li>
+</ul>
+<p>Example tool signature (teaches boundary + structured error + no raw crash):</p>
+<pre><code>get_record(id: string) -&gt; { found: bool, data: {...} | null, error: &quot;not_found&quot; | &quot;backend_down&quot; | null }</code></pre>
+<p><strong>Then break it on purpose.</strong> Feed a non-existent ID. Make the backend &quot;go down.&quot; Ask something it cannot answer. Watch it fall over, then add the escalation path and a fallback so it degrades gracefully instead of hallucinating. Shela already has this shape in her newsletter pipeline; strip that to a skeleton and rebuild it clean on the SDK rather than starting blank.</p>
+<hr>
+<h2>Exam-room tactic: delete 3 wrong answers fast</h2>
+<p>Confirmed against 12 real sample answer keys. The losing options are almost always one of these four shapes:</p>
+<ol>
+<li>The one that <strong>over-engineers</strong> (multi-agent when one agent would do; a classifier when a rename would do).</li>
+<li>The one that <strong>ignores failure</strong> (no structured error, no escalation, no fallback; empty list for an error).</li>
+<li>The one that <strong>trusts the model to behave</strong> (no schema, no validation; relies on sentiment or confidence self-ratings).</li>
+<li>The one that <strong>gives full autonomy</strong> where plan mode or a human gate or code-level enforcement clearly belongs.</li>
+</ol>
+<p>What survives is usually the answer. The exam rewards the boring, safe, well-bounded design.</p>
+<hr>
+<h2>What is OUT OF SCOPE (verbatim from the official guide, Jun 17)</h2>
+<p>The guide has an explicit &quot;Out-of-Scope Topics&quot; list. These will NOT appear on the exam. Do not drill them, and note that several show up in the Academy COURSE quizzes anyway, so course-quiz coverage is broader than the exam:</p>
+<ul>
+<li>Fine-tuning Claude or training custom models</li>
+<li>Claude API authentication, billing, or account management</li>
+<li>Detailed implementation of specific programming languages/frameworks (beyond what tool + schema config needs)</li>
+<li>Deploying or hosting MCP servers (infrastructure, networking, container orchestration)</li>
+<li>Claude&#x27;s internal architecture, training process, or model weights</li>
+<li>Constitutional AI, RLHF, or safety-training methodologies</li>
+<li>Embedding models or vector database implementation details</li>
+<li><strong>Computer use</strong> (browser automation, desktop interaction)</li>
+<li><strong>Vision / image analysis</strong> capabilities</li>
+<li><strong>Streaming API implementation</strong> or server-sent events</li>
+<li>Rate limiting, quotas, or API pricing calculations</li>
+<li>OAuth, API key rotation, or auth protocol details</li>
+<li>Specific cloud provider configs (AWS, GCP, Azure)</li>
+<li>Performance benchmarking or model-comparison metrics</li>
+<li><strong>Prompt caching implementation details</strong> (beyond knowing it exists)</li>
+<li><strong>Token counting algorithms or tokenization specifics</strong></li>
+</ul>
+<p>Practical consequence for the speed-run: the &quot;Building with the Claude API&quot; course quizzes tested several of these (the prompt-caching 1024-token minimum, streaming, computer use, vision, tokenization first-step). Getting them right is nice but pays nothing on the exam. Spend real practice on in-scope scenario judgment, not features trivia.</p>
+<h3>In-scope topics (also verbatim, so this is the real study checklist)</h3>
+<p>Agentic loop implementation (control flow on <code>stop_reason</code>); multi-agent orchestration (coordinator-subagent, decomposition, parallel subagents, iterative refinement); subagent context management (explicit passing, structured state persistence, crash recovery via manifests); tool interface design; MCP tool/resource design; MCP server config (project vs user scope, env var expansion, simultaneous multi-server access); error handling and propagation; escalation decision-making; CLAUDE.md config; custom commands and skills; plan mode vs direct execution; iterative refinement; structured output via <code>tool_use</code>; few-shot prompting; batch processing; context window optimization; human review workflows; information provenance.</p>
+<hr>
+<h2>Official &quot;Recommended Learning&quot; courses (Anthropic Academy)</h2>
+<p>In the exam guide&#x27;s own tile row: <strong>Building with the Claude API</strong>, <strong>Introduction to Model Context Protocol</strong>, <strong>Claude Code in Action</strong>, <strong>Claude 101</strong>. The Target Candidate Description also names <strong>Agent Skills</strong> under Claude Code configuration/workflows, so treat <strong>Introduction to Agent Skills</strong> as supplemental study, not one of the four official recommended-learning courses. AI Fluency is optional scaffolding. The Agent SDK gap is filled from the Autonomee classroom + the GoBot codebase, not from Academy.</p>
+<hr>
+<h2>Task-statement-level syllabus (the real topic + keyword checklist)</h2>
+<p>The exam guide &quot;lists the domains and task statements tested.&quot; These are the reproduced task statements, one cluster per domain. Teach these as the actual study checklist; each bullet is a topic, and the inline <code>code</code> terms are the exact keywords a candidate must recognize. 30 task areas total.</p>
+<h3>Domain 1 - Agentic Architecture &amp; Orchestration (27%) - 7 task areas</h3>
+<ul>
+<li><strong>1.1 Designing agentic loops.</strong> Agent loop lifecycle: send request, check <code>stop_reason</code> (<code>&quot;tool_use&quot;</code> vs <code>&quot;end_turn&quot;</code>), execute tools, append results, repeat. Model-driven decisions vs hard-coded trees. Anti-patterns: parsing assistant text for completion; arbitrary iteration limits as the stop.</li>
+<li><strong>1.2 Multi-agent orchestration (coordinator-subagent).</strong> Hub-and-spoke: coordinator owns comms, errors, routing. Subagents have isolated context. Coordinator does decomposition, delegation, aggregation, dynamic selection. Risk: overly narrow decomposition. Split coverage to avoid duplication; iterative-refinement re-routing.</li>
+<li><strong>1.3 Subagent calls, context passing, spawning.</strong> <code>Task</code> tool spawns subagents; coordinator <code>allowedTools</code> must include <code>&quot;Task&quot;</code>. Explicit context passing (subagents inherit nothing). <code>AgentDefinition</code> (descriptions, system prompts, tool constraints). <code>fork_session</code>. Parallel subagents via multiple <code>Task</code> calls in one turn. Prompt with goals + quality criteria, not step-by-step.</li>
+<li><strong>1.4 Multi-step workflows, enforcement &amp; handoff.</strong> Programmatic enforcement (hooks/preconditions) vs prompt guidance. Deterministic guarantees (verify identity before a financial op). Preconditions block downstream (block <code>process_refund</code> until <code>get_customer</code> returns a verified ID). Structured escalation handoff.</li>
+<li><strong>1.5 Agent SDK hooks.</strong> <code>PostToolUse</code> to intercept/normalize results (Unix to ISO 8601, status codes). Interception hooks block policy violations (block refunds over $500) + redirect to escalation. Hooks = deterministic; prompts = probabilistic.</li>
+<li><strong>1.6 Task decomposition.</strong> Fixed pipelines (prompt chaining) vs dynamic adaptive decomposition. Per-file analysis + integration pass. Map structure first, then prioritized plan.</li>
+<li><strong>1.7 Session state, resume, fork.</strong> <code>--resume &lt;session-name&gt;</code>; <code>fork_session</code> branches; inform agent of file changes on resume; a new session + structured summary can beat resuming with stale results.</li>
+</ul>
+<h3>Domain 2 - Tool Design &amp; MCP Integration (18%) - 5 task areas</h3>
+<ul>
+<li><strong>2.1 Tool interfaces &amp; descriptions.</strong> Descriptions are the primary tool-selection mechanism; include input formats, example queries, edge cases, boundaries. Overlap causes misrouting; rename to remove overlap (<code>analyze_content</code> to <code>extract_web_results</code>); split general tools into specialized.</li>
+<li><strong>2.2 Structured error responses (MCP).</strong> <code>isError</code> flag. Error types: transient / validation / business / permission. Structured metadata <code>errorCategory</code>, <code>isRetryable</code>, message. <code>retryable: false</code> for business rules. Local recovery in subagents. Access failure vs valid empty result.</li>
+<li><strong>2.3 Tool allocation &amp; <code>tool_choice</code>.</strong> Too many tools (18 vs 4-5) reduces reliability. Scope tools to role + limited cross-role utilities. <code>tool_choice</code>: <code>&quot;auto&quot;</code> / <code>&quot;any&quot;</code> / forced <code>{&quot;type&quot;:&quot;tool&quot;,&quot;name&quot;:...}</code>. Constrained alternatives (<code>fetch_url</code> to <code>load_document</code>).</li>
+<li><strong>2.4 Integrating MCP servers.</strong> Project <code>.mcp.json</code> (team) vs user <code>~/.claude.json</code> (experiments). Env-var substitution <code>${GITHUB_TOKEN}</code>. All connected servers&#x27; tools discovered simultaneously. MCP resources as content catalogs (schemas) to cut exploratory calls. Prefer community servers.</li>
+<li><strong>2.5 Built-in tools.</strong> Grep (content search), Glob (file discovery), Read/Write (full file), Edit (unique-match precise change; fall back to Read+Write if non-unique). Incremental investigation: Grep entry points, then Read flows.</li>
+</ul>
+<h3>Domain 3 - Claude Code Configuration &amp; Workflows (20%) - 6 task areas</h3>
+<ul>
+<li><strong>3.1 CLAUDE.md hierarchy, scope, modular.</strong> User (<code>~/.claude/CLAUDE.md</code>, not shared), project (<code>.claude/CLAUDE.md</code> or root, shared via VCS), directory-level. <code>@path</code> imports (<code>@./standards/coding-style.md</code>). <code>.claude/rules/</code> for topic files. Diagnose user-vs-project mistakes.</li>
+<li><strong>3.2 Slash commands &amp; skills.</strong> Project <code>.claude/commands/</code> (shared) vs user <code>~/.claude/commands/</code>. Skills <code>.claude/skills/</code> with <code>SKILL.md</code> frontmatter: <code>context: fork</code>, <code>allowed-tools</code>, <code>argument-hint</code>. <code>fork</code> isolates verbose output.</li>
+<li><strong>3.3 Path-specific rules.</strong> <code>.claude/rules/</code> YAML <code>paths</code> globs; load only when editing matching files; globs like <code>*<em>/</em>.test.tsx</code>; prefer over directory CLAUDE.md when conventions span the codebase.</li>
+<li><strong>3.4 Plan mode vs direct execution.</strong> Plan for large / multi-approach / architectural (microservices, 45+ file migrations); direct for a clear single-file fix with a stack trace. Explore subagent isolates discovery. Combine plan then execute.</li>
+<li><strong>3.5 Iterative refinement.</strong> Concrete I/O examples; test-driven iteration; the interview pattern (Claude asks questions to surface design); interdependent issues in one message vs independent sequentially.</li>
+<li><strong>3.6 CI/CD integration.</strong> <code>-p</code>/<code>--print</code> non-interactive; <code>--output-format json</code> + <code>--json-schema</code>; CLAUDE.md gives CI context; session context isolation (independent instance reviews better); report only new/unfixed; include existing tests in context.</li>
+</ul>
+<h3>Domain 4 - Prompt Engineering &amp; Structured Output (20%) - 6 task areas</h3>
+<ul>
+<li><strong>4.1 Explicit criteria.</strong> Concrete categorical criteria beat vague (&quot;flag comments only when they contradict code&quot;). False positives erode trust. Define report vs ignore; severity with code examples.</li>
+<li><strong>4.2 Few-shot.</strong> Most effective for consistent, actionable output; 2-4 targeted examples + rationale; demonstrate format (location/issue/severity/fix); distinguish acceptable vs real issues; reduces extraction hallucination.</li>
+<li><strong>4.3 Structured output <code>tool_use</code> + JSON Schema.</strong> Most reliable schema-conformant output; kills syntax errors, not semantic. <code>tool_choice</code> auto/any/forced. Required vs optional/nullable to avoid fabrication. Enums + <code>&quot;other&quot;</code>/<code>&quot;unclear&quot;</code> + detail string.</li>
+<li><strong>4.4 Validation, retries, feedback.</strong> Retry-with-error-feedback (original doc + bad extraction + exact errors). Retries useless when info is absent. <code>detected_pattern</code> field. Self-correction: extract <code>calculated_total</code> vs <code>stated_total</code>.</li>
+<li><strong>4.5 Batch processing.</strong> Message Batches API: 50% cheaper, up to 24h, no SLA. Non-blocking only (overnight/audits), not pre-merge. No multi-turn tool calling in one request. <code>custom_id</code> correlation; cadence planning; re-submit only failed by <code>custom_id</code>.</li>
+<li><strong>4.6 Multi-instance / multi-pass review.</strong> Self-review is weak (retains its reasoning). Independent instance finds subtle issues. Per-file + cross-file integration pass. Verification with self-rated confidence for calibrated routing.</li>
+</ul>
+<h3>Domain 5 - Context Management &amp; Reliability (15%) - 6 task areas</h3>
+<ul>
+<li><strong>5.1 Preserve critical info.</strong> Summarization loses numbers/percentages/dates. Lost-in-the-middle (start + end processed, middle missed). Tool outputs accumulate (40+ fields when 5 needed). Send full history. &quot;Case facts&quot; block; trim tool outputs; key findings at the start with headings; subagents include metadata.</li>
+<li><strong>5.2 Escalation &amp; ambiguity.</strong> Triggers: explicit human request, policy gap, no progress. Immediate vs attempt-to-resolve. Sentiment + confidence self-ratings are unreliable. Multiple matches: ask for identifiers, do not guess. Explicit criteria + few-shot in the system prompt.</li>
+<li><strong>5.3 Error propagation (multi-agent).</strong> Structured error context (failure type, query, partial results, alternatives). Access failure vs valid empty result. Generic statuses hide context. Silent suppression and full-abort are both anti-patterns. Local recovery for transient; propagate non-recoverable with partial results. Coverage annotations in synthesis.</li>
+<li><strong>5.4 Large-codebase context.</strong> Degradation in long sessions (model cites &quot;typical patterns&quot; instead of specific classes). Scratchpad files. Delegate to subagents to isolate discovery. Structured state persistence for crash recovery. <code>/compact</code>.</li>
+<li><strong>5.5 Human oversight &amp; confidence calibration.</strong> Aggregate metrics mask per-type/field failures. Stratified random sampling. Field-level confidence with labeled validation sets. Validate accuracy by doc type/field before automating. Route low-confidence / ambiguous-source items to human review.</li>
+<li><strong>5.6 Information provenance &amp; uncertainty in synthesis.</strong> Summarization can lose claim-source mappings. Require subagents to return source URLs or document names, relevant excerpts, and publication or collection dates. Preserve conflicts from credible sources with attribution instead of choosing one value. Separate well-established findings from contested ones, and render financial data as tables, news as prose, and technical findings as structured lists when that better preserves meaning.</li>
+</ul>
+<p><strong>Note on scenario count:</strong> the official exam guide and Shela&#x27;s screenshots show <strong>6</strong> scenarios. One community guide speculatively adds a 7th/8th; treat only the 6 as canonical.</p>
+<h3>Accuracy notes (cross-check of the two community guides, June 15, 2026)</h3>
+<p>Verified the two community guides against each other so the trainer never teaches a community error.</p>
+<ul>
+<li><strong>High confidence (both agree, identical to the official guide):</strong> domain weights 27/18/20/20/15; scoring 720/1000, 1-of-4, no guessing penalty; scenarios 1 to 6; and all the core judgment doctrine (loop + stop_reason, hooks vs prompts, structured errors, tool_choice, JSON-schema-is-shape-not-truth, escalation by explicit triggers, summarization caveats, multi-pass review).</li>
+<li><strong>Resolved disagreement:</strong> paullarionov&#x27;s format table claims &quot;4 of 8 possible scenarios&quot; and invents Scenarios 7 and 8; daronyondem does NOT (its Scenarios 7 to 15 are a labeled &quot;Practice Scenarios&quot; set, &quot;none is exam content&quot;). Official guide + screenshots = 6. Teach 6 only.</li>
+<li><strong>Teach as concept, not exact token (lower confidence, product-version specific):</strong> the two guides name different identifiers for forcing structured JSON output. daronyondem uses the API param <code>output_config.format</code>; paullarionov uses the Claude Code CLI flags <code>--output-format json</code> + <code>--json-schema</code>. Same idea, different surfaces, neither token fully verifiable here. Also <code>fork_session</code> (SDK) vs <code>fork-session</code> (CLI). Teach the principle (schema-backed / tool_use output beats prompt-only); flag the exact flag/param spellings as &quot;verify against the official courses,&quot; do not drill them as gospel.</li>
+</ul>
+<hr>
+<h2>The 12 OFFICIAL sample questions (verbatim from the guide, Jun 17)</h2>
+<p>These are the real sample questions printed in the official guide. They are the single best model of the exam&#x27;s style: a production scenario, 4 options, pick the BEST. Use them as the gold standard when writing mock questions, and have Shela attempt them cold. The right answer and the one-line lesson are given.</p>
+<p><strong>Customer Support Resolution Agent</strong></p>
+<ol>
+<li>Agent skips <code>get_customer</code> in 12% of cases and misidentifies accounts. Fix? <strong>A: add a programmatic prerequisite that blocks <code>lookup_order</code>/<code>process_refund</code> until <code>get_customer</code> returns a verified ID.</strong> Lesson: critical business logic needs deterministic enforcement (hooks/preconditions), not prompt instructions (B, C) or tool-availability changes (D).</li>
+<li>Agent calls <code>get_customer</code> for order questions; both tools have minimal near-identical descriptions. Best FIRST step? <strong>B: expand each tool&#x27;s description (input formats, example queries, edge cases, boundaries).</strong> Lesson: tool descriptions are the primary selection mechanism; fix the descriptions, do not add few-shot (A), a routing classifier (C), or consolidate tools (D) as a first step.</li>
+<li>55% first-contact resolution; agent escalates easy cases and tries to autonomously handle hard policy-exception ones. Fix escalation? <strong>A: add explicit escalation criteria + few-shot examples to the system prompt.</strong> Lesson: explicit criteria beat self-reported confidence (B, poorly calibrated), a trained classifier (C, over-engineered), and sentiment detection (D, sentiment does not equal complexity).</li>
+</ol>
+<p><strong>Code Generation with Claude Code</strong></p>
+<ol>
+<li>Custom <code>/review</code> slash command available to every dev on clone/pull. Where? <strong>A: <code>.claude/commands/</code> in the project repo</strong> (version-controlled, shared). Not user-level (B), not CLAUDE.md (C), not a non-existent config.json (D).</li>
+<li>Restructure a monolith into microservices, dozens of files, boundary decisions. Approach? <strong>A: plan mode</strong> to explore, understand dependencies, design before changing. Lesson: plan mode is for large-scale/architectural/multi-file work; direct execution (B, C, D) risks costly rework.</li>
+<li>Codebase with distinct conventions, test files spread throughout, want auto-applied conventions by file type. <strong>A: <code>.claude/rules/</code> with YAML frontmatter glob patterns</strong> (e.g. <code>*<em>/</em>.test.tsx</code>). Beats a monolithic CLAUDE.md (B), skills needing manual invocation (C), or directory-bound CLAUDE.md files (D).</li>
+</ol>
+<p><strong>Multi-Agent Research System</strong></p>
+<ol>
+<li>Reports cover only visual arts, missing music/writing/film; coordinator logs show it decomposed into only visual-art subtasks. Root cause? <strong>B: the coordinator&#x27;s task decomposition is too narrow.</strong> Lesson: read the logs; the subagents did their assigned jobs correctly, so do not blame downstream agents (A, C, D).</li>
+<li>Web search subagent times out; design failure flow to the coordinator. <strong>A: return structured error context (failure type, attempted query, partial results, alternatives).</strong> Lesson: structured errors enable recovery; generic statuses (B), suppressing as success (C), and aborting the whole workflow (D) are all anti-patterns.</li>
+<li>Synthesis agent needs frequent fact-checks (85% simple, 15% deep), causing 2-3 round trips and +40% latency. <strong>A: give synthesis a scoped <code>verify_fact</code> tool for simple lookups; keep complex verifications routed through the coordinator.</strong> Lesson: least privilege + scoped cross-role tool for the common case; do not batch (B), over-provision all web tools (C), or speculatively cache (D).</li>
+</ol>
+<p><strong>Claude Code for Continuous Integration</strong></p>
+<ol>
+<li>Pipeline runs <code>claude &quot;Analyze this PR&quot;</code> and hangs on interactive input. <strong>A: add the <code>-p</code> (<code>--print</code>) flag.</strong> Lesson: <code>-p</code> is the documented non-interactive mode; the others are non-existent flags/env vars or Unix workarounds.</li>
+<li>Two workflows (a blocking pre-merge check, an overnight report); manager wants both on the Batch API for 50% savings. <strong>A: batch for the overnight report only; keep real-time for the blocking pre-merge check.</strong> Lesson: Batch API is up to 24h with no latency SLA, fine for overnight, wrong for blocking; match the API to the latency need.</li>
+<li>PR touches 14 files; single-pass review gives inconsistent, contradictory feedback. <strong>A: split into focused passes (per-file local analysis, then a separate cross-file integration pass).</strong> Lesson: file-by-file avoids attention dilution; a bigger model (C) does not fix attention, and consensus-of-3 (D) suppresses real intermittent bugs.</li>
+</ol>
+<p><strong>The pattern across all 12:</strong> the winning answer is almost always the boring, well-bounded, deterministic-where-it-matters choice. The distractors are the four losing shapes: over-engineering, ignoring failure, trusting the model to behave (sentiment/confidence), or full autonomy where a gate belongs. None ask &quot;write the correct code.&quot;</p>
+<h2>The official Exam Preparation Recommendations (Jun 17)</h2>
+<p>The guide&#x27;s own prep advice is heavily HANDS-ON. This matters for how to coach Shela: the guide assumes judgment is earned by building.</p>
+<ol>
+<li>Build an agent with the Claude Agent SDK (full agentic loop, tool calling, error handling, session management, subagents).</li>
+<li>Configure Claude Code for a real project (CLAUDE.md hierarchy, <code>.claude/rules/</code>, skills with frontmatter, MCP server).</li>
+<li>Design and test MCP tools (differentiated descriptions, structured error responses, ambiguous-request testing).</li>
+<li>Build a structured data extraction pipeline (<code>tool_use</code> + JSON schema, validation-retry, optional/nullable fields, Batch API).</li>
+<li>Practice prompt engineering (few-shot for ambiguity, explicit review criteria, multi-pass review).</li>
+<li>Study context management (structured facts from verbose outputs, scratchpad files, subagent delegation).</li>
+<li>Review escalation / human-in-the-loop (when to escalate vs resolve, confidence-based routing).</li>
+<li>Complete the official practice exam before sitting the real one.</li>
+</ol>
+<p>There are also 4 detailed hands-on &quot;Preparation Exercises&quot; in the guide (build a multi-tool agent with escalation; configure Claude Code for a team; build an extraction pipeline; design and debug a multi-agent research pipeline). These map directly to the 6 scenarios and are the exact &quot;build-and-break&quot; work to do on the slow pass.</p>
+<h2>Companion study materials (already built)</h2>
+<ul>
+<li>Reference map (all domains/scenarios/courses): <code>cowork-outputs/20260615_Learning_Autonomee-CCA-80-20-Study-Plan.html</code></li>
+<li>The 4-hour functional-pass battle plan: <code>cowork-outputs/20260615_Learning_Autonomee-CCA-4Hour-Functional-Pass.html</code></li>
+<li>Community cross-check references, not source of truth: daronyondem/claude-architect-exam-guide and paullarionov/claude-certified-architect (GitHub). Use only when reconciled against the official exam guide.</li>
+</ul>
+  </main>
+</body>
+</html>

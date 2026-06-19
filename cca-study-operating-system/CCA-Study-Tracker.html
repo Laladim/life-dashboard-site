@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCA-F Study Tracker - Shela</title>
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#eff6ff; --green:#16a34a; --green-soft:#f0fdf4;
+    --amber:#d97706; --amber-soft:#fffbeb; --slate:#475569;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.55;}
+  .wrap{max-width:980px;margin:0 auto;padding:32px 20px 80px;}
+  header.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:18px;padding:30px 32px;}
+  header.hero h1{margin:0 0 6px;font-size:28px;letter-spacing:-.3px;}
+  header.hero p{margin:4px 0;opacity:.92;font-size:15px;}
+  .pills{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;}
+  .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;font-size:13px;}
+  h2{font-size:20px;margin:38px 0 14px;letter-spacing:-.2px;}
+  h2 .num{color:var(--blue);font-weight:700;margin-right:8px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:14px;}
+  .grid{display:grid;gap:14px;}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.4px;}
+  .b-done{background:var(--green-soft);color:var(--green);border:1px solid #bbf7d0;}
+  .b-now{background:var(--blue-soft);color:var(--blue);border:1px solid #bfdbfe;}
+  .b-next{background:var(--amber-soft);color:var(--amber);border:1px solid #fde68a;}
+  .b-todo{background:#f1f5f9;color:var(--slate);border:1px solid var(--line);}
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);}
+  a{color:var(--blue);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .steps{counter-reset:step;display:grid;gap:10px;}
+  .step{display:flex;gap:14px;align-items:flex-start;}
+  .step .dot{counter-increment:step;background:var(--blue);color:#fff;min-width:28px;height:28px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}
+  .step .dot::before{content:counter(step);}
+  .step .body strong{display:block;}
+  .muted{color:var(--muted);font-size:13px;}
+  .fact{padding:12px 14px;border-left:3px solid var(--blue);background:var(--blue-soft);border-radius:0 10px 10px 0;margin-bottom:10px;}
+  .domain{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px;}
+  .domain:last-child{border-bottom:none;}
+  .w{font-weight:700;color:var(--blue);}
+  .progressbar{height:8px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-top:8px;}
+  .progressbar > span{display:block;height:100%;background:var(--blue);}
+  code{background:#f1f5f9;padding:1px 6px;border-radius:6px;font-size:13px;}
+  footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0;font-size:12px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Claude Certified Architect - Foundations</h1>
+  <p>Study tracker for <strong>Shela</strong> · candidate profile: solution architect, judgment, not coding</p>
+  <p>This is both our roadmap and our progress log. It updates each study session.</p>
+  <div class="pills">
+    <span class="pill">Exam: Oct 1, 2026</span>
+    <span class="pill">~107 days out</span>
+    <span class="pill">Pass: 720 / 1000</span>
+    <span class="pill">MCQ · 720 pass · 4-of-6 scenarios</span>
+    <span class="pill">Autonomee Partners cohort</span>
+  </div>
+</header>
+
+<h2><span class="num">1</span>How we study (the loop)</h2>
+<div class="card">
+  <div class="steps">
+    <div class="step"><div class="dot"></div><div class="body"><strong>Screenshot the lesson</strong><span class="muted">Before watching, Shela sends the lesson page so we know exactly what's coming.</span></div></div>
+    <div class="step"><div class="dot"></div><div class="body"><strong>Exam watch-outs + note template</strong><span class="muted">Claude flags what the exam tests in this topic and hands a pre-filled note skeleton (one of 7 templates).</span></div></div>
+    <div class="step"><div class="dot"></div><div class="body"><strong>Blank Phomemo worksheet</strong><span class="muted">Printable 53mm worksheet with prompts + terms to fill in by hand or speak aloud.</span></div></div>
+    <div class="step"><div class="dot"></div><div class="body"><strong>Answer in own words</strong><span class="muted">Shela writes or speaks the answers, active recall, no copying.</span></div></div>
+    <div class="step"><div class="dot"></div><div class="body"><strong>Graded feedback</strong><span class="muted">Claude grades against the verified lesson, errors and fixes in bold, printable feedback sheet.</span></div></div>
+    <div class="step"><div class="dot"></div><div class="body"><strong>Log + memory card</strong><span class="muted">Result saved to the learning log; a Phomemo memory card captures the must-remember facts for spaced review.</span></div></div>
+  </div>
+</div>
+
+<h2><span class="num">2</span>Course roadmap (official recommended learning + supplemental Agent Skills)</h2>
+<div class="grid g2">
+  <div class="card">
+    <span class="badge b-now">In progress</span>
+    <h3 style="margin:10px 0 4px;">1 · Introduction to Agent Skills</h3>
+    <p class="muted">Warm-up · maps to Domain 3 (Claude Code config)</p>
+    <div class="progressbar"><span style="width:17%"></span></div>
+    <p class="muted">L1 complete &amp; graded. L2-L6 captured, awaiting study.</p>
+  </div>
+  <div class="card">
+    <span class="badge b-done">Complete</span>
+    <h3 style="margin:10px 0 4px;">2 · Building with the Claude API</h3>
+    <p class="muted">The big one (~8 hrs) · maps to Domain 4 (prompting &amp; structured output)</p>
+    <div class="progressbar"><span style="width:100%"></span></div>
+    <p class="muted">All 8 quizzes + the 23-Q Final Assessment passed (Jun 17, 2026). Fast completion done; slow study pass pending. <strong>Reviewer:</strong> archived in the local trainer workspace.</p>
+  </div>
+  <div class="card">
+    <span class="badge b-done">Complete</span>
+    <h3 style="margin:10px 0 4px;">3 · Introduction to Model Context Protocol</h3>
+    <p class="muted">Maps to Domain 2 (tool design &amp; MCP)</p>
+    <div class="progressbar"><span style="width:100%"></span></div>
+    <p class="muted">Final assessment 7/7 clean (Jun 18, 2026). Fast completion done; slow scenario pass pending. <strong>Reviewer:</strong> archived in the local trainer workspace.</p>
+  </div>
+  <div class="card">
+    <span class="badge b-done">Complete</span>
+    <h3 style="margin:10px 0 4px;">4 · Claude Code in Action</h3>
+    <p class="muted">Maps to Domains 3 + 1</p>
+    <div class="progressbar"><span style="width:100%"></span></div>
+    <p class="muted">Quiz 7/8 (Jun 18, 2026). Weak spot: CLAUDE.md types by sharing scope. <strong>Reviewer:</strong> archived in the local trainer workspace.</p>
+  </div>
+  <div class="card">
+    <span class="badge b-next">Remaining</span>
+    <h3 style="margin:10px 0 4px;">5 · Claude 101</h3>
+    <p class="muted">Final recommended course still open</p>
+    <div class="progressbar"><span style="width:0%"></span></div>
+    <p class="muted">Finish this next, then move to scenario-based review and practice.</p>
+  </div>
+</div>
+<p class="muted">Gap to self-study: the <strong>Claude Agent SDK</strong> underpins 3 of the 6 exam scenarios but is not one of the assigned courses.</p>
+
+<h2><span class="num">3</span>Course 1, Agent Skills: lesson tracker</h2>
+<div class="card" style="padding:6px 10px;">
+<table>
+  <tr><th>#</th><th>Lesson</th><th>Status</th><th>Our notes</th><th>Worksheet / feedback</th></tr>
+  <tr>
+    <td>L1</td><td>What are skills?</td>
+    <td><span class="badge b-done">Done</span></td>
+    <td><a href="lessons/agent-skills/L1_what-are-skills.html">L1 notes</a></td>
+    <td><a href="file:///Users/laladimalanta/Desktop/CCA-Phomemo-Notes/CCA_AgentSkills_L1_worksheet_600dpi_import.pdf">worksheet</a> · <a href="file:///Users/laladimalanta/Desktop/CCA-Phomemo-Notes/CCA_AgentSkills_L1_feedback_600dpi_import.pdf">feedback</a></td>
+  </tr>
+  <tr>
+    <td>L2</td><td>Creating your first skill</td>
+    <td><span class="badge b-next">Notes ready</span></td>
+    <td><a href="lessons/agent-skills/L2_creating-your-first-skill.html">L2 notes</a></td>
+    <td class="muted">worksheet on request</td>
+  </tr>
+  <tr>
+    <td>L3</td><td>Configuration &amp; multi-file skills</td>
+    <td><span class="badge b-next">Notes ready</span></td>
+    <td><a href="lessons/agent-skills/L3_configuration-and-multi-file-skills.html">L3 notes</a></td>
+    <td class="muted">worksheet on request</td>
+  </tr>
+  <tr>
+    <td>L4</td><td>Skills vs. other Claude Code features</td>
+    <td><span class="badge b-next">Notes ready</span></td>
+    <td><a href="lessons/agent-skills/L4_skills-vs-other-features.html">L4 notes</a></td>
+    <td class="muted">worksheet on request</td>
+  </tr>
+  <tr>
+    <td>L5</td><td>Sharing skills</td>
+    <td><span class="badge b-next">Notes ready</span></td>
+    <td><a href="lessons/agent-skills/L5_sharing-skills.html">L5 notes</a></td>
+    <td class="muted">worksheet on request</td>
+  </tr>
+  <tr>
+    <td>L6</td><td>Troubleshooting skills</td>
+    <td><span class="badge b-next">Notes ready</span></td>
+    <td><a href="lessons/agent-skills/L6_troubleshooting-skills.html">L6 notes</a></td>
+    <td class="muted">worksheet on request</td>
+  </tr>
+</table>
+</div>
+<div class="legend">
+  <span><span class="badge b-done">Done</span> studied + graded</span>
+  <span><span class="badge b-next">Notes ready</span> transcript + notes captured, not yet studied</span>
+  <span><span class="badge b-now">In progress</span></span>
+  <span><span class="badge b-todo">To do</span></span>
+</div>
+
+<h2><span class="num">4</span>The 5 facts this course keeps repeating (exam gold)</h2>
+<div class="card">
+  <div class="fact"><strong>1. The description is how Claude matches a skill to a request</strong> (semantic matching). Vague description means no trigger.</div>
+  <div class="fact"><strong>2. Skills load on demand.</strong> At startup only the name + description sit in context; the full body loads on match. Context-cheap by design.</div>
+  <div class="fact"><strong>3. Priority for same-named skills: Enterprise, Personal, Project, Plugins.</strong></div>
+  <div class="fact"><strong>4. Each customization feature has its lane.</strong> CLAUDE.md (always-on), skills (request-driven), hooks (event-driven), subagents (isolated delegation), MCP (external tools). Don't force everything into skills.</div>
+  <div class="fact"><strong>5. Subagents inherit nothing.</strong> They don't see skills unless explicitly listed; built-in agents can't use skills at all.</div>
+</div>
+
+<h2><span class="num">5</span>Vocabulary started (Unit 1) <span class="badge b-now">In progress</span></h2>
+<div class="card">
+  <table>
+    <tr><th>Term</th><th>Plain meaning</th><th>Exam nuance</th></tr>
+    <tr><td><strong>API</strong></td><td>One program messages another and gets an answer back.</td><td>A Claude API call is <strong>stateless</strong>, it forgets the previous message unless resent.</td></tr>
+    <tr><td><strong>Agent</strong></td><td>Claude running in a loop, <em>deciding</em> to call tools until done.</td><td>Done = <code>stop_reason == "end_turn"</code>; never judge by reading text.</td></tr>
+    <tr><td><strong>Tool</strong></td><td>A narrow, well-labeled button the agent chooses to press.</td><td>Failure behavior matters: structured error, never a raw crash or empty list.</td></tr>
+    <tr><td><strong>Schema</strong></td><td>A contract for the <em>shape</em> of data.</td><td>Guarantees <strong>shape, not truth</strong>, valid JSON can hold wrong values.</td></tr>
+  </table>
+  <p class="muted">Covered in trainer mode so far: API, Agent, Tool, Schema. MCP improved through the course quiz, but still needs formal vocab review with context window, Claude Code, CLAUDE.md, plan mode, and Agent SDK. Printable card: <a href="file:///Users/laladimalanta/Desktop/CCA-Phomemo-Notes/CCA_U1_vocab_phomemo_53mm_600dpi_import.pdf">CCA_U1_vocab (PDF)</a></p>
+</div>
+
+<h2><span class="num">6</span>The exam map (reference)</h2>
+<div class="card">
+  <h3 style="margin:0 0 8px;">5 domains</h3>
+  <div class="domain"><span>1 · Agentic Architecture &amp; Orchestration</span><span class="w">27%</span></div>
+  <div class="domain"><span>2 · Tool Design &amp; MCP Integration</span><span class="w">18%</span></div>
+  <div class="domain"><span>3 · Claude Code Configuration &amp; Workflows</span><span class="w">20%</span></div>
+  <div class="domain"><span>4 · Prompt Engineering &amp; Structured Output</span><span class="w">20%</span></div>
+  <div class="domain"><span>5 · Context Management &amp; Reliability</span><span class="w">15%</span></div>
+  <h3 style="margin:18px 0 8px;">6 production scenarios (exam draws 4 at random)</h3>
+  <p class="muted">1 · Customer Support Resolution Agent &nbsp;·&nbsp; 2 · Code Generation with Claude Code &nbsp;·&nbsp; 3 · Multi-Agent Research System &nbsp;·&nbsp; 4 · Developer Productivity with Claude &nbsp;·&nbsp; 5 · Claude Code for CI &nbsp;·&nbsp; 6 · Structured Data Extraction</p>
+  <p class="muted">Source of truth: the official exam guide PDF. Local digest: <a href="knowledge-base.html">knowledge-base.html</a></p>
+</div>
+
+<h2><span class="num">7</span>Every file we've created (asset index)</h2>
+<div class="card" style="padding:6px 10px;">
+<table>
+  <tr><th>Asset</th><th>What it is</th><th>Open</th></tr>
+  <tr><td>Operating-system page</td><td>HTML overview of how the study OS works</td><td><a href="index.html">CCA-Operating-System.html</a></td></tr>
+  <tr><td>Trainer skill</td><td>The study coach protocol + Lesson Note Pack process</td><td><a href="trainer-skill.html">trainer-skill.html</a></td></tr>
+  <tr><td>Trainer companion skill</td><td>Independent audit loop for readiness, relevance, accuracy, and freshness</td><td><a href="cca-trainer-companion.html">cca-trainer-companion.html</a></td></tr>
+  <tr><td>Coverage audit helper</td><td>Readable verifier page and generated coverage checks</td><td><a href="verify-operating-system.html">verify-operating-system.html</a></td></tr>
+  <tr><td>Operating review</td><td>Current rating, improvements, remaining weaknesses</td><td><a href="operating-system-review.html">operating-system-review.html</a></td></tr>
+  <tr><td>Mastery matrix</td><td>30 guide task areas + 6 scenarios with status/evidence</td><td><a href="guide-mastery-matrix.html">guide-mastery-matrix.html</a></td></tr>
+  <tr><td>Mastery dashboard</td><td>Generated coverage snapshot from the matrix</td><td><a href="mastery-dashboard.html">mastery-dashboard.html</a></td></tr>
+  <tr><td>Daily study loop</td><td>The repeatable daily study workflow</td><td><a href="daily-study-loop.html">daily-study-loop.html</a></td></tr>
+  <tr><td>Daily review sheet</td><td>Copyable/printable worksheet for each study day</td><td><a href="daily-review-sheet.html">daily-review-sheet.html</a></td></tr>
+  <tr><td>Readiness gates</td><td>Evidence rules before saying "ready"</td><td><a href="readiness-gates.html">readiness-gates.html</a></td></tr>
+  <tr><td>Session checklist</td><td>Done gate for every trainer session</td><td><a href="trainer-session-checklist.html">trainer-session-checklist.html</a></td></tr>
+  <tr><td>Mock exam bank</td><td>30 practice MCQs mapped to guide domains</td><td><a href="mock-exam-bank.html">mock-exam-bank.html</a></td></tr>
+  <tr><td>Weekly review</td><td>Retention and stale weak-spot protocol</td><td><a href="weekly-review-protocol.html">weekly-review-protocol.html</a></td></tr>
+  <tr><td>Knowledge base</td><td>Guide-derived working digest (secondary to the official PDF)</td><td><a href="knowledge-base.html">knowledge-base.html</a></td></tr>
+  <tr><td>Progress</td><td>Where Shela is, intake, confidence per unit</td><td><a href="progress.html">progress.html</a></td></tr>
+  <tr><td>Learning log</td><td>Per-lesson record + template chooser</td><td><a href="learning-log.html">learning-log.html</a></td></tr>
+  <tr><td>Lesson library</td><td>Agent Skills L1-L6 notes + transcripts</td><td><a href="lessons/agent-skills/README.html">lessons/agent-skills/</a></td></tr>
+  <tr><td>Vocab card</td><td>API / Agent / Tool / Schema flashcards (Phomemo)</td><td><a href="file:///Users/laladimalanta/Desktop/CCA-Phomemo-Notes/CCA_U1_vocab_phomemo_53mm_600dpi_import.pdf">PDF</a></td></tr>
+  <tr><td>L1 watch-outs card</td><td>Exam watch-outs answer card (Phomemo)</td><td><a href="file:///Users/laladimalanta/Desktop/CCA-Phomemo-Notes/CCA_AgentSkills_watchouts_600dpi_import.pdf">PDF</a></td></tr>
+  <tr><td>L1 worksheet</td><td>Blank fill-in worksheet (Phomemo)</td><td><a href="file:///Users/laladimalanta/Desktop/CCA-Phomemo-Notes/CCA_AgentSkills_L1_worksheet_600dpi_import.pdf">PDF</a></td></tr>
+  <tr><td>L1 feedback</td><td>Full graded feedback sheet (Phomemo)</td><td><a href="file:///Users/laladimalanta/Desktop/CCA-Phomemo-Notes/CCA_AgentSkills_L1_feedback_600dpi_import.pdf">PDF</a></td></tr>
+  <tr><td>Phomemo generators</td><td>Reusable scripts: cards, worksheet, feedback</td><td><a href="file:///Users/laladimalanta/Desktop/CCA-Phomemo-Notes/">folder</a></td></tr>
+</table>
+</div>
+<p class="muted">Phomemo print files live in <code>~/Desktop/CCA-Phomemo-Notes/</code> (53mm roll, 600 DPI import + 203 DPI print). Study materials live in <code>~/Life-Dashboard/personal-skills/claude-certified-architect-trainer/</code>.</p>
+
+<h2><span class="num">8</span>What's next</h2>
+<div class="card">
+  <ul style="margin:0;padding-left:20px;">
+	    <li>Finish <strong>Claude 101</strong>, the remaining recommended course.</li>
+	    <li>Use <strong>guide-mastery-matrix.md</strong> as the daily source of what to study next.</li>
+	    <li>Read the vocabulary dictionary and finish Unit 1 terms: MCP, context window, Claude Code, CLAUDE.md, plan mode, Agent SDK.</li>
+    <li>Re-drill the active weak spots: temperature direction, feature-purpose map, CLAUDE.md sharing scope, parallelization vs chaining, MCP triad.</li>
+    <li>Then start scenario-based practice: classify scenario, domain, big decision, trap, and right instinct.</li>
+    <li>Start the FastAPI re-understanding / Claude rebuild track as the hands-on lab for the official guide exercises.</li>
+  </ul>
+</div>
+
+<footer>
+  Generated 2026-06-16 · updated 2026-06-18 · updates each study session ·
+  built from the verified CCA exam guide + the trainer progress log.
+</footer>
+
+</div>
+</body>
+</html>

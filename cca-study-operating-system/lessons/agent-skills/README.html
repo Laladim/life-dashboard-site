@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Lesson - Readme</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="../../index.html">Back to operating system</a></header>
+  <main>
+<h1>Course: Introduction to Agent Skills</h1>
+<p>Our own reusable lesson library for the Anthropic Academy course <strong>Introduction to Agent Skills</strong> (the warm-up course in Goda&#x27;s Autonomee assignment; maps to CCA-F <strong>Domain 3  -  Claude Code Configuration &amp; Workflows, 20%</strong>, task 3.2).</p>
+<p>Each lesson file = learning objectives + plain-English notes + verbatim key takeaways + CCA-F exam watch-outs + terms + the full cleaned transcript. Sources: the PDF course companion (<code>~/Desktop/CCA Resources/Claude Certified Architect.pdf</code>) + YouTube auto-captions (cleaned via <code>_raw/clean_vtt.py</code>).</p>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Lesson</th><th>Duration</th><th>File</th><th>Heaviest exam tie-in</th></tr></thead><tbody><tr><td>1</td><td>What are skills?</td><td>2:54</td><td>[L1](L1_what-are-skills.md)</td><td>description = matching; personal vs project; skills vs CLAUDE.md vs slash commands</td></tr><tr><td>2</td><td>Creating your first skill</td><td>3:47</td><td>[L2](L2_creating-your-first-skill.md)</td><td>startup loads name+desc only; <strong>priority: Enterprise→Personal→Project→Plugins</strong>; restart required</td></tr><tr><td>3</td><td>Configuration and multi-file skills</td><td>4:04</td><td>[L3](L3_configuration-and-multi-file-skills.md)</td><td>allowed-tools guardrail; progressive disclosure (&lt;500 lines); run-don&#x27;t-read scripts</td></tr><tr><td>4</td><td>Skills vs. other Claude Code features</td><td>3:01</td><td>[L4](L4_skills-vs-other-features.md)</td><td><strong>choose the right tool</strong>; hooks=deterministic vs skills=probabilistic; subagents isolated</td></tr><tr><td>5</td><td>Sharing skills</td><td>3:53</td><td>[L5](L5_sharing-skills.md)</td><td><strong>subagents don&#x27;t inherit skills</strong>; built-ins can&#x27;t use skills; enterprise = highest priority</td></tr><tr><td>6</td><td>Troubleshooting skills</td><td>3:37</td><td>[L6](L6_troubleshooting-skills.md)</td><td>symptom→cause map; validator + <code>claude --debug</code>; forward slashes / chmod +x</td></tr></tbody></table></div>
+<p><strong>Total runtime ≈ 21 min</strong> of video (the written/companion study is longer).</p>
+<h2>The 5 facts this whole course keeps repeating (exam gold)</h2>
+<ol>
+<li><strong>The description is how Claude matches a skill to a request</strong> (semantic matching). Vague description → no trigger.</li>
+<li><strong>Skills load on demand</strong>; at startup only name + description are in context. Context-cheap by design.</li>
+<li><strong>Priority for same-named skills: Enterprise → Personal → Project → Plugins.</strong></li>
+<li><strong>Each customization feature has its lane</strong>  -  CLAUDE.md (always-on), skills (request-driven), hooks (event-driven), subagents (isolated delegation), MCP (external tools). Don&#x27;t force everything into skills.</li>
+<li><strong>Subagents inherit nothing</strong>  -  they don&#x27;t see skills unless explicitly listed; built-in agents can&#x27;t use skills at all.</li>
+</ol>
+<h2>Provenance / how to regenerate</h2>
+<ul>
+<li>Raw captions + transcript cleaner: <code>_raw/</code> (VTT files + <code>clean_vtt.py</code> + <code>L#_*.txt</code>).</li>
+<li>Caption fetch that worked: <code>yt-dlp --skip-download --write-auto-subs --sub-langs &quot;en.*&quot; --extractor-args &quot;youtube:player_client=web,default&quot;</code> (plain fetch failed YouTube&#x27;s n-challenge).</li>
+</ul>
+  </main>
+</body>
+</html>

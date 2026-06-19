@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Companion Audit Output Schema</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>CCA Companion Audit Output Schema</h1>
+<p>Use this schema for formal audits.</p>
+<h2>Required Fields</h2>
+<pre><code>Verdict: PASS / WARNING / FAIL / NEEDS LIVE VERIFICATION
+Severity: Critical / Moderate / Minor / Context only
+Audit target:
+User concern:
+Files opened:
+Official guide needed: yes / no
+Official guide opened: yes / no / unavailable
+Anthropic live sources needed: yes / no
+Anthropic live sources checked: yes / no
+Verified as of:
+Finding:
+Evidence:
+Exam impact:
+Confidence impact:
+Recommended fix:
+Next smallest action:</code></pre>
+<h2>Verdict Definitions</h2>
+<p><code>PASS</code> Use only when the claim, artifact, or readiness state is supported by evidence.</p>
+<p><code>WARNING</code> Use when the material is mostly sound but one weakness could confuse Shela or reduce study quality.</p>
+<p><code>FAIL</code> Use when the issue could mislead Shela, teach wrong exam behavior, inflate readiness, or omit a required guide topic.</p>
+<p><code>NEEDS LIVE VERIFICATION</code> Use when the audit depends on current Claude or Anthropic product truth and official live sources were not checked.</p>
+<h2>Required Challenge Language</h2>
+<p>Use direct language when needed:</p>
+<pre><code>The trainer should not mark this complete yet.</code></pre>
+<pre><code>This is course exposure, not mastery evidence.</code></pre>
+<pre><code>This may be useful for real-world Claude work, but I cannot trace it to the CCA-F exam guide.</code></pre>
+<pre><code>Shela should not treat this as exam-ready until she can explain the wrong-answer traps without notes.</code></pre>
+<h2>Fix Format</h2>
+<p>When recommending an edit, give the exact replacement or next action:</p>
+<pre><code>Replace:
+[old wording]
+
+With:
+[new wording]</code></pre>
+<p>or:</p>
+<pre><code>Next action:
+Run a spot-the-trap drill for matrix row 1.6 and record the result in progress.md.</code></pre>
+  </main>
+</body>
+</html>

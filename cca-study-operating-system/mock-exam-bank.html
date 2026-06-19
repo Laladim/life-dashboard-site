@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Mock Exam Bank</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>CCA Mock Exam Bank</h1>
+<p>These are <strong>practice questions, not official exam questions</strong>. They are modeled on the official guide&#x27;s domains, scenarios, and answer patterns. Use them for active recall and wrong-answer review.</p>
+<h2>How To Use</h2>
+<ul>
+<li>Shela answers before reading the explanation.</li>
+<li>The trainer records the result in <code>progress.md</code>.</li>
+<li>Any missed question updates <code>guide-mastery-matrix.md</code>.</li>
+<li>Passing means Shela can explain why the correct option wins and why at least one distractor fails.</li>
+</ul>
+<hr>
+<h3>Q01 - Domain 1 - Agentic Loop</h3>
+<p>A support agent calls a tool, receives the result, and must decide whether to continue. Which signal should the application use to know the model is finished?</p>
+<p>A. The assistant says &quot;I am done&quot; B. A fixed maximum of 3 tool calls has been reached C. <code>stop_reason == &quot;end_turn&quot;</code> D. The answer looks complete to the user</p>
+<p><strong>Answer:</strong> C <strong>Why:</strong> Completion should be based on the model stop signal, not text parsing, guesses, or arbitrary caps.</p>
+<h3>Q02 - Domain 1 - Multi-Agent Orchestration</h3>
+<p>A research task has four independent document sets that can be analyzed separately and then combined. What design is best?</p>
+<p>A. One long prompt that analyzes every document at once B. Parallel specialized subagents followed by synthesis C. A fixed sequential chain where each document waits for the previous one D. A customer-support escalation workflow</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Independent specialized work is a strong fit for parallel subagents plus aggregation.</p>
+<h3>Q03 - Domain 1 - Subagent Context</h3>
+<p>A coordinator tells a subagent, &quot;Use the customer issue we discussed earlier.&quot; The subagent gives a vague answer. What is the likely problem?</p>
+<p>A. Subagents automatically inherit too much context B. Subagents inherit nothing unless the coordinator passes it explicitly C. The subagent should use sentiment analysis D. The subagent needs a larger model only</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Subagents have isolated context; the prompt must include the needed facts.</p>
+<h3>Q04 - Domain 1 - Hooks vs Prompts</h3>
+<p>A refund agent must never process refunds above a policy limit without escalation. What is the safest design?</p>
+<p>A. Add &quot;please never do this&quot; to the prompt B. Use a hook or code precondition that blocks the tool call C. Ask the model to rate its confidence D. Let the customer sentiment decide</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Deterministic guarantees need code-level enforcement, not probabilistic prompt guidance.</p>
+<h3>Q05 - Domain 1 - Task Decomposition</h3>
+<p>A workflow always follows the same three dependent steps: extract, validate, then summarize. Which pattern fits best?</p>
+<p>A. Prompt chaining B. Dynamic decomposition C. Random routing D. Unbounded multi-agent debate</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Fixed dependent steps are a chain; each step relies on the previous output.</p>
+<h3>Q06 - Domain 1 - Session State</h3>
+<p>A long coding session has stale tool results and many unrelated turns. What is often safer than blindly resuming the whole transcript?</p>
+<p>A. Start fresh from a structured summary and rerun needed lookups B. Trust the old transcript completely C. Increase temperature D. Hide the old tool results in the middle</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> A structured summary plus fresh lookups reduces stale-context risk.</p>
+<h3>Q07 - Domain 2 - Tool Description</h3>
+<p>Two tools have overlapping descriptions and Claude often picks the wrong one. What should you fix first?</p>
+<p>A. Rename and clarify tool boundaries B. Add a separate classifier agent immediately C. Remove all tool descriptions D. Force every tool call manually</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Tool descriptions drive selection. Overlap should be removed at the tool interface.</p>
+<h3>Q08 - Domain 2 - Structured Error</h3>
+<p>A lookup tool fails because the database is temporarily unavailable. What should it return?</p>
+<p>A. An empty list B. A raw stack trace C. Structured error metadata with retryability and category D. A confident invented answer</p>
+<p><strong>Answer:</strong> C <strong>Why:</strong> The agent needs actionable error information to recover or escalate.</p>
+<h3>Q09 - Domain 2 - Tool Choice</h3>
+<p>The model must call some tool before answering, but the exact tool can vary. Which setting fits?</p>
+<p>A. <code>tool_choice: &quot;auto&quot;</code> B. <code>tool_choice: &quot;any&quot;</code> C. No tools available D. Natural language reminder only</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> <code>&quot;any&quot;</code> forces a tool call while letting the model choose which tool.</p>
+<h3>Q10 - Domain 2 - MCP Triad</h3>
+<p>In MCP, which item represents passive reference context such as schemas or catalogs?</p>
+<p>A. Tool B. Resource C. Prompt D. Hook</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Resources provide passive context. Tools act. Prompts are reusable templates.</p>
+<h3>Q11 - Domain 2 - Built-In Tools</h3>
+<p>Claude needs to find files by filename pattern before reading them. Which tool concept matches that job?</p>
+<p>A. Grep B. Glob C. JSON Schema D. Batch API</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Glob finds paths/files. Grep searches text inside files.</p>
+<h3>Q12 - Domain 3 - CLAUDE.md Scope</h3>
+<p>A team standard is placed in a user&#x27;s personal CLAUDE.md, and teammates do not follow it. What is wrong?</p>
+<p>A. Team standards should live in project-level configuration B. User CLAUDE.md always syncs to everyone C. Slash commands replace all project rules D. The standard should be in a customer support tool</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Shared team instructions must live in the repo/project scope.</p>
+<h3>Q13 - Domain 3 - Slash Commands vs Skills</h3>
+<p>Shela wants a reusable action she explicitly types when needed. Which feature is the best fit?</p>
+<p>A. Slash command B. Skill C. Context window D. Sentiment trigger</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Slash commands are manually invoked. Skills auto-load when relevant.</p>
+<h3>Q14 - Domain 3 - Path Rules</h3>
+<p>Different testing conventions apply only to <code>*.test.tsx</code> files. Where should this rule live?</p>
+<p>A. A broad always-on instruction for every task B. A path-specific rule with matching globs C. A billing dashboard D. A confidence self-rating prompt</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Path-specific rules save context and load only when relevant.</p>
+<h3>Q15 - Domain 3 - Plan Mode</h3>
+<p>Claude must migrate many files with architectural trade-offs. What workflow should be preferred?</p>
+<p>A. Direct execution with no review B. Plan mode before changes C. Batch API only D. Ask the model for a confidence score</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Plan mode gates larger ambiguous work before execution.</p>
+<h3>Q16 - Domain 3 - CI/CD</h3>
+<p>A CI job hangs because Claude is waiting for interactive input. What is the right fix?</p>
+<p>A. Use non-interactive print mode B. Increase context window C. Add a refund tool D. Remove structured output</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> CI needs non-interactive execution.</p>
+<h3>Q17 - Domain 3 - Review Context</h3>
+<p>Claude wrote a patch and then reviews the same session&#x27;s work. The review misses issues. What improves the review?</p>
+<p>A. A fresh isolated review context B. The same session with more praise C. A higher temperature D. No tests in context</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Independent context reduces self-review blind spots.</p>
+<h3>Q18 - Domain 4 - Explicit Criteria</h3>
+<p>A PR review prompt says &quot;find bad code&quot; and produces noisy comments. What is the best improvement?</p>
+<p>A. Define exact report/ignore criteria with examples B. Ask for more comments C. Remove severity labels D. Trust the model to infer team standards</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Concrete criteria reduce false positives and improve actionability.</p>
+<h3>Q19 - Domain 4 - Few-Shot</h3>
+<p>An extraction task has subtle categories the model confuses. What is usually most helpful?</p>
+<p>A. Two to four targeted examples with rationale B. No examples, only a vague instruction C. A larger context window alone D. A billing-setting change</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Few-shot examples teach the distinction and expected output.</p>
+<h3>Q20 - Domain 4 - Schema Shape</h3>
+<p>JSON Schema output validates successfully, but the extracted amount is wrong. What did the schema guarantee?</p>
+<p>A. Truth of every value B. Output shape and types C. Source provenance D. Human approval</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Schema enforces structure, not semantic truth.</p>
+<h3>Q21 - Domain 4 - Optional Fields</h3>
+<p>A document may not include a middle name. What schema design avoids fabrication?</p>
+<p>A. Require <code>middle_name</code> always B. Make <code>middle_name</code> optional or nullable C. Ask Claude to invent missing data D. Hide the field from validation errors</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Required fields can pressure the model to fabricate absent information.</p>
+<h3>Q22 - Domain 4 - Validation Retry</h3>
+<p>An extraction fails validation. What should the retry include?</p>
+<p>A. Only &quot;try harder&quot; B. Original document, bad output, and exact validation errors C. A confidence score only D. A random new schema</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Error-informed retry gives the model actionable correction context.</p>
+<h3>Q23 - Domain 4 - Batch Processing</h3>
+<p>A manager wants the cheapest option for an overnight audit report. Latency does not matter. What fits?</p>
+<p>A. Batch processing B. Blocking real-time CI check C. Manual sentiment review D. User-level CLAUDE.md only</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Batch is good for non-blocking, cost-sensitive work.</p>
+<h3>Q24 - Domain 4 - Multi-Pass Review</h3>
+<p>A large PR review misses cross-file issues. What design is better?</p>
+<p>A. Per-file review plus separate integration pass B. One giant prompt only C. Never include file context D. Trust the first review completely</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Focused passes reduce attention dilution and catch different issue types.</p>
+<h3>Q25 - Domain 5 - Critical Facts</h3>
+<p>A long support conversation summary loses dates and amounts. What should the system maintain separately?</p>
+<p>A. A structured case-facts block B. A model confidence score C. A hidden larger font D. A generic &quot;customer is upset&quot; note</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Critical numbers, dates, and sources should be preserved outside lossy summaries.</p>
+<h3>Q26 - Domain 5 - Escalation</h3>
+<p>Which is a reliable escalation trigger?</p>
+<p>A. The customer explicitly asks for a human B. The model says it feels 60% confident C. The sentiment sounds negative D. A random timer expires</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Explicit user request is a deterministic trigger; confidence and sentiment are unreliable.</p>
+<h3>Q27 - Domain 5 - Ambiguity</h3>
+<p>A lookup returns three possible customers with the same name. What should the agent do?</p>
+<p>A. Guess the most likely one B. Ask for an identifier or disambiguating detail C. Process a refund for all three D. Ignore the ambiguity</p>
+<p><strong>Answer:</strong> B <strong>Why:</strong> Ambiguous matches should be clarified, not guessed.</p>
+<h3>Q28 - Domain 5 - Error Propagation</h3>
+<p>A search subagent cannot access one source but found partial results elsewhere. What should it do?</p>
+<p>A. Hide the failure and synthesize anyway B. Abort the entire research task without details C. Return structured failure context plus partial results D. Invent coverage for the missing source</p>
+<p><strong>Answer:</strong> C <strong>Why:</strong> Coordinators need partial results and structured error context to recover or qualify output.</p>
+<h3>Q29 - Domain 5 - Large Codebase Context</h3>
+<p>Claude starts citing generic patterns instead of specific files in a long codebase session. What helps?</p>
+<p>A. Delegate focused discovery to subagents and keep structured notes B. Continue adding unrelated context forever C. Increase temperature D. Remove file paths from prompts</p>
+<p><strong>Answer:</strong> A <strong>Why:</strong> Focused context and structured state help preserve specificity.</p>
+<h3>Q30 - Mixed - Out-of-Scope Recognition</h3>
+<p>Which topic should not be over-studied for this exam according to the guide&#x27;s out-of-scope list?</p>
+<p>A. Tool error propagation B. MCP tool/resource/prompt design C. Fine-tuning Claude models D. Plan mode vs direct execution</p>
+<p><strong>Answer:</strong> C <strong>Why:</strong> Fine-tuning is out of scope; the other choices are in-scope exam material.</p>
+  </main>
+</body>
+</html>

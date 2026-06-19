@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Daily Study Loop</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>CCA Daily Study Loop</h1>
+<p><strong>Purpose:</strong> Give Shela a repeatable daily workflow that turns the official guide into usable exam judgment.</p>
+<h2>Daily Minimum Session: 30 Minutes</h2>
+<ol>
+<li><strong>Warm recall, 5 minutes</strong></li>
+</ol>
+<ul>
+<li>Ask 3 questions from yesterday or the weakest matrix rows.</li>
+<li>Shela answers before seeing the explanation.</li>
+<li>Mark misses in <code>guide-mastery-matrix.md</code>.</li>
+</ul>
+<ol>
+<li><strong>One guide concept, 10 minutes</strong></li>
+</ol>
+<ul>
+<li>Pick exactly one row from <code>guide-mastery-matrix.md</code>.</li>
+<li>Explain it using the Required Concept Card Format.</li>
+<li>Tie it to one official scenario.</li>
+</ul>
+<ol>
+<li><strong>Active drill, 10 minutes</strong></li>
+</ol>
+<ul>
+<li>Use one drill type: teach-back, spot-the-trap, scenario classification, or mock MCQ.</li>
+<li>Grade against the official guide or guide-derived digest.</li>
+<li>Require Shela to explain why the tempting wrong answer is wrong.</li>
+</ul>
+<ol>
+<li><strong>Log and assign next action, 5 minutes</strong></li>
+</ol>
+<ul>
+<li>Update <code>progress.md</code>.</li>
+<li>Update the relevant row in <code>guide-mastery-matrix.md</code>.</li>
+<li>Name the next row or weak spot.</li>
+</ul>
+<h2>Deep Session: 45-60 Minutes</h2>
+<p>Use this when Shela has more energy.</p>
+<ol>
+<li>Warm recall, 5 minutes.</li>
+<li>Teach one new guide concept, 10 minutes.</li>
+<li>Drill the concept, 10 minutes.</li>
+<li>Scenario application, 10 minutes.</li>
+<li>Wrong-answer review, 10 minutes.</li>
+<li>Update logs and matrix, 5 minutes.</li>
+</ol>
+<h2>Daily Study Materials</h2>
+<p>Use these every day:</p>
+<ul>
+<li><code>guide-mastery-matrix.md</code>: what remains, what passed, what needs review.</li>
+<li><code>CCA-vocabulary-dictionary.md</code>: plain-English term review.</li>
+<li><code>knowledge-base.md</code>: guide-derived digest for fast lookup.</li>
+<li><code>progress.md</code>: current state, weak spots, and next session target.</li>
+<li><code>readiness-gates.md</code>: the criteria for exam readiness.</li>
+</ul>
+<h2>Shela&#x27;s Responsibilities</h2>
+<p>Shela should:</p>
+<ul>
+<li>answer before reading the explanation;</li>
+<li>say &quot;I don&#x27;t know&quot; quickly instead of guessing silently;</li>
+<li>explain terms in her own words;</li>
+<li>ask for a different analogy when the first one does not land;</li>
+<li>rate confidence honestly from 1-5;</li>
+<li>accept repetition on weak spots;</li>
+<li>avoid using course completion as a substitute for exam practice;</li>
+<li>keep daily review small enough to actually repeat.</li>
+</ul>
+<h2>Trainer Responsibilities</h2>
+<p>The trainer should:</p>
+<ul>
+<li>keep the official guide as the governing source;</li>
+<li>teach one concept at a time;</li>
+<li>ask for active recall every session;</li>
+<li>grade clearly and kindly;</li>
+<li>update the matrix and progress log;</li>
+<li>refuse to mark <code>Passed</code> without evidence;</li>
+<li>keep Shela focused on scenario judgment, not trivia.</li>
+</ul>
+<h2>End-of-Day Output</h2>
+<p>Every day should end with this short summary:</p>
+<pre><code>Today covered:
+Passed:
+Needs review:
+Next session:
+Evidence logged in:</code></pre>
+  </main>
+</body>
+</html>

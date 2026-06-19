@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Lesson - L1 What Are Skills</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="../../index.html">Back to operating system</a></header>
+  <main>
+<hr>
+<p>lesson: 1 course: Introduction to Agent Skills title: What are skills? video: https://www.youtube.com/watch?v=bjdBVZa66oU duration: &quot;2:54&quot; exam_domain: &quot;Domain 3  -  Claude Code Configuration &amp; Workflows (20%), task 3.2 (slash commands &amp; skills)&quot; captured: 2026-06-16 sources: PDF course companion + YouTube auto-captions (cleaned) ---</p>
+<h1>Lesson 1  -  What are skills?</h1>
+<h2>Learning objectives (from the course)</h2>
+<ul>
+<li>Define what Claude Code skills are and how they work</li>
+<li>Explain where skills live (personal vs. project directories)</li>
+<li>Distinguish between skills, CLAUDE.md, and slash commands</li>
+<li>Identify scenarios where skills are the right customization tool</li>
+</ul>
+<h2>The lesson in plain English</h2>
+<p>A <strong>skill</strong> is a markdown file that teaches Claude how to do something <strong>once</strong>, so you stop re-explaining it every time. More fully: skills are <em>folders</em> of instructions, scripts, and resources that Claude can discover and use to do tasks more accurately. Each skill lives in a <code>SKILL.md</code> file whose <strong>frontmatter</strong> (top block) holds a <code>name</code> and a <code>description</code>.</p>
+<p>The <strong>description is the matching mechanism.</strong> When you ask Claude to &quot;review this PR,&quot; it compares your request against the descriptions of all available skills and activates the ones that match. That is the whole trigger model.</p>
+<p>Where they live decides <strong>who gets them</strong>:</p>
+<ul>
+<li><strong>Personal</strong> → <code>~/.claude/skills/</code>  -  follows <em>you</em> across every project (your commit style, your doc format).</li>
+<li><strong>Project</strong> → <code>.claude/skills/</code> in the repo root  -  anyone who clones the repo gets them automatically (team standards, brand guidelines).</li>
+</ul>
+<p>How skills differ from the neighbors:</p>
+<ul>
+<li><strong>CLAUDE.md</strong> loads into <em>every</em> conversation (always-on). Skills load <strong>on demand</strong>  -  only the name + description sit in context until a match, so they don&#x27;t bloat your context window.</li>
+<li><strong>Slash commands</strong> require you to <em>type</em> them. Skills activate automatically when Claude recognizes the situation.</li>
+</ul>
+<p>Rule of thumb: <strong>if you find yourself explaining the same thing to Claude repeatedly, that&#x27;s a skill waiting to be written.</strong></p>
+<h2>Key takeaways (verbatim from course companion)</h2>
+<ul>
+<li>Skills are folders of instructions that Claude Code can discover and use to handle tasks more accurately. Each skill lives in a SKILL.md file with a name and description in its frontmatter</li>
+<li>Claude uses the description to match skills to requests. When you ask Claude to do something, it compares your request against available skill descriptions and activates the ones that match</li>
+<li>Personal skills go in ~/.claude/skills and follow you across all projects. Project skills go in .claude/skills inside a repository and are shared with anyone who clones it</li>
+<li>Skills load on demand  -  unlike CLAUDE.md (which loads into every conversation) or slash commands (which require explicit invocation), skills activate automatically when Claude recognizes the situation</li>
+<li>If you find yourself explaining the same thing to Claude repeatedly, that&#x27;s a skill waiting to be written</li>
+</ul>
+<h2>Exam watch-outs (CCA-F, Domain 3)</h2>
+<ul>
+<li><strong>Project vs. user/personal split is a classic trap.</strong> Team skill at user-level = teammates can&#x27;t see it. Shared = in the repo (<code>.claude/skills/</code>), under version control.</li>
+<li>The <strong>description is what Claude matches on</strong>  -  same design instinct as tool descriptions in Domain 2. Vague description = no trigger.</li>
+<li>Know the three-way contrast cold: <strong>CLAUDE.md = always-on</strong>, <strong>skills = on-demand/auto</strong>, <strong>slash commands = on-demand/manual</strong>.</li>
+</ul>
+<h2>Terms introduced</h2>
+<ul>
+<li><strong>Skill</strong> = a folder + <code>SKILL.md</code> teaching Claude a task once, applied automatically when relevant.</li>
+<li><strong>SKILL.md</strong> = the file defining a skill; frontmatter (name, description) + instructions below.</li>
+<li><strong>description (frontmatter)</strong> = the text Claude uses to decide whether the skill matches a request.</li>
+<li><strong>Personal skill</strong> = <code>~/.claude/skills/</code>, follows you across projects.</li>
+<li><strong>Project skill</strong> = <code>.claude/skills/</code> in repo, shared with everyone who clones.</li>
+</ul>
+<h2>Full transcript (cleaned auto-captions; &quot;claw/claud&quot;=Claude, &quot;claw.md&quot;=CLAUDE.md)</h2>
+<p>&gt; Every time you explain your team&#x27;s coding standards to Claude, you&#x27;re repeating yourself. Every PR review, you redescribe how you want feedback structured. Every commit message, you remind Claude of your preferred format. And skills fix this. A skill is a markdown file that teaches Claude how to do something once, and Claude applies that knowledge automatically whenever it&#x27;s relevant. Agent skills are folders of instructions, scripts, and resources that agents can discover and use to do things more accurately and efficiently. With Claude Code, we have the skill.md file. The description is how Claude decides whether to use the skill. When you ask Claude to review this PR, it matches your request against available skill descriptions and finds this one. Claude reads your request, compares it to all available skill descriptions, and activates the ones that match. You can store skills in a few places depending on who needs them. Personal skills go in the home directory .claude/skills and follow you across all your projects. These are your preferences, your commit message style, your documentation format, how you like code explained. Project skills go in the .claude/skills inside of the root directory of your repository. Anyone who clones the repository gets these skills automatically. This is where team standards live, like your company&#x27;s brand guidelines, preferred fonts, and colors that you use for web design. Claude Code has several ways to customize behavior. Skills are unique because they&#x27;re automatic and task-specific. CLAUDE.md files load into every conversation. If you want Claude to always use TypeScript strict mode, that goes in your CLAUDE.md file. Skills, on the other hand, load on demand when they match your request. It only loads in the name and description, so it doesn&#x27;t fill up your entire context window. Your PR review checklist doesn&#x27;t need to be in the context when you&#x27;re debugging. It loads when you actually ask for a review. Slash commands require you to type them. Skills don&#x27;t. Claude applies them when it recognizes the situation. Skills work best for specialized knowledge that applies to specific tasks. Code review standards your team follows, commit message formats that you prefer, brand guidelines of your organization. If you find yourself explaining the same thing to Claude repeatedly, well, that&#x27;s a skill waiting to be written.</p>
+  </main>
+</body>
+</html>

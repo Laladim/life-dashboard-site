@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA Learning Log</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dde8; --paper:#f7f8fb; --white:#fff; --blue:#285c9f; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    header { position:sticky; top:0; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); padding:12px 20px; }
+    main { max-width:1120px; margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:34px; line-height:1.1; margin:0 0 14px; }
+    h2 { margin-top:34px; border-top:1px solid var(--line); padding-top:24px; }
+    h3 { margin-top:24px; }
+    p, li { color:#344054; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    code { background:#eef2f8; border:1px solid var(--line); border-radius:5px; padding:1px 5px; font-size:13px; }
+    pre { overflow:auto; background:#101828; color:#f2f4f7; border-radius:8px; padding:16px; }
+    pre code { background:transparent; border:0; color:inherit; padding:0; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--white); margin:16px 0; }
+    table { border-collapse:collapse; width:100%; min-width:760px; font-size:13px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { background:#eef2f8; color:#344054; }
+    tr:last-child td { border-bottom:0; }
+    .back { display:inline-flex; align-items:center; min-height:34px; padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); font-weight:650; }
+  </style>
+</head>
+<body>
+  <header><a class="back" href="index.html">Back to operating system</a></header>
+  <main>
+<h1>CCA Learning Log  -  Shela</h1>
+<p><strong>Dual purpose:</strong> (1) study record for the Oct 1 CCA-F exam, (2) documentation/proof for the Autonomee Partners onboarding. The official CCA-F guide lists 4 recommended-learning courses; Agent Skills is supplemental Domain 3 preparation because the guide names Agent Skills in the target-candidate profile.</p>
+<p><strong>How this log is filled:</strong> Shela screenshots the lesson page before starting and sends it. The trainer produces a Lesson Note Pack (watch-outs + note template + Phomemo card) and adds a row here. After watching, Shela&#x27;s 3-5 takeaways get added.</p>
+<p><strong>Course order (Autonomee assignment + official guide mapping):</strong></p>
+<ol>
+<li>Introduction to Agent Skills (supplemental warm-up; not one of the guide&#x27;s 4 recommended-learning courses)</li>
+<li>Building with the Claude API (~8 hrs, official recommended learning)</li>
+<li>Introduction to Model Context Protocol (official recommended learning)</li>
+<li>Claude Code in Action (official recommended learning)</li>
+<li>Claude 101 (official recommended learning; still remaining)</li>
+</ol>
+<p>Exam domain map: Agent Skills → supplemental Domain 3 (Claude Code config, 20%). Claude API → Domain 4 (Prompt/Structured Output, 20%). MCP → Domain 2 (Tool Design &amp; MCP, 18%). Claude Code in Action → Domains 3 + 1. Claude 101 → official recommended-learning foundation. The Agent SDK (half the exam scenarios) is NOT covered deeply by these courses  -  flag as a self-study gap.</p>
+<hr>
+<h2>Log (newest first)</h2>
+<p><strong>Lesson library:</strong> <code>lessons/agent-skills/</code> holds our own <code>.md</code> per lesson (notes + verbatim takeaways + exam watch-outs + full transcript). Built 2026-06-16 from the PDF companion + cleaned YouTube captions.</p>
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Course</th><th>Lesson</th><th>Lesson .md</th><th>Note template</th><th>Worksheet/card</th><th>Domain</th><th>Shela&#x27;s takeaways (after)</th></tr></thead><tbody><tr><td>2026-06-16</td><td>Agent Skills</td><td>L1 What are skills?</td><td>L1_what-are-skills.md</td><td>Box Method (spoken teach-back)</td><td><code>CCA_AgentSkills_L1_worksheet</code> + <code>_L1_feedback</code> sheet</td><td>3</td><td>Strong pass. SOLID: skill definition (word-perfect), description=matching, slash=typed, when-to-use rule, skills auto-triggered. FIX 1: thought SKILL.md = master inventory (it&#x27;s one file per skill; her mental model was her own SKILL-INDEX.md). FIX 2: personal vs project = WHO gets it by location (~/.claude/skills=just you everywhere; .claude/skills=whole team/repo), not meta-rules. Minor: called CLAUDE.md &quot;master of all skills&quot; (it&#x27;s the always-on rulebook). Self-rating: not given (redirect to printing). Re-drill the 2 fixes next session.</td></tr><tr><td>2026-06-16</td><td>Agent Skills</td><td>L2 Creating your first skill</td><td>L2_creating-your-first-skill.md</td><td>_tbd_</td><td>_tbd_</td><td>3</td><td>_pending_</td></tr><tr><td>2026-06-16</td><td>Agent Skills</td><td>L3 Configuration &amp; multi-file</td><td>L3_configuration-and-multi-file-skills.md</td><td>_tbd_</td><td>_tbd_</td><td>3/2/5</td><td>_pending_</td></tr><tr><td>2026-06-16</td><td>Agent Skills</td><td>L4 Skills vs other features</td><td>L4_skills-vs-other-features.md</td><td>_tbd_</td><td>_tbd_</td><td>3/1/2</td><td>_pending_</td></tr><tr><td>2026-06-16</td><td>Agent Skills</td><td>L5 Sharing skills</td><td>L5_sharing-skills.md</td><td>_tbd_</td><td>_tbd_</td><td>3/1/2</td><td>_pending_</td></tr><tr><td>2026-06-16</td><td>Agent Skills</td><td>L6 Troubleshooting skills</td><td>L6_troubleshooting-skills.md</td><td>_tbd_</td><td>_tbd_</td><td>3</td><td>_pending_</td></tr></tbody></table></div>
+<hr>
+<h2>Note-template chooser (which of Shela&#x27;s 7 templates fits which lesson type)</h2>
+<div class="table-wrap"><table><thead><tr><th>Lesson type</th><th>Best template</th><th>Why</th></tr></thead><tbody><tr><td>A process / loop / sequence (agent loop, lookup-then-act, retry flow)</td><td><strong>Flow Chart</strong></td><td>The thing IS a sequence; draw it as one.</td></tr><tr><td>Compare two options (plan vs direct, tool_choice auto/any/forced, project vs user config)</td><td><strong>Two Column</strong></td><td>Exam loves &quot;which one, when&quot;  -  columns force the contrast.</td></tr><tr><td>One discrete concept w/ parts (MCP tool vs resource vs prompt, a single tool&#x27;s anatomy)</td><td><strong>Box Method</strong></td><td>Definition + features + examples + when-to-use in one frame.</td></tr><tr><td>A landscape / overview lesson (intro to X, the 5 domains)</td><td><strong>Mind Map</strong></td><td>Captures breadth + relationships, not depth.</td></tr><tr><td>A hierarchy of sub-topics (a domain broken into task areas)</td><td><strong>Outline</strong></td><td>Mirrors the nested structure.</td></tr><tr><td>Concept-heavy lesson where you&#x27;ll have questions</td><td><strong>Cornell</strong></td><td>Cues/questions column = built-in active recall (the workhorse default).</td></tr><tr><td>A dense list of independent facts</td><td><strong>Sentence</strong></td><td>Fast capture, one fact per line.</td></tr></tbody></table></div>
+<p>Default to <strong>Cornell</strong> when unsure  -  its cue column doubles as a self-quiz.</p>
+  </main>
+</body>
+</html>
