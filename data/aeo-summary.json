@@ -1,19 +1,19 @@
 {
-  "run_date": "2026-06-14",
-  "generated_at": "2026-06-14T23:45:07.121147+00:00",
+  "run_date": "2026-06-21",
+  "generated_at": "2026-06-21T23:45:04.531977+00:00",
   "n_prompts_tested": 154,
-  "n_cited_any": 60,
-  "combined_rate": 0.3896,
+  "n_cited_any": 59,
+  "combined_rate": 0.3831,
   "per_engine": {
     "perplexity": {
-      "cited": 47,
+      "cited": 49,
       "total": 154,
-      "rate": 0.3051948051948052
+      "rate": 0.3181818181818182
     },
     "openai": {
-      "cited": 38,
+      "cited": 34,
       "total": 154,
-      "rate": 0.24675324675324675
+      "rate": 0.22077922077922077
     },
     "gemini": {
       "cited": 0,
@@ -25,30 +25,6 @@
     {
       "pid": "P001",
       "text": "secretary of state API for business verification",
-      "category": "SOS API",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P003",
-      "text": "real-time secretary of state data API",
-      "category": "SOS API",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P317",
-      "text": "Top secretary of state API solutions for business verification",
       "category": "SOS API",
       "priority": "high",
       "rate": 1.0,
@@ -95,8 +71,8 @@
       "comp": "Middesk"
     },
     {
-      "pid": "P111",
-      "text": "SOS data API vs building your own state scraper",
+      "pid": "P120",
+      "text": "Secretary of state API data coverage by state",
       "category": "SOS API",
       "priority": "medium",
       "rate": 1.0,
@@ -104,11 +80,35 @@
         "perplexity",
         "openai"
       ],
-      "comp": "OpenCorporates"
+      "comp": "Middesk"
     },
     {
-      "pid": "P120",
-      "text": "Secretary of state API data coverage by state",
+      "pid": "P121",
+      "text": "Is secretary of state API data real-time or cached",
+      "category": "SOS API",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P122",
+      "text": "Business verification API vs building in-house scraper",
+      "category": "Business Verification",
+      "priority": "medium",
+      "rate": 1.0,
+      "engines": [
+        "perplexity",
+        "openai"
+      ],
+      "comp": "Middesk"
+    },
+    {
+      "pid": "P321",
+      "text": "Secretary of state API for business document retrieval certificates annual reports",
       "category": "SOS API",
       "priority": "medium",
       "rate": 1.0,
@@ -151,14 +151,14 @@
       "comp": ""
     },
     {
-      "pid": "P318",
-      "text": "How to use secretary of state API step by step guide",
-      "category": "SOS API",
+      "pid": "P346",
+      "text": "Upstart AI lending platform 500 banks adoption Q4 2024",
+      "category": "Business Verification",
       "priority": "high",
       "source": "llm-traffic",
-      "notes": "LLM: 41 sessions. Cited by ChatGPT + Claude + Perplexity + Copilot.",
+      "notes": "LLM: 148 sessions. #1 cited blog.",
       "rate": 0.0,
-      "comp": "Compliancely"
+      "comp": ""
     },
     {
       "pid": "P200",
@@ -179,16 +179,6 @@
       "notes": "",
       "rate": 0.0,
       "comp": ""
-    },
-    {
-      "pid": "P202",
-      "text": "Best api for lending compliance and audit trails fintech",
-      "category": "OFAC/Compliance",
-      "priority": "medium",
-      "source": "gsc",
-      "notes": "",
-      "rate": 0.0,
-      "comp": "Alloy"
     },
     {
       "pid": "P303",
@@ -239,8 +229,18 @@
       "notes": "LLM: 177 sessions.",
       "rate": 0.0,
       "comp": ""
+    },
+    {
+      "pid": "P308",
+      "text": "New Jersey business entity search",
+      "category": "SOS API",
+      "priority": "medium",
+      "source": "llm-traffic",
+      "notes": "LLM: 152 sessions.",
+      "rate": 0.0,
+      "comp": ""
     }
   ],
-  "elapsed_sec": 2097.4,
+  "elapsed_sec": 2095.2,
   "est_cost_usd": 2.618
 }
