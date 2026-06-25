@@ -174,6 +174,11 @@
     display: inline-block; padding: 2px 8px; border-radius: 999px;
     background: #ede9fe; color: #4c1d95; font-size: 11px; font-weight: 600;
   }
+  .pending {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+  }
   .insight-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -291,7 +296,7 @@ const COLORS = {
   slate: "#1a1538", amber: "#D97706", green: "#059669",
 };
 
-let editions = [], charts = {};
+let editionRows = [], editions = [], charts = {};
 
 function num(v) {
   if (v == null) return 0;
@@ -325,8 +330,8 @@ async function load() {
     const rows = Papa.parse(text, { header: false, skipEmptyLines: true }).data;
     // Header: Date Published, Title, News ID, Topic, Key Stat, Content Angle, Newsletter URL,
     //         NL Sent, NL Open Rate, NL Unique Clicks, NL CTR, NL Web Views, NL Unsubs, NL Unique Opens
-    editions = rows.slice(1)
-      .filter(r => r[0] && r[0].trim() && r[13])
+    editionRows = rows.slice(1)
+      .filter(r => r[0] && r[0].trim())
       .map(r => ({
         dateRaw: r[0],
         date: parseDate(r[0]),
@@ -340,11 +345,14 @@ async function load() {
         webViews: num(r[11]),
         unsubs: num(r[12]),
         uniqueOpens: num(r[13]),
+        hasPerformance: !!(r[13] && String(r[13]).trim()),
       }))
       .filter(e => e.date)
       .sort((a, b) => a.date - b.date);
+    editions = editionRows.filter(e => e.hasPerformance);
 
-    if (!editions.length) throw new Error("No editions parsed from sheet.");
+    if (!editionRows.length) throw new Error("No editions parsed from sheet.");
+    if (!editions.length) throw new Error("No performance rows parsed from sheet.");
 
     document.getElementById("loading").style.display = "none";
     document.getElementById("dashboard").style.display = "block";
@@ -352,11 +360,12 @@ async function load() {
     renderInsights();
     renderCharts();
     renderTable();
-    const latest = editions[editions.length - 1];
+    const latestEdition = editionRows[editionRows.length - 1];
+    const latestPerformance = editions[editions.length - 1];
     document.getElementById("header-sub").textContent =
-      `Latest data: ${latest.date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} · ${editions.length} editions · Primary metric: Unique Opens`;
+      `Latest edition: ${latestEdition.date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} · Performance through: ${latestPerformance.date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} · Primary metric: Unique Opens`;
     document.getElementById("status").textContent =
-      `Data refreshed: ${new Date().toLocaleString()} · ${editions.length} editions`;
+      `Data refreshed: ${new Date().toLocaleString()} · ${editionRows.length} editions · ${editions.length} with performance data`;
   } catch (e) {
     document.getElementById("loading").style.display = "none";
     const err = document.getElementById("error");
@@ -420,6 +429,7 @@ function topicStats() {
 
 function renderInsights() {
   const latest = editions[editions.length - 1];
+  const latestEdition = editionRows[editionRows.length - 1];
   const last5 = editions.slice(-5);
   const prior5 = editions.slice(-10, -5);
   const last5Avg = avg(last5, e => e.uniqueOpens);
@@ -431,7 +441,8 @@ function renderInsights() {
   const mostClicks = [...editions].sort((a, b) => b.clicks - a.clicks)[0];
 
   document.getElementById("brief-list").innerHTML = `
-    <div><b>${fmt(editions.length)} editions tracked</b>From ${shortDate(editions[0].date)} to ${shortDate(latest.date)}</div>
+    <div><b>${fmt(editionRows.length)} editions tracked</b>From ${shortDate(editionRows[0].date)} to ${shortDate(latestEdition.date)}</div>
+    <div><b>${fmt(editions.length)} editions with performance</b>Performance data through ${shortDate(latest.date)}</div>
     <div><b>${fmt(last5Avg)} avg opens, last 5</b>${trend ? `${trend > 0 ? "Up" : "Down"} ${Math.abs(trend).toFixed(1)}% vs prior 5` : "Prior 5 comparison pending"}</div>
     <div><b>${fmt(latest.clicks)} latest clicks</b>${fmtPct(latest.ctr)} click rate on latest send</div>
   `;
@@ -550,9 +561,14 @@ function renderCharts() {
 
 function renderTable() {
   const peak = editions.reduce((p, e) => e.uniqueOpens > p.uniqueOpens ? e : p, editions[0]);
-  const rows = [...editions].reverse();
+  const rows = [...editionRows].reverse();
+  const metric = (e, value, pct=false, strong=false) => {
+    if (!e.hasPerformance) return '<span class="pending">Pending</span>';
+    const out = pct ? fmtPct(value) : fmt(value);
+    return strong ? `<strong>${out}</strong>` : out;
+  };
   document.getElementById("table-body").innerHTML = rows.map(e => {
-    const peakCls = e === peak ? "peak-row" : "";
+    const peakCls = e.hasPerformance && e.dateRaw === peak.dateRaw && e.title === peak.title ? "peak-row" : "";
     const titleCell = e.url
       ? `<a href="${e.url}" target="_blank" rel="noopener">${e.title}</a>`
       : e.title;
@@ -560,13 +576,13 @@ function renderTable() {
       <td>${shortDate(e.date)}</td>
       <td>${titleCell}</td>
       <td><span class="pill">${e.topic}</span></td>
-      <td>${fmt(e.sent)}</td>
-      <td><strong>${fmt(e.uniqueOpens)}</strong></td>
-      <td>${fmtPct(e.openRate)}</td>
-      <td>${fmt(e.clicks)}</td>
-      <td>${fmtPct(e.ctr)}</td>
-      <td>${fmt(e.webViews)}</td>
-      <td>${fmt(e.unsubs)}</td>
+      <td>${metric(e, e.sent)}</td>
+      <td>${metric(e, e.uniqueOpens, false, true)}</td>
+      <td>${metric(e, e.openRate, true)}</td>
+      <td>${metric(e, e.clicks)}</td>
+      <td>${metric(e, e.ctr, true)}</td>
+      <td>${metric(e, e.webViews)}</td>
+      <td>${metric(e, e.unsubs)}</td>
     </tr>`;
   }).join("");
 }
