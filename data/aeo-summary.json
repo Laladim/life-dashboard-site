@@ -1,246 +1,83 @@
 {
-  "run_date": "2026-07-05",
-  "generated_at": "2026-07-05T23:46:15.100395+00:00",
+  "run_date": "2026-07-10",
+  "generated_at": "2026-07-10T11:17:51.945477+00:00",
   "n_prompts_tested": 154,
-  "n_cited_any": 64,
-  "combined_rate": 0.4156,
+  "n_cited_any": 84,
+  "combined_rate": 0.5455,
   "per_engine": {
     "perplexity": {
-      "cited": 55,
+      "cited": 74,
       "total": 154,
-      "rate": 0.35714285714285715
+      "rate": 0.4805194805194805,
+      "ok": 154,
+      "errors": 0,
+      "missing": 0,
+      "status": "healthy"
     },
     "openai": {
-      "cited": 37,
+      "cited": 40,
       "total": 154,
-      "rate": 0.24025974025974026
+      "rate": 0.2597402597402597,
+      "ok": 154,
+      "errors": 0,
+      "missing": 0,
+      "status": "healthy"
     },
     "gemini": {
-      "cited": 0,
-      "total": 154,
-      "rate": 0.0
+      "cited": 35,
+      "total": 153,
+      "rate": 0.22875816993464052,
+      "ok": 153,
+      "errors": 1,
+      "missing": 0,
+      "status": "healthy"
     }
   },
-  "wins": [
-    {
-      "pid": "P001",
-      "text": "secretary of state API for business verification",
-      "category": "SOS API",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
+  "engine_health": {
+    "perplexity": {
+      "status": "healthy",
+      "expected_calls": 154,
+      "completed_calls": 154,
+      "ok": 154,
+      "errors": 0,
+      "missing": 0,
+      "unexpected": 0,
+      "failure_rate": 0.0
     },
-    {
-      "pid": "P003",
-      "text": "real-time secretary of state data API",
-      "category": "SOS API",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
+    "openai": {
+      "status": "healthy",
+      "expected_calls": 154,
+      "completed_calls": 154,
+      "ok": 154,
+      "errors": 0,
+      "missing": 0,
+      "unexpected": 0,
+      "failure_rate": 0.0
     },
-    {
-      "pid": "P109",
-      "text": "Build vs buy secretary of state API integration",
-      "category": "SOS API",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P317",
-      "text": "Top secretary of state API solutions for business verification",
-      "category": "SOS API",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P318",
-      "text": "How to use secretary of state API step by step guide",
-      "category": "SOS API",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P336",
-      "text": "Cobalt Intelligence vs Middesk comparison for alternative lenders",
-      "category": "Business Verification",
-      "priority": "high",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P005",
-      "text": "secretary of state business status API alternative to Middesk",
-      "category": "SOS API",
-      "priority": "medium",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P010",
-      "text": "best business verification API 2026",
-      "category": "Business Verification",
-      "priority": "medium",
-      "rate": 1.0,
-      "engines": [
-        "perplexity",
-        "openai"
-      ],
-      "comp": "Middesk"
+    "gemini": {
+      "status": "healthy",
+      "expected_calls": 154,
+      "completed_calls": 154,
+      "ok": 153,
+      "errors": 1,
+      "missing": 0,
+      "unexpected": 0,
+      "failure_rate": 0.0065
     }
-  ],
-  "gaps": [
-    {
-      "pid": "P300",
-      "text": "Is this company a legitimate registered business",
-      "category": "Business Verification",
-      "priority": "high",
-      "source": "llm-traffic",
-      "notes": "LLM: 4800+ entity lookups. #1 citation driver across all states.",
-      "rate": 0.0,
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P301",
-      "text": "Look up business registration status in Texas",
-      "category": "SOS API",
-      "priority": "high",
-      "source": "llm-traffic",
-      "notes": "LLM: 1030 sessions. TX is #1 state.",
-      "rate": 0.0,
-      "comp": "Middesk"
-    },
-    {
-      "pid": "P302",
-      "text": "Check if a company is registered in New York",
-      "category": "SOS API",
-      "priority": "high",
-      "source": "llm-traffic",
-      "notes": "LLM: 412 sessions. NY is #2 state.",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P200",
-      "text": "Indiana sos business search",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "gsc",
-      "notes": "",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P201",
-      "text": "What is ngs status for llc",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "gsc",
-      "notes": "",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P303",
-      "text": "Verify business entity status in Illinois",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "llm-traffic",
-      "notes": "LLM: 253 sessions.",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P304",
-      "text": "Florida secretary of state business entity lookup",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "llm-traffic",
-      "notes": "LLM: 246 sessions.",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P305",
-      "text": "Search Virginia corporation registration status",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "llm-traffic",
-      "notes": "LLM: 228 sessions.",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P306",
-      "text": "Nevada business entity registration search",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "llm-traffic",
-      "notes": "LLM: 171 sessions.",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P307",
-      "text": "Colorado secretary of state business search",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "llm-traffic",
-      "notes": "LLM: 177 sessions.",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P308",
-      "text": "New Jersey business entity search",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "llm-traffic",
-      "notes": "LLM: 152 sessions.",
-      "rate": 0.0,
-      "comp": ""
-    },
-    {
-      "pid": "P309",
-      "text": "Washington state business registration lookup",
-      "category": "SOS API",
-      "priority": "medium",
-      "source": "llm-traffic",
-      "notes": "LLM: 83 sessions.",
-      "rate": 0.0,
-      "comp": ""
-    }
-  ],
-  "elapsed_sec": 2164.1,
-  "est_cost_usd": 2.618
+  },
+  "semantic_health": {
+    "status": "healthy",
+    "max_engine_error_rate": 0.1,
+    "engines": [
+      "perplexity",
+      "openai",
+      "gemini"
+    ],
+    "failed_engines": []
+  },
+  "wins": [],
+  "gaps": [],
+  "elapsed_sec": 3857.0,
+  "est_cost_usd": 2.771,
+  "details_visibility": "private_local_only"
 }
