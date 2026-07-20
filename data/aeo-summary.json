@@ -1,32 +1,32 @@
 {
-  "run_date": "2026-07-12",
-  "generated_at": "2026-07-13T00:05:44.647910+00:00",
+  "run_date": "2026-07-19",
+  "generated_at": "2026-07-20T00:03:24.977381+00:00",
   "n_prompts_tested": 154,
-  "n_cited_any": 84,
-  "combined_rate": 0.5455,
+  "n_cited_any": 100,
+  "combined_rate": 0.6494,
   "per_engine": {
     "perplexity": {
-      "cited": 74,
+      "cited": 98,
       "total": 154,
-      "rate": 0.4805194805194805,
+      "rate": 0.6363636363636364,
       "ok": 154,
       "errors": 0,
       "missing": 0,
       "status": "healthy"
     },
     "openai": {
-      "cited": 40,
-      "total": 153,
-      "rate": 0.26143790849673204,
-      "ok": 153,
-      "errors": 1,
+      "cited": 34,
+      "total": 154,
+      "rate": 0.22077922077922077,
+      "ok": 154,
+      "errors": 0,
       "missing": 0,
       "status": "healthy"
     },
     "gemini": {
-      "cited": 32,
+      "cited": 38,
       "total": 154,
-      "rate": 0.2077922077922078,
+      "rate": 0.24675324675324675,
       "ok": 154,
       "errors": 0,
       "missing": 0,
@@ -48,11 +48,11 @@
       "status": "healthy",
       "expected_calls": 154,
       "completed_calls": 154,
-      "ok": 153,
-      "errors": 1,
+      "ok": 154,
+      "errors": 0,
       "missing": 0,
       "unexpected": 0,
-      "failure_rate": 0.0065
+      "failure_rate": 0.0
     },
     "gemini": {
       "status": "healthy",
@@ -77,7 +77,7 @@
   },
   "wins": [],
   "gaps": [],
-  "elapsed_sec": 3335.4,
-  "est_cost_usd": 2.76,
+  "elapsed_sec": 3198.4,
+  "est_cost_usd": 2.772,
   "details_visibility": "private_local_only"
 }
